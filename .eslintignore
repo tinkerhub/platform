@@ -1,4 +1,5 @@
 esbuild.config.js
+esbuild.config.dev.js
 node_modules
 .eslintrc.js
 lint-staged.config.js
