@@ -24,6 +24,6 @@
     "baseUrl": "./src",
     "noEmit": true
   },
-  "exclude": ["node_modules"],
+  "exclude": ["node_modules", "./.eslintrc.js"],
   "include": ["./src/**/*.ts"]
 }

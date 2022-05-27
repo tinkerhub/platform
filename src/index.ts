@@ -3,12 +3,7 @@ import { IncomingMessage, Server, ServerResponse } from 'http';
 import { nanoid } from 'nanoid';
 import pino, { Logger } from 'pino';
 
-const server: FastifyInstance = fastify<
-  Server,
-  IncomingMessage,
-  ServerResponse,
-  Logger
->({
+const server: FastifyInstance = fastify<Server, IncomingMessage, ServerResponse, Logger>({
   logger: pino({
     level: 'info',
     redact: ['req.headers.authorization'],
@@ -51,9 +46,7 @@ const opts: RouteShorthandOptions = {
   },
 };
 
-server.get('/ping', opts, async () => {
-  return { pong: 'it worked!' };
-});
+server.get('/ping', opts, async () => ({ pong: 'it worked!' }));
 
 const start = async () => {
   try {
