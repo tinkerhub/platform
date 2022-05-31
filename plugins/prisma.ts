@@ -8,9 +8,9 @@ declare module 'fastify' {
     prisma: PrismaClient
   }
 }
+const prisma = new PrismaClient()
 
 const prismaPlugin: FastifyPluginAsync = fp(async (server, {}) => {
-  const prisma = new PrismaClient()
   await prisma.$connect()
   // Make Prisma Client available through the fastify server instance: server.prisma
   server.decorate('prisma', prisma)
@@ -19,5 +19,11 @@ const prismaPlugin: FastifyPluginAsync = fp(async (server, {}) => {
     await server.prisma.$disconnect()
   })
 })
+async function main() {
 
+  const users= await prisma.user.findMany()
+  console.log(users);
+  
+  }
+  main()
 export default prismaPlugin
