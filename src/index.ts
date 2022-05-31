@@ -3,13 +3,11 @@ import fastify, { FastifyInstance } from 'fastify';
 import { IncomingMessage, Server, ServerResponse } from 'http';
 import { nanoid } from 'nanoid';
 import pino, { Logger } from 'pino';
-
 import { fastifyLogger } from './logger';
 import { envConfig } from './env';
-
+import { prismaPlugin } from './prisma';
 import { miscRoutes } from './misc';
 import { authRoutes } from './auth';
-
 const server: FastifyInstance = fastify<Server, IncomingMessage, ServerResponse, Logger>({
   logger: pino({
     level: 'info',
@@ -26,10 +24,10 @@ server.register(fastifyLogger);
 server.register(authRoutes, { prefix: '/auth' });
 server.register(miscRoutes);
 
+server.register(prismaPlugin);
 const start = async () => {
   try {
     await server.after();
-
     await server.listen(server.config.PORT, server.config.HOST);
   } catch (err) {
     server.log.error(err);
