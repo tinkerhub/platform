@@ -28,7 +28,7 @@ server.register(miscRoutes);
 // global error handler
 server.setErrorHandler((error: Error, _request, reply: FastifyReply) => {
   const code = error.statusCode || 500;
-  const message = error.message || 'the requesetd route was not found';
+  const message = error.message || 'the requested route was not found';
   reply.status(code).send({ success: false, message, error: error.error });
 });
 
