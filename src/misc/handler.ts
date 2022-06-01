@@ -1,5 +1,5 @@
 import { FastifyReply, FastifyRequest } from 'fastify';
 
 export const rootHandler = async (_: FastifyRequest, reply: FastifyReply) => {
-  reply.send('first request');
+  reply.send('route testing');
 };

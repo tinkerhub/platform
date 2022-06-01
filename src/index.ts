@@ -1,8 +1,9 @@
 import fastifyEnv from '@fastify/env';
-import fastify, { FastifyInstance } from 'fastify';
+import fastify, { FastifyInstance, FastifyReply } from 'fastify';
 import { IncomingMessage, Server, ServerResponse } from 'http';
 import { nanoid } from 'nanoid';
 import pino, { Logger } from 'pino';
+import { Error } from './response';
 import { fastifyLogger } from './logger';
 import { envConfig } from './env';
 import { miscRoutes } from './misc';
@@ -23,6 +24,13 @@ server.register(fastifyLogger);
 // routes
 server.register(authRoutes, { prefix: '/auth' });
 server.register(miscRoutes);
+
+// global error handler
+server.setErrorHandler((error: Error, _request, reply: FastifyReply) => {
+  const code = error.statusCode || 500;
+  const message = error.message || 'the requesetd route was not found';
+  reply.status(code).send({ success: false, message, error: error.error });
+});
 
 const start = async () => {
   try {

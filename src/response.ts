@@ -1,22 +1,31 @@
 import { FastifyReply } from 'fastify';
 
+// response handling function
+
 export function handleServerResponse(
   reply: FastifyReply,
   message: string,
-  code: number = 500,
-  data = null
+  code: number,
+  data: unknown
 ) {
-  const statusCode = code || reply.statusCode;
-  const response = message || 'The requested route was not found';
-  if (code >= 400) {
-    return reply.status(statusCode).send({
-      success: false,
-      message: response,
-    });
-  }
-  return reply.status(statusCode).send({
+  return reply.status(code).send({
     success: true,
-    message: response,
+    message,
     data,
   });
 }
+
+// error handler function
+export interface Error {
+  message?: string;
+  error?: unknown;
+  statusCode?: number;
+}
+export const handleServerError = (code: number, message: string, err: unknown = null) => {
+  const error = new Error() as Error;
+  error.message = message;
+  error.error = err;
+  error.statusCode = code;
+  // eslint-disable-next-line @typescript-eslint/no-throw-literal
+  throw error;
+};
