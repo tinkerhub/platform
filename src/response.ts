@@ -1,31 +1,27 @@
-import { FastifyReply } from 'fastify';
-
 // response handling function
-
-export function handleServerResponse(
-  reply: FastifyReply,
+export function renderResponse(
+  success: boolean,
   message: string,
-  code: number,
-  data: unknown
+  data: unknown,
+  code: number = 404
 ) {
-  return reply.status(code).send({
-    success: true,
-    message,
-    data,
-  });
+  if (success) {
+    return {
+      success: true,
+      message,
+      data,
+    };
+  }
+  const error = new Error() as ErrorResponse;
+  error.message = message;
+  error.error = data;
+  error.statusCode = code;
+  // eslint-disable-next-line @typescript-eslint/no-throw-literal
+  throw error;
 }
 
-// error handler function
-export interface Error {
+export interface ErrorResponse {
   message?: string;
   error?: unknown;
   statusCode?: number;
 }
-export const handleServerError = (code: number, message: string, err: unknown = null) => {
-  const error = new Error() as Error;
-  error.message = message;
-  error.error = err;
-  error.statusCode = code;
-  // eslint-disable-next-line @typescript-eslint/no-throw-literal
-  throw error;
-};
