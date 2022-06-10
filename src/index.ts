@@ -3,12 +3,12 @@ import fastify, { FastifyInstance, FastifyReply } from 'fastify';
 import { IncomingMessage, Server, ServerResponse } from 'http';
 import { nanoid } from 'nanoid';
 import pino, { Logger } from 'pino';
-import { ErrorResponse } from './response';
 import { fastifyLogger } from './logger';
 import { envConfig } from './env';
+import { prismaPlugin } from './prisma';
+import { ErrorResponse } from './response';
 import { miscRoutes } from './misc';
 import { authRoutes } from './auth';
-
 const server: FastifyInstance = fastify<Server, IncomingMessage, ServerResponse, Logger>({
   logger: pino({
     level: 'info',
@@ -25,6 +25,7 @@ server.register(fastifyLogger);
 server.register(authRoutes, { prefix: '/auth' });
 server.register(miscRoutes);
 
+server.register(prismaPlugin);
 // global error handler
 server.setErrorHandler((error: ErrorResponse, _request, reply: FastifyReply) => {
   const code = error.statusCode || 500;
