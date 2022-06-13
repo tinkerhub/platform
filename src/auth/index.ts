@@ -1,1 +1,1 @@
-export { authRoutes } from './routes';
+export { authRoutes } from '../server/middlewares/routes/auth';

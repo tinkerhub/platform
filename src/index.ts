@@ -5,10 +5,10 @@ import { nanoid } from 'nanoid';
 import pino, { Logger } from 'pino';
 import { fastifyLogger } from './logger';
 import { envConfig } from './env';
-import { prismaPlugin } from './prisma';
+import { prismaPlugin } from './server/plugins/prisma';
 import { ErrorResponse } from './response';
-import { miscRoutes } from './misc';
 import { authRoutes } from './auth';
+
 const server: FastifyInstance = fastify<Server, IncomingMessage, ServerResponse, Logger>({
   logger: pino({
     level: 'info',
@@ -23,7 +23,6 @@ server.register(fastifyLogger);
 
 // routes
 server.register(authRoutes, { prefix: '/auth' });
-server.register(miscRoutes);
 
 server.register(prismaPlugin);
 // global error handler

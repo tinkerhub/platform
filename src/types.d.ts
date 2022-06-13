@@ -2,10 +2,11 @@ import { FastifyInstance as FI } from 'fastify';
 
 declare module 'fastify' {
   interface FastifyInstance extends FI {
-    prisma: PrismaClient
+    prisma: PrismaClient;
     config: {
       PORT: number;
       HOST: string;
+      DATABASE_URL: string;
     };
   }
 }

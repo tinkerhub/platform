@@ -1,8 +1,8 @@
 import { FastifyPluginCallback, FastifyPluginOptions } from 'fastify';
 import { Server } from 'http';
-import { authMeHandler } from './handler';
+import { authMeHandler } from '../../../auth/handler';
 
-import { authMeReqValidator } from './validation';
+import { authMeReqValidator } from '../../https/auth-validator';
 
 export const authRoutes: FastifyPluginCallback<FastifyPluginOptions, Server> = (
   server,

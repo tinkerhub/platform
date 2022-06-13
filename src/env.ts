@@ -13,6 +13,9 @@ export const schema = {
       type: 'string',
       default: '0.0.0.0',
     },
+    DATABASE_URL: {
+      type: 'string',
+    },
   },
 };
 
