@@ -12,6 +12,10 @@ RUN pnpm install
 
 COPY . .
 
+COPY ./prisma ./
+
+RUN pnpm prisma-generate
+
 EXPOSE 3000
 
 CMD [ "pnpm", "dev" ]
