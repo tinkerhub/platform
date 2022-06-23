@@ -131,3 +131,4 @@ dist
 
 # SQLite database file
 prisma/dev.db/
+tmp
