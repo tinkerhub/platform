@@ -10,13 +10,15 @@
         "start": "node ./dist/index.js",
         "lint": "eslint ./src --ext .js,.ts",
         "lint-fix": "eslint ./src --ext .js,.ts --fix",
-        "prepare": "husky install"
+        "prepare": "husky install",
+        "prisma-generate": "prisma generate --schema=./prisma/schema.prisma"
     },
     "keywords": [],
     "author": "",
     "license": "ISC",
     "dependencies": {
         "@fastify/env": "^3.0.0",
+        "@fastify/swagger": "^6.0.0",
         "@prisma/client": "^3.14.0",
         "fastify": "^3.29.0",
         "fastify-plugin": "^3.0.1",
