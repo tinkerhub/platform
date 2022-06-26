@@ -26,6 +26,22 @@ server.register(authRoutes, { prefix: '/auth' });
 server.register(miscRoutes);
 
 server.register(prismaPlugin);
+
+// Swagger
+server.register(require('@fastify/swagger'), {
+  exposeRoute: true,
+  routePrefix: '/docs',
+  swagger: {
+    info: {
+      title: 'Tinkerhub Platform',
+      description:
+        'Tinkerhub Platform is a community built platform for Tinkers to condut there activities.',
+      version: '1.0',
+    },
+    host: 'localhost',
+    schemes: ['http'],
+  },
+});
 // global error handler
 server.setErrorHandler((error: ErrorResponse, _request, reply: FastifyReply) => {
   const code = error.statusCode || 500;
