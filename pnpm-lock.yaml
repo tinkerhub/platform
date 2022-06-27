@@ -18,7 +18,6 @@ specifiers:
   eslint-plugin-import: ^2.25.2
   eslint-plugin-prettier: ^4.0.0
   fastify: ^3.29.0
-  fastify-env: ^2.0.0
   fastify-plugin: ^3.0.1
   husky: ^8.0.0
   nanoid: ^3.3.4
@@ -37,7 +36,6 @@ dependencies:
   '@fastify/swagger': 6.1.0
   '@prisma/client': 3.14.0_prisma@3.14.0
   fastify: 3.29.0
-  fastify-env: 2.2.0
   fastify-plugin: 3.0.1
   nanoid: 3.3.4
   pino: 7.11.0
@@ -1091,17 +1089,8 @@ packages:
       is-obj: 2.0.0
     dev: true
 
-  /dotenv-expand/5.1.0:
-    resolution: {integrity: sha512-YXQl1DSa4/PQyRfgrv6aoNjhasp/p4qs9FjJ4q4cQk+8m4r6k4ZSiEyytKG8f8W9gi8WsQtIObNmKd+tMzNTmA==}
-    dev: false
-
   /dotenv-expand/8.0.3:
     resolution: {integrity: sha512-SErOMvge0ZUyWd5B0NXMQlDkN+8r+HhVUsxgOO7IoPDOdDRD2JjExpN6y3KnFR66jsJMwSn1pqIivhU5rcJiNg==}
-    engines: {node: '>=12'}
-    dev: false
-
-  /dotenv/11.0.0:
-    resolution: {integrity: sha512-Fp/b504Y5W+e+FpCxTFMUZ7ZEQkQYF0rx+KZtmwixJxGQbLHrhCwo3FjZgNC8vIfrSi29PABNbMoCGD9YoiXbQ==}
     engines: {node: '>=12'}
     dev: false
 
@@ -1146,14 +1135,6 @@ packages:
     resolution: {integrity: sha512-+uw1inIHVPQoaVuHzRyXd21icM+cnt4CzD5rW+NC1wjOUSTOs+Te7FOv7AhN7vS9x/oIyhLP5PR1H+phQAHu5Q==}
     dependencies:
       once: 1.4.0
-
-  /env-schema/3.5.2:
-    resolution: {integrity: sha512-mSCYvxQLrJ3Z641CpCSvU2UIFPjDNqZ9yUfqWdx2FMXfccWtYrJEa+pR9mc3YyINvmnlXdbmD5fBx1NSlipMfw==}
-    dependencies:
-      ajv: 8.11.0
-      dotenv: 11.0.0
-      dotenv-expand: 5.1.0
-    dev: false
 
   /env-schema/4.0.0:
     resolution: {integrity: sha512-hM5OwjrUPxxrCjC1Ykf+wPld2lbnN3/m9Y9wuMPt0jmYluJpAV3OXc1HiliZxFkxLzw2FcrSOXdw/3uI7PYCFA==}
@@ -1764,20 +1745,6 @@ packages:
 
   /fast-safe-stringify/2.1.1:
     resolution: {integrity: sha512-W+KJc2dmILlPplD/H4K9l9LcAHAfPtP6BY84uVLXQ6Evcz9Lcg33Y2z1IVblT6xdY54PXYVHEv+0Wpq8Io6zkA==}
-
-  /fastify-env/2.1.1:
-    resolution: {integrity: sha512-5IyYR+d+0/hwae/PpC6oWb+hlMpBqG1MuWWTEbFR2uzGhDXX/rCp4gdBrodt7SndOyvVlF+Z8QZ0fGlXPWtIOw==}
-    dependencies:
-      env-schema: 3.5.2
-      fastify-plugin: 3.0.1
-    dev: false
-
-  /fastify-env/2.2.0:
-    resolution: {integrity: sha512-WlNsLv+SfIyYsAVozdA2dby09cz7nMlOHDNWKlwb5eXIkg9USyYEAM5g371N+KMsc7hIB0gxn4HiHU9XGafAdA==}
-    dependencies:
-      fastify-env-deprecated: /fastify-env/2.1.1
-      process-warning: 1.0.0
-    dev: false
 
   /fastify-plugin/3.0.1:
     resolution: {integrity: sha512-qKcDXmuZadJqdTm6vlCqioEbyewF60b/0LOFCcYN1B6BIZGlYJumWWOYs70SFYLDAH4YqdE1cxH/RKMG7rFxgA==}
