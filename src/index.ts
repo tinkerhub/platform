@@ -3,12 +3,14 @@ import fastify, { FastifyInstance, FastifyReply } from 'fastify';
 import { IncomingMessage, Server, ServerResponse } from 'http';
 import { nanoid } from 'nanoid';
 import pino, { Logger } from 'pino';
+import Swagger from '@fastify/swagger';
 import { fastifyLogger } from './logger';
 import { envConfig } from './env';
 import { prismaPlugin } from './prisma';
 import { ErrorResponse } from './response';
 import { miscRoutes } from './misc';
 import { authRoutes } from './auth';
+
 const server: FastifyInstance = fastify<Server, IncomingMessage, ServerResponse, Logger>({
   logger: pino({
     level: 'info',
@@ -28,7 +30,7 @@ server.register(miscRoutes);
 server.register(prismaPlugin);
 
 // Swagger
-server.register(require('@fastify/swagger'), {
+server.register(Swagger, {
   exposeRoute: true,
   routePrefix: '/docs',
   swagger: {
