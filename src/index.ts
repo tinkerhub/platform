@@ -3,12 +3,14 @@ import fastify, { FastifyInstance, FastifyReply } from 'fastify';
 import { IncomingMessage, Server, ServerResponse } from 'http';
 import { nanoid } from 'nanoid';
 import pino, { Logger } from 'pino';
+import Swagger from '@fastify/swagger';
 import { fastifyLogger } from './logger';
 import { envConfig } from './env';
 import { prismaPlugin } from './prisma';
 import { ErrorResponse } from './response';
 import { miscRoutes } from './misc';
 import { authRoutes } from './auth';
+
 const server: FastifyInstance = fastify<Server, IncomingMessage, ServerResponse, Logger>({
   logger: pino({
     level: 'info',
@@ -26,6 +28,22 @@ server.register(authRoutes, { prefix: '/auth' });
 server.register(miscRoutes);
 
 server.register(prismaPlugin);
+
+// Swagger
+server.register(Swagger, {
+  exposeRoute: true,
+  routePrefix: '/docs',
+  swagger: {
+    info: {
+      title: 'Tinkerhub Platform',
+      description:
+        'Tinkerhub Platform is a community built platform for Tinkers to condut there activities.',
+      version: '1.0',
+    },
+    host: 'localhost',
+    schemes: ['http'],
+  },
+});
 // global error handler
 server.setErrorHandler((error: ErrorResponse, _request, reply: FastifyReply) => {
   const code = error.statusCode || 500;
