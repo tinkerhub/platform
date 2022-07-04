@@ -4,7 +4,6 @@ import { IncomingMessage, Server, ServerResponse } from 'http';
 import { nanoid } from 'nanoid';
 import { dependencyPlugin } from 'server/plugins/dependency';
 import pino, { Logger } from 'pino';
-import Swagger from '@fastify/swagger';
 import { fastifyLogger } from '../../logger';
 import { envConfig } from '../../env';
 import { authRoutes } from './auth/routes';
@@ -27,21 +26,6 @@ server.register(dependencyPlugin);
 server.register(authRoutes, { prefix: '/auth' });
 
 server.register(prismaPlugin);
-// Swagger
-server.register(Swagger, {
-  exposeRoute: true,
-  routePrefix: '/docs',
-  swagger: {
-    info: {
-      title: 'Tinkerhub Platform',
-      description:
-        'Tinkerhub Platform is a community built platform for Tinkers to conduct thier activities.',
-      version: '1.0',
-    },
-    host: 'localhost',
-    schemes: ['http'],
-  },
-});
 
 // global error handler
 server.setErrorHandler((error: ErrorResponse, _request, reply: FastifyReply) => {
