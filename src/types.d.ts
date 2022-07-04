@@ -1,3 +1,4 @@
+import { AuthIinterface } from 'auth/handler';
 import { FastifyInstance as FI } from 'fastify';
 
 declare module 'fastify' {
@@ -8,5 +9,6 @@ declare module 'fastify' {
       HOST: string;
       DATABASE_URL: string;
     };
+    service: AuthIinterface;
   }
 }

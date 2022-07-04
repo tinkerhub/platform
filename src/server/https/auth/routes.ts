@@ -1,6 +1,5 @@
 import { FastifyPluginCallback, FastifyPluginOptions } from 'fastify';
 import { Server } from 'http';
-import { authMeHandler } from '../../../auth/handler';
 import { authMeReqValidator } from './validator';
 
 export const authRoutes: FastifyPluginCallback<FastifyPluginOptions, Server> = (
@@ -9,6 +8,6 @@ export const authRoutes: FastifyPluginCallback<FastifyPluginOptions, Server> = (
   done
 ) => {
   // GET /me
-  server.get('/me', authMeReqValidator, authMeHandler);
+  server.get('/me', authMeReqValidator, server.service.authMeHandler);
   done();
 };
