@@ -17,6 +17,7 @@
     "license": "ISC",
     "dependencies": {
         "@fastify/env": "^3.0.0",
+        "@fastify/swagger": "^7.4.1",
         "@prisma/client": "^3.14.0",
         "fastify": "^3.29.0",
         "fastify-plugin": "^3.0.1",
