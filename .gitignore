@@ -130,4 +130,4 @@ dist
 .pnp.*
 
 # SQLite database file
-prisma/dev.db/
+prisma/dev.db

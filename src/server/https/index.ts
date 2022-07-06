@@ -3,6 +3,7 @@ import fastify, { FastifyInstance, FastifyReply } from 'fastify';
 import { IncomingMessage, Server, ServerResponse } from 'http';
 import { nanoid } from 'nanoid';
 import { dependencyPlugin } from 'server/plugins/dependency';
+import Swagger from '@fastify/swagger';
 import pino, { Logger } from 'pino';
 import { fastifyLogger } from '../../logger';
 import { envConfig } from '../../env';
@@ -21,7 +22,20 @@ export const server: FastifyInstance = fastify<Server, IncomingMessage, ServerRe
 server.register(fastifyEnv, envConfig);
 server.register(fastifyLogger);
 server.register(dependencyPlugin);
-
+server.register(Swagger, {
+  exposeRoute: true,
+  routePrefix: '/docs',
+  swagger: {
+    info: {
+      title: 'Tinkerhub Platform',
+      description:
+        'Tinkerhub Platform is a community built platform for Tinkers to condut there activities.',
+      version: '1.0',
+    },
+    host: 'localhost',
+    schemes: ['http'],
+  },
+});
 // routes
 server.register(authRoutes, { prefix: '/auth' });
 
