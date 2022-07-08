@@ -1,9 +1,11 @@
 import fp from 'fastify-plugin';
 import { FastifyPluginAsync } from 'fastify';
-import { AuthHandler } from '../../auth/handler';
+import { AuthService } from '../../auth/service';
 
-const authFuncs = new AuthHandler();
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const dependencyPlugin: FastifyPluginAsync = fp(async (server, _) => {
-  server.decorate('service', authFuncs);
+  const auth = new AuthService();
+  server.decorate('service', {
+    auth,
+  });
 });
