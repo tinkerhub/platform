@@ -5,11 +5,11 @@ import { nanoid } from 'nanoid';
 import { dependencyPlugin } from 'server/plugins/dependency';
 import Swagger from '@fastify/swagger';
 import pino, { Logger } from 'pino';
-import { fastifyLogger } from '../../logger';
+import { fastifyLogger } from '../logger';
 import { envConfig } from '../../env';
 import { authRoutes } from './auth/routes';
 import { prismaPlugin } from '../plugins/prisma';
-import { ErrorResponse } from '../../response';
+import { ErrorResponse } from '../response';
 
 export const server: FastifyInstance = fastify<Server, IncomingMessage, ServerResponse, Logger>({
   logger: pino({
