@@ -1,0 +1,17 @@
+FROM node:16-alpine
+
+WORKDIR /app
+
+COPY package.json ./
+
+COPY pnpm-lock.yaml ./
+
+RUN npm install pnpm -g
+
+RUN pnpm install
+
+COPY . .
+
+EXPOSE 3000
+
+CMD [ "pnpm", "dev" ]
