@@ -24,7 +24,7 @@
     "baseUrl": "./src",
     "noEmit": true
   },
-  "exclude": ["node_modules", "./.eslintrc.js","./client"],
+  "exclude": ["node_modules", "./.eslintrc.js"],
   "include": ["./src/**/*.ts", "./src/**/*.d.ts"],
   "ts-node": { "files": true },
   "files": ["src/index.ts", "src/types.d.ts"]
