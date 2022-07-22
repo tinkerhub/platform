@@ -7,7 +7,7 @@ export const schema = {
   properties: {
     PORT: {
       type: 'number',
-      default: 3000,
+      default: 5000,
     },
     HOST: {
       type: 'string',
