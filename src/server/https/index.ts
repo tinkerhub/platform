@@ -5,11 +5,20 @@ import { nanoid } from 'nanoid';
 import { dependencyPlugin } from 'server/plugins/dependency';
 import Swagger from '@fastify/swagger';
 import pino, { Logger } from 'pino';
-import { fastifyLogger } from '../../logger';
-import { envConfig } from '../../env';
-import { authRoutes } from './auth/routes';
-import { prismaPlugin } from '../plugins/prisma';
+
+import { verifySession } from 'supertokens-node/recipe/session/framework/fastify';
+import supertokens from 'supertokens-node';
+import Session from 'supertokens-node/recipe/session';
+import Passwordless from 'supertokens-node/recipe/passwordless';
+import { plugin, SessionRequest } from 'supertokens-node/framework/fastify';
+import formDataPlugin from '@fastify/formbody';
+import cors from '@fastify/cors';
 import { ErrorResponse } from '../../response';
+import { prismaPlugin } from '../plugins/prisma';
+import { authRoutes } from './auth/routes';
+import { envConfig } from '../../env';
+import { fastifyLogger } from '../../logger';
+// import { env } from 'process';
 
 export const server: FastifyInstance = fastify<Server, IncomingMessage, ServerResponse, Logger>({
   logger: pino({
@@ -47,3 +56,86 @@ server.setErrorHandler((error: ErrorResponse, _request, reply: FastifyReply) => 
   const message = error.message || 'the requested route was not found';
   reply.status(code).send({ success: false, message, error: error.error });
 });
+
+// Super Tokens
+
+const serverFunction = () => {
+  server.register(cors, {
+    origin: 'http://localhost:3000',
+    allowedHeaders: ['Content-Type', ...supertokens.getAllCORSHeaders()],
+    credentials: true,
+  });
+  server.register(formDataPlugin);
+  server.register(plugin);
+};
+
+supertokens.init({
+  framework: 'fastify',
+  supertokens: {
+    // try.supertokens.com is for demo purposes. Replace this with the address of your core instance (sign up on supertokens.com), or self host a core.
+    connectionURI: process.env.SUPERTOKENS_URI as string,
+    apiKey: process.env.SUPERTOKENS_API_KEY,
+  },
+  appInfo: {
+    // learn more about this on https://supertokens.com/docs/session/appinfo
+    appName: 'backend',
+    apiDomain: 'http://127.0.0.1:5000',
+    websiteDomain: 'http://127.0.0.1:3000',
+    apiBasePath: '/auth',
+    websiteBasePath: '/auth',
+  },
+  recipeList: [
+    Passwordless.init({
+      flowType: 'USER_INPUT_CODE',
+      contactMethod: 'PHONE',
+      override: {
+        apis: (originalImplementation) => ({
+          ...originalImplementation,
+          consumeCodePOST: async (input) => {
+            if (originalImplementation.consumeCodePOST === undefined) {
+              throw Error('Should never come here');
+            }
+
+            // First we call the original implementation of consumeCodePOST.
+            const response = await originalImplementation.consumeCodePOST(input);
+
+            // Post sign up response, we check if it was successful
+            if (response.status === 'OK') {
+              const { phoneNumber } = response.user;
+
+              console.log({ phoneNumber });
+
+              if (response.createdNewUser) {
+                // TODO: post sign up logic
+              } else {
+                // TODO: post sign in logic
+              }
+            }
+            return response;
+          },
+        }),
+      },
+    }),
+    Session.init(), // initializes session features
+  ],
+});
+
+server.post(
+  '/',
+  {
+    preHandler: verifySession({ sessionRequired: false }),
+  },
+  (req: SessionRequest, res) => {
+    console.log(res);
+
+    if (req.session !== undefined) {
+      const userId = req.session.getUserId();
+
+      console.log(userId);
+    } else {
+      // user is not logged in...
+    }
+  }
+);
+
+serverFunction();
