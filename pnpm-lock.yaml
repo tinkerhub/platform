@@ -525,10 +525,7 @@ packages:
 
   /@typescript-eslint/eslint-plugin/5.30.7_6wltbjakwuqm7awqswigmiuhd4:
     resolution: {integrity: sha512-l4L6Do+tfeM2OK0GJsU7TUcM/1oN/N25xHm3Jb4z3OiDU4Lj8dIuxX9LpVMS9riSXQs42D1ieX7b85/r16H9Fw==}
-<<<<<<< HEAD
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
-=======
->>>>>>> [fix]: resolved some conflicts
     peerDependencies:
       '@typescript-eslint/parser': ^5.0.0
       eslint: ^6.0.0 || ^7.0.0 || ^8.0.0
@@ -1639,13 +1636,8 @@ packages:
       eslint: ^7.32.0 || ^8.2.0
       eslint-plugin-import: ^2.25.3
     dependencies:
-<<<<<<< HEAD
       '@typescript-eslint/eslint-plugin': 5.30.7_6wltbjakwuqm7awqswigmiuhd4
       '@typescript-eslint/parser': 5.30.7_he2ccbldppg44uulnyq4rwocfa
-=======
-       '@typescript-eslint/eslint-plugin': 5.30.7_6wltbjakwuqm7awqswigmiuhd4
-       '@typescript-eslint/parser': 5.30.7_he2ccbldppg44uulnyq4rwocfa
->>>>>>> [fix]: resolved some conflicts
       eslint: 8.20.0
       eslint-config-airbnb-base: 15.0.0_afl3vkhn63baibzal45igheroq
       eslint-plugin-import: 2.26.0_xconv27bia2733zao6ipggqv2i
