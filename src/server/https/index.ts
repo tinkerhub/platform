@@ -10,14 +10,13 @@ import { envConfig } from '../../env';
 import { authRoutes } from './auth/routes';
 import { prismaPlugin } from '../plugins/prisma';
 import { ErrorResponse } from '../response';
-\import { verifySession } from 'supertokens-node/recipe/session/framework/fastify';
+import { verifySession } from 'supertokens-node/recipe/session/framework/fastify';
 import supertokens from 'supertokens-node';
 import Session from 'supertokens-node/recipe/session';
 import Passwordless from 'supertokens-node/recipe/passwordless';
 import { plugin, SessionRequest } from 'supertokens-node/framework/fastify';
 import formDataPlugin from '@fastify/formbody';
 import cors from '@fastify/cors';
-
 // import { env } from 'process';
 
 export const server: FastifyInstance = fastify<Server, IncomingMessage, ServerResponse, Logger>({
