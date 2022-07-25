@@ -5,7 +5,6 @@ import { nanoid } from 'nanoid';
 import { dependencyPlugin } from 'server/plugins/dependency';
 import Swagger from '@fastify/swagger';
 import pino, { Logger } from 'pino';
-
 import { verifySession } from 'supertokens-node/recipe/session/framework/fastify';
 import supertokens from 'supertokens-node';
 import Session from 'supertokens-node/recipe/session';
@@ -18,7 +17,6 @@ import { prismaPlugin } from '../plugins/prisma';
 import { authRoutes } from './auth/routes';
 import { envConfig } from '../../env';
 import { fastifyLogger } from '../../logger';
-// import { env } from 'process';
 
 export const server: FastifyInstance = fastify<Server, IncomingMessage, ServerResponse, Logger>({
   logger: pino({

@@ -1,4 +1,4 @@
-import { server } from './server/https/index';
+import { server } from './server/https';
 
 const start = async () => {
   try {
