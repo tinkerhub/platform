@@ -4,3 +4,4 @@ node_modules
 .eslintrc.js
 lint-staged.config.js
 commitlint.config.js
+client
