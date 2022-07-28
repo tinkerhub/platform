@@ -14,7 +14,7 @@ import formDataPlugin from '@fastify/formbody';
 import cors from '@fastify/cors';
 import { ErrorResponse } from '../response';
 import { prismaPlugin } from '../plugins/prisma';
-import { authRoutes } from './auth/routes';
+// import { authRoutes } from './auth/routes';
 import { envConfig } from '../../env';
 import { fastifyLogger } from '../logger';
 
@@ -23,13 +23,13 @@ supertokens.init({
   supertokens: {
     // try.supertokens.com is for demo purposes. Replace this with the address of your core instance (sign up on supertokens.com), or self host a core.
     connectionURI: process.env.SUPERTOKENS_URI as string,
-    apiKey: process.env.SUPERTOKENS_API_KEY,
+    apiKey: process.env.SUPERTOKENS_API_KEY as string,
   },
   appInfo: {
     // learn more about this on https://supertokens.com/docs/session/appinfo
-    appName: 'backend',
-    apiDomain: 'http://127.0.0.1:5000',
-    websiteDomain: 'http://127.0.0.1:3000',
+    appName: process.env.APP_NAME as string,
+    apiDomain: process.env.SUPERTOKENS_API_DOMAIN as string,
+    websiteDomain: process.env.SUPERTOKENS_WEBSITE_DOMAIN as string,
     apiBasePath: '/auth',
     websiteBasePath: '/auth',
   },
@@ -102,7 +102,7 @@ server.register(cors, {
 server.register(formDataPlugin);
 server.register(plugin);
 // routes
-server.register(authRoutes, { prefix: '/auth' });
+// server.register(authRoutes, { prefix: '/auth' });
 
 server.register(prismaPlugin);
 

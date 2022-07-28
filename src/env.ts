@@ -22,6 +22,18 @@ export const schema = {
     SUPERTOKENS_API_KEY: {
       type: 'string',
     },
+    APP_NAME: {
+      type: 'string',
+    },
+    SUPERTOKENS_API_DOMAIN: {
+      type: 'string',
+    },
+    SUPERTOKENS_WEBSITE_DOMAIN: {
+      type: 'string',
+    },
+    SUPERTOKENS_CORS: {
+      type: 'string',
+    },
   },
 };
 
