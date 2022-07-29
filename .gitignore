@@ -131,3 +131,6 @@ dist
 
 # SQLite database file
 prisma/dev.db
+
+# SuperTokens
+supertokens-frontend

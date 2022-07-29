@@ -7,13 +7,31 @@ export const schema = {
   properties: {
     PORT: {
       type: 'number',
-      default: 3000,
+      default: 5000,
     },
     HOST: {
       type: 'string',
       default: '0.0.0.0',
     },
     DATABASE_URL: {
+      type: 'string',
+    },
+    SUPERTOKENS_URI: {
+      type: 'string',
+    },
+    SUPERTOKENS_API_KEY: {
+      type: 'string',
+    },
+    APP_NAME: {
+      type: 'string',
+    },
+    SUPERTOKENS_API_DOMAIN: {
+      type: 'string',
+    },
+    SUPERTOKENS_WEBSITE_DOMAIN: {
+      type: 'string',
+    },
+    SUPERTOKENS_CORS: {
       type: 'string',
     },
   },
