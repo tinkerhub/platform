@@ -95,7 +95,7 @@ server.register(Swagger, {
   },
 });
 server.register(cors, {
-  origin: 'http://localhost:3000',
+  origin: process.env.SUPERTOKENS_FRONTEND_PORT,
   allowedHeaders: ['Content-Type', ...supertokens.getAllCORSHeaders()],
   credentials: true,
 });
