@@ -134,3 +134,6 @@ prisma/dev.db
 
 # SuperTokens
 supertokens-frontend
+
++ .turbo
+.DS_Store
