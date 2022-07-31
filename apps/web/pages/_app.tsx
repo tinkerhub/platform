@@ -2,11 +2,19 @@
 import React from 'react';
 import type { AppProps } from 'next/app';
 import { ChakraProvider } from '@chakra-ui/react';
+import SuperTokens, { SuperTokensWrapper } from 'supertokens-auth-react';
+import { authConfig } from '../auth';
+
+if (typeof window !== 'undefined') {
+  SuperTokens.init(authConfig());
+}
 
 const MyApp = ({ Component, pageProps }: AppProps) => (
-  <ChakraProvider>
-    <Component {...pageProps} />
-  </ChakraProvider>
+  <SuperTokensWrapper>
+    <ChakraProvider>
+      <Component {...pageProps} />
+    </ChakraProvider>
+  </SuperTokensWrapper>
 );
 
 export default MyApp;
