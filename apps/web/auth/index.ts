@@ -3,11 +3,11 @@ import Session from 'supertokens-auth-react/recipe/session';
 
 export const authConfig = () => ({
   appInfo: {
-    appName: 'platform',
-    apiDomain: 'http://localhost:8000',
-    websiteDomain: 'http://localhost:3000',
-    apiBasePath: '/auth',
-    websiteBasePath: '/auth',
+    appName: process.env.NEXT_PUBLIC_APPNAME,
+    apiDomain: process.env.NEXT_PUBLIC_APIDOMAIN,
+    websiteDomain: process.env.NEXT_PUBLIC_DOMAIN,
+    apiBasePath: process.env.NEXT_PUBLIC_APIPATH,
+    websiteBasePath: process.env.NEXT_PUBLIC_PATH,
   },
   recipeList: [
     Passwordless.init({
