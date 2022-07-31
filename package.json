@@ -9,7 +9,8 @@
     "dev": "turbo run dev",
     "lint": "eslint . --ext js,jsx,ts,tsx",
     "lint-fix": "eslint . --ext js,jsx,ts,tsx --fix",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "turbo": "turbo"
   },
   "keywords": [],
   "author": "",

@@ -43,15 +43,17 @@
 
 ## About The Project
 
-Tinkerhub Platform is a community built platform for Tinkers to condut there activities.
+Tinkerhub Platform is a community built platform for Tinkers to conduct there activities.
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 ### Built With
 
+- [NestJS](https://nestjs.com/)
 - [Fastify](https://www.fastify.io/)
+- [Prisma](https://www.prisma.io/)
 - [Next.js](https://nextjs.org/)
-- [React.js](https://reactjs.org/)
+- [ChakraUI](https://chakra-ui.com/)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -69,17 +71,93 @@ You need to install
 ### Installation
 
 1. Clone the repo
+
    ```sh
    git clone https://github.com/tinkerhub/platform.git
    ```
-2. Install NPM packages
+
+2. Install all the NPM packages all the applications.
+
+   > We are using PNPM workspace and turborepo to manage the applications in monorepo.
+
    ```sh
    pnpm install
    ```
-3. Start the dev server and open `http://localhost:3000`
+
+3. Copy the `.env.example` for each applications to `.env` in the same directory and fill the values required
+
+4. Start the api dev server and open `http://localhost:8000`
+
    ```sh
-   pnpm dev
+   pnpm --filter api dev
    ```
+
+5. Start the web application dev server and open `http://localhost:3000`
+
+   ```sh
+   pnpm --filter web dev
+   ```
+
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+### Installation with Docker compose
+
+| Not ready yet. Coming soon
+
+1. You need to install
+
+- [Docker](https://www.docker.com/) / [Podman](https://podman.io/)
+- [Docker Compose](https://docs.docker.com/compose/)
+
+2. Run
+
+```sh
+docker-compose up
+```
+
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+## Command Center
+
+<details>
+
+  <summary>
+  All the commands for applications can be executed from the root directory using PNPM Workspace and Turborepo.
+  </summary>
+
+1. Web application PNPM commands
+
+   ```sh
+     pnpm --filter web <pnpm options>
+   ```
+
+2. API Server PNPM commands
+
+   ```sh
+     pnpm --filter api <pnpm options>
+   ```
+
+3. Turbo Pipeline Commands
+
+   ```sh
+     pnpm turbo run <pipeline_action_1> <pipeline_action_2>
+   ```
+
+### Misc Commands
+
+1. Run lint
+
+   ```sh
+     pnpm lint
+   ```
+
+2. Run lint with autofixable fixes
+
+   ```sh
+     pnpm lint-fix
+   ```
+
+</details>
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 

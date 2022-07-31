@@ -1,21 +1,24 @@
-version: "3.8"
+version: '3.8'
 services:
-  app:
+  api:
     build:
       context: .
-      dockerfile: Dockerfile.dev
+      dockerfile: apps/api/Dockerfile.dev
     ports:
-      - 3000:3000
+      - 8000:8000
+    volumes:
+      - ./apps/api:/app/apps/api
+    environment:
+      - DATABASE_URL=file:./dev.db
+    depends_on:
+      - db
   db:
     image: postgres
     volumes:
-      - pgdata:/var/lib/postgresql/data
+      - ./tmp/pg:/var/lib/postgresql/data
     ports:
       - 5432:5432
-
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DB=prisma
-volumes:
-  pgdata:
+      - POSTGRES_DB=platform
