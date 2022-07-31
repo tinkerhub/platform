@@ -86,13 +86,19 @@ You need to install
 
 3. Copy the `.env.example` for each applications to `.env` in the same directory and fill the values required
 
-4. Start the api dev server and open `http://localhost:8000`
+4. Install new dependencies to the project
+
+   ```sh
+   pnpm add "package-name" --filter "workspace-name"
+   ```
+
+5. Start the api dev server and open `http://localhost:8000`
 
    ```sh
    pnpm --filter api dev
    ```
 
-5. Start the web application dev server and open `http://localhost:3000`
+6. Start the web application dev server and open `http://localhost:3000`
 
    ```sh
    pnpm --filter web dev
