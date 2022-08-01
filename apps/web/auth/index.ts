@@ -12,6 +12,9 @@ export const authConfig = () => ({
   recipeList: [
     Passwordless.init({
       contactMethod: 'PHONE',
+      signInUpFeature: {
+        defaultCountry: 'IN',
+      },
     }),
     Session.init(),
   ],
