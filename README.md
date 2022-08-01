@@ -143,6 +143,12 @@ docker-compose up
      pnpm turbo run <pipeline_action_1> <pipeline_action_2>
    ```
 
+4. Package installation command
+
+   ```sh
+   pnpm add "package-name" --filter "workspace-name"
+   ```
+
 ### Misc Commands
 
 1. Run lint
