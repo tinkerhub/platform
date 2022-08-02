@@ -1,7 +1,9 @@
-import React, { useEffect } from 'react';
+import { Box, Flex } from '@chakra-ui/react';
 import dynamic from 'next/dynamic';
+import React, { useEffect } from 'react';
 import SuperTokens from 'supertokens-auth-react';
 import { redirectToAuth } from 'supertokens-auth-react/recipe/passwordless';
+import { Topbar } from '../../components/Navbar';
 
 const SuperTokensComponentNoSSR = dynamic(
   // eslint-disable-next-line no-promise-executor-return
@@ -17,7 +19,19 @@ const Auth = () => {
     }
   }, []);
 
-  return <SuperTokensComponentNoSSR />;
+  return (
+    <Box minH="100vh" bg="white">
+      <Topbar showBtn={false} />
+      <Flex
+        flexDirection={{ base: 'column', lg: 'row' }}
+        w="100%"
+        justifyContent="space-around"
+        mt="80px"
+      >
+        <SuperTokensComponentNoSSR />
+      </Flex>
+    </Box>
+  );
 };
 
 export default Auth;

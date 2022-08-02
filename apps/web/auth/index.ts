@@ -14,6 +14,22 @@ export const authConfig = () => ({
       contactMethod: 'PHONE',
       signInUpFeature: {
         defaultCountry: 'IN',
+        // disableDefaultUI: true,
+      },
+      getRedirectionURL: async (context) => {
+        if (context.action === 'SUCCESS') {
+          if (context.redirectToPath !== undefined) {
+            // we are navigating back to where the user was before they authenticated
+            return context.redirectToPath;
+          }
+          if (context.isNewUser) {
+            // user signed up
+            return '/wizard';
+          }
+          // user signed in
+          return '/profile';
+        }
+        return undefined;
       },
     }),
     Session.init(),
