@@ -126,6 +126,7 @@ importers:
   apps/web:
     specifiers:
       '@babel/core': ^7.18.9
+      '@chakra-ui/icons': ^2.0.4
       '@chakra-ui/react': ^2.2.4
       '@emotion/react': ^11.9.3
       '@emotion/styled': ^11.9.3
@@ -142,6 +143,7 @@ importers:
       supertokens-auth-react: ^0.24.2
       typescript: 4.7.4
     dependencies:
+      '@chakra-ui/icons': 2.0.4_react@18.2.0
       '@chakra-ui/react': 2.2.4_tij2njokttso6734ktuzwjh5a4
       '@emotion/react': 11.9.3_szkdlbnthht4v3jvm76fn7u6na
       '@emotion/styled': 11.9.3_y2x62d5bbinncmisoeyv36jqse
@@ -788,6 +790,16 @@ packages:
       react: 18.2.0
     dev: false
 
+  /@chakra-ui/icon/3.0.4_react@18.2.0:
+    resolution: {integrity: sha512-9Ry+fa6EKRYUexffvgOJ9dRIkxCSnASgdSnb09EbQTgCTeM+47LUsxR2+r8pbY6ZT5D4m2zRLkTrv7O7icoyOw==}
+    peerDependencies:
+      '@chakra-ui/system': '>=2.0.0-next.0'
+      react: '>=18'
+    dependencies:
+      '@chakra-ui/utils': 2.0.4
+      react: 18.2.0
+    dev: false
+
   /@chakra-ui/icon/3.0.4_yvhl5ql2jypczm6naccxme2hbi:
     resolution: {integrity: sha512-9Ry+fa6EKRYUexffvgOJ9dRIkxCSnASgdSnb09EbQTgCTeM+47LUsxR2+r8pbY6ZT5D4m2zRLkTrv7O7icoyOw==}
     peerDependencies:
@@ -796,6 +808,17 @@ packages:
     dependencies:
       '@chakra-ui/system': 2.2.2_fdnqutfacy7v3gmlcm66flps3q
       '@chakra-ui/utils': 2.0.4
+      react: 18.2.0
+    dev: false
+
+  /@chakra-ui/icons/2.0.4_react@18.2.0:
+    resolution: {integrity: sha512-/Xh6UtIilFhSCxZ6pKmB3zaatvGMc+IAvPb0TvlegWfNaLI7XwHWkEoK+GxYXV02wT/yqmup2gd41/OL3S0YLg==}
+    peerDependencies:
+      '@chakra-ui/system': '>=2.0.0-next.0'
+      react: '>=18'
+    dependencies:
+      '@chakra-ui/icon': 3.0.4_react@18.2.0
+      '@types/react': 18.0.15
       react: 18.2.0
     dev: false
 
