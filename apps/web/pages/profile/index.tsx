@@ -30,16 +30,19 @@ const index: NextPage = () => {
   const [edit, setEdit] = useState<boolean>(true);
   const LogOut = async () => {
     await signOut();
-    window.location.href = '/';
+    router.replace('/');
   };
   const {
     register,
     handleSubmit,
+    setFocus,
     formState: { errors },
   } = useForm<Form>();
 
   const editHandler = () => {
     setEdit(false);
+    // name input gets focused after pressing edit button
+    setFocus('name');
   };
 
   const toast = useToast();
