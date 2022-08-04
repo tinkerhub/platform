@@ -9,20 +9,20 @@ import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 import { Topbar, BottomBar } from '../../components/Navbar';
 
-type Form = {
-  campus: string | null;
-  desc: string | null;
-  district: string | null;
-  dob: string | null;
-  email: string | null;
-  house: string | null;
-  mentor: string | null;
-  mobile: string | null;
-  name: string | null;
-  pin: string | null;
-  pronoun: string | null;
-  skills: string | null;
-  street: string | null;
+export type Form = {
+  campus: string;
+  desc: string;
+  district: string;
+  dob: string;
+  email: string;
+  house: string;
+  mentor: boolean;
+  mobile: number;
+  name: string;
+  pin: number;
+  pronoun?: string;
+  skills: string;
+  street: string;
 };
 
 const index: NextPage = () => {

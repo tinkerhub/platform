@@ -3,6 +3,7 @@ import React from 'react';
 import type { AppProps } from 'next/app';
 import { ChakraProvider } from '@chakra-ui/react';
 import SuperTokens, { SuperTokensWrapper } from 'supertokens-auth-react';
+import { WizardContextProvider } from '../context/wizardContext';
 import { authConfig } from '../auth';
 
 if (typeof window !== 'undefined') {
@@ -11,9 +12,11 @@ if (typeof window !== 'undefined') {
 
 const MyApp = ({ Component, pageProps }: AppProps) => (
   <SuperTokensWrapper>
-    <ChakraProvider>
-      <Component {...pageProps} />
-    </ChakraProvider>
+    <WizardContextProvider>
+      <ChakraProvider>
+        <Component {...pageProps} />
+      </ChakraProvider>
+    </WizardContextProvider>
   </SuperTokensWrapper>
 );
 
