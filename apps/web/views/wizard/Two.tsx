@@ -2,14 +2,28 @@
 import { Box, Button, Input, Radio, RadioGroup, Stack, Text } from '@chakra-ui/react';
 import { motion } from 'framer-motion';
 import { useFormContext } from 'react-hook-form';
+import makeAnimated from 'react-select/animated';
+import Select from 'react-select';
 import { Form } from '../../types';
 import { Prop } from './One';
 
 export const Two = ({ next }: Prop) => {
+  const animatedComponents = makeAnimated();
   const {
     register,
     formState: { errors },
   } = useFormContext<Form>();
+  const Skills = [
+    { value: 'Java', label: 'Java' },
+    { value: 'Python', label: 'Python' },
+    { value: 'Javascript', label: 'JavaScript' },
+    { value: 'React', label: 'React' },
+    { value: 'HTML', label: 'HTML' },
+    { value: 'Typescript', label: 'Typescript' },
+    { value: 'Go', label: 'Go' },
+  ];
+
+  // const Skills = ['java', 'js', 'go', 'react', 'html', 'python', 'css', 'angular'];
 
   return (
     <motion.div
@@ -33,7 +47,12 @@ export const Two = ({ next }: Prop) => {
           mt="15px"
         >
           <Text color="black">Skill</Text>
-          <Input bg="rgba(240, 240, 240, 1)" {...register('My_Skills')} type="string" />
+          <Select
+            closeMenuOnSelect={false}
+            components={animatedComponents}
+            isMulti
+            options={Skills}
+          />
           <Text color="red" fontSize="12px">
             {errors.My_Skills?.message}
           </Text>

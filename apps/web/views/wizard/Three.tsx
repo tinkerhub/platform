@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import { Box, Button, Input, Text } from '@chakra-ui/react';
+import { Box, Button, Input, Select, Text } from '@chakra-ui/react';
 import { motion } from 'framer-motion';
 import { useFormContext } from 'react-hook-form';
 import { Form } from '../../types';
@@ -9,6 +9,23 @@ export const Three = () => {
     register,
     formState: { errors },
   } = useFormContext<Form>();
+
+  const District = [
+    { value: 'Alappuzha', label: 'Alappuzha' },
+    { value: 'Ernakulam', label: 'Ernakulam' },
+    { value: 'Idukki', label: 'Idukki' },
+    { value: 'Kannur', label: 'Kannur' },
+    { value: 'Kasaragod', label: 'Kasaragod' },
+    { value: 'Kollam', label: 'Kollam' },
+    { value: 'Kottayam', label: 'Kottayam' },
+    { value: 'Kozhikode', label: 'Kozhikode' },
+    { value: 'Malappuram', label: 'Malappuram' },
+    { value: 'Palakkad', label: 'Palakkad' },
+    { value: 'Pathanamthitta', label: 'Pathanamthitta' },
+    { value: 'Thiruvananthapuram', label: 'Thiruvananthapuram' },
+    { value: 'Thrissur', label: 'Thrissur' },
+    { value: 'Wayanad', label: 'Wayanad' },
+  ];
 
   return (
     <motion.div
@@ -33,7 +50,11 @@ export const Three = () => {
         </Box>
         <Box display="flex" flexDirection="column" h="75px" justifyContent="space-between">
           <Text color="black">District</Text>
-          <Input bg="rgba(240, 240, 240, 1)" {...register('District')} />
+          <Select placeholder="Select Your District">
+            {District.map((el) => (
+              <option value={el.value}>{el.label}</option>
+            ))}
+          </Select>
           <Text color="red" fontSize="12px">
             {errors.District?.message}
           </Text>

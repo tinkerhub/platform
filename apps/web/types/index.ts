@@ -13,12 +13,12 @@ export type Form = {
   Mentor: boolean | string;
   RegistrationType: string;
   accept: boolean;
-  House_Name: string;
-  District: string;
-  Pincode: string;
-  My_Skills: string;
+  House_Name?: string;
+  District?: string;
+  Pincode?: string;
+  My_Skills: string[];
   StudyStream: string;
-  Street: string;
+  Street?: string;
   GraduationDate: Date;
   CampusCommunityActive: boolean | string;
 };
