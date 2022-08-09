@@ -1,9 +1,9 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import { Box, Button, Input, Radio, RadioGroup, Stack, Text } from '@chakra-ui/react';
+import { Box, Button, Radio, RadioGroup, Stack, Text, Select } from '@chakra-ui/react';
 import { motion } from 'framer-motion';
 import { useFormContext } from 'react-hook-form';
 import makeAnimated from 'react-select/animated';
-import Select from 'react-select';
+import MultiSelect from 'react-select';
 import { Form } from '../../types';
 import { Prop } from './One';
 
@@ -34,7 +34,11 @@ export const Two = ({ next }: Prop) => {
       <Box mt="30px">
         <Box display="flex" flexDirection="column" h="75px" justifyContent="space-between">
           <Text color="black">Best way to describe yourself</Text>
-          <Input bg="rgba(240, 240, 240, 1)" {...register('describe')} type="string" />
+          <Select placeholder="I prefer to use the pronoun" {...register('describe')}>
+            <option value="He/Him">He/Him</option>
+            <option value="She/Her">She/Her</option>
+            <option value="They/Them">They/Them</option>
+          </Select>
           <Text color="red" fontSize="12px">
             {errors.describe?.message}
           </Text>
@@ -47,7 +51,7 @@ export const Two = ({ next }: Prop) => {
           mt="15px"
         >
           <Text color="black">Skill</Text>
-          <Select
+          <MultiSelect
             closeMenuOnSelect={false}
             components={animatedComponents}
             isMulti
@@ -84,13 +88,22 @@ export const Two = ({ next }: Prop) => {
           mt="15px"
         >
           <Text color="black">Select Your campus</Text>
-          <Input bg="rgba(240, 240, 240, 1)" {...register('College')} />
+          <Select placeholder="I prefer to use the pronoun" {...register('College')}>
+            <option value="He/Him">He/Him</option>
+            <option value="She/Her">She/Her</option>
+            <option value="They/Them">They/Them</option>
+          </Select>
           <Text color="red" fontSize="12px">
             {errors.College?.message}
           </Text>
         </Box>
         <Box mt="25px">
-          <Button colorScheme="blue" width="100%" onClick={next}>
+          <Button
+            colorScheme="blue"
+            width="100%"
+            onClick={next}
+            backgroundColor="rgba(65, 83, 240, 1)"
+          >
             Next
           </Button>
         </Box>

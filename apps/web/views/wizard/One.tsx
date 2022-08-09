@@ -59,7 +59,12 @@ export const One = ({ next }: Prop) => {
           </Select>
         </Box>
         <Box mt="25px">
-          <Button colorScheme="blue" width="100%" onClick={next}>
+          <Button
+            colorScheme="blue"
+            width="100%"
+            onClick={next}
+            backgroundColor="rgba(65, 83, 240, 1)"
+          >
             Next
           </Button>
         </Box>

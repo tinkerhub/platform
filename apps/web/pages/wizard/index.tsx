@@ -4,8 +4,8 @@ import React, { useState } from 'react';
 import type { NextPage } from 'next';
 import { useForm, FormProvider } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { registerFormValidator, CardBio, Bar, One, Two, Three } from '../../views/wizard';
-import { Topbar } from '../../components/Navbar';
+import { registerFormValidator, CardBio, Bar, One, Two, Three, Final } from '../../views/wizard';
+import { LayoutPlain } from '../../layout';
 import { Form } from '../../types';
 
 const Index: NextPage = () => {
@@ -27,10 +27,19 @@ const Index: NextPage = () => {
     console.log(val);
   };
 
+  if (step === 4) {
+    return (
+      <LayoutPlain>
+        <Center bg="white" minH="10vh">
+          <Final isLoading />
+        </Center>
+      </LayoutPlain>
+    );
+  }
+
   return (
-    <>
-      <Topbar showBtn={false} />
-      <Center bg="white" minH="93vh">
+    <LayoutPlain>
+      <Center bg="white" minH="10vh">
         <CardBio>
           <Bar val={step} back={stepSub} />
           <FormProvider {...methods}>
@@ -42,7 +51,7 @@ const Index: NextPage = () => {
           </FormProvider>
         </CardBio>
       </Center>
-    </>
+    </LayoutPlain>
   );
 };
 

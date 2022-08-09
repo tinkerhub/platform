@@ -1,3 +1,4 @@
+export { Final } from './Final';
 export { registerFormValidator } from './validator';
 export { CardBio } from './Card';
 export { Bar } from './Bar';
