@@ -67,7 +67,12 @@ export const Three = () => {
           </Text>
         </Box>
         <Box mt="25px">
-          <Button colorScheme="blue" width="100%" type="submit">
+          <Button
+            colorScheme="blue"
+            width="100%"
+            type="submit"
+            backgroundColor="rgba(65, 83, 240, 1)"
+          >
             Next
           </Button>
         </Box>
