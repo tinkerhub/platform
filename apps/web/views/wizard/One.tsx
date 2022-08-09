@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import { Box, Button, Input, Text } from '@chakra-ui/react';
+import { Box, Button, Input, Text, Select } from '@chakra-ui/react';
 import React from 'react';
 import { motion } from 'framer-motion';
 import { useFormContext } from 'react-hook-form';
@@ -14,7 +14,7 @@ export const One = ({ next }: Prop) => {
     register,
     formState: { errors },
   } = useFormContext<Form>();
-  // console.log(errors.)
+
   return (
     <motion.div
       animate={{ scale: 1, opacity: 1 }}
@@ -23,7 +23,7 @@ export const One = ({ next }: Prop) => {
     >
       <Box mt="30px">
         <Box display="flex" flexDirection="column" h="75px" justifyContent="space-between">
-          <Text color="black">Name</Text>
+          <Text color="black">FullName</Text>
           <Input bg="rgba(240, 240, 240, 1)" {...register('FullName')} />
           <Text color="red" fontSize="12px">
             {errors.FullName?.message}
@@ -52,7 +52,11 @@ export const One = ({ next }: Prop) => {
         </Box>
         <Box display="flex" flexDirection="column" h="75px" justifyContent="space-between">
           <Text color="black">Preferred pronoun</Text>
-          <Input bg="rgba(240, 240, 240, 1)" {...register('Pronoun')} />
+          <Select placeholder="I prefer to use the pronoun" {...register('Pronoun')}>
+            <option value="He/Him">He/Him</option>
+            <option value="She/Her">She/Her</option>
+            <option value="They/Them">They/Them</option>
+          </Select>
         </Box>
         <Box mt="25px">
           <Button colorScheme="blue" width="100%" onClick={next}>

@@ -1,9 +1,10 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
 import type { AppProps } from 'next/app';
-import { ChakraProvider, theme } from '@chakra-ui/react';
+import { ChakraProvider } from '@chakra-ui/react';
 import SuperTokens, { SuperTokensWrapper } from 'supertokens-auth-react';
 import { authConfig } from '../auth';
+import { theme } from '../theme';
 
 if (typeof window !== 'undefined') {
   SuperTokens.init(authConfig());

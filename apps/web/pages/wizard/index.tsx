@@ -1,13 +1,14 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import { Center } from '@chakra-ui/react';
 import React, { useState } from 'react';
+import type { NextPage } from 'next';
 import { useForm, FormProvider } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { registerFormValidator, CardBio, Bar, One, Two, Three } from '../../views/wizard';
 import { Topbar } from '../../components/Navbar';
 import { Form } from '../../types';
 
-const Index = () => {
+const Index: NextPage = () => {
   const [step, setStep] = useState<number>(1);
   const methods = useForm<Form>({ mode: 'all', resolver: yupResolver(registerFormValidator) });
 
@@ -22,6 +23,7 @@ const Index = () => {
     // send post request to backend
     // then increease the step to 4 to render the sucess/ fail UI
     stepAdd();
+    // eslint-disable-next-line no-console
     console.log(val);
   };
 

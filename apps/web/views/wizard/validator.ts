@@ -16,7 +16,7 @@ const requiredErrorStatement = (value: string): string => `Please type your ${va
 
 export const registerFormValidator = Yup.object().shape({
   FullName: Yup.string().required(requiredErrorStatement('full name')),
-  DOB: Yup.date().required(requiredErrorStatement('DOB')),
+  DOB: Yup.date().typeError('Please provide a valid Date').required(requiredErrorStatement('DOB')),
   Email: Yup.string().email().required(requiredErrorStatement('email')),
   Pronoun: PickAnOptionValidator.nullable().required('Please pick an option'),
   Mobile: Yup.string().required(requiredErrorStatement('Mobile number')),
