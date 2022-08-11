@@ -9,7 +9,7 @@ import { LayoutPlain } from '../../layout';
 import { Form } from '../../types';
 
 const Index: NextPage = () => {
-  const [step, setStep] = useState<number>(1);
+  const [step, setStep] = useState<number>(4);
   const methods = useForm<Form>({ mode: 'all', resolver: yupResolver(registerFormValidator) });
 
   const stepAdd = (): void => {
@@ -30,8 +30,8 @@ const Index: NextPage = () => {
   if (step === 4) {
     return (
       <LayoutPlain>
-        <Center bg="white" minH="10vh">
-          <Final isLoading />
+        <Center bg="white">
+          <Final isLoading={false} />
         </Center>
       </LayoutPlain>
     );
@@ -39,7 +39,7 @@ const Index: NextPage = () => {
 
   return (
     <LayoutPlain>
-      <Center bg="white" minH="10vh">
+      <Center bg="white">
         <CardBio>
           <Bar val={step} back={stepSub} />
           <FormProvider {...methods}>

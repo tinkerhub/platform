@@ -8,7 +8,16 @@ const Home: NextPage = () => (
     <Head>
       <title>Tinkerhub</title>
     </Head>
-    <Box bg="white" pt={20} w="100%" minH={{ sm: '65vh', xl: '35vh' }}>
+    <Box
+      bg="white"
+      pt={{ base: '110px' }}
+      w="100%"
+      minH={{ base: '20vh', sm: '30vh', lg: '30vh', xl: '35vh' }}
+      justifyContent="start"
+      alignItems="center "
+      display="flex"
+      mb={{ base: '60px', sm: '200px', xl: '40px' }}
+    >
       <Flex direction="column" justifyContent="space-around" h="100px">
         <Box p={2} maxW="600px" mt="200px">
           <Heading as="h2" size="4xl" color="rgba(65, 83, 240, 1)" fontWeight="extrabold">
