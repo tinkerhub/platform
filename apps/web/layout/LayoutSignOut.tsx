@@ -8,8 +8,9 @@ import type { Child } from '../types';
 export const LayoutSignOut = ({ children }: Child) => {
   const router = useRouter();
   const LogOut = async () => {
-    await signOut();
     router.replace('/');
+    await signOut();
+    window.location.reload();
   };
   return (
     <Flex
