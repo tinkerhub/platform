@@ -2,11 +2,14 @@
 import React, { useState } from 'react';
 import type { NextPage } from 'next';
 import { ArrowBackIcon, CopyIcon } from '@chakra-ui/icons';
-import { Box, Button, Flex, Heading, Input, Stack, Text, useToast } from '@chakra-ui/react';
+import { Box, Button, Flex, Heading, Input, Select, Stack, Text, useToast } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
 import { LayoutSignOut } from '../../layout';
+import { registerFormValidator } from '../../views/wizard';
 import { Form } from '../../types';
+import { District } from '../../views/wizard/Three';
 
 const Index: NextPage = () => {
   const router = useRouter();
@@ -15,8 +18,8 @@ const Index: NextPage = () => {
     register,
     handleSubmit,
     setFocus,
-    // formState: { errors },
-  } = useForm<Form>();
+    formState: { errors },
+  } = useForm<Form>({ mode: 'all', resolver: yupResolver(registerFormValidator) });
 
   const toast = useToast();
 
@@ -110,22 +113,21 @@ const Index: NextPage = () => {
                   _focus={{ bg: 'rgba(240, 240, 240, 1)' }}
                   readOnly={edit}
                   {...register('FullName')}
-                  required
                 />
+                <Text color="red" fontSize="12px" mt="12px">
+                  {errors.FullName?.message}
+                </Text>
               </Box>
               <Box w={{ base: '400px', lg: '250px' }}>
                 <Text color="black">Best way to describe yourself </Text>
-                <Input
-                  mt="7px"
-                  variant="filled"
-                  placeholder="Filled"
-                  background="rgba(240, 240, 240, 1)"
-                  color="black"
-                  _focus={{ bg: 'rgba(240, 240, 240, 1)' }}
-                  disabled={edit}
-                  required
-                  {...register('describe')}
-                />
+                <Select placeholder="I prefer to use the pronoun" {...register('describe')}>
+                  <option value="He/Him">He/Him</option>
+                  <option value="She/Her">She/Her</option>
+                  <option value="They/Them">They/Them</option>
+                </Select>
+                <Text color="red" fontSize="12px" mt="12px">
+                  {errors.describe?.message}
+                </Text>
               </Box>
               <Box w={{ base: '400px', lg: '250px' }}>
                 <Text color="black">House Name</Text>
@@ -138,8 +140,10 @@ const Index: NextPage = () => {
                   _focus={{ bg: 'rgba(240, 240, 240, 1)' }}
                   disabled={edit}
                   {...register('House_Name')}
-                  required
                 />
+                <Text color="red" fontSize="12px" mt="12px">
+                  {errors.House_Name?.message}
+                </Text>
               </Box>
             </Stack>
             <Stack
@@ -157,9 +161,11 @@ const Index: NextPage = () => {
                   color="black"
                   _focus={{ bg: 'rgba(240, 240, 240, 1)' }}
                   disabled={edit}
-                  required
                   {...register('Mobile')}
                 />
+                <Text color="red" fontSize="12px" mt="12px">
+                  {errors.Mobile?.message}
+                </Text>
               </Box>
               <Box w={{ base: '400px', lg: '250px' }}>
                 <Text color="black">Can you be a mentor</Text>
@@ -172,7 +178,6 @@ const Index: NextPage = () => {
                   _focus={{ bg: 'rgba(240, 240, 240, 1)' }}
                   disabled={edit}
                   {...register('Mentor')}
-                  required
                 />
               </Box>
               <Box w={{ base: '400px', lg: '250px' }}>
@@ -186,7 +191,6 @@ const Index: NextPage = () => {
                   _focus={{ bg: 'rgba(240, 240, 240, 1)' }}
                   disabled={edit}
                   {...register('Street')}
-                  required
                 />
               </Box>
             </Stack>
@@ -206,35 +210,29 @@ const Index: NextPage = () => {
                   _focus={{ bg: 'rgba(240, 240, 240, 1)' }}
                   disabled={edit}
                   {...register('Email')}
-                  required
                 />
+                <Text color="red" fontSize="12px" mt="12px">
+                  {errors.Email?.message}
+                </Text>
               </Box>
               <Box w={{ base: '400px', lg: '250px' }}>
                 <Text color="black">Select your campus</Text>
-                <Input
-                  mt="7px"
-                  variant="filled"
-                  placeholder="Filled"
-                  background="rgba(240, 240, 240, 1)"
-                  color="black"
-                  _focus={{ bg: 'rgba(240, 240, 240, 1)' }}
-                  disabled={edit}
-                  required
-                  {...register('College')}
-                />
+                <Select placeholder="I prefer to use the pronoun" {...register('College')}>
+                  <option value="He/Him">He/Him</option>
+                  <option value="She/Her">She/Her</option>
+                  <option value="They/Them">They/Them</option>
+                </Select>
+                <Text color="red" fontSize="12px" mt="12px">
+                  {errors.College?.message}
+                </Text>
               </Box>
               <Box w={{ base: '400px', lg: '250px' }}>
                 <Text color="black">District</Text>
-                <Input
-                  mt="7px"
-                  variant="filled"
-                  background="rgba(240, 240, 240, 1)"
-                  color="black"
-                  _focus={{ bg: 'rgba(240, 240, 240, 1)' }}
-                  disabled={edit}
-                  {...register('District')}
-                  required
-                />
+                <Select placeholder="Select Your District">
+                  {District.map((el) => (
+                    <option value={el.value}>{el.label}</option>
+                  ))}
+                </Select>
               </Box>
             </Stack>
             <Stack
@@ -253,8 +251,10 @@ const Index: NextPage = () => {
                   _focus={{ bg: 'rgba(240, 240, 240, 1)' }}
                   disabled={edit}
                   {...register('DOB')}
-                  required
                 />
+                <Text color="red" fontSize="12px" mt="12px">
+                  {errors.DOB?.message}
+                </Text>
               </Box>
               <Box w={{ base: '400px', lg: '250px' }}>
                 <Text color="black">Skill</Text>
@@ -267,8 +267,10 @@ const Index: NextPage = () => {
                   _focus={{ bg: 'rgba(240, 240, 240, 1)' }}
                   disabled={edit}
                   {...register('My_Skills')}
-                  required
                 />
+                <Text color="red" fontSize="12px" mt="12px">
+                  {errors.My_Skills?.message}
+                </Text>
               </Box>
               <Box w={{ base: '400px', lg: '250px' }}>
                 <Text color="black">Pincode</Text>
@@ -281,7 +283,6 @@ const Index: NextPage = () => {
                   _focus={{ bg: 'rgba(240, 240, 240, 1)' }}
                   disabled={edit}
                   {...register('Pincode')}
-                  required
                 />
               </Box>
             </Stack>
@@ -301,7 +302,6 @@ const Index: NextPage = () => {
                   _focus={{ bg: 'rgba(240, 240, 240, 1)' }}
                   disabled={edit}
                   {...register('Pronoun')}
-                  required
                 />
               </Box>
             </Stack>
