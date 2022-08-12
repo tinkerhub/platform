@@ -44,7 +44,7 @@ const Index: NextPage = () => {
   };
   return (
     <LayoutSignOut>
-      <Box bg="white" mt="2">
+      <Box bg="white" mt="2" mb="-100px">
         <Box>
           <ArrowBackIcon
             color="black"
@@ -251,6 +251,7 @@ const Index: NextPage = () => {
                   _focus={{ bg: 'rgba(240, 240, 240, 1)' }}
                   disabled={edit}
                   {...register('DOB')}
+                  type="date"
                 />
                 <Text color="red" fontSize="12px" mt="12px">
                   {errors.DOB?.message}

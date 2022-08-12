@@ -14,7 +14,17 @@ export const authConfig = () => ({
       contactMethod: 'PHONE',
       signInUpFeature: {
         defaultCountry: 'IN',
-        // disableDefaultUI: true,
+        emailOrPhoneFormStyle: {
+          button: {
+            backgroundColor: 'rgba(65, 83, 240, 1)',
+            border: '0px',
+            width: '100%',
+            margin: '0 auto',
+          },
+          superTokensBranding: {
+            display: 'none',
+          },
+        },
       },
       getRedirectionURL: async (context) => {
         if (context.action === 'SUCCESS') {

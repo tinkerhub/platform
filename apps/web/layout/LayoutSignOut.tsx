@@ -16,8 +16,8 @@ export const LayoutSignOut = ({ children }: Child) => {
     <Flex
       flexDirection="column"
       justifyContent="space-between"
-      pl={{ base: '30px', md: '74px' }}
-      pr={{ base: '30px', md: '73px' }}
+      p={{ base: '20px', md: '74px' }}
+      pr={{ base: '5px', md: '73px' }}
       pt={{ base: '40px', md: '50px' }}
     >
       <Topbar showBtn btnText="Log Out" btnFunc={LogOut} />
