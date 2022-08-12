@@ -1,4 +1,4 @@
-import { Flex } from '@chakra-ui/react';
+import { Center, Flex, Spinner } from '@chakra-ui/react';
 import dynamic from 'next/dynamic';
 import React, { useEffect } from 'react';
 import type { NextPage } from 'next';
@@ -19,6 +19,24 @@ const Auth: NextPage = () => {
       redirectToAuth();
     }
   }, []);
+
+  if (!SuperTokensComponentNoSSR) {
+    return (
+      <LayoutPlain>
+        <Center
+          minH="550px"
+          w="450px"
+          bg="white"
+          p="35px"
+          borderRadius="lg"
+          borderColor="rgba(200, 200, 200, 1)"
+          borderWidth=".5px"
+        >
+          <Spinner thickness="4px" speed="0.65s" emptyColor="gray.200" color="blue.500" size="xl" />
+        </Center>
+      </LayoutPlain>
+    );
+  }
 
   return (
     <LayoutPlain>

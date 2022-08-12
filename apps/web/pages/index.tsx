@@ -12,11 +12,11 @@ const Home: NextPage = () => (
       bg="white"
       pt={{ base: '110px' }}
       w="100%"
-      minH={{ base: '20vh', sm: '30vh', lg: '30vh', xl: '35vh' }}
+      minH={{ base: '20vh', sm: '30vh', lg: '30vh', xl: '15vh' }}
       justifyContent="start"
       alignItems="center "
       display="flex"
-      mb={{ base: '60px', sm: '200px', xl: '40px' }}
+      mb={{ base: '100px', sm: '200px', xl: '40px' }}
     >
       <Flex direction="column" justifyContent="space-around" h="100px">
         <Box p={2} maxW="600px" mt="200px">

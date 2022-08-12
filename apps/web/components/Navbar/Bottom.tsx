@@ -2,11 +2,11 @@ import { Box, Divider, Flex, Text } from '@chakra-ui/react';
 import React from 'react';
 
 export const BottomBar = () => (
-  <Box pb={10} mt={{ base: '210px', sm: '0px', '2xl': '90px' }}>
+  <Box pb={10} mt={{ base: '0px', sm: '0px', '2xl': '10px' }}>
     <Divider
       orientation="horizontal"
       bgColor="rgba(177, 177, 177, 1)"
-      mt={{ base: '80px', sm: '60px', xl: '65px', '2xl': '170px' }}
+      mt={{ base: '220px', sm: '60px', xl: '65px', '2xl': '170px' }}
       width="60.5%"
       height="1px"
     />
