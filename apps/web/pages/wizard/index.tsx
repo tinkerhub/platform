@@ -5,11 +5,10 @@ import type { NextPage } from 'next';
 import { useForm, FormProvider } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { registerFormValidator, CardBio, Bar, One, Two, Three, Final } from '../../views/wizard';
-import { LayoutPlain } from '../../layout';
 import { Form } from '../../types';
 
 const Index: NextPage = () => {
-  const [step, setStep] = useState<number>(4);
+  const [step, setStep] = useState<number>(1);
   const methods = useForm<Form>({ mode: 'all', resolver: yupResolver(registerFormValidator) });
 
   const stepAdd = (): void => {
@@ -29,29 +28,25 @@ const Index: NextPage = () => {
 
   if (step === 4) {
     return (
-      <LayoutPlain>
-        <Center bg="white">
-          <Final isLoading={false} />
-        </Center>
-      </LayoutPlain>
+      <Center bg="white" mb="60px">
+        <Final isLoading={false} />
+      </Center>
     );
   }
 
   return (
-    <LayoutPlain>
-      <Center bg="white">
-        <CardBio>
-          <Bar val={step} back={stepSub} />
-          <FormProvider {...methods}>
-            <form onSubmit={methods.handleSubmit(handleData)}>
-              {step === 1 && <One next={stepAdd} />}
-              {step === 2 && <Two next={stepAdd} />}
-              {step === 3 && <Three />}
-            </form>
-          </FormProvider>
-        </CardBio>
-      </Center>
-    </LayoutPlain>
+    <Center bg="white" mb="60px">
+      <CardBio>
+        <Bar val={step} back={stepSub} />
+        <FormProvider {...methods}>
+          <form onSubmit={methods.handleSubmit(handleData)}>
+            {step === 1 && <One next={stepAdd} />}
+            {step === 2 && <Two next={stepAdd} />}
+            {step === 3 && <Three />}
+          </form>
+        </FormProvider>
+      </CardBio>
+    </Center>
   );
 };
 

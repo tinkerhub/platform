@@ -7,21 +7,23 @@ import MultiSelect from 'react-select';
 import { Form } from '../../types';
 import { Prop } from './One';
 
+export const Skills = [
+  { value: 'Java', label: 'Java' },
+  { value: 'Python', label: 'Python' },
+  { value: 'Javascript', label: 'JavaScript' },
+  { value: 'React', label: 'React' },
+  { value: 'HTML', label: 'HTML' },
+  { value: 'Typescript', label: 'Typescript' },
+  { value: 'Go', label: 'Go' },
+];
+
 export const Two = ({ next }: Prop) => {
   const animatedComponents = makeAnimated();
   const {
     register,
     formState: { errors },
+    // control,
   } = useFormContext<Form>();
-  const Skills = [
-    { value: 'Java', label: 'Java' },
-    { value: 'Python', label: 'Python' },
-    { value: 'Javascript', label: 'JavaScript' },
-    { value: 'React', label: 'React' },
-    { value: 'HTML', label: 'HTML' },
-    { value: 'Typescript', label: 'Typescript' },
-    { value: 'Go', label: 'Go' },
-  ];
 
   // const Skills = ['java', 'js', 'go', 'react', 'html', 'python', 'css', 'angular'];
 
@@ -51,6 +53,7 @@ export const Two = ({ next }: Prop) => {
           mt="15px"
         >
           <Text color="black">Skill</Text>
+
           <MultiSelect
             closeMenuOnSelect={false}
             components={animatedComponents}
@@ -66,7 +69,7 @@ export const Two = ({ next }: Prop) => {
           flexDirection="column"
           h="60px"
           justifyContent="space-between"
-          mt="15px"
+          mt="25px"
         >
           <Text color="black">Can you be a Mentor</Text>
           <RadioGroup defaultValue="2">
