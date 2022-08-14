@@ -4,7 +4,6 @@ import React, { useEffect } from 'react';
 import type { NextPage } from 'next';
 import SuperTokens from 'supertokens-auth-react';
 import { redirectToAuth } from 'supertokens-auth-react/recipe/passwordless';
-import { LayoutPlain } from '../../layout';
 
 const SuperTokensComponentNoSSR = dynamic(
   // eslint-disable-next-line no-promise-executor-return
@@ -22,33 +21,31 @@ const Auth: NextPage = () => {
 
   if (!SuperTokensComponentNoSSR) {
     return (
-      <LayoutPlain>
-        <Center
-          minH="550px"
-          w="450px"
-          bg="white"
-          p="35px"
-          borderRadius="lg"
-          borderColor="rgba(200, 200, 200, 1)"
-          borderWidth=".5px"
-        >
-          <Spinner thickness="4px" speed="0.65s" emptyColor="gray.200" color="blue.500" size="xl" />
-        </Center>
-      </LayoutPlain>
+      <Center
+        minH="550px"
+        w="450px"
+        bg="white"
+        p="35px"
+        borderRadius="lg"
+        borderColor="rgba(200, 200, 200, 1)"
+        borderWidth=".5px"
+        mb="90px"
+      >
+        <Spinner thickness="4px" speed="0.65s" emptyColor="gray.200" color="blue.500" size="xl" />
+      </Center>
     );
   }
 
   return (
-    <LayoutPlain>
-      <Flex
-        flexDirection={{ base: 'column', lg: 'row' }}
-        w="100%"
-        justifyContent="space-around"
-        mt="80px"
-      >
-        <SuperTokensComponentNoSSR />
-      </Flex>
-    </LayoutPlain>
+    <Flex
+      flexDirection={{ base: 'column', lg: 'row' }}
+      w="100%"
+      justifyContent="space-around"
+      mt="80px"
+      mb="120px"
+    >
+      <SuperTokensComponentNoSSR />
+    </Flex>
   );
 };
 

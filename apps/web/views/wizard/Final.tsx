@@ -1,5 +1,5 @@
 /* eslint-disable react/no-unescaped-entities */
-import { Center, Spinner, Heading, Box, Button, Text, useToast } from '@chakra-ui/react';
+import { Center, Spinner, Heading, Box, Button, useToast } from '@chakra-ui/react';
 import React from 'react';
 import { CopyIcon } from '@chakra-ui/icons';
 
@@ -65,7 +65,10 @@ export const Final = ({ isLoading }: Prop) => {
           alignItems="center"
           onClick={copyFile}
         >
-          <Text>1010101010110</Text>
+          <Heading fontWeight="bold" size="md">
+            {' '}
+            1010101010110
+          </Heading>
           <CopyIcon fontSize="25px" />
         </Box>
         <Button
@@ -89,6 +92,7 @@ export const Final = ({ isLoading }: Prop) => {
           mt="14px"
           color="black"
           fontSize="20px"
+          _hover={{ cursor: 'pointer', borderColor: '#4299e1' }}
         >
           Continue to Home
         </Button>

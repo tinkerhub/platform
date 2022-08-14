@@ -5,6 +5,7 @@ import { ChakraProvider } from '@chakra-ui/react';
 import SuperTokens, { SuperTokensWrapper } from 'supertokens-auth-react';
 import { authConfig } from '../auth';
 import { theme } from '../theme';
+import { Layout } from '../layout';
 
 if (typeof window !== 'undefined') {
   SuperTokens.init(authConfig());
@@ -13,7 +14,9 @@ if (typeof window !== 'undefined') {
 const MyApp = ({ Component, pageProps }: AppProps) => (
   <SuperTokensWrapper>
     <ChakraProvider theme={theme}>
-      <Component {...pageProps} />
+      <Layout>
+        <Component {...pageProps} />
+      </Layout>
     </ChakraProvider>
   </SuperTokensWrapper>
 );

@@ -1,5 +1,14 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import { Box, Button, Input, Text, Select } from '@chakra-ui/react';
+import {
+  Box,
+  Text,
+  Select,
+  FormErrorMessage,
+  FormLabel,
+  FormControl,
+  Input,
+  Button,
+} from '@chakra-ui/react';
 import React from 'react';
 import { motion } from 'framer-motion';
 import { useFormContext } from 'react-hook-form';
@@ -23,11 +32,15 @@ export const One = ({ next }: Prop) => {
     >
       <Box mt="30px">
         <Box display="flex" flexDirection="column" h="75px" justifyContent="space-between">
-          <Text color="black">FullName</Text>
-          <Input bg="rgba(240, 240, 240, 1)" {...register('FullName')} />
-          <Text color="red" fontSize="12px">
-            {errors.FullName?.message}
-          </Text>
+          <FormControl>
+            <FormLabel color="black" htmlFor="name">
+              FullName
+            </FormLabel>
+            <Input bg="rgba(240, 240, 240, 1)" {...register('FullName')} id="name" />
+            <FormErrorMessage color="red" fontSize="12px">
+              {errors.FullName?.message}
+            </FormErrorMessage>
+          </FormControl>
         </Box>
         <Box display="flex" flexDirection="column" h="75px" justifyContent="space-between">
           <Text color="black">Mobile Number</Text>
