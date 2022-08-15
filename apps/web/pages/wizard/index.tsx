@@ -19,23 +19,23 @@ const Index: NextPage = () => {
     setStep((ste) => ste - 1);
   };
   const handleData = (val: any): void => {
+    stepAdd();
     // send post request to backend
     // then increease the step to 4 to render the sucess/ fail UI
-    stepAdd();
     // eslint-disable-next-line no-console
     console.log(val);
   };
 
   if (step === 4) {
     return (
-      <Center bg="white" mb="60px">
+      <Center mb="60px">
         <Final isLoading={false} />
       </Center>
     );
   }
 
   return (
-    <Center bg="white" mb="60px">
+    <Center mb="60px">
       <CardBio>
         <Bar val={step} back={stepSub} />
         <FormProvider {...methods}>

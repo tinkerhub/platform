@@ -72,6 +72,7 @@ export const Three = () => {
             width="100%"
             type="submit"
             backgroundColor="rgba(65, 83, 240, 1)"
+            color="white"
           >
             Next
           </Button>
