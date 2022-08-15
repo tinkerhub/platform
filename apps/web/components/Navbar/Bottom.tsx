@@ -8,7 +8,7 @@ export const BottomBar = () => (
       We are a community of tinkerers, makers, policy geeks & students and are working towards
       mapping and empowering people who share a passion to innovate.
     </Text>
-    <Flex bg="white" justifyContent="space-between" mt={{ base: '20px', xl: '41px' }}>
+    <Flex justifyContent="space-between" mt={{ base: '20px', xl: '41px' }}>
       <Text color="rgba(177, 177, 177, 1)" _hover={{ cursor: 'pointer', color: 'grey' }}>
         tinkerhub.org
       </Text>

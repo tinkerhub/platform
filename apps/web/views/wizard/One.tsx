@@ -1,15 +1,6 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import {
-  Box,
-  Text,
-  Select,
-  FormErrorMessage,
-  FormLabel,
-  FormControl,
-  Input,
-  Button,
-} from '@chakra-ui/react';
-import React from 'react';
+import { Box, Text, Select, FormLabel, FormControl, Input, Button } from '@chakra-ui/react';
+import React, { useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useFormContext } from 'react-hook-form';
 import { Form } from '../../types';
@@ -21,8 +12,14 @@ export interface Prop {
 export const One = ({ next }: Prop) => {
   const {
     register,
+    setFocus,
     formState: { errors },
   } = useFormContext<Form>();
+
+  useEffect(() => {
+    setFocus('FullName');
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <motion.div
@@ -37,12 +34,18 @@ export const One = ({ next }: Prop) => {
               FullName
             </FormLabel>
             <Input bg="rgba(240, 240, 240, 1)" {...register('FullName')} id="name" />
-            <FormErrorMessage color="red" fontSize="12px">
+            <Text color="red" fontSize="12px">
               {errors.FullName?.message}
-            </FormErrorMessage>
+            </Text>
           </FormControl>
         </Box>
-        <Box display="flex" flexDirection="column" h="75px" justifyContent="space-between">
+        <Box
+          display="flex"
+          flexDirection="column"
+          h="75px"
+          justifyContent="space-between"
+          mt="15px"
+        >
           <Text color="black">Mobile Number</Text>
           <Input bg="rgba(240, 240, 240, 1)" {...register('Mobile')} />
           <Text color="red" fontSize="12px">
@@ -77,6 +80,8 @@ export const One = ({ next }: Prop) => {
             width="100%"
             onClick={next}
             backgroundColor="rgba(65, 83, 240, 1)"
+            disabled={false}
+            color="white"
           >
             Next
           </Button>

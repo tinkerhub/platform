@@ -105,6 +105,7 @@ export const Two = ({ next }: Prop) => {
             colorScheme="blue"
             width="100%"
             onClick={next}
+            color="white"
             backgroundColor="rgba(65, 83, 240, 1)"
           >
             Next

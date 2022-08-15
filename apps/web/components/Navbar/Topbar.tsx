@@ -9,14 +9,7 @@ interface NavProp {
 }
 
 export const Topbar = ({ btnFunc, btnText = 'Login/Signup', showBtn }: NavProp) => (
-  <Box
-    display="flex"
-    justifyContent="space-between"
-    h={65}
-    alignItems="center"
-    bg="white"
-    color="black"
-  >
+  <Box display="flex" justifyContent="space-between" h={65} alignItems="center">
     <Flex flexDirection="column">
       <Flex>
         <Heading size="lg">Tinker</Heading>
@@ -33,6 +26,7 @@ export const Topbar = ({ btnFunc, btnText = 'Login/Signup', showBtn }: NavProp) 
         colorScheme="blue"
         backgroundColor="rgba(65, 83, 240, 1)"
         onClick={btnFunc}
+        color="white"
         px={{ base: '15px', lg: '80px' }}
       >
         {btnText}

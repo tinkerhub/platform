@@ -46,10 +46,10 @@ const Index: NextPage = () => {
     console.log(data);
   };
   return (
-    <Box bg="white" mt="2" mb="30px">
+    <Box mt="2" mb="30px">
       <Box>
         <ArrowBackIcon
-          color="black"
+          // color="black"
           w={8}
           h={8}
           _hover={{ cursor: 'pointer', color: 'grey' }}
@@ -59,15 +59,14 @@ const Index: NextPage = () => {
       <form onSubmit={handleSubmit(updateProfile)}>
         <Box display="flex" justifyContent="space-between" mt="4">
           <Box display="flex" justifyContent="space-between">
-            <Heading color="black" as="h2" size={{ base: 'md', lg: 'xl' }} alignSelf="center">
+            <Heading as="h2" size={{ base: 'md', lg: 'xl' }} alignSelf="center">
               My Profile
             </Heading>
-            <Heading color="black" as="h2" size="sm" alignSelf="center" pl={5}>
+            <Heading as="h2" size="sm" alignSelf="center" pl={5}>
               membership ID
             </Heading>
             <CopyIcon
               onClick={copyFile}
-              color="black"
               w={4}
               h={4}
               ml={3}
@@ -82,6 +81,7 @@ const Index: NextPage = () => {
                 backgroundColor="rgba(65, 83, 240, 1)"
                 alignSelf="center"
                 onClick={editHandler}
+                color="white"
               >
                 Edit
               </Button>
@@ -92,6 +92,7 @@ const Index: NextPage = () => {
                 alignSelf="center"
                 type="submit"
                 backgroundColor="rgba(65, 83, 240, 1)"
+                color="white"
               >
                 Save
               </Button>
@@ -105,13 +106,12 @@ const Index: NextPage = () => {
             mb="10px"
           >
             <Box w={{ base: '400px', lg: '250px' }}>
-              <Text color="black">Name</Text>
+              <Text>Name</Text>
               <Input
                 mt="7px"
                 variant="filled"
                 placeholder="JhonDoe"
                 background="rgba(240, 240, 240, 1)"
-                color="black"
                 _focus={{ bg: 'rgba(240, 240, 240, 1)' }}
                 readOnly={edit}
                 {...register('FullName')}
@@ -121,7 +121,7 @@ const Index: NextPage = () => {
               </Text>
             </Box>
             <Box w={{ base: '400px', lg: '250px' }}>
-              <Text color="black">Best way to describe yourself </Text>
+              <Text>Best way to describe yourself </Text>
               <Select placeholder="I prefer to use the pronoun" {...register('describe')}>
                 <option value="He/Him">He/Him</option>
                 <option value="She/Her">She/Her</option>
@@ -132,7 +132,7 @@ const Index: NextPage = () => {
               </Text>
             </Box>
             <Box w={{ base: '400px', lg: '250px' }}>
-              <Text color="black">House Name</Text>
+              <Text>House Name</Text>
               <Input
                 mt="7px"
                 variant="filled"
@@ -154,13 +154,12 @@ const Index: NextPage = () => {
             mb="10px"
           >
             <Box w={{ base: '400px', lg: '250px' }}>
-              <Text color="black">Mobile Number</Text>
+              <Text>Mobile Number</Text>
               <Input
                 mt="7px"
                 variant="filled"
                 placeholder="Filled"
                 background="rgba(240, 240, 240, 1)"
-                color="black"
                 _focus={{ bg: 'rgba(240, 240, 240, 1)' }}
                 disabled={edit}
                 {...register('Mobile')}
@@ -170,26 +169,24 @@ const Index: NextPage = () => {
               </Text>
             </Box>
             <Box w={{ base: '400px', lg: '250px' }}>
-              <Text color="black">Can you be a mentor</Text>
+              <Text>Can you be a mentor</Text>
               <Input
                 mt="7px"
                 variant="filled"
                 placeholder="Filled"
                 background="rgba(240, 240, 240, 1)"
-                color="black"
                 _focus={{ bg: 'rgba(240, 240, 240, 1)' }}
                 disabled={edit}
                 {...register('Mentor')}
               />
             </Box>
             <Box w={{ base: '400px', lg: '250px' }}>
-              <Text color="black">Street Name</Text>
+              <Text>Street Name</Text>
               <Input
                 mt="7px"
                 variant="filled"
                 placeholder="Filled"
                 background="rgba(240, 240, 240, 1)"
-                color="black"
                 _focus={{ bg: 'rgba(240, 240, 240, 1)' }}
                 disabled={edit}
                 {...register('Street')}
@@ -202,7 +199,7 @@ const Index: NextPage = () => {
             mb="10px"
           >
             <Box w={{ base: '400px', lg: '250px' }}>
-              <Text color="black">Email</Text>
+              <Text>Email</Text>
               <Input
                 mt="7px"
                 variant="filled"
@@ -218,7 +215,7 @@ const Index: NextPage = () => {
               </Text>
             </Box>
             <Box w={{ base: '400px', lg: '250px' }}>
-              <Text color="black">Select your campus</Text>
+              <Text>Select your campus</Text>
               <Select placeholder="I prefer to use the pronoun" {...register('College')}>
                 <option value="He/Him">He/Him</option>
                 <option value="She/Her">She/Her</option>
@@ -229,7 +226,7 @@ const Index: NextPage = () => {
               </Text>
             </Box>
             <Box w={{ base: '400px', lg: '250px' }}>
-              <Text color="black">District</Text>
+              <Text>District</Text>
               <Select placeholder="Select Your District">
                 {District.map((el) => (
                   <option value={el.value}>{el.label}</option>
@@ -243,13 +240,12 @@ const Index: NextPage = () => {
             mb="10px"
           >
             <Box w={{ base: '400px', lg: '250px' }}>
-              <Text color="black">Date of Birth</Text>
+              <Text>Date of Birth</Text>
               <Input
                 mt="7px"
                 variant="filled"
                 placeholder="Filled"
                 background="rgba(240, 240, 240, 1)"
-                color="black"
                 _focus={{ bg: 'rgba(240, 240, 240, 1)' }}
                 disabled={edit}
                 {...register('DOB')}
@@ -260,7 +256,7 @@ const Index: NextPage = () => {
               </Text>
             </Box>
             <Box w={{ base: '400px', lg: '250px' }}>
-              <Text color="black">Skill</Text>
+              <Text>Skill</Text>
               <MultiSelect
                 closeMenuOnSelect={false}
                 components={animatedComponents}
@@ -272,13 +268,12 @@ const Index: NextPage = () => {
               </Text>
             </Box>
             <Box w={{ base: '400px', lg: '250px' }}>
-              <Text color="black">Pincode</Text>
+              <Text>Pincode</Text>
               <Input
                 mt="7px"
                 variant="filled"
                 placeholder="Filled"
                 background="rgba(240, 240, 240, 1)"
-                color="black"
                 _focus={{ bg: 'rgba(240, 240, 240, 1)' }}
                 disabled={edit}
                 {...register('Pincode')}
@@ -291,13 +286,12 @@ const Index: NextPage = () => {
             mb="10px"
           >
             <Box w={{ base: '400px', lg: '250px' }}>
-              <Text color="black">Preferred pronoun</Text>
+              <Text>Preferred pronoun</Text>
               <Input
                 mt="7px"
                 variant="filled"
                 placeholder="Filled"
                 background="rgba(240, 240, 240, 1)"
-                color="black"
                 _focus={{ bg: 'rgba(240, 240, 240, 1)' }}
                 disabled={edit}
                 {...register('Pronoun')}
