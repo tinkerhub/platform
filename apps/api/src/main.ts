@@ -4,9 +4,8 @@ import { NestFactory } from '@nestjs/core';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { FastifyAdapter, NestFastifyApplication } from '@nestjs/platform-fastify';
 import supertokens from 'supertokens-node';
-import { plugin } from 'supertokens-node/framework/fastify';
+import { plugin, errorHandler } from 'supertokens-node/framework/fastify';
 import { AppModule } from './app.module';
-import { SupertokensExceptionFilter } from './auth/auth.filter';
 
 declare const module: any;
 
@@ -29,7 +28,7 @@ async function bootstrap() {
   await app.register(plugin);
 
   // SuperTokens Filter
-  app.useGlobalFilters(new SupertokensExceptionFilter());
+  fastify.setErrorHandler(errorHandler());
   // swagger
   const config = new DocumentBuilder()
     .setTitle('TinkerHub Platform API')

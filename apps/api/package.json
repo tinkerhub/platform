@@ -21,14 +21,13 @@
     "prisma": "prisma"
   },
   "dependencies": {
-    "@fastify/middie": "^8.0.0",
     "@fastify/static": "^6.5.0",
     "@nestjs/common": "^9.0.0",
     "@nestjs/config": "^2.2.0",
     "@nestjs/core": "^9.0.0",
     "@nestjs/mapped-types": "*",
     "@nestjs/platform-fastify": "^9.0.7",
-    "@nestjs/swagger": "^6.0.0",
+    "@nestjs/swagger": "^6.0.4",
     "@prisma/client": "^4.1.1",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.13.2",

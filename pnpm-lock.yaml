@@ -48,7 +48,6 @@ importers:
 
   apps/api:
     specifiers:
-      '@fastify/middie': ^8.0.0
       '@fastify/static': ^6.5.0
       '@nestjs/cli': ^9.0.0
       '@nestjs/common': ^9.0.0
@@ -57,7 +56,7 @@ importers:
       '@nestjs/mapped-types': '*'
       '@nestjs/platform-fastify': ^9.0.7
       '@nestjs/schematics': ^9.0.0
-      '@nestjs/swagger': ^6.0.0
+      '@nestjs/swagger': ^6.0.4
       '@nestjs/testing': ^9.0.0
       '@prisma/client': ^4.1.1
       '@types/jest': 28.1.4
@@ -87,7 +86,6 @@ importers:
       webpack: ^5.74.0
       webpack-node-externals: ^3.0.0
     dependencies:
-      '@fastify/middie': 8.0.0
       '@fastify/static': 6.5.0
       '@nestjs/common': 9.0.7_allg6cauirbqzgqcmexy2wdnoq
       '@nestjs/config': 2.2.0_4dbiavrsou3qkbphku77c4yu4y
@@ -1737,7 +1735,7 @@ packages:
     dependencies:
       '@fastify/accept-negotiator': 1.0.0
       content-disposition: 0.5.4
-      fastify-plugin: 4.0.0
+      fastify-plugin: 4.2.0
       glob: 8.0.3
       p-limit: 3.1.0
       readable-stream: 4.1.0
@@ -4909,8 +4907,8 @@ packages:
     resolution: {integrity: sha512-qKcDXmuZadJqdTm6vlCqioEbyewF60b/0LOFCcYN1B6BIZGlYJumWWOYs70SFYLDAH4YqdE1cxH/RKMG7rFxgA==}
     dev: false
 
-  /fastify-plugin/4.0.0:
-    resolution: {integrity: sha512-ZJcXPPcqkj7HFDYqbsCuOIAgIZ/sd2b+OnBxNGyxAcUDUJfIpxp4t23CwxO2E7LZpqUrIliA4TnjxTXG8mLoqw==}
+  /fastify-plugin/4.2.0:
+    resolution: {integrity: sha512-hovKzEXZc2YgeuXn41/2EA/IaIOdRu1pB9WKgnzDBj3lhKSdDCEsckHa7I6LiT/LhflvAQX7ZY8IQ6eBX0htTg==}
     dev: false
 
   /fastify/4.3.0:
