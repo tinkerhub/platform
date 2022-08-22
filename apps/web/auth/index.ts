@@ -11,6 +11,7 @@ export const authConfig = () => ({
   },
   recipeList: [
     Passwordless.init({
+      useShadowDom: false,
       contactMethod: 'PHONE',
       signInUpFeature: {
         defaultCountry: 'IN',
@@ -23,6 +24,15 @@ export const authConfig = () => ({
           },
           superTokensBranding: {
             display: 'none',
+          },
+          headerTitle: {
+            fontFamily: 'sans-serif',
+          },
+          container: {
+            height: '550px',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
           },
         },
       },

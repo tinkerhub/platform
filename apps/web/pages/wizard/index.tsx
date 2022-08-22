@@ -6,10 +6,13 @@ import { useForm, FormProvider } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { registerFormValidator, CardBio, Bar, One, Two, Three, Final } from '../../views/wizard';
 import { Form } from '../../types';
+import { useData } from '../../hooks';
 
 const Index: NextPage = () => {
   const [step, setStep] = useState<number>(1);
   const methods = useForm<Form>({ mode: 'all', resolver: yupResolver(registerFormValidator) });
+  const { properties, sendData } = useData();
+
   const stepAdd = (): void => {
     setStep((ste) => ste + 1);
   };
@@ -17,22 +20,21 @@ const Index: NextPage = () => {
   const stepSub = (): void => {
     setStep((ste) => ste - 1);
   };
-  const handleData = (val: Form): void => {
+  const handleData = (val: Form) => {
     if (step === 3) {
       // increase the step to 4 to render the sucess/ fail UI
       stepAdd();
       // send post request to backend
+      sendData(val);
+    } else {
+      stepAdd();
     }
-    stepAdd();
-
-    // eslint-disable-next-line no-console
-    console.log(val);
   };
 
   if (step === 4) {
     return (
       <Center mb="60px">
-        <Final isLoading={false} />
+        <Final isLoading={properties.isLoading} />
       </Center>
     );
   }
