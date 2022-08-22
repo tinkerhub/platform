@@ -46,10 +46,18 @@ export const Final = ({ isLoading }: Prop) => {
       borderWidth=".5px"
     >
       <Box padding="30" height="290px" width="100%">
-        <Heading as="h2" size="xl" textAlign="left">
+        <Heading as="h2" size="xl" textAlign="left" color="black">
           Thank You
         </Heading>
-        <Heading as="h3" size="md" textAlign="left" fontSize="18px" fontWeight="450" mt="10px">
+        <Heading
+          as="h3"
+          size="md"
+          textAlign="left"
+          fontSize="18px"
+          fontWeight="450"
+          mt="10px"
+          color="black"
+        >
           Here's your membership ID
         </Heading>
         <Box
@@ -65,11 +73,11 @@ export const Final = ({ isLoading }: Prop) => {
           alignItems="center"
           onClick={copyFile}
         >
-          <Heading fontWeight="bold" size="md">
+          <Heading fontWeight="bold" size="md" color="black">
             {' '}
             1010101010110
           </Heading>
-          <CopyIcon fontSize="25px" />
+          <CopyIcon fontSize="25px" color="black" />
         </Box>
         <Button
           colorScheme="blue"

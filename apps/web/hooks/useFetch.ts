@@ -1,13 +1,13 @@
 import useSWR from 'swr';
 import { apiHandler } from '../api';
 
-interface Info {
+export interface Info {
   ok: boolean;
   data: unknown;
 }
-interface Error {
+export interface Error {
   ok: boolean;
-  error: unknown;
+  message: string;
 }
 
 interface ReturnVal {
