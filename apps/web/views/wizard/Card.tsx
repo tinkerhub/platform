@@ -11,6 +11,7 @@ export const CardBio = ({ children }: Child) => (
     borderRadius="lg"
     borderColor="rgba(200, 200, 200, 1)"
     borderWidth=".5px"
+    mt="35px"
   >
     {children}
   </Box>

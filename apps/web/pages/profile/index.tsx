@@ -105,7 +105,7 @@ const Index: NextPage = () => {
             direction={{ base: 'column', lg: 'row' }}
             mb="10px"
           >
-            <Box w={{ base: '400px', lg: '250px' }}>
+            <Box>
               <Text>Name</Text>
               <Input
                 mt="7px"
@@ -120,7 +120,7 @@ const Index: NextPage = () => {
                 {errors.FullName?.message}
               </Text>
             </Box>
-            <Box w={{ base: '400px', lg: '250px' }}>
+            <Box>
               <Text>Best way to describe yourself </Text>
               <Select placeholder="I prefer to use the pronoun" {...register('describe')}>
                 <option value="He/Him">He/Him</option>
@@ -131,7 +131,7 @@ const Index: NextPage = () => {
                 {errors.describe?.message}
               </Text>
             </Box>
-            <Box w={{ base: '400px', lg: '250px' }}>
+            <Box>
               <Text>House Name</Text>
               <Input
                 mt="7px"
@@ -153,7 +153,7 @@ const Index: NextPage = () => {
             direction={{ base: 'column', lg: 'row' }}
             mb="10px"
           >
-            <Box w={{ base: '400px', lg: '250px' }}>
+            <Box>
               <Text>Mobile Number</Text>
               <Input
                 mt="7px"
@@ -168,7 +168,7 @@ const Index: NextPage = () => {
                 {errors.Mobile?.message}
               </Text>
             </Box>
-            <Box w={{ base: '400px', lg: '250px' }}>
+            <Box width={{ lg: '245px' }}>
               <Text>Can you be a mentor</Text>
               <Input
                 mt="7px"
@@ -180,7 +180,7 @@ const Index: NextPage = () => {
                 {...register('Mentor')}
               />
             </Box>
-            <Box w={{ base: '400px', lg: '250px' }}>
+            <Box>
               <Text>Street Name</Text>
               <Input
                 mt="7px"
@@ -198,7 +198,7 @@ const Index: NextPage = () => {
             direction={{ base: 'column', lg: 'row' }}
             mb="10px"
           >
-            <Box w={{ base: '400px', lg: '250px' }}>
+            <Box>
               <Text>Email</Text>
               <Input
                 mt="7px"
@@ -214,7 +214,7 @@ const Index: NextPage = () => {
                 {errors.Email?.message}
               </Text>
             </Box>
-            <Box w={{ base: '400px', lg: '250px' }}>
+            <Box>
               <Text>Select your campus</Text>
               <Select placeholder="I prefer to use the pronoun" {...register('College')}>
                 <option value="He/Him">He/Him</option>
@@ -225,7 +225,7 @@ const Index: NextPage = () => {
                 {errors.College?.message}
               </Text>
             </Box>
-            <Box w={{ base: '400px', lg: '250px' }}>
+            <Box>
               <Text>District</Text>
               <Select placeholder="Select Your District">
                 {District.map((el) => (
@@ -239,7 +239,7 @@ const Index: NextPage = () => {
             direction={{ base: 'column', lg: 'row' }}
             mb="10px"
           >
-            <Box w={{ base: '400px', lg: '250px' }}>
+            <Box width={{ lg: '220px' }}>
               <Text>Date of Birth</Text>
               <Input
                 mt="7px"
@@ -255,7 +255,7 @@ const Index: NextPage = () => {
                 {errors.DOB?.message}
               </Text>
             </Box>
-            <Box w={{ base: '400px', lg: '250px' }}>
+            <Box width={{ lg: '240px' }}>
               <Text>Skill</Text>
               <MultiSelect
                 closeMenuOnSelect={false}
@@ -267,7 +267,7 @@ const Index: NextPage = () => {
                 {errors.My_Skills?.message}
               </Text>
             </Box>
-            <Box w={{ base: '400px', lg: '250px' }}>
+            <Box width={{ lg: '220px' }}>
               <Text>Pincode</Text>
               <Input
                 mt="7px"
@@ -285,7 +285,7 @@ const Index: NextPage = () => {
             direction={{ base: 'column', lg: 'row' }}
             mb="10px"
           >
-            <Box w={{ base: '400px', lg: '250px' }}>
+            <Box>
               <Text>Preferred pronoun</Text>
               <Input
                 mt="7px"

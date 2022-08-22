@@ -5,7 +5,6 @@ import { useFormContext } from 'react-hook-form';
 import makeAnimated from 'react-select/animated';
 import MultiSelect from 'react-select';
 import { Form } from '../../types';
-import { Prop } from './One';
 
 export const Skills = [
   { value: 'Java', label: 'Java' },
@@ -17,7 +16,7 @@ export const Skills = [
   { value: 'Go', label: 'Go' },
 ];
 
-export const Two = ({ next }: Prop) => {
+export const Two = () => {
   const animatedComponents = makeAnimated();
   const {
     register,
@@ -104,7 +103,7 @@ export const Two = ({ next }: Prop) => {
           <Button
             colorScheme="blue"
             width="100%"
-            onClick={next}
+            type="submit"
             color="white"
             backgroundColor="rgba(65, 83, 240, 1)"
           >

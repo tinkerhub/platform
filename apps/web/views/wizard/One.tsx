@@ -5,11 +5,7 @@ import { motion } from 'framer-motion';
 import { useFormContext } from 'react-hook-form';
 import { Form } from '../../types';
 
-export interface Prop {
-  next: () => void;
-}
-
-export const One = ({ next }: Prop) => {
+export const One = () => {
   const {
     register,
     setFocus,
@@ -73,12 +69,15 @@ export const One = ({ next }: Prop) => {
             <option value="She/Her">She/Her</option>
             <option value="They/Them">They/Them</option>
           </Select>
+          <Text color="red" fontSize="12px">
+            {errors.Pronoun?.message}
+          </Text>
         </Box>
         <Box mt="25px">
           <Button
             colorScheme="blue"
             width="100%"
-            onClick={next}
+            type="submit"
             backgroundColor="rgba(65, 83, 240, 1)"
             disabled={false}
             color="white"

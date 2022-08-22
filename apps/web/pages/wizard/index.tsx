@@ -19,9 +19,14 @@ const Index: NextPage = () => {
     setStep((ste) => ste - 1);
   };
   const handleData = (val: any): void => {
+    if (step === 3) {
+      stepAdd();
+
+      // send post request to backend
+      // then increase the step to 4 to render the sucess/ fail UI
+    }
     stepAdd();
-    // send post request to backend
-    // then increease the step to 4 to render the sucess/ fail UI
+
     // eslint-disable-next-line no-console
     console.log(val);
   };
@@ -40,8 +45,8 @@ const Index: NextPage = () => {
         <Bar val={step} back={stepSub} />
         <FormProvider {...methods}>
           <form onSubmit={methods.handleSubmit(handleData)}>
-            {step === 1 && <One next={stepAdd} />}
-            {step === 2 && <Two next={stepAdd} />}
+            {step === 1 && <One />}
+            {step === 2 && <Two />}
             {step === 3 && <Three />}
           </form>
         </FormProvider>
