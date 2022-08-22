@@ -1,4 +1,4 @@
-import { Center, Flex, Spinner } from '@chakra-ui/react';
+import { Center, Spinner } from '@chakra-ui/react';
 import dynamic from 'next/dynamic';
 import React, { useEffect } from 'react';
 import type { NextPage } from 'next';
@@ -37,15 +37,9 @@ const Auth: NextPage = () => {
   }
 
   return (
-    <Flex
-      flexDirection={{ base: 'column', lg: 'row' }}
-      w="100%"
-      justifyContent="space-around"
-      mt="80px"
-      mb="120px"
-    >
+    <Center mb="120px">
       <SuperTokensComponentNoSSR />
-    </Flex>
+    </Center>
   );
 };
 
