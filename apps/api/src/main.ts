@@ -3,6 +3,8 @@ import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { FastifyAdapter, NestFastifyApplication } from '@nestjs/platform-fastify';
+import supertokens from 'supertokens-node';
+import { plugin, errorHandler } from 'supertokens-node/framework/fastify';
 import { AppModule } from './app.module';
 
 declare const module: any;
@@ -16,6 +18,17 @@ async function bootstrap() {
     bufferLogs: true,
   });
 
+  // SuperTokens CORS
+  app.enableCors({
+    origin: process.env.SUPERTOKENS_WEBSITE_DOMAIN,
+    allowedHeaders: ['content-type', ...supertokens.getAllCORSHeaders()],
+    credentials: true,
+  });
+
+  await app.register(plugin);
+
+  // SuperTokens Filter
+  fastify.setErrorHandler(errorHandler());
   // swagger
   const config = new DocumentBuilder()
     .setTitle('TinkerHub Platform API')

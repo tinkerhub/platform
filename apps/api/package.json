@@ -21,7 +21,6 @@
     "prisma": "prisma"
   },
   "dependencies": {
-    "@fastify/middie": "^8.0.0",
     "@fastify/static": "^6.5.0",
     "@nestjs/common": "^9.0.0",
     "@nestjs/config": "^2.2.0",
@@ -39,7 +38,8 @@
     "prisma": "^4.1.1",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
-    "rxjs": "^7.2.0"
+    "rxjs": "^7.2.0",
+    "supertokens-node": "^11.1.0"
   },
   "devDependencies": {
     "@nestjs/cli": "^9.0.0",

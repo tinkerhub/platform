@@ -5,6 +5,7 @@ import { LoggerModule } from 'nestjs-pino';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ProfilesModule } from './profiles/profiles.module';
+import { AuthModule } from './auth/auth.module';
 
 const apiModules = [ProfilesModule];
 
@@ -28,7 +29,22 @@ const coreModules = [
 ];
 
 @Module({
-  imports: [...coreModules, ...apiModules],
+  imports: [
+    ...coreModules,
+    ...apiModules,
+    AuthModule.forRoot({
+      connectionURI: process.env.SUPERTOKENS_URI as string,
+      apiKey: process.env.SUPERTOKENS_API_KEY,
+      appInfo: {
+        appName: process.env.APP_NAME as string,
+        apiDomain: process.env.SUPERTOKENS_API_DOMAIN as string,
+        websiteDomain: process.env.SUPERTOKENS_WEBSITE_DOMAIN as string,
+        apiBasePath: process.env.SUPERTOKENS_PATH,
+        websiteBasePath: process.env.SUPERTOKENS_PATH,
+      },
+    }),
+    ConfigModule.forRoot(),
+  ],
   controllers: [AppController],
   providers: [AppService],
 })
