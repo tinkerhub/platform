@@ -1,10 +1,9 @@
 import { useState } from 'react';
-import { Form } from '../types';
 import { apiHandler } from '../api';
 import { Error, Info } from './useFetch';
 
-interface ReturnData {
-  sendData: (val: Form) => void;
+interface ReturnData<T> {
+  sendData: (val: T) => void;
   properties: {
     data: Info | null;
     isLoading: boolean;
@@ -12,14 +11,14 @@ interface ReturnData {
   };
 }
 
-export const useData = (): ReturnData => {
+export const useData = <T>(uri: string): ReturnData<T> => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isError, setError] = useState<Error | null>(null);
   const [dataInfo, setData] = useState<Info | null>(null);
-  const sendData = async (dataField: Form) => {
+  const sendData = async (dataField: T) => {
     try {
       setIsLoading(true);
-      const { data } = await apiHandler.post('/user', dataField);
+      const { data } = await apiHandler.post(uri, dataField);
       if (!data.ok) throw new Error(data.message);
       setData(data);
     } catch (e) {
