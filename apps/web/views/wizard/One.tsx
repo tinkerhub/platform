@@ -1,8 +1,9 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import { Box, Text, Select, FormLabel, FormControl, Input, Button } from '@chakra-ui/react';
+import { Box, Text, FormLabel, FormControl, Input, Button } from '@chakra-ui/react';
 import React, { useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useFormContext } from 'react-hook-form';
+import { Select as MultiSeclect } from 'chakra-react-select';
 import { Form } from '../../types';
 
 export const One = () => {
@@ -23,14 +24,12 @@ export const One = () => {
       initial={{ opacity: 0, scale: 0.5 }}
       transition={{ duration: 0.5 }}
     >
-      <Box mt="30px">
+      <Box mt="30px" display="flex" flexDirection="column" justifyContent="space-between">
         <Box display="flex" flexDirection="column" h="75px" justifyContent="space-between">
           <FormControl>
-            <FormLabel color="black" htmlFor="name">
-              FullName
-            </FormLabel>
-            <Input bg="rgba(240, 240, 240, 1)" {...register('FullName')} id="name" />
-            <Text color="red" fontSize="12px">
+            <FormLabel>Name</FormLabel>
+            <Input mt="7px" variant="filled" placeholder="JhonDoe" {...register('FullName')} />
+            <Text color="red" fontSize="12px" mt="12px">
               {errors.FullName?.message}
             </Text>
           </FormControl>
@@ -42,33 +41,47 @@ export const One = () => {
           justifyContent="space-between"
           mt="15px"
         >
-          <Text color="black">Mobile Number</Text>
-          <Input bg="rgba(240, 240, 240, 1)" {...register('Mobile')} />
-          <Text color="red" fontSize="12px">
-            {errors.Mobile?.message}
-          </Text>
+          <FormControl>
+            <FormLabel>Mobile Number</FormLabel>
+            <Input {...register('Mobile')} />
+            <Text color="red" fontSize="12px">
+              {errors.Mobile?.message}
+            </Text>
+          </FormControl>
         </Box>
         <Box display="flex" flexDirection="column" h="75px" justifyContent="space-between">
-          <Text color="black">Email</Text>
-          <Input bg="rgba(240, 240, 240, 1)" {...register('Email')} />
-          <Text color="red" fontSize="12px">
-            {errors.Email?.message}
-          </Text>
+          <FormControl>
+            <FormLabel>Email</FormLabel>
+            <Input {...register('Email')} />
+            <Text color="red" fontSize="12px">
+              {errors.Email?.message}
+            </Text>
+          </FormControl>
         </Box>
         <Box display="flex" flexDirection="column" h="75px" justifyContent="space-between">
-          <Text color="black">Date of Birth</Text>
-          <Input bg="rgba(240, 240, 240, 1)" {...register('DOB')} type="date" />
-          <Text color="red" fontSize="12px">
-            {errors.DOB?.message}
-          </Text>
+          <FormControl>
+            <FormLabel>Date of Birth</FormLabel>
+            <Input {...register('DOB')} type="date" />
+            <Text color="red" fontSize="12px">
+              {errors.DOB?.message}
+            </Text>
+          </FormControl>
         </Box>
         <Box display="flex" flexDirection="column" h="75px" justifyContent="space-between">
-          <Text color="black">Preferred pronoun</Text>
-          <Select placeholder="I prefer to use the pronoun" {...register('Pronoun')}>
-            <option value="He/Him">He/Him</option>
-            <option value="She/Her">She/Her</option>
-            <option value="They/Them">They/Them</option>
-          </Select>
+          <FormControl>
+            <FormLabel>Select your Pronoun</FormLabel>
+            <MultiSeclect
+              name="campus"
+              options={[
+                { value: 'He/Him', label: 'He/Him' },
+                { value: 'She/Her', label: 'She/Her' },
+                { value: 'They/Them', label: 'They/They' },
+              ]}
+              placeholder="Select Your Pronoun"
+              closeMenuOnSelect
+              size="md"
+            />
+          </FormControl>
           <Text color="red" fontSize="12px">
             {errors.Pronoun?.message}
           </Text>

@@ -8,7 +8,6 @@ import {
   Flex,
   Heading,
   Input,
-  Select,
   Stack,
   Text,
   useToast,
@@ -69,11 +68,11 @@ const Index: NextPage = () => {
       <form onSubmit={handleSubmit(updateProfile)}>
         <Box display="flex" justifyContent="space-between" mt="4">
           <Box display="flex" justifyContent="space-between">
-            <Heading as="h2" size={{ base: 'md', lg: 'xl' }} alignSelf="center">
+            <Heading as="h2" size="xl" alignSelf="center">
               My Profile
             </Heading>
-            <Heading as="h2" size="sm" alignSelf="center" pl={5}>
-              membership ID
+            <Heading as="h2" fontSize={{ base: '16px', md: 'md' }} alignSelf="center" pl={5}>
+              2852179
             </Heading>
             <CopyIcon
               onClick={copyFile}
@@ -87,6 +86,7 @@ const Index: NextPage = () => {
           <Box>
             {edit && (
               <Button
+                width={{ md: '100px' }}
                 colorScheme="blue"
                 backgroundColor="rgba(65, 83, 240, 1)"
                 alignSelf="center"
@@ -116,27 +116,37 @@ const Index: NextPage = () => {
             mb="10px"
           >
             <Box>
-              <Text>Name</Text>
-              <Input
-                mt="7px"
-                variant="filled"
-                placeholder="JhonDoe"
-                background="rgba(240, 240, 240, 1)"
-                _focus={{ bg: 'rgba(240, 240, 240, 1)' }}
-                readOnly={edit}
-                {...register('FullName')}
-              />
-              <Text color="red" fontSize="12px" mt="12px">
-                {errors.FullName?.message}
-              </Text>
+              <FormControl>
+                <FormLabel>Name</FormLabel>
+                <Input
+                  mt="7px"
+                  variant="filled"
+                  placeholder="JhonDoe"
+                  readOnly={edit}
+                  {...register('FullName')}
+                  disabled={edit}
+                />
+                <Text color="red" fontSize="12px" mt="12px">
+                  {errors.FullName?.message}
+                </Text>
+              </FormControl>
             </Box>
-            <Box>
-              <Text>Best way to describe yourself </Text>
-              <Select placeholder="I prefer to use the pronoun" {...register('describe')}>
-                <option value="He/Him">He/Him</option>
-                <option value="She/Her">She/Her</option>
-                <option value="They/Them">They/Them</option>
-              </Select>
+            <Box width={{ lg: '240px' }}>
+              <FormControl>
+                <FormLabel>Select your Pronoun</FormLabel>
+                <MultiSeclect
+                  name="campus"
+                  options={[
+                    { value: 'He/Him', label: 'He/Him' },
+                    { value: 'She/Her', label: 'She/Her' },
+                    { value: 'They/Them', label: 'They/They' },
+                  ]}
+                  placeholder="Select Your Pronoun"
+                  closeMenuOnSelect
+                  size="md"
+                  isDisabled={edit}
+                />
+              </FormControl>
               <Text color="red" fontSize="12px" mt="12px">
                 {errors.describe?.message}
               </Text>
@@ -146,10 +156,7 @@ const Index: NextPage = () => {
               <Input
                 mt="7px"
                 variant="filled"
-                placeholder="Filled"
-                background="rgba(240, 240, 240, 1)"
-                color="black"
-                _focus={{ bg: 'rgba(240, 240, 240, 1)' }}
+                placeholder="Home"
                 disabled={edit}
                 {...register('House_Name')}
               />
@@ -164,16 +171,16 @@ const Index: NextPage = () => {
             mb="10px"
           >
             <Box>
-              <Text>Mobile Number</Text>
-              <Input
-                mt="7px"
-                variant="filled"
-                placeholder="Filled"
-                background="rgba(240, 240, 240, 1)"
-                _focus={{ bg: 'rgba(240, 240, 240, 1)' }}
-                disabled={edit}
-                {...register('Mobile')}
-              />
+              <FormControl>
+                <FormLabel>Mobile Number</FormLabel>
+                <Input
+                  mt="7px"
+                  variant="filled"
+                  placeholder="1234567890"
+                  disabled={edit}
+                  {...register('Mobile')}
+                />
+              </FormControl>
               <Text color="red" fontSize="12px" mt="12px">
                 {errors.Mobile?.message}
               </Text>
@@ -184,23 +191,21 @@ const Index: NextPage = () => {
                 mt="7px"
                 variant="filled"
                 placeholder="Filled"
-                background="rgba(240, 240, 240, 1)"
-                _focus={{ bg: 'rgba(240, 240, 240, 1)' }}
                 disabled={edit}
                 {...register('Mentor')}
               />
             </Box>
             <Box>
-              <Text>Street Name</Text>
-              <Input
-                mt="7px"
-                variant="filled"
-                placeholder="Filled"
-                background="rgba(240, 240, 240, 1)"
-                _focus={{ bg: 'rgba(240, 240, 240, 1)' }}
-                disabled={edit}
-                {...register('Street')}
-              />
+              <FormControl>
+                <FormLabel>Street Name</FormLabel>
+                <Input
+                  mt="7px"
+                  variant="Kochi"
+                  placeholder="Filled"
+                  disabled={edit}
+                  {...register('Street')}
+                />
+              </FormControl>
             </Box>
           </Stack>
           <Stack
@@ -213,10 +218,7 @@ const Index: NextPage = () => {
               <Input
                 mt="7px"
                 variant="filled"
-                placeholder="Filled"
-                background="rgba(240, 240, 240, 1)"
-                color="black"
-                _focus={{ bg: 'rgba(240, 240, 240, 1)' }}
+                placeholder="jhondoe@hotmail.com"
                 disabled={edit}
                 {...register('Email')}
               />
@@ -224,24 +226,38 @@ const Index: NextPage = () => {
                 {errors.Email?.message}
               </Text>
             </Box>
-            <Box>
-              <Text>Select your campus</Text>
-              <Select placeholder="I prefer to use the pronoun" {...register('College')}>
-                <option value="He/Him">He/Him</option>
-                <option value="She/Her">She/Her</option>
-                <option value="They/Them">They/Them</option>
-              </Select>
+            <Box width={{ lg: '240px' }}>
+              <FormControl>
+                <FormLabel>Select your campus</FormLabel>
+                <MultiSeclect
+                  name="campus"
+                  options={[
+                    { value: 'He/Him', label: 'He/Him' },
+                    { value: 'She/Her', label: 'She/Her' },
+                    { value: 'They/Them', label: 'They/They' },
+                  ]}
+                  placeholder="Select Your Campus"
+                  closeMenuOnSelect
+                  isDisabled={edit}
+                  size="md"
+                />
+              </FormControl>
               <Text color="red" fontSize="12px" mt="12px">
                 {errors.College?.message}
               </Text>
             </Box>
-            <Box>
-              <Text>District</Text>
-              <Select placeholder="Select Your District">
-                {District.map((el) => (
-                  <option value={el.value}>{el.label}</option>
-                ))}
-              </Select>
+            <Box width={{ lg: '220px' }}>
+              <FormControl width="100%">
+                <FormLabel>Select your District</FormLabel>
+                <MultiSeclect
+                  name="campus"
+                  options={District}
+                  placeholder="Select Your District"
+                  closeMenuOnSelect
+                  size="md"
+                  isDisabled={edit}
+                />
+              </FormControl>
             </Box>
           </Stack>
           <Stack
@@ -254,9 +270,7 @@ const Index: NextPage = () => {
               <Input
                 mt="7px"
                 variant="filled"
-                placeholder="Filled"
-                background="rgba(240, 240, 240, 1)"
-                _focus={{ bg: 'rgba(240, 240, 240, 1)' }}
+                placeholder="12-12-12"
                 disabled={edit}
                 {...register('DOB')}
                 type="date"
@@ -266,15 +280,16 @@ const Index: NextPage = () => {
               </Text>
             </Box>
             <Box width={{ lg: '240px' }}>
-              <FormControl p={4}>
+              <FormControl>
                 <FormLabel>Select Your skills</FormLabel>
                 <MultiSeclect
                   isMulti
                   name="colors"
                   options={Skills}
-                  placeholder="Select some colors..."
+                  placeholder="Select Your Skills"
                   closeMenuOnSelect={false}
-                  size="lg"
+                  size="md"
+                  isDisabled={edit}
                 />
                 <Text color="red" fontSize="12px">
                   {errors.My_Skills?.message}
@@ -285,16 +300,16 @@ const Index: NextPage = () => {
               </Text>
             </Box>
             <Box width={{ lg: '220px' }}>
-              <Text>Pincode</Text>
-              <Input
-                mt="7px"
-                variant="filled"
-                placeholder="Filled"
-                background="rgba(240, 240, 240, 1)"
-                _focus={{ bg: 'rgba(240, 240, 240, 1)' }}
-                disabled={edit}
-                {...register('Pincode')}
-              />
+              <FormControl>
+                <FormLabel>Pincode</FormLabel>
+                <Input
+                  mt="7px"
+                  variant="filled"
+                  placeholder="672215"
+                  disabled={edit}
+                  {...register('Pincode')}
+                />
+              </FormControl>
             </Box>
           </Stack>
           <Stack
@@ -302,18 +317,19 @@ const Index: NextPage = () => {
             direction={{ base: 'column', lg: 'row' }}
             mb="10px"
           >
-            <Box>
+            {/* <Box>
               <Text>Preferred pronoun</Text>
               <Input
                 mt="7px"
                 variant="filled"
                 placeholder="Filled"
+                color="black"
                 background="rgba(240, 240, 240, 1)"
                 _focus={{ bg: 'rgba(240, 240, 240, 1)' }}
                 disabled={edit}
                 {...register('Pronoun')}
               />
-            </Box>
+            </Box> */}
           </Stack>
         </Flex>
       </form>

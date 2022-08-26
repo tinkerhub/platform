@@ -6,7 +6,6 @@ import {
   RadioGroup,
   Stack,
   Text,
-  Select,
   FormControl,
   FormLabel,
 } from '@chakra-ui/react';
@@ -27,7 +26,7 @@ export const Skills = [
 
 export const Two = () => {
   const {
-    register,
+    // register,
     formState: { errors },
     // control,
   } = useFormContext<Form>();
@@ -40,14 +39,20 @@ export const Two = () => {
     >
       <Box mt="30px">
         <Box display="flex" flexDirection="column" h="75px" justifyContent="space-between">
-          <FormControl p={4}>
-            <FormLabel color="black">Best way to describe yourself</FormLabel>
-            <Select placeholder="I prefer to use the pronoun" {...register('describe')}>
-              <option value="He/Him">He/Him</option>
-              <option value="She/Her">She/Her</option>
-              <option value="They/Them">They/Them</option>
-            </Select>
-            <Text color="red" fontSize="12px">
+          <FormControl>
+            <FormLabel>Select your Pronoun</FormLabel>
+            <MultiSeclect
+              name="campus"
+              options={[
+                { value: 'He/Him', label: 'He/Him' },
+                { value: 'She/Her', label: 'She/Her' },
+                { value: 'They/Them', label: 'They/They' },
+              ]}
+              placeholder="Select Your Pronoun"
+              closeMenuOnSelect
+              size="md"
+            />
+            <Text color="red" fontSize="12px" mt="12px">
               {errors.describe?.message}
             </Text>
           </FormControl>
@@ -59,7 +64,7 @@ export const Two = () => {
           justifyContent="space-between"
           mt="15px"
         >
-          <FormControl p={4}>
+          <FormControl>
             <FormLabel>Select Your skills</FormLabel>
             <MultiSeclect
               isMulti
@@ -81,7 +86,7 @@ export const Two = () => {
           justifyContent="space-between"
           mt="25px"
         >
-          <FormLabel color="black">Can you be a Mentor</FormLabel>
+          <FormLabel>Can you be a Mentor</FormLabel>
           <RadioGroup defaultValue="2">
             <Stack spacing={5} direction="row">
               <Radio colorScheme="blue" value="1">
@@ -100,12 +105,20 @@ export const Two = () => {
           justifyContent="space-between"
           mt="15px"
         >
-          <FormLabel color="black">Select Your campus</FormLabel>
-          <Select placeholder="I prefer to use the pronoun" {...register('College')}>
-            <option value="He/Him">He/Him</option>
-            <option value="She/Her">She/Her</option>
-            <option value="They/Them">They/Them</option>
-          </Select>
+          <FormControl>
+            <FormLabel>Select Your Campus</FormLabel>
+            <MultiSeclect
+              isMulti
+              name="colors"
+              options={Skills}
+              placeholder="Select some colors..."
+              closeMenuOnSelect={false}
+              size="lg"
+            />
+            <Text color="red" fontSize="12px">
+              {errors.My_Skills?.message}
+            </Text>
+          </FormControl>
           <Text color="red" fontSize="12px">
             {errors.College?.message}
           </Text>

@@ -9,7 +9,7 @@ import { Form } from '../../types';
 import { useData } from '../../hooks';
 
 const Index: NextPage = () => {
-  const [step, setStep] = useState<number>(2);
+  const [step, setStep] = useState<number>(1);
   const methods = useForm<Form>({ mode: 'all', resolver: yupResolver(registerFormValidator) });
   const { properties, sendData } = useData<Form>('/user/profile');
 

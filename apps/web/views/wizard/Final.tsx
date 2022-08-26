@@ -24,7 +24,6 @@ export const Final = ({ isLoading, id }: Prop) => {
       <Center
         minH="550px"
         w="450px"
-        bg="white"
         p="35px"
         borderRadius="lg"
         borderColor="rgba(200, 200, 200, 1)"
@@ -43,25 +42,16 @@ export const Final = ({ isLoading, id }: Prop) => {
       mt="30px"
       minH="550px"
       w="450px"
-      bg="white"
       p="35px"
       borderRadius="lg"
       borderColor="rgba(200, 200, 200, 1)"
       borderWidth=".5px"
     >
       <Box padding="30" height="290px" width="100%">
-        <Heading as="h2" size="xl" textAlign="left" color="black">
+        <Heading as="h2" size="xl" textAlign="left">
           Thank You
         </Heading>
-        <Heading
-          as="h3"
-          size="md"
-          textAlign="left"
-          fontSize="18px"
-          fontWeight="450"
-          mt="10px"
-          color="black"
-        >
+        <Heading as="h3" size="md" textAlign="left" fontSize="18px" fontWeight="450" mt="10px">
           Here's your membership ID
         </Heading>
         <Box
@@ -95,12 +85,13 @@ export const Final = ({ isLoading, id }: Prop) => {
         </Button>
         <Button
           colorScheme="white"
-          borderColor="rgba(65, 83, 240, 1)"
+          // borderColor="rgba(65, 83, 240, 1)"
           borderWidth="3px"
           py="3"
           px="2"
           width="100%"
           mt="14px"
+          bg="white"
           color="black"
           fontSize="20px"
           _hover={{ cursor: 'pointer', borderColor: '#4299e1' }}

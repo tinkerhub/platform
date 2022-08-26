@@ -25,7 +25,14 @@ export const Bar = ({ val, back }: Prop) => {
     <Box>
       {val === 3 && (
         <Flex justifyContent="flex-end" mb="12px">
-          <Text display="inline" bg="rgba(240, 240, 240, 1)" borderRadius="3xl" px="2.5" py="1.6">
+          <Text
+            display="inline"
+            bg="rgba(240, 240, 240, 1)"
+            borderRadius="3xl"
+            px="2.5"
+            py="1.6"
+            color="black"
+          >
             Optional
           </Text>
         </Flex>
@@ -38,7 +45,6 @@ export const Bar = ({ val, back }: Prop) => {
             transition={{ duration: 0.5 }}
           >
             <ArrowBackIcon
-              color="black"
               _hover={{ cursor: 'pointer', bg: 'grey', color: 'white', transition: '.2s' }}
               fontSize="20px"
               borderRadius="3xl"
@@ -54,7 +60,7 @@ export const Bar = ({ val, back }: Prop) => {
           initial={{ opacity: 0, scale: 0.5, alignSelf: 'start' }}
           transition={{ duration: 0.5 }}
         >
-          <Heading as="h2" size="lg" color="black">
+          <Heading as="h2" size="lg">
             About You
           </Heading>
         </motion.div>
@@ -62,7 +68,6 @@ export const Bar = ({ val, back }: Prop) => {
         <Box display="flex" justifyContent="space-between" alignSelf="center" w="50px">
           {step.map((el) => (
             <Text
-              color="black"
               fontWeight={el === val ? 'extrabold' : 'normal'}
               fontSize={el === val ? '22px' : '20px'}
               key={el}
