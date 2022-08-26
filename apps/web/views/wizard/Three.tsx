@@ -1,7 +1,8 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import { Box, Button, Input, Select, Text } from '@chakra-ui/react';
+import { Box, Button, FormControl, FormLabel, Input, Text } from '@chakra-ui/react';
 import { motion } from 'framer-motion';
 import { useFormContext } from 'react-hook-form';
+import { Select as MultiSeclect } from 'chakra-react-select';
 import { Form } from '../../types';
 
 export const District = [
@@ -35,36 +36,46 @@ export const Three = () => {
     >
       <Box mt="30px">
         <Box display="flex" flexDirection="column" h="75px" justifyContent="space-between">
-          <Text color="black">House Name</Text>
-          <Input bg="rgba(240, 240, 240, 1)" {...register('House_Name')} type="string" />
-          <Text color="red" fontSize="12px">
-            {errors.House_Name?.message}
-          </Text>
+          <FormControl>
+            <FormLabel>House Name</FormLabel>
+            <Input {...register('House_Name')} type="string" />
+            <Text color="red" fontSize="12px">
+              {errors.House_Name?.message}
+            </Text>
+          </FormControl>
         </Box>
         <Box display="flex" flexDirection="column" h="75px" justifyContent="space-between">
-          <Text color="black">Street Name</Text>
-          <Input bg="rgba(240, 240, 240, 1)" {...register('Street')} />
-          <Text color="red" fontSize="12px">
-            {errors.Street?.message}
-          </Text>
+          <FormControl>
+            <FormLabel>Street Name</FormLabel>
+            <Input {...register('Street')} />
+            <Text color="red" fontSize="12px">
+              {errors.Street?.message}
+            </Text>
+          </FormControl>
         </Box>
         <Box display="flex" flexDirection="column" h="75px" justifyContent="space-between">
-          <Text color="black">District</Text>
-          <Select placeholder="Select Your District">
-            {District.map((el) => (
-              <option value={el.value}>{el.label}</option>
-            ))}
-          </Select>
+          <FormControl width="100%">
+            <FormLabel>Select your District</FormLabel>
+            <MultiSeclect
+              name="campus"
+              options={District}
+              placeholder="Select Your District"
+              closeMenuOnSelect
+              size="md"
+            />
+          </FormControl>
           <Text color="red" fontSize="12px">
             {errors.District?.message}
           </Text>
         </Box>
         <Box display="flex" flexDirection="column" h="75px" justifyContent="space-between">
-          <Text color="black">Pincode</Text>
-          <Input bg="rgba(240, 240, 240, 1)" {...register('Pincode')} />
-          <Text color="red" fontSize="12px">
-            {errors.Pincode?.message}
-          </Text>
+          <FormControl>
+            <FormLabel>Pincode</FormLabel>
+            <Input {...register('Pincode')} />
+            <Text color="red" fontSize="12px">
+              {errors.Pincode?.message}
+            </Text>
+          </FormControl>
         </Box>
         <Box mt="25px">
           <Button

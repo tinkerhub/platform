@@ -6,7 +6,7 @@ export const CardBio = ({ children }: Child) => (
   <Box
     minH="350px"
     w="450px"
-    bg="white"
+    // bg="white"
     p="35px"
     borderRadius="lg"
     borderColor="rgba(200, 200, 200, 1)"
