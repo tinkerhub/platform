@@ -133,18 +133,13 @@ const Index: NextPage = () => {
             </Box>
             <Box width={{ lg: '240px' }}>
               <FormControl>
-                <FormLabel>Select your Pronoun</FormLabel>
-                <MultiSeclect
-                  name="campus"
-                  options={[
-                    { value: 'He/Him', label: 'He/Him' },
-                    { value: 'She/Her', label: 'She/Her' },
-                    { value: 'They/Them', label: 'They/They' },
-                  ]}
-                  placeholder="Select Your Pronoun"
-                  closeMenuOnSelect
-                  size="md"
-                  isDisabled={edit}
+                <FormLabel>Best way to describe yourself</FormLabel>
+                <Input
+                  type="text"
+                  {...register('describe')}
+                  readOnly={edit}
+                  variant="filled"
+                  placeholder="I am ..."
                 />
               </FormControl>
               <Text color="red" fontSize="12px" mt="12px">
@@ -152,7 +147,7 @@ const Index: NextPage = () => {
               </Text>
             </Box>
             <Box>
-              <Text>House Name</Text>
+              <FormLabel>House Name</FormLabel>
               <Input
                 mt="7px"
                 variant="filled"
@@ -186,7 +181,7 @@ const Index: NextPage = () => {
               </Text>
             </Box>
             <Box width={{ lg: '245px' }}>
-              <Text>Can you be a mentor</Text>
+              <FormLabel>Can you be a mentor</FormLabel>
               <Input
                 mt="7px"
                 variant="filled"
@@ -200,8 +195,8 @@ const Index: NextPage = () => {
                 <FormLabel>Street Name</FormLabel>
                 <Input
                   mt="7px"
-                  variant="Kochi"
-                  placeholder="Filled"
+                  variant="filled"
+                  placeholder="kochi"
                   disabled={edit}
                   {...register('Street')}
                 />
@@ -214,7 +209,7 @@ const Index: NextPage = () => {
             mb="10px"
           >
             <Box>
-              <Text>Email</Text>
+              <FormLabel>Email</FormLabel>
               <Input
                 mt="7px"
                 variant="filled"
@@ -266,7 +261,7 @@ const Index: NextPage = () => {
             mb="10px"
           >
             <Box width={{ lg: '220px' }}>
-              <Text>Date of Birth</Text>
+              <FormLabel>Date of Birth</FormLabel>
               <Input
                 mt="7px"
                 variant="filled"
@@ -317,19 +312,23 @@ const Index: NextPage = () => {
             direction={{ base: 'column', lg: 'row' }}
             mb="10px"
           >
-            {/* <Box>
-              <Text>Preferred pronoun</Text>
-              <Input
-                mt="7px"
-                variant="filled"
-                placeholder="Filled"
-                color="black"
-                background="rgba(240, 240, 240, 1)"
-                _focus={{ bg: 'rgba(240, 240, 240, 1)' }}
-                disabled={edit}
-                {...register('Pronoun')}
-              />
-            </Box> */}
+            <Box width={{ lg: '220px' }}>
+              <FormControl>
+                <FormLabel>Select your Pronoun</FormLabel>
+                <MultiSeclect
+                  name="campus"
+                  options={[
+                    { value: 'He/Him', label: 'He/Him' },
+                    { value: 'She/Her', label: 'She/Her' },
+                    { value: 'They/Them', label: 'They/They' },
+                  ]}
+                  placeholder="Select Your Pronoun"
+                  closeMenuOnSelect
+                  size="md"
+                  isDisabled={edit}
+                />
+              </FormControl>
+            </Box>
           </Stack>
         </Flex>
       </form>

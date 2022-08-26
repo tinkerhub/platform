@@ -29,7 +29,7 @@ export const One = () => {
           <FormControl>
             <FormLabel>Name</FormLabel>
             <Input mt="7px" variant="filled" placeholder="JhonDoe" {...register('FullName')} />
-            <Text color="red" fontSize="12px" mt="12px">
+            <Text color="red" fontSize="12px" mt="6px">
               {errors.FullName?.message}
             </Text>
           </FormControl>
@@ -39,35 +39,53 @@ export const One = () => {
           flexDirection="column"
           h="75px"
           justifyContent="space-between"
-          mt="15px"
+          mt="29px"
         >
           <FormControl>
             <FormLabel>Mobile Number</FormLabel>
             <Input {...register('Mobile')} />
-            <Text color="red" fontSize="12px">
+            <Text color="red" fontSize="12px" mt="6px">
               {errors.Mobile?.message}
             </Text>
           </FormControl>
         </Box>
-        <Box display="flex" flexDirection="column" h="75px" justifyContent="space-between">
+        <Box
+          display="flex"
+          flexDirection="column"
+          h="75px"
+          justifyContent="space-between"
+          mt="25px"
+        >
           <FormControl>
             <FormLabel>Email</FormLabel>
             <Input {...register('Email')} />
-            <Text color="red" fontSize="12px">
+            <Text color="red" fontSize="12px" mt="6px">
               {errors.Email?.message}
             </Text>
           </FormControl>
         </Box>
-        <Box display="flex" flexDirection="column" h="75px" justifyContent="space-between">
+        <Box
+          display="flex"
+          flexDirection="column"
+          h="75px"
+          justifyContent="space-between"
+          mt="25px"
+        >
           <FormControl>
             <FormLabel>Date of Birth</FormLabel>
             <Input {...register('DOB')} type="date" />
-            <Text color="red" fontSize="12px">
+            <Text color="red" fontSize="12px" mt="6px">
               {errors.DOB?.message}
             </Text>
           </FormControl>
         </Box>
-        <Box display="flex" flexDirection="column" h="75px" justifyContent="space-between">
+        <Box
+          display="flex"
+          flexDirection="column"
+          h="75px"
+          justifyContent="space-between"
+          mt="25px"
+        >
           <FormControl>
             <FormLabel>Select your Pronoun</FormLabel>
             <MultiSeclect
@@ -82,7 +100,7 @@ export const One = () => {
               size="md"
             />
           </FormControl>
-          <Text color="red" fontSize="12px">
+          <Text color="red" fontSize="12px" mt="6px">
             {errors.Pronoun?.message}
           </Text>
         </Box>
