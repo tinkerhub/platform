@@ -1,13 +1,14 @@
 /* eslint-disable react/no-unescaped-entities */
-import { Center, Spinner, Heading, Box, Button, useToast } from '@chakra-ui/react';
+import { Center, Spinner, Heading, Box, Button, useToast, Text } from '@chakra-ui/react';
 import React from 'react';
 import { CopyIcon } from '@chakra-ui/icons';
 
 interface Prop {
   isLoading: boolean;
+  id: number;
 }
 
-export const Final = ({ isLoading }: Prop) => {
+export const Final = ({ isLoading, id }: Prop) => {
   const toast = useToast();
   const copyFile = () => {
     toast({
@@ -29,6 +30,9 @@ export const Final = ({ isLoading }: Prop) => {
         borderColor="rgba(200, 200, 200, 1)"
         borderWidth=".5px"
       >
+        <Text as="h5" color="black">
+          Loading...
+        </Text>
         <Spinner thickness="4px" speed="0.65s" emptyColor="gray.200" color="blue.500" size="xl" />
       </Center>
     );
@@ -74,8 +78,7 @@ export const Final = ({ isLoading }: Prop) => {
           onClick={copyFile}
         >
           <Heading fontWeight="bold" size="md" color="black">
-            {' '}
-            1010101010110
+            {id}
           </Heading>
           <CopyIcon fontSize="25px" color="black" />
         </Box>

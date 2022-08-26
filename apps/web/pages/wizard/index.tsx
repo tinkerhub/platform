@@ -9,7 +9,7 @@ import { Form } from '../../types';
 import { useData } from '../../hooks';
 
 const Index: NextPage = () => {
-  const [step, setStep] = useState<number>(1);
+  const [step, setStep] = useState<number>(2);
   const methods = useForm<Form>({ mode: 'all', resolver: yupResolver(registerFormValidator) });
   const { properties, sendData } = useData<Form>('/user/profile');
 
@@ -34,7 +34,7 @@ const Index: NextPage = () => {
   if (step === 4) {
     return (
       <Center mb="60px">
-        <Final isLoading={properties.isLoading} />
+        <Final isLoading={properties.isLoading} id={100000} />
       </Center>
     );
   }
