@@ -2,19 +2,29 @@
 import React, { useState } from 'react';
 import type { NextPage } from 'next';
 import { ArrowBackIcon, CopyIcon } from '@chakra-ui/icons';
-import { Box, Button, Flex, Heading, Input, Select, Stack, Text, useToast } from '@chakra-ui/react';
+import {
+  Box,
+  Button,
+  Flex,
+  Heading,
+  Input,
+  Select,
+  Stack,
+  Text,
+  useToast,
+  FormControl,
+  FormLabel,
+} from '@chakra-ui/react';
 import { useRouter } from 'next/router';
+import { Select as MultiSeclect } from 'chakra-react-select';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import makeAnimated from 'react-select/animated';
-import MultiSelect from 'react-select';
 import { registerFormValidator } from '../../views/wizard';
 import { Form } from '../../types';
 import { Skills } from '../../views/wizard/Two';
 import { District } from '../../views/wizard/Three';
 
 const Index: NextPage = () => {
-  const animatedComponents = makeAnimated();
   const router = useRouter();
   const [edit, setEdit] = useState<boolean>(true);
   const {
@@ -256,13 +266,20 @@ const Index: NextPage = () => {
               </Text>
             </Box>
             <Box width={{ lg: '240px' }}>
-              <Text>Skill</Text>
-              <MultiSelect
-                closeMenuOnSelect={false}
-                components={animatedComponents}
-                isMulti
-                options={Skills}
-              />
+              <FormControl p={4}>
+                <FormLabel>Select Your skills</FormLabel>
+                <MultiSeclect
+                  isMulti
+                  name="colors"
+                  options={Skills}
+                  placeholder="Select some colors..."
+                  closeMenuOnSelect={false}
+                  size="lg"
+                />
+                <Text color="red" fontSize="12px">
+                  {errors.My_Skills?.message}
+                </Text>
+              </FormControl>
               <Text color="red" fontSize="12px" mt="12px">
                 {errors.My_Skills?.message}
               </Text>

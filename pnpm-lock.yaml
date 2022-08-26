@@ -138,13 +138,13 @@ importers:
       '@typescript-eslint/eslint-plugin': ^5.30.7
       '@typescript-eslint/parser': ^5.30.7
       axios: ^0.27.2
+      chakra-react-select: ^4.1.4
       framer-motion: ^6.5.1
       next: 12.2.2
       next-pwa: 5.5.4
       react: 18.2.0
       react-dom: 18.2.0
       react-hook-form: ^7.33.1
-      react-select: ^5.4.0
       supertokens-auth-react: ^0.24.2
       swr: ^1.3.0
       typescript: 4.7.4
@@ -157,13 +157,13 @@ importers:
       '@fontsource/archivo': 4.5.7
       '@hookform/resolvers': 2.9.7_react-hook-form@7.34.0
       axios: 0.27.2
+      chakra-react-select: 4.1.4_kwfxfbeyo4cozxldft43mrxxl4
       framer-motion: 6.5.1_biqbaboplfbrettd7655fr4n2y
       next: 12.2.2_qugu52izettqdqqm5qcjcltcia
       next-pwa: 5.5.4_25fm6adfgkergigdj2objuzkki
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
       react-hook-form: 7.34.0_react@18.2.0
-      react-select: 5.4.0_nzjbfc7eybcehockioa7br7kbi
       supertokens-auth-react: 0.24.2_nzjbfc7eybcehockioa7br7kbi
       swr: 1.3.0_react@18.2.0
       yup: 0.32.11
@@ -4786,6 +4786,28 @@ packages:
 
   /caniuse-lite/1.0.30001373:
     resolution: {integrity: sha512-pJYArGHrPp3TUqQzFYRmP/lwJlj8RCbVe3Gd3eJQkAV8SAC6b19XS9BjMvRdvaS8RMkaTN8ZhoHP6S1y8zzwEQ==}
+
+  /chakra-react-select/4.1.4_kwfxfbeyo4cozxldft43mrxxl4:
+    resolution: {integrity: sha512-zhLIGWxVZWYZv/EOxzrnVfIT+JmNdBgFEbRYR2H7I7ViLcR434KRV5Wz9zZByUmhVxID34WMOInDZYeLXAMkNg==}
+    peerDependencies:
+      '@chakra-ui/form-control': ^2.0.0
+      '@chakra-ui/icon': ^3.0.0
+      '@chakra-ui/layout': ^2.0.0
+      '@chakra-ui/menu': ^2.0.0
+      '@chakra-ui/spinner': ^2.0.0
+      '@chakra-ui/system': ^2.0.0
+      '@emotion/react': ^11.8.1
+      react: ^18.0.0
+      react-dom: ^18.0.0
+    dependencies:
+      '@emotion/react': 11.9.3_szkdlbnthht4v3jvm76fn7u6na
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+      react-select: 5.4.0_nzjbfc7eybcehockioa7br7kbi
+    transitivePeerDependencies:
+      - '@babel/core'
+      - '@types/react'
+    dev: false
 
   /chalk/2.4.2:
     resolution: {integrity: sha512-Mti+f9lpJNcwF4tWV8/OrTTtF1gZi+f8FqlyAdouralcFWFQWF2+NgCHShjkCb+IFBLq9buZwE1xckQU4peSuQ==}

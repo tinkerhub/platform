@@ -1,9 +1,18 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import { Box, Button, Radio, RadioGroup, Stack, Text, Select } from '@chakra-ui/react';
+import {
+  Box,
+  Button,
+  Radio,
+  RadioGroup,
+  Stack,
+  Text,
+  Select,
+  FormControl,
+  FormLabel,
+} from '@chakra-ui/react';
 import { motion } from 'framer-motion';
 import { useFormContext } from 'react-hook-form';
-import makeAnimated from 'react-select/animated';
-import MultiSelect from 'react-select';
+import { Select as MultiSeclect } from 'chakra-react-select';
 import { Form } from '../../types';
 
 export const Skills = [
@@ -17,14 +26,11 @@ export const Skills = [
 ];
 
 export const Two = () => {
-  const animatedComponents = makeAnimated();
   const {
     register,
     formState: { errors },
     // control,
   } = useFormContext<Form>();
-
-  // const Skills = ['java', 'js', 'go', 'react', 'html', 'python', 'css', 'angular'];
 
   return (
     <motion.div
@@ -34,15 +40,17 @@ export const Two = () => {
     >
       <Box mt="30px">
         <Box display="flex" flexDirection="column" h="75px" justifyContent="space-between">
-          <Text color="black">Best way to describe yourself</Text>
-          <Select placeholder="I prefer to use the pronoun" {...register('describe')}>
-            <option value="He/Him">He/Him</option>
-            <option value="She/Her">She/Her</option>
-            <option value="They/Them">They/Them</option>
-          </Select>
-          <Text color="red" fontSize="12px">
-            {errors.describe?.message}
-          </Text>
+          <FormControl p={4}>
+            <FormLabel color="black">Best way to describe yourself</FormLabel>
+            <Select placeholder="I prefer to use the pronoun" {...register('describe')}>
+              <option value="He/Him">He/Him</option>
+              <option value="She/Her">She/Her</option>
+              <option value="They/Them">They/Them</option>
+            </Select>
+            <Text color="red" fontSize="12px">
+              {errors.describe?.message}
+            </Text>
+          </FormControl>
         </Box>
         <Box
           display="flex"
@@ -51,17 +59,20 @@ export const Two = () => {
           justifyContent="space-between"
           mt="15px"
         >
-          <Text color="black">Skill</Text>
-
-          <MultiSelect
-            closeMenuOnSelect={false}
-            components={animatedComponents}
-            isMulti
-            options={Skills}
-          />
-          <Text color="red" fontSize="12px">
-            {errors.My_Skills?.message}
-          </Text>
+          <FormControl p={4}>
+            <FormLabel>Select Your skills</FormLabel>
+            <MultiSeclect
+              isMulti
+              name="colors"
+              options={Skills}
+              placeholder="Select some colors..."
+              closeMenuOnSelect={false}
+              size="lg"
+            />
+            <Text color="red" fontSize="12px">
+              {errors.My_Skills?.message}
+            </Text>
+          </FormControl>
         </Box>
         <Box
           display="flex"
@@ -70,7 +81,7 @@ export const Two = () => {
           justifyContent="space-between"
           mt="25px"
         >
-          <Text color="black">Can you be a Mentor</Text>
+          <FormLabel color="black">Can you be a Mentor</FormLabel>
           <RadioGroup defaultValue="2">
             <Stack spacing={5} direction="row">
               <Radio colorScheme="blue" value="1">
@@ -89,7 +100,7 @@ export const Two = () => {
           justifyContent="space-between"
           mt="15px"
         >
-          <Text color="black">Select Your campus</Text>
+          <FormLabel color="black">Select Your campus</FormLabel>
           <Select placeholder="I prefer to use the pronoun" {...register('College')}>
             <option value="He/Him">He/Him</option>
             <option value="She/Her">She/Her</option>
