@@ -9,7 +9,7 @@ services:
     volumes:
       - ./apps/api:/app/apps/api
     environment:
-      - DATABASE_URL=file:./dev.db
+      - DATABASE_URL:postgresql://postgres:postgres@localhost:5432/platform?schema=public
     depends_on:
       - db
   db:

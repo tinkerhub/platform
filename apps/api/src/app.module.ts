@@ -43,7 +43,6 @@ const coreModules = [
         websiteBasePath: process.env.SUPERTOKENS_PATH,
       },
     }),
-    ConfigModule.forRoot(),
   ],
   controllers: [AppController],
   providers: [AppService],
