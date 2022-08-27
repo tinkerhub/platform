@@ -1,8 +1,8 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import { Box, Button, FormControl, FormLabel, Input, Text } from '@chakra-ui/react';
 import { motion } from 'framer-motion';
-import { useFormContext } from 'react-hook-form';
-import { Select as MultiSeclect } from 'chakra-react-select';
+import { Controller, useFormContext } from 'react-hook-form';
+import { Select as MultiSeclect, GroupBase, OptionBase } from 'chakra-react-select';
 import { Form } from '../../types';
 
 export const District = [
@@ -22,9 +22,15 @@ export const District = [
   { value: 'Wayanad', label: 'Wayanad' },
 ];
 
+interface Options extends OptionBase {
+  label: string;
+  value: string;
+}
+
 export const Three = () => {
   const {
     register,
+    control,
     formState: { errors },
   } = useFormContext<Form>();
 
@@ -54,16 +60,30 @@ export const Three = () => {
           </FormControl>
         </Box>
         <Box display="flex" flexDirection="column" h="75px" justifyContent="space-between">
-          <FormControl width="100%">
-            <FormLabel>Select your District</FormLabel>
-            <MultiSeclect
-              name="campus"
-              options={District}
-              placeholder="Select Your District"
-              closeMenuOnSelect
-              size="md"
-            />
-          </FormControl>
+          <Controller
+            control={control}
+            name="District"
+            render={({ field: { onChange, onBlur, name, ref } }) => (
+              <>
+                <FormControl>
+                  <FormLabel>Select your District</FormLabel>
+                  <MultiSeclect<Options, true, GroupBase<Options>>
+                    onChange={onChange}
+                    onBlur={onBlur}
+                    name={name}
+                    ref={ref}
+                    options={District}
+                    placeholder="Select Your District"
+                    closeMenuOnSelect
+                    size="md"
+                  />
+                </FormControl>
+                <Text color="red" fontSize="12px" mt="12px">
+                  {errors.District?.message}
+                </Text>
+              </>
+            )}
+          />
           <Text color="red" fontSize="12px">
             {errors.District?.message}
           </Text>

@@ -2,14 +2,26 @@
 import { Box, Text, FormLabel, FormControl, Input, Button } from '@chakra-ui/react';
 import React, { useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { useFormContext } from 'react-hook-form';
-import { Select as MultiSeclect } from 'chakra-react-select';
+import { useFormContext, Controller } from 'react-hook-form';
+import { Select as MultiSeclect, OptionBase, GroupBase } from 'chakra-react-select';
 import { Form } from '../../types';
+
+interface Options extends OptionBase {
+  label: string;
+  value: string;
+}
+
+const PronounOpt: Options[] = [
+  { label: 'He/Him', value: 'He/Him' },
+  { label: 'She/Her', value: 'She/Her' },
+  { label: 'They/Them', value: 'They/Them' },
+];
 
 export const One = () => {
   const {
     register,
     setFocus,
+    control,
     formState: { errors },
   } = useFormContext<Form>();
 
@@ -43,7 +55,7 @@ export const One = () => {
         >
           <FormControl>
             <FormLabel>Mobile Number</FormLabel>
-            <Input {...register('Mobile')} />
+            <Input {...register('Mobile')} type="number" />
             <Text color="red" fontSize="12px" mt="6px">
               {errors.Mobile?.message}
             </Text>
@@ -86,23 +98,30 @@ export const One = () => {
           justifyContent="space-between"
           mt="25px"
         >
-          <FormControl>
-            <FormLabel>Select your Pronoun</FormLabel>
-            <MultiSeclect
-              name="campus"
-              options={[
-                { value: 'He/Him', label: 'He/Him' },
-                { value: 'She/Her', label: 'She/Her' },
-                { value: 'They/Them', label: 'They/They' },
-              ]}
-              placeholder="Select Your Pronoun"
-              closeMenuOnSelect
-              size="md"
-            />
-          </FormControl>
-          <Text color="red" fontSize="12px" mt="6px">
-            {errors.Pronoun?.message}
-          </Text>
+          <Controller
+            control={control}
+            name="Pronoun"
+            render={({ field: { onChange, onBlur, name, ref } }) => (
+              <>
+                <FormControl>
+                  <FormLabel>Select your Pronoun</FormLabel>
+                  <MultiSeclect<Options, true, GroupBase<Options>>
+                    onChange={onChange}
+                    onBlur={onBlur}
+                    name={name}
+                    ref={ref}
+                    options={PronounOpt}
+                    placeholder="Select Your Pronoun"
+                    closeMenuOnSelect
+                    size="md"
+                  />
+                </FormControl>
+                <Text color="red" fontSize="12px" mt="12px">
+                  {errors.Pronoun?.message}
+                </Text>
+              </>
+            )}
+          />
         </Box>
         <Box mt="25px">
           <Button

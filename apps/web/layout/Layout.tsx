@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import { Flex } from '@chakra-ui/react';
 import { useSessionContext } from 'supertokens-auth-react/recipe/session';
 import { signOut } from 'supertokens-auth-react/recipe/passwordless';
-import { Topbar, BottomBar } from '../components/Navbar';
+import { Topbar, BottomBar } from './Navbar';
 import type { Child } from '../types';
 import { ActionKind, AuthReducer } from './reducer';
 
