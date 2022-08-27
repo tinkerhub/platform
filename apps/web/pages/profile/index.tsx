@@ -1,4 +1,4 @@
-/* eslint-disable react/jsx-props-no-spreading */ /* eslint-disable react-hooks/rules-of-hooks */
+/* eslint-disable react/jsx-props-no-spreading */
 import React, { useState } from 'react';
 import type { NextPage } from 'next';
 import { ArrowBackIcon, CopyIcon } from '@chakra-ui/icons';
@@ -15,21 +15,34 @@ import {
   FormLabel,
 } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
-import { Select as MultiSeclect } from 'chakra-react-select';
-import { useForm } from 'react-hook-form';
+import { Select as MultiSeclect, OptionBase, GroupBase } from 'chakra-react-select';
+import { useForm, Controller, SubmitHandler } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { registerFormValidator } from '../../views/wizard';
 import { Form } from '../../types';
 import { Skills } from '../../views/wizard/Two';
 import { District } from '../../views/wizard/Three';
 
+interface Options extends OptionBase {
+  label: string;
+  value: string;
+}
+
+const PronounOpt: Options[] = [
+  { label: 'He/Him', value: 'He/Him' },
+  { label: 'She/Her', value: 'She/Her' },
+  { label: 'They/Them', value: 'They/Them' },
+];
+
 const Index: NextPage = () => {
   const router = useRouter();
+
   const [edit, setEdit] = useState<boolean>(true);
   const {
     register,
     handleSubmit,
     setFocus,
+    control,
     formState: { errors },
   } = useForm<Form>({ mode: 'all', resolver: yupResolver(registerFormValidator) });
 
@@ -42,6 +55,7 @@ const Index: NextPage = () => {
   };
 
   const copyFile = () => {
+    window.navigator.clipboard.writeText('8078153360');
     toast({
       title: 'Id copied to clipboard.',
       status: 'success',
@@ -50,7 +64,7 @@ const Index: NextPage = () => {
     });
   };
 
-  const updateProfile = (data: Form) => {
+  const updateProfile: SubmitHandler<Form> = (data) => {
     // eslint-disable-next-line no-console
     console.log(data);
   };
@@ -124,7 +138,6 @@ const Index: NextPage = () => {
                   placeholder="JhonDoe"
                   readOnly={edit}
                   {...register('FullName')}
-                  disabled={edit}
                 />
                 <Text color="red" fontSize="12px" mt="12px">
                   {errors.FullName?.message}
@@ -132,16 +145,31 @@ const Index: NextPage = () => {
               </FormControl>
             </Box>
             <Box width={{ lg: '240px' }}>
-              <FormControl>
-                <FormLabel>Best way to describe yourself</FormLabel>
-                <Input
-                  type="text"
-                  {...register('describe')}
-                  readOnly={edit}
-                  variant="filled"
-                  placeholder="I am ..."
-                />
-              </FormControl>
+              <Controller
+                control={control}
+                name="describe"
+                render={({ field: { onChange, onBlur, name, ref } }) => (
+                  <>
+                    <FormControl>
+                      <FormLabel>Best way to describe yourself</FormLabel>
+                      <MultiSeclect<Options, true, GroupBase<Options>>
+                        onChange={onChange}
+                        onBlur={onBlur}
+                        name={name}
+                        ref={ref}
+                        options={PronounOpt}
+                        placeholder="I am"
+                        closeMenuOnSelect
+                        isDisabled={edit}
+                        size="md"
+                      />
+                    </FormControl>
+                    <Text color="red" fontSize="12px" mt="12px">
+                      {errors.Pronoun?.message}
+                    </Text>
+                  </>
+                )}
+              />
               <Text color="red" fontSize="12px" mt="12px">
                 {errors.describe?.message}
               </Text>
@@ -172,7 +200,7 @@ const Index: NextPage = () => {
                   mt="7px"
                   variant="filled"
                   placeholder="1234567890"
-                  disabled={edit}
+                  disabled
                   {...register('Mobile')}
                 />
               </FormControl>
@@ -222,37 +250,58 @@ const Index: NextPage = () => {
               </Text>
             </Box>
             <Box width={{ lg: '240px' }}>
-              <FormControl>
-                <FormLabel>Select your campus</FormLabel>
-                <MultiSeclect
-                  name="campus"
-                  options={[
-                    { value: 'He/Him', label: 'He/Him' },
-                    { value: 'She/Her', label: 'She/Her' },
-                    { value: 'They/Them', label: 'They/They' },
-                  ]}
-                  placeholder="Select Your Campus"
-                  closeMenuOnSelect
-                  isDisabled={edit}
-                  size="md"
-                />
-              </FormControl>
-              <Text color="red" fontSize="12px" mt="12px">
-                {errors.College?.message}
-              </Text>
+              <Controller
+                control={control}
+                name="College"
+                render={({ field: { onChange, onBlur, name, ref } }) => (
+                  <>
+                    <FormControl>
+                      <FormLabel>Select your campus</FormLabel>
+                      <MultiSeclect<Options, true, GroupBase<Options>>
+                        onChange={onChange}
+                        onBlur={onBlur}
+                        name={name}
+                        ref={ref}
+                        options={PronounOpt}
+                        placeholder="Select Your Campus"
+                        closeMenuOnSelect
+                        isDisabled={edit}
+                        size="md"
+                      />
+                    </FormControl>
+                    <Text color="red" fontSize="12px" mt="12px">
+                      {errors.College?.message}
+                    </Text>
+                  </>
+                )}
+              />
             </Box>
             <Box width={{ lg: '220px' }}>
-              <FormControl width="100%">
-                <FormLabel>Select your District</FormLabel>
-                <MultiSeclect
-                  name="campus"
-                  options={District}
-                  placeholder="Select Your District"
-                  closeMenuOnSelect
-                  size="md"
-                  isDisabled={edit}
-                />
-              </FormControl>
+              <Controller
+                control={control}
+                name="District"
+                render={({ field: { onChange, onBlur, name, ref } }) => (
+                  <>
+                    <FormControl>
+                      <FormLabel>Select your District</FormLabel>
+                      <MultiSeclect<Options, true, GroupBase<Options>>
+                        onChange={onChange}
+                        onBlur={onBlur}
+                        name={name}
+                        ref={ref}
+                        options={District}
+                        placeholder="Select Your District"
+                        closeMenuOnSelect
+                        isDisabled={edit}
+                        size="md"
+                      />
+                    </FormControl>
+                    <Text color="red" fontSize="12px" mt="12px">
+                      {errors.District?.message}
+                    </Text>
+                  </>
+                )}
+              />
             </Box>
           </Stack>
           <Stack
@@ -275,21 +324,32 @@ const Index: NextPage = () => {
               </Text>
             </Box>
             <Box width={{ lg: '240px' }}>
-              <FormControl>
-                <FormLabel>Select Your skills</FormLabel>
-                <MultiSeclect
-                  isMulti
-                  name="colors"
-                  options={Skills}
-                  placeholder="Select Your Skills"
-                  closeMenuOnSelect={false}
-                  size="md"
-                  isDisabled={edit}
-                />
-                <Text color="red" fontSize="12px">
-                  {errors.My_Skills?.message}
-                </Text>
-              </FormControl>
+              <Controller
+                control={control}
+                name="My_Skills"
+                render={({ field: { onChange, onBlur, name, ref } }) => (
+                  <>
+                    <FormControl>
+                      <FormLabel>Select your Skills</FormLabel>
+                      <MultiSeclect<Options, true, GroupBase<Options>>
+                        isMulti
+                        onChange={onChange}
+                        onBlur={onBlur}
+                        name={name}
+                        ref={ref}
+                        options={Skills}
+                        placeholder="Select Your Skills"
+                        closeMenuOnSelect
+                        isDisabled={edit}
+                        size="md"
+                      />
+                    </FormControl>
+                    <Text color="red" fontSize="12px" mt="12px">
+                      {errors.My_Skills?.message}
+                    </Text>
+                  </>
+                )}
+              />
               <Text color="red" fontSize="12px" mt="12px">
                 {errors.My_Skills?.message}
               </Text>
@@ -313,21 +373,31 @@ const Index: NextPage = () => {
             mb="10px"
           >
             <Box width={{ lg: '220px' }}>
-              <FormControl>
-                <FormLabel>Select your Pronoun</FormLabel>
-                <MultiSeclect
-                  name="campus"
-                  options={[
-                    { value: 'He/Him', label: 'He/Him' },
-                    { value: 'She/Her', label: 'She/Her' },
-                    { value: 'They/Them', label: 'They/They' },
-                  ]}
-                  placeholder="Select Your Pronoun"
-                  closeMenuOnSelect
-                  size="md"
-                  isDisabled={edit}
-                />
-              </FormControl>
+              <Controller
+                control={control}
+                name="Pronoun"
+                render={({ field: { onChange, onBlur, name, ref } }) => (
+                  <>
+                    <FormControl>
+                      <FormLabel>Select your Pronoun</FormLabel>
+                      <MultiSeclect<Options, true, GroupBase<Options>>
+                        onChange={onChange}
+                        onBlur={onBlur}
+                        name={name}
+                        ref={ref}
+                        options={PronounOpt}
+                        placeholder="Select Your Pronoun"
+                        closeMenuOnSelect
+                        isDisabled={edit}
+                        size="md"
+                      />
+                    </FormControl>
+                    <Text color="red" fontSize="12px" mt="12px">
+                      {errors.Pronoun?.message}
+                    </Text>
+                  </>
+                )}
+              />
             </Box>
           </Stack>
         </Flex>
