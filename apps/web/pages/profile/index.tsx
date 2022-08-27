@@ -201,6 +201,7 @@ const Index: NextPage = () => {
                   variant="filled"
                   placeholder="1234567890"
                   disabled
+                  type="number"
                   {...register('Mobile')}
                 />
               </FormControl>
@@ -362,6 +363,7 @@ const Index: NextPage = () => {
                   variant="filled"
                   placeholder="672215"
                   disabled={edit}
+                  type="number"
                   {...register('Pincode')}
                 />
               </FormControl>

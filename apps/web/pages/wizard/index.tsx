@@ -2,14 +2,14 @@
 import { Center } from '@chakra-ui/react';
 import React, { useState } from 'react';
 import type { NextPage } from 'next';
-import { useForm, FormProvider } from 'react-hook-form';
+import { useForm, FormProvider, SubmitHandler } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { registerFormValidator, CardBio, Bar, One, Two, Three, Final } from '../../views/wizard';
 import { Form } from '../../types';
 import { useData } from '../../hooks';
 
 const Index: NextPage = () => {
-  const [step, setStep] = useState<number>(1);
+  const [step, setStep] = useState<number>(3);
   const methods = useForm<Form>({ mode: 'all', resolver: yupResolver(registerFormValidator) });
   const { properties, sendData } = useData<Form>('/user/profile');
 
@@ -20,7 +20,7 @@ const Index: NextPage = () => {
   const stepSub = (): void => {
     setStep((ste) => ste - 1);
   };
-  const handleData = (val: Form) => {
+  const handleData: SubmitHandler<Form> = (val) => {
     if (step === 3) {
       // increase the step to 4 to render the sucess/ fail UI
       stepAdd();
