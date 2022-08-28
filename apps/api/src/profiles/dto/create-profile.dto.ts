@@ -33,6 +33,9 @@ export class CreateProfileDto {
   mentor: boolean;
 
   @IsString()
+  mobile: string;
+
+  @IsString()
   pin: string;
 
   @IsString()
