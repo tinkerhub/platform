@@ -1,5 +1,17 @@
-import { Controller, Post, Body, Param, UseGuards, Get, Put } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  Body,
+  UseGuards,
+  Get,
+  Put,
+  Req,
+  Res,
+  HttpException,
+  HttpStatus,
+} from '@nestjs/common';
 import { AuthGuard } from 'src/auth/auth.guard';
+import Session from 'supertokens-node/recipe/session';
 import { ProfilesService } from './profiles.service';
 import { CreateProfileDto } from './dto/create-profile.dto';
 import { UpdateProfileDto } from './dto/update-profile.dto';
@@ -14,13 +26,39 @@ export class ProfilesController {
     return this.profilesService.create(createProfileDto);
   }
 
-  @Get('/:id')
-  read(@Param('id') id: string) {
-    return this.profilesService.read(id);
+  @Get()
+  async read(@Req() req: any, @Res({ passthrough: true }) res: any) {
+    try {
+      const session = await Session.getSession(req, res);
+      const authid = session.getUserId();
+      return await this.profilesService.read(authid);
+    } catch (err) {
+      throw new HttpException(
+        {
+          message: 'Session not available',
+        },
+        HttpStatus.SERVICE_UNAVAILABLE
+      );
+    }
   }
 
-  @Put('/:id')
-  update(@Param('id') id: string, @Body() updateProfileDto: UpdateProfileDto) {
-    return this.profilesService.update(id, updateProfileDto);
+  @Put()
+  async update(
+    @Req() req: any,
+    @Res({ passthrough: true }) res: any,
+    @Body() updateProfileDto: UpdateProfileDto
+  ) {
+    try {
+      const session = await Session.getSession(req, res);
+      const authid = session.getUserId();
+      return await this.profilesService.update(authid, updateProfileDto);
+    } catch (err) {
+      throw new HttpException(
+        {
+          message: 'Session not available',
+        },
+        HttpStatus.SERVICE_UNAVAILABLE
+      );
+    }
   }
 }

@@ -12,6 +12,7 @@ datasource db {
 
 model User {
   id       String   @id @unique @default(uuid())
+  Authid   String   @unique
   name     String
   email    String   @unique
   campus   String?

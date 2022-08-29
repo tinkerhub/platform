@@ -5,6 +5,10 @@ export class CreateProfileDto {
   @ApiProperty()
   @IsNotEmpty()
   @IsString()
+  Authid: string;
+
+  @IsNotEmpty()
+  @IsString()
   name: string;
 
   @IsNotEmpty()

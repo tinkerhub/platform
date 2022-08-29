@@ -47,11 +47,11 @@ export class ProfilesService {
   }
 
   // Method to READ an existing profile
-  async read(id: string) {
+  async read(authid: string) {
     try {
-      const resp = await this.prismaService.user.findUnique({
+      const resp = await this.prismaService.user.findFirst({
         where: {
-          id,
+          Authid: authid,
         },
       });
       return this.Success({
@@ -73,11 +73,11 @@ export class ProfilesService {
   }
 
   // Method to UPDATE an existing profile
-  async update(id: string, updateProfileDto: UpdateProfileDto) {
+  async update(authid: string, updateProfileDto: UpdateProfileDto) {
     try {
       const resp = await this.prismaService.user.update({
+        where: { Authid: authid },
         data: updateProfileDto,
-        where: { id },
       });
       return this.Success({
         data: resp,
