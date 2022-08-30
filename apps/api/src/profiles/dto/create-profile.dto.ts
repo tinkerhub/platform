@@ -3,9 +3,7 @@ import { IsArray, IsBoolean, IsEmail, IsNotEmpty, IsString } from 'class-validat
 
 export class CreateProfileDto {
   @ApiProperty()
-  @IsNotEmpty()
-  @IsString()
-  Authid: string;
+  authid: string;
 
   @IsNotEmpty()
   @IsString()
@@ -36,7 +34,6 @@ export class CreateProfileDto {
   @IsBoolean()
   mentor: boolean;
 
-  @IsString()
   mobile: string;
 
   @IsString()

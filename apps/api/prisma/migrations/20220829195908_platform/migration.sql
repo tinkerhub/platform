@@ -1,7 +1,7 @@
 -- CreateTable
 CREATE TABLE "User" (
     "id" TEXT NOT NULL,
-    "Authid" TEXT NOT NULL,
+    "authid" TEXT,
     "name" TEXT NOT NULL,
     "email" TEXT NOT NULL,
     "campus" TEXT,
@@ -23,7 +23,10 @@ CREATE TABLE "User" (
 CREATE UNIQUE INDEX "User_id_key" ON "User"("id");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "User_Authid_key" ON "User"("Authid");
+CREATE UNIQUE INDEX "User_authid_key" ON "User"("authid");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "User_mobile_key" ON "User"("mobile");

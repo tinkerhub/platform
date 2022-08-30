@@ -12,7 +12,7 @@ datasource db {
 
 model User {
   id       String   @id @unique @default(uuid())
-  Authid   String   @unique
+  authid   String?  @unique
   name     String
   email    String   @unique
   campus   String?
@@ -21,7 +21,7 @@ model User {
   dob      String
   house    String?
   mentor   Boolean
-  mobile   String?
+  mobile   String?  @unique
   pin      String?
   pronoun  String?
   skills   String[]
