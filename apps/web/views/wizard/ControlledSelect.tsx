@@ -43,7 +43,6 @@ export const ControlledSelect = <
     rules,
     shouldUnregister,
   });
-
   return (
     <FormControl label={label} isInvalid={!!error} id={name}>
       {label && <FormLabel>{label}</FormLabel>}

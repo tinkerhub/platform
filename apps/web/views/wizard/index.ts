@@ -1,5 +1,10 @@
 export { Final } from './Final';
-export { registerFormValidator } from './validator';
+export {
+  registerFormValidator,
+  firstFormValidator,
+  secondValidator,
+  thirdValidator,
+} from './validator';
 export { CardBio } from './Card';
 export { Bar } from './Bar';
 export { One } from './One';
