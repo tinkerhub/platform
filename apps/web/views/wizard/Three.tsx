@@ -66,8 +66,8 @@ export const Three = () => {
         </Box>
         <Box display="flex" flexDirection="column" justifyContent="space-between">
           <ControlledSelect
-            name="District"
             control={control}
+            name="District"
             label="Pick Your District"
             placeholder="Kozhikode"
             options={District}

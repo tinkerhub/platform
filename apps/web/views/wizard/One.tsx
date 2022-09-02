@@ -82,6 +82,7 @@ export const One = () => {
             label="Pronoun"
             placeholder="My pronoun is"
             options={PronounOpt}
+            isRequired
           />
         </Box>
         <Box>

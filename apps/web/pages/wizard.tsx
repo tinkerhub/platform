@@ -1,17 +1,41 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import { Center } from '@chakra-ui/react';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import type { NextPage } from 'next';
 import { useForm, FormProvider, SubmitHandler } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { registerFormValidator, CardBio, Bar, One, Two, Three, Final } from '../../views/wizard';
-import { Form } from '../../types';
-import { useData } from '../../hooks';
+import {
+  CardBio,
+  Bar,
+  One,
+  Two,
+  Three,
+  Final,
+  firstFormValidator,
+  secondValidator,
+  thirdValidator,
+} from '../views/wizard';
+import { Form } from '../types';
+import { useData } from '../hooks';
 
 const Index: NextPage = () => {
   const [step, setStep] = useState<number>(1);
-  const methods = useForm<Form>({ mode: 'all', resolver: yupResolver(registerFormValidator) });
+  const [validator, setValidator] = useState<any>(firstFormValidator);
+
+  const methods = useForm<Form>({ mode: 'all', resolver: yupResolver(validator) });
   const { properties, sendData } = useData<Form>('/user/profile');
+
+  useEffect(() => {
+    if (step === 1) {
+      setValidator(firstFormValidator);
+    }
+    if (step === 2) {
+      setValidator(secondValidator);
+    }
+    if (step === 3) {
+      setValidator(thirdValidator);
+    }
+  }, [step]);
 
   const stepAdd = (): void => {
     setStep((ste) => ste + 1);

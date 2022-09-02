@@ -12,12 +12,16 @@ export const BottomBar = () => (
       <Text color="rgba(177, 177, 177, 1)" _hover={{ cursor: 'pointer', color: 'grey' }}>
         tinkerhub.org
       </Text>
-      <Flex flexDirection="row" justifyContent="space-between" minW="250px">
+      <Flex
+        flexDirection="row"
+        justifyContent={{ base: 'space-around', md: 'space-between' }}
+        minW="250px"
+      >
         <Text color="rgba(177, 177, 177, 1)" _hover={{ cursor: 'pointer', color: 'grey' }}>
-          Philosophy
+          philosophy
         </Text>
         <Text color="rgba(177, 177, 177, 1)" _hover={{ cursor: 'pointer', color: 'grey' }}>
-          Code of Conduct
+          code of conduct
         </Text>
       </Flex>
     </Flex>

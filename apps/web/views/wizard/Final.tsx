@@ -1,5 +1,5 @@
 /* eslint-disable react/no-unescaped-entities */
-import { Center, Spinner, Heading, Box, Button, useToast, Text } from '@chakra-ui/react';
+import { Center, Spinner, Heading, Box, Button, useToast, Text, Flex } from '@chakra-ui/react';
 import React from 'react';
 import { CopyIcon } from '@chakra-ui/icons';
 
@@ -29,10 +29,10 @@ export const Final = ({ isLoading, id }: Prop) => {
         borderColor="rgba(200, 200, 200, 1)"
         borderWidth=".5px"
       >
-        <Text as="h5" color="black">
-          Loading...
-        </Text>
-        <Spinner thickness="4px" speed="0.65s" emptyColor="gray.200" color="blue.500" size="xl" />
+        <Flex flexDirection="column">
+          <Text as="h5">Loading...</Text>
+          <Spinner thickness="4px" speed="0.65s" emptyColor="gray.200" color="blue.500" size="xl" />
+        </Flex>
       </Center>
     );
   }

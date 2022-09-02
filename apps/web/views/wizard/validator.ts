@@ -75,3 +75,51 @@ export const registerFormValidator = Yup.object().shape({
   District: PickAnOptionValidator.nullable(),
   Pincode: Yup.string(),
 });
+
+export const firstFormValidator = Yup.object().shape({
+  FullName: Yup.string().required(requiredErrorStatement('full name')),
+  DOB: Yup.date().typeError('Please provide a valid Date').required(requiredErrorStatement('DOB')),
+  Email: Yup.string().email().required(requiredErrorStatement('email')),
+  Pronoun: PickAnOptionValidator.nullable().required('Please pick an option'),
+  Mobile: Yup.string().required(requiredErrorStatement('Mobile number')),
+  CampusCommunityActive: Yup.object()
+    .nullable()
+    .when('RegistrationType', {
+      is: (val: Option) => val?.value === 'Student',
+      then: PickAnOptionValidator.nullable().required(
+        requiredErrorStatement('Please pick an option')
+      ),
+    }),
+});
+export const secondValidator = Yup.object().shape({
+  Pronoun: PickAnOptionValidator.nullable().required('Please pick an option'),
+  My_Skills: Yup.array()
+    .nullable()
+    .max(5, 'Pick 5 skills maximum')
+    .of(
+      Yup.object().shape({
+        id: Yup.string().required(),
+        name: Yup.string().required(),
+      })
+    ),
+  Mentor: Yup.object()
+    .nullable()
+    .when('RegistrationType', {
+      is: (val: Option) => val?.value === 'Professional',
+      then: PickAnOptionValidator.required(),
+    }),
+  College: Yup.object().when('CampusCommunityActive', {
+    is: (val: Option) => val?.value === 'Yes',
+    then: Yup.object()
+      .shape({
+        id: Yup.string().required(),
+        name: Yup.string().required(),
+      })
+      .nullable()
+      .required('Please pick a college'),
+  }),
+});
+
+export const thirdValidator = Yup.object().shape({
+  District: PickAnOptionValidator.nullable(),
+});

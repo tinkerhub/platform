@@ -21,15 +21,13 @@ interface Options extends OptionBase {
   value: string;
 }
 
-const PronounOpt: Options[] = [
-  { label: 'He/Him', value: 'He/Him' },
-  { label: 'She/Her', value: 'She/Her' },
-  { label: 'They/Them', value: 'They/Them' },
+const Desp: Options[] = [
+  { label: 'Student', value: 'Student' },
+  { label: 'Profissional', value: 'Professional' },
 ];
 
 export const Two = () => {
   const { control } = useFormContext<Form>();
-
   return (
     <motion.div
       animate={{ scale: 1, opacity: 1 }}
@@ -39,11 +37,11 @@ export const Two = () => {
       <Box mt="30px">
         <Box display="flex" flexDirection="column" justifyContent="space-between">
           <ControlledSelect
-            name="Pronoun"
+            name="describe"
             control={control}
-            label="Your Prounoun "
-            placeholder="I am .."
-            options={PronounOpt}
+            label="Best way to describe yourslef"
+            placeholder="Student"
+            options={Desp}
           />
         </Box>
         <Box display="flex" flexDirection="column" justifyContent="space-between" mt="15px">
@@ -81,7 +79,7 @@ export const Two = () => {
             control={control}
             label="Pick Your college"
             placeholder="Gec.."
-            options={PronounOpt}
+            options={[{ label: 'hello', value: 'hello' }]}
           />
         </Box>
         <Box mt="25px">
