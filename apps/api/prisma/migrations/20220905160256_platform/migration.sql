@@ -7,7 +7,7 @@ CREATE TABLE "User" (
     "campus" TEXT,
     "desc" TEXT NOT NULL,
     "district" TEXT,
-    "dob" TEXT NOT NULL,
+    "dob" TIMESTAMP(3) NOT NULL,
     "house" TEXT,
     "mentor" BOOLEAN NOT NULL,
     "mobile" TEXT,
