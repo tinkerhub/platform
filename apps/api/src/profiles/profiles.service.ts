@@ -16,7 +16,7 @@ export class ProfilesService {
   // Response Handler
   Success(resp: Resp) {
     return {
-      ok: true,
+      Success: true,
       message: resp.message,
       data: resp.data,
     };
@@ -27,10 +27,22 @@ export class ProfilesService {
     const ReadResp = await this.read(createProfileDto.authid);
     const EmailResp = await this.EmailRead(createProfileDto.email);
     if (ReadResp.data != null) {
-      return { message: 'User Exists' };
+      throw new HttpException(
+        {
+          success: false,
+          error: 'User Exists',
+        },
+        HttpStatus.CONFLICT
+      );
     }
     if (EmailResp != null && EmailResp.data != null) {
-      return { message: 'Email already in use' };
+      throw new HttpException(
+        {
+          success: false,
+          error: 'Email already in use',
+        },
+        HttpStatus.CONFLICT
+      );
     }
     try {
       const resp = await this.prismaService.user.create({
@@ -46,7 +58,8 @@ export class ProfilesService {
       } else {
         throw new HttpException(
           {
-            message: "Could'nt create user",
+            success: false,
+            error: "Could'nt create user",
           },
           HttpStatus.BAD_REQUEST
         );
@@ -72,7 +85,8 @@ export class ProfilesService {
       } else {
         throw new HttpException(
           {
-            message: "Could'nt read user info",
+            success: false,
+            error: "Could'nt read user info",
           },
           HttpStatus.BAD_REQUEST
         );
@@ -101,7 +115,8 @@ export class ProfilesService {
       } else {
         throw new HttpException(
           {
-            message: "Could'nt read user info",
+            success: false,
+            error: "Could'nt read user info",
           },
           HttpStatus.BAD_REQUEST
         );
@@ -113,7 +128,13 @@ export class ProfilesService {
   async update(authid: string, updateProfileDto: UpdateProfileDto) {
     const EmailResp = await this.EmailRead(updateProfileDto.email);
     if (EmailResp.data != null) {
-      return { message: 'Email already in use' };
+      throw new HttpException(
+        {
+          success: false,
+          error: 'Email already in use',
+        },
+        HttpStatus.CONFLICT
+      );
     }
     try {
       const resp = await this.prismaService.user.update({
@@ -130,7 +151,8 @@ export class ProfilesService {
       } else {
         throw new HttpException(
           {
-            message: "Could'nt update user info",
+            success: false,
+            error: "Could'nt update user info",
           },
           HttpStatus.BAD_REQUEST
         );

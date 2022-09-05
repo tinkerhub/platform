@@ -4,11 +4,11 @@ import {
   Body,
   UseGuards,
   Get,
-  Put,
   Req,
   Res,
   HttpException,
   HttpStatus,
+  Patch,
 } from '@nestjs/common';
 import { AuthGuard } from 'src/auth/auth.guard';
 import Session from 'supertokens-node/recipe/session';
@@ -37,24 +37,16 @@ export class ProfilesController {
     } catch (err) {
       throw new HttpException(
         {
-          message: 'Session not available',
+          success: false,
+          error: 'Session not available',
         },
         HttpStatus.SERVICE_UNAVAILABLE
       );
     }
-    try {
-      const createProfile = createProfileDto;
-      createProfile.authid = authid;
-      createProfile.mobile = mobile;
-      return await this.profilesService.create(createProfile);
-    } catch (error) {
-      throw new HttpException(
-        {
-          message: "User can't be created",
-        },
-        HttpStatus.SERVICE_UNAVAILABLE
-      );
-    }
+    const createProfile = createProfileDto;
+    createProfile.authid = authid;
+    createProfile.mobile = mobile;
+    return this.profilesService.create(createProfile);
   }
 
   @Get()
@@ -66,24 +58,16 @@ export class ProfilesController {
     } catch (err) {
       throw new HttpException(
         {
-          message: 'Session not available',
+          success: false,
+          error: 'Session not available',
         },
         HttpStatus.SERVICE_UNAVAILABLE
       );
     }
-    try {
-      return await this.profilesService.read(authid);
-    } catch (error) {
-      throw new HttpException(
-        {
-          message: "User data can't be read",
-        },
-        HttpStatus.SERVICE_UNAVAILABLE
-      );
-    }
+    return this.profilesService.read(authid);
   }
 
-  @Put()
+  @Patch()
   async update(
     @Req() req: any,
     @Res({ passthrough: true }) res: any,
@@ -96,20 +80,12 @@ export class ProfilesController {
     } catch (err) {
       throw new HttpException(
         {
-          message: 'Session not available',
+          success: false,
+          error: 'Session not available',
         },
         HttpStatus.SERVICE_UNAVAILABLE
       );
     }
-    try {
-      return await this.profilesService.update(authid, updateProfileDto);
-    } catch (error) {
-      throw new HttpException(
-        {
-          message: "User data can't be updated",
-        },
-        HttpStatus.SERVICE_UNAVAILABLE
-      );
-    }
+    return this.profilesService.update(authid, updateProfileDto);
   }
 }
