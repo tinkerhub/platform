@@ -3,6 +3,7 @@ import {
   Post,
   Body,
   UseGuards,
+  Session,
   Get,
   Req,
   Res,
@@ -11,7 +12,7 @@ import {
   Patch,
 } from '@nestjs/common';
 import { AuthGuard } from 'src/auth/auth.guard';
-import Session from 'supertokens-node/recipe/session';
+import { SessionContainer } from 'supertokens-node/recipe/session';
 import Passwordless from 'supertokens-node/recipe/passwordless';
 import { ProfilesService } from './profiles.service';
 import { CreateProfileDto } from './dto/create-profile.dto';
@@ -26,12 +27,12 @@ export class ProfilesController {
   async create(
     @Req() req: any,
     @Res({ passthrough: true }) res: any,
-    @Body() createProfileDto: CreateProfileDto
+    @Body() createProfileDto: CreateProfileDto,
+    @Session() session: SessionContainer
   ) {
     let authid: string;
     let mobile: string;
     try {
-      const session = await Session.getSession(req, res);
       authid = session.getUserId();
       mobile = (await Passwordless.getUserById({ userId: authid }))!.phoneNumber!;
     } catch (err) {
@@ -50,10 +51,13 @@ export class ProfilesController {
   }
 
   @Get()
-  async read(@Req() req: any, @Res({ passthrough: true }) res: any) {
+  async read(
+    @Req() req: any,
+    @Res({ passthrough: true }) res: any,
+    @Session() session: SessionContainer
+  ) {
     let authid: string;
     try {
-      const session = await Session.getSession(req, res);
       authid = session.getUserId();
     } catch (err) {
       throw new HttpException(
@@ -71,11 +75,11 @@ export class ProfilesController {
   async update(
     @Req() req: any,
     @Res({ passthrough: true }) res: any,
-    @Body() updateProfileDto: UpdateProfileDto
+    @Body() updateProfileDto: UpdateProfileDto,
+    @Session() session: SessionContainer
   ) {
     let authid: string;
     try {
-      const session = await Session.getSession(req, res);
       authid = session.getUserId();
     } catch (err) {
       throw new HttpException(
