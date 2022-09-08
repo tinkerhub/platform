@@ -45,9 +45,6 @@ export class ProfilesService {
       throw new CreateException();
       // );
     }
-    const d = new Date(createProfileDto.dob);
-    const createProfile: CreateProfileDto = createProfileDto;
-    createProfile.dob = d;
     const resp = await this.prismaService.user.create({
       // @ts-ignore
       data: createProfileDto,
@@ -100,14 +97,9 @@ export class ProfilesService {
       // );
       throw new UpdateException();
     }
-    const updateProfile: UpdateProfileDto = updateProfileDto;
-    if (updateProfileDto.dob !== undefined) {
-      const d = new Date(updateProfileDto.dob);
-      updateProfile.dob = d;
-    }
     const resp = await this.prismaService.user.update({
       where: { authid },
-      data: updateProfile,
+      data: UpdateProfileDto,
     });
     return this.Success({
       data: resp,
