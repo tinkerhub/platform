@@ -1,22 +1,13 @@
-import {
-  Controller,
-  Post,
-  Body,
-  UseGuards,
-  Session,
-  Get,
-  Req,
-  Res,
-  HttpException,
-  HttpStatus,
-  Patch,
-} from '@nestjs/common';
+import { Controller, Post, Body, UseGuards, Session, Get, Req, Res, Patch } from '@nestjs/common';
 import { AuthGuard } from 'src/auth/auth.guard';
 import { SessionContainer } from 'supertokens-node/recipe/session';
 import Passwordless from 'supertokens-node/recipe/passwordless';
 import { ProfilesService } from './profiles.service';
 import { CreateProfileDto } from './dto/create-profile.dto';
 import { UpdateProfileDto } from './dto/update-profile.dto';
+import { CreateException } from './exception/create.exception';
+import { ReadException } from './exception/read.exception';
+import { UpdateException } from './exception/update.exception';
 
 @UseGuards(AuthGuard)
 @Controller('users/profile')
@@ -30,24 +21,16 @@ export class ProfilesController {
     @Body() createProfileDto: CreateProfileDto,
     @Session() session: SessionContainer
   ) {
-    let authid: string;
-    let mobile: string;
     try {
-      authid = session.getUserId();
-      mobile = (await Passwordless.getUserById({ userId: authid }))!.phoneNumber!;
-    } catch (err) {
-      throw new HttpException(
-        {
-          success: false,
-          error: 'Session not available',
-        },
-        HttpStatus.SERVICE_UNAVAILABLE
-      );
+      const authid = session.getUserId();
+      const mobile = (await Passwordless.getUserById({ userId: authid }))!.phoneNumber!;
+      const createProfile = createProfileDto;
+      createProfile.authid = authid;
+      createProfile.mobile = mobile;
+      return await this.profilesService.create(createProfile);
+    } catch {
+      throw new CreateException();
     }
-    const createProfile = createProfileDto;
-    createProfile.authid = authid;
-    createProfile.mobile = mobile;
-    return this.profilesService.create(createProfile);
   }
 
   @Get()
@@ -59,16 +42,10 @@ export class ProfilesController {
     let authid: string;
     try {
       authid = session.getUserId();
-    } catch (err) {
-      throw new HttpException(
-        {
-          success: false,
-          error: 'Session not available',
-        },
-        HttpStatus.SERVICE_UNAVAILABLE
-      );
+      return await this.profilesService.read(authid);
+    } catch {
+      throw new ReadException();
     }
-    return this.profilesService.read(authid);
   }
 
   @Patch()
@@ -81,15 +58,9 @@ export class ProfilesController {
     let authid: string;
     try {
       authid = session.getUserId();
-    } catch (err) {
-      throw new HttpException(
-        {
-          success: false,
-          error: 'Session not available',
-        },
-        HttpStatus.SERVICE_UNAVAILABLE
-      );
+      return await this.profilesService.update(authid, updateProfileDto);
+    } catch {
+      throw new UpdateException();
     }
-    return this.profilesService.update(authid, updateProfileDto);
   }
 }
