@@ -28,25 +28,12 @@ export class ProfilesService {
     const ReadResp = await this.read(createProfileDto.authid);
     const EmailResp = await this.EmailRead(createProfileDto.email);
     if (ReadResp.data != null) {
-      // throw new HttpException(
-      // {
-      // success: false,
-      // error: 'User Exists',
-      // },
       throw new CreateException();
-      // );
     }
     if (EmailResp != null && EmailResp.data != null) {
-      // throw new HttpException(
-      // {
-      // success: false,
-      // error: 'Email already in use',
-      // },
       throw new CreateException();
-      // );
     }
     const resp = await this.prismaService.user.create({
-      // @ts-ignore
       data: createProfileDto,
     });
     return this.Success({
@@ -88,13 +75,6 @@ export class ProfilesService {
   async update(authid: string, updateProfileDto: UpdateProfileDto) {
     const EmailResp = await this.EmailRead(updateProfileDto.email);
     if (EmailResp.data != null) {
-      // throw new HttpException(
-      //   {
-      //     success: false,
-      //     error: 'Email already in use',
-      //   },
-      //   HttpStatus.CONFLICT
-      // );
       throw new UpdateException();
     }
     const resp = await this.prismaService.user.update({
