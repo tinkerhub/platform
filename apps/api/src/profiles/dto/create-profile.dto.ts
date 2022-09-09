@@ -26,7 +26,7 @@ export class CreateProfileDto {
 
   @IsNotEmpty()
   @Type(() => Date)
-  dob: string;
+  dob: Date;
 
   @IsString()
   house: string;
