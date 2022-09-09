@@ -9,10 +9,9 @@ import {
   VStack,
 } from '@chakra-ui/react';
 import { motion } from 'framer-motion';
-import { useFormContext } from 'react-hook-form';
-import { OptionBase } from 'chakra-react-select';
+import { useController, useFormContext } from 'react-hook-form';
+import { OptionBase, Select } from 'chakra-react-select';
 import { Form } from '../../types';
-import { ControlledSelect } from './ControlledSelect';
 
 interface Options extends OptionBase {
   label: string;
@@ -43,6 +42,19 @@ export const Three = () => {
     formState: { errors },
   } = useFormContext<Form>();
 
+  const {
+    field: {
+      onChange: districtChange,
+      onBlur: ndistrictBlur,
+      ref: districtRef,
+      value: districtValue,
+    },
+    fieldState: { error: distError },
+  } = useController({
+    name: 'District',
+    control,
+  });
+
   return (
     <motion.div
       animate={{ scale: 1, opacity: 1 }}
@@ -65,13 +77,19 @@ export const Three = () => {
           </FormControl>
         </Box>
         <Box display="flex" flexDirection="column" justifyContent="space-between">
-          <ControlledSelect
-            control={control}
-            name="District"
-            label="Pick Your District"
-            placeholder="Kozhikode"
-            options={District}
-          />
+          <FormControl label="District" isInvalid={!!distError} id="District">
+            <FormLabel>District</FormLabel>
+
+            <Select
+              options={District}
+              ref={districtRef}
+              name="District"
+              onChange={districtChange}
+              onBlur={ndistrictBlur}
+              value={districtValue || District[0]}
+            />
+            <FormErrorMessage>{distError?.message}</FormErrorMessage>
+          </FormControl>
         </Box>
         <Box display="flex" flexDirection="column" justifyContent="space-between">
           <FormControl label="Pincode" isInvalid={!!errors.Pincode} id="Pincode">
@@ -88,7 +106,7 @@ export const Three = () => {
             backgroundColor="rgba(65, 83, 240, 1)"
             color="white"
           >
-            Next
+            Submit
           </Button>
         </Box>
       </VStack>

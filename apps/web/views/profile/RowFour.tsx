@@ -1,11 +1,16 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import { Stack, FormControl, FormLabel, Input, FormErrorMessage, Box } from '@chakra-ui/react';
+import { GroupBase, OptionBase, Select } from 'chakra-react-select';
 import React from 'react';
-import { useFormContext } from 'react-hook-form';
+import { useController, useFormContext } from 'react-hook-form';
 import { Form } from '../../types';
-import { ControlledSelect } from '../wizard';
 import { Skills } from '../wizard/Two';
 import { IsEdit, PronounOpt } from './types';
+
+interface Options extends OptionBase {
+  label: string;
+  value: string;
+}
 
 export const RowFour = ({ edit }: IsEdit) => {
   const {
@@ -14,6 +19,21 @@ export const RowFour = ({ edit }: IsEdit) => {
     formState: { errors },
   } = useFormContext<Form>();
 
+  const {
+    field: { onChange: skillChange, onBlur: oskillBlur, ref: skillRef },
+    fieldState: { error: skillError },
+  } = useController({
+    name: 'My_Skills',
+    control,
+  });
+
+  const {
+    field: { onChange: onPronounChange, onBlur: onPronounBlur, ref: PronounRef },
+    fieldState: { error: PronounError },
+  } = useController({
+    name: 'Pronoun',
+    control,
+  });
   return (
     <>
       <Stack
@@ -29,17 +49,23 @@ export const RowFour = ({ edit }: IsEdit) => {
           </FormControl>
         </Box>
         <Box width={{ lg: '240px' }}>
-          <ControlledSelect
-            isMulti
-            name="My_Skills"
-            control={control}
-            label="Pick your skills"
-            placeholder="Python"
-            options={Skills}
-            closeMenuOnSelect
-            isDisabled={edit}
-            size="md"
-          />
+          <FormControl label="Skills" isInvalid={!!skillError} id="Skills">
+            <FormLabel>Select Your Skill</FormLabel>
+            <Select<Options, true, GroupBase<Options>>
+              isMulti
+              options={Skills}
+              ref={skillRef}
+              placeholder="Python"
+              name="signupReasons"
+              onChange={skillChange}
+              onBlur={oskillBlur}
+              closeMenuOnSelect
+              isDisabled={edit}
+              size="md"
+              value={null}
+            />
+            <FormErrorMessage>{skillError?.message}</FormErrorMessage>
+          </FormControl>
         </Box>
         <Box width={{ lg: '220px' }}>
           <FormControl>
@@ -61,16 +87,18 @@ export const RowFour = ({ edit }: IsEdit) => {
         mb="10px"
       >
         <Box width={{ lg: '220px' }}>
-          <ControlledSelect
-            name="Pronoun"
-            control={control}
-            label="Pronoun"
-            placeholder="Select Your Pronoun"
-            options={PronounOpt}
-            closeMenuOnSelect
-            isDisabled={edit}
-            size="md"
-          />
+          <FormControl label="Pronoun" isInvalid={!!PronounError} id="Pronoun">
+            <FormLabel>Prefered pronoun</FormLabel>
+            <Select<Options, true, GroupBase<Options>>
+              options={PronounOpt}
+              ref={PronounRef}
+              name="signupReasons"
+              onChange={onPronounChange}
+              onBlur={onPronounBlur}
+              value={null}
+            />
+            <FormErrorMessage>{PronounError?.message}</FormErrorMessage>
+          </FormControl>
         </Box>
       </Stack>
     </>

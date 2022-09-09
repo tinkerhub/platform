@@ -14,7 +14,7 @@ export type Option = {
 
 const requiredErrorStatement = (value: string): string => `Please type your ${value}`;
 
-export const registerFormValidator = Yup.object().shape({
+export const registerFormValidator = Yup.object({
   FullName: Yup.string().required(requiredErrorStatement('full name')),
   DOB: Yup.date().typeError('Please provide a valid Date').required(requiredErrorStatement('DOB')),
   Email: Yup.string().email().required(requiredErrorStatement('email')),
@@ -66,8 +66,8 @@ export const registerFormValidator = Yup.object().shape({
     .max(5, 'Pick 5 skills maximum')
     .of(
       Yup.object().shape({
-        id: Yup.string().required(),
-        name: Yup.string().required(),
+        value: Yup.string().required(),
+        label: Yup.string().required(),
       })
     ),
   House_Name: Yup.string(),
@@ -76,7 +76,7 @@ export const registerFormValidator = Yup.object().shape({
   Pincode: Yup.string(),
 });
 
-export const firstFormValidator = Yup.object().shape({
+export const firstFormValidator = Yup.object({
   FullName: Yup.string().required(requiredErrorStatement('full name')),
   DOB: Yup.date().typeError('Please provide a valid Date').required(requiredErrorStatement('DOB')),
   Email: Yup.string().email().required(requiredErrorStatement('email')),
@@ -91,15 +91,15 @@ export const firstFormValidator = Yup.object().shape({
       ),
     }),
 });
-export const secondValidator = Yup.object().shape({
+export const secondValidator = Yup.object({
   Pronoun: PickAnOptionValidator.nullable().required('Please pick an option'),
   My_Skills: Yup.array()
     .nullable()
     .max(5, 'Pick 5 skills maximum')
     .of(
       Yup.object().shape({
-        id: Yup.string().required(),
-        name: Yup.string().required(),
+        value: Yup.string().required(),
+        label: Yup.string().required(),
       })
     ),
   Mentor: Yup.object()
@@ -120,6 +120,6 @@ export const secondValidator = Yup.object().shape({
   }),
 });
 
-export const thirdValidator = Yup.object().shape({
+export const thirdValidator = Yup.object({
   District: PickAnOptionValidator.nullable(),
 });

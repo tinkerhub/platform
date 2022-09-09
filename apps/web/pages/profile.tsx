@@ -31,7 +31,6 @@ const Index: NextPage = () => {
   };
 
   const updateProfile: SubmitHandler<Form> = (data) => {
-    // eslint-disable-next-line no-console
     console.log(data);
     setEdit((el) => !el);
   };

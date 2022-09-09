@@ -1,5 +1,5 @@
 /* eslint-disable react/no-unescaped-entities */
-import { Center, Spinner, Heading, Box, Button, useToast, Text, Flex } from '@chakra-ui/react';
+import { Center, Spinner, Heading, Box, Button, useToast, Flex } from '@chakra-ui/react';
 import React from 'react';
 import { CopyIcon } from '@chakra-ui/icons';
 
@@ -30,8 +30,17 @@ export const Final = ({ isLoading, id }: Prop) => {
         borderWidth=".5px"
       >
         <Flex flexDirection="column">
-          <Text as="h5">Loading...</Text>
-          <Spinner thickness="4px" speed="0.65s" emptyColor="gray.200" color="blue.500" size="xl" />
+          {/* <Text as="h5" fontSize="30px" mb="20px">
+            Loading...
+          </Text> */}
+          <Spinner
+            thickness="4px"
+            speed="0.65s"
+            emptyColor="gray.200"
+            color="blue.500"
+            size="xl"
+            alignSelf="center"
+          />
         </Flex>
       </Center>
     );
@@ -80,6 +89,7 @@ export const Final = ({ isLoading, id }: Prop) => {
           width="100%"
           mt="14px"
           fontSize="20px"
+          color="white"
         >
           Continue to Discord
         </Button>

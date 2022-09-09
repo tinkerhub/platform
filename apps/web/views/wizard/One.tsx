@@ -10,10 +10,12 @@ import {
 } from '@chakra-ui/react';
 import React, { useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { useFormContext } from 'react-hook-form';
-import type { OptionBase } from 'chakra-react-select';
-import { Form } from '../../types';
-import { ControlledSelect } from './ControlledSelect';
+import { InferType } from 'yup';
+import { useFormContext, Controller } from 'react-hook-form';
+import { Select, OptionBase } from 'chakra-react-select';
+import { firstFormValidator } from './validator';
+
+type FormType = InferType<typeof firstFormValidator>;
 
 interface Options extends OptionBase {
   label: string;
@@ -32,7 +34,7 @@ export const One = () => {
     setFocus,
     control,
     formState: { errors },
-  } = useFormContext<Form>();
+  } = useFormContext<FormType>();
 
   useEffect(() => {
     setFocus('FullName');
@@ -76,13 +78,17 @@ export const One = () => {
           </FormControl>
         </Box>
         <Box display="flex" flexDirection="column" justifyContent="space-between">
-          <ControlledSelect<Form, Options, true>
-            name="Pronoun"
+          <Controller
+            defaultValue={undefined}
             control={control}
-            label="Pronoun"
-            placeholder="My pronoun is"
-            options={PronounOpt}
-            isRequired
+            name="Pronoun"
+            render={({ field, fieldState: { error } }) => (
+              <FormControl label="Pronoun" isInvalid={Boolean(error)} id="Pronoun">
+                <FormLabel>Prefered pronoun</FormLabel>
+                <Select {...field} options={PronounOpt} />
+                {error && <FormErrorMessage>{error.message}</FormErrorMessage>}
+              </FormControl>
+            )}
           />
         </Box>
         <Box>
