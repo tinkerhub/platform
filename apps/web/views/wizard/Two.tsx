@@ -1,10 +1,18 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import { Box, Button, Radio, RadioGroup, Stack, FormLabel } from '@chakra-ui/react';
+import {
+  Box,
+  Button,
+  Radio,
+  RadioGroup,
+  Stack,
+  FormLabel,
+  FormControl,
+  FormErrorMessage,
+} from '@chakra-ui/react';
 import { motion } from 'framer-motion';
-import { useFormContext } from 'react-hook-form';
-import { OptionBase } from 'chakra-react-select';
+import { useController, useFormContext } from 'react-hook-form';
+import { GroupBase, OptionBase, Select } from 'chakra-react-select';
 import { Form } from '../../types';
-import { ControlledSelect } from './ControlledSelect';
 
 export const Skills = [
   { value: 'Java', label: 'Java' },
@@ -28,6 +36,30 @@ const Desp: Options[] = [
 
 export const Two = () => {
   const { control } = useFormContext<Form>();
+  const {
+    field: { onChange: skillChange, onBlur: oskillBlur, ref: skillRef },
+    fieldState: { error: skillError },
+  } = useController({
+    name: 'My_Skills',
+    control,
+  });
+
+  const {
+    field: { onChange: descChange, onBlur: odescBlur, ref: descRef },
+    fieldState: { error: descError },
+  } = useController({
+    name: 'describe',
+    control,
+  });
+
+  const {
+    field: { onChange: campusChange, onBlur: campusBlur, ref: campusRef },
+    fieldState: { error: campusError },
+  } = useController({
+    name: 'College',
+    control,
+  });
+
   return (
     <motion.div
       animate={{ scale: 1, opacity: 1 }}
@@ -36,23 +68,33 @@ export const Two = () => {
     >
       <Box mt="30px">
         <Box display="flex" flexDirection="column" justifyContent="space-between">
-          <ControlledSelect
-            name="describe"
-            control={control}
-            label="Best way to describe yourslef"
-            placeholder="Student"
-            options={Desp}
-          />
+          <FormControl label="describe" isInvalid={!!descError} id="describe">
+            <FormLabel>Best way to describe yourself</FormLabel>
+            <Select<Options, true, GroupBase<Options>>
+              options={Desp}
+              ref={descRef}
+              name="describe"
+              onChange={descChange}
+              onBlur={odescBlur}
+              value={null}
+            />
+            <FormErrorMessage>{descError?.message}</FormErrorMessage>
+          </FormControl>
         </Box>
         <Box display="flex" flexDirection="column" justifyContent="space-between" mt="15px">
-          <ControlledSelect
-            isMulti
-            name="My_Skills"
-            control={control}
-            label="Pick your skills"
-            placeholder="Python"
-            options={Skills}
-          />
+          <FormControl label="Skills" isInvalid={!!skillError} id="Skills">
+            <FormLabel>Select Your Skill</FormLabel>
+            <Select<Options, true, GroupBase<Options>>
+              isMulti
+              options={Skills}
+              ref={skillRef}
+              name="signupReasons"
+              onChange={skillChange}
+              onBlur={oskillBlur}
+              value={null}
+            />
+            <FormErrorMessage>{skillError?.message}</FormErrorMessage>
+          </FormControl>
         </Box>
         <Box display="flex" flexDirection="column" justifyContent="space-between" mt="15px">
           <FormLabel>Can you be a Mentor</FormLabel>
@@ -74,13 +116,18 @@ export const Two = () => {
           justifyContent="space-between"
           mt="15px"
         >
-          <ControlledSelect
-            name="College"
-            control={control}
-            label="Pick Your college"
-            placeholder="Gec.."
-            options={[{ label: 'hello', value: 'hello' }]}
-          />
+          <FormControl label="College" isInvalid={!!campusError} id="College">
+            <FormLabel>I currently study at</FormLabel>
+            <Select<Options, true, GroupBase<Options>>
+              options={Skills}
+              ref={campusRef}
+              name="College"
+              onChange={campusChange}
+              onBlur={campusBlur}
+              value={null}
+            />
+            <FormErrorMessage>{campusError?.message}</FormErrorMessage>
+          </FormControl>
         </Box>
         <Box mt="25px">
           <Button

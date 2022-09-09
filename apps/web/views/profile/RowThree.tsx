@@ -3,20 +3,19 @@ import { Stack, FormControl, FormLabel, Input, FormErrorMessage, Box } from '@ch
 import React from 'react';
 import { useFormContext } from 'react-hook-form';
 import { Form } from '../../types';
-import { ControlledSelect } from '../wizard';
-import { District } from '../wizard/Three';
-import { IsEdit, Options } from './types';
+// import { District } from '../wizard/Three';
+import { IsEdit } from './types';
 
-const PronounOpt: Options[] = [
-  { label: 'He/Him', value: 'He/Him' },
-  { label: 'She/Her', value: 'She/Her' },
-  { label: 'They/Them', value: 'They/Them' },
-];
+// const PronounOpt: Options[] = [
+//   { label: 'He/Him', value: 'He/Him' },
+//   { label: 'She/Her', value: 'She/Her' },
+//   { label: 'They/Them', value: 'They/Them' },
+// ];
 
 export const RowThree: React.FC<IsEdit> = ({ edit }) => {
   const {
     register,
-    control,
+    // control,
     formState: { errors },
   } = useFormContext<Form>();
 
@@ -34,7 +33,7 @@ export const RowThree: React.FC<IsEdit> = ({ edit }) => {
         </FormControl>
       </Box>
       <Box width={{ lg: '240px' }}>
-        <ControlledSelect
+        {/* <ControlledSelect
           name="College"
           control={control}
           label="Pick Your college"
@@ -43,10 +42,10 @@ export const RowThree: React.FC<IsEdit> = ({ edit }) => {
           closeMenuOnSelect
           isDisabled={edit}
           size="md"
-        />
+        /> */}
       </Box>
       <Box width={{ lg: '220px' }}>
-        <ControlledSelect
+        {/* <ControlledSelect
           name="District"
           control={control}
           label="Pick Your District"
@@ -55,7 +54,7 @@ export const RowThree: React.FC<IsEdit> = ({ edit }) => {
           closeMenuOnSelect
           isDisabled={edit}
           size="md"
-        />
+        /> */}
       </Box>
     </Stack>
   );
