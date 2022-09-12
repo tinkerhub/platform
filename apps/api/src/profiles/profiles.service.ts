@@ -28,10 +28,10 @@ export class ProfilesService {
     const ReadResp = await this.read(createProfileDto.authid);
     const EmailResp = await this.EmailRead(createProfileDto.email);
     if (ReadResp.data != null) {
-      throw new CreateException();
+      throw new CreateException('User Exists');
     }
     if (EmailResp != null && EmailResp.data != null) {
-      throw new CreateException();
+      throw new CreateException('User with same email exists');
     }
     const resp = await this.prismaService.user.create({
       data: createProfileDto,
@@ -75,12 +75,16 @@ export class ProfilesService {
   async update(authid: string, updateProfileDto: UpdateProfileDto) {
     const EmailResp = await this.EmailRead(updateProfileDto.email);
     if (EmailResp.data != null) {
-      throw new UpdateException();
+      throw new UpdateException('Email exists');
     }
+
+    // It works
     const resp = await this.prismaService.user.update({
       where: { authid },
-      data: UpdateProfileDto,
+      data: updateProfileDto,
     });
+    // Magic :)
+
     return this.Success({
       data: resp,
       message: 'User info was updated succesfully',

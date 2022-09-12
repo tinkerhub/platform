@@ -28,8 +28,8 @@ export class ProfilesController {
       createProfile.authid = authid;
       createProfile.mobile = mobile;
       return await this.profilesService.create(createProfile);
-    } catch {
-      throw new CreateException();
+    } catch (err) {
+      throw new CreateException(err);
     }
   }
 
@@ -43,8 +43,8 @@ export class ProfilesController {
     try {
       authid = session.getUserId();
       return await this.profilesService.read(authid);
-    } catch {
-      throw new ReadException();
+    } catch (err) {
+      throw new ReadException(err);
     }
   }
 
@@ -59,8 +59,8 @@ export class ProfilesController {
     try {
       authid = session.getUserId();
       return await this.profilesService.update(authid, updateProfileDto);
-    } catch {
-      throw new UpdateException();
+    } catch (err) {
+      throw new UpdateException(err);
     }
   }
 }
