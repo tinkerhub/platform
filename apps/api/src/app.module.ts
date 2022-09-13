@@ -25,7 +25,12 @@ const coreModules = [
     },
   }),
   // logging module
-  LoggerModule.forRoot(),
+  LoggerModule.forRoot({
+    pinoHttp: {
+      level: 'info',
+      redact: ['req.headers'],
+    },
+  }),
 ];
 
 @Module({
