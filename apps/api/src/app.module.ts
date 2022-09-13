@@ -25,7 +25,12 @@ const coreModules = [
     },
   }),
   // logging module
-  LoggerModule.forRoot(),
+  LoggerModule.forRoot({
+    pinoHttp: {
+      level: 'info',
+      redact: ['req.headers'],
+    },
+  }),
 ];
 
 @Module({
@@ -43,7 +48,6 @@ const coreModules = [
         websiteBasePath: process.env.SUPERTOKENS_PATH,
       },
     }),
-    ConfigModule.forRoot(),
   ],
   controllers: [AppController],
   providers: [AppService],

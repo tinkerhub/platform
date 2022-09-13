@@ -1,35 +1,66 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Post, Body, UseGuards, Session, Get, Req, Res, Patch } from '@nestjs/common';
+import { AuthGuard } from 'src/auth/auth.guard';
+import { SessionContainer } from 'supertokens-node/recipe/session';
+import Passwordless from 'supertokens-node/recipe/passwordless';
 import { ProfilesService } from './profiles.service';
 import { CreateProfileDto } from './dto/create-profile.dto';
 import { UpdateProfileDto } from './dto/update-profile.dto';
-import { Profile } from './entities/profile.entity';
+import { CreateException } from './exception/create.exception';
+import { ReadException } from './exception/read.exception';
+import { UpdateException } from './exception/update.exception';
 
+@UseGuards(AuthGuard)
 @Controller('users/profile')
 export class ProfilesController {
   constructor(private readonly profilesService: ProfilesService) {}
 
   @Post()
-  create(@Body() createProfileDto: CreateProfileDto): Profile {
-    return this.profilesService.create(createProfileDto);
+  async create(
+    @Req() req: any,
+    @Res({ passthrough: true }) res: any,
+    @Body() createProfileDto: CreateProfileDto,
+    @Session() session: SessionContainer
+  ) {
+    try {
+      const authid = session.getUserId();
+      const mobile = (await Passwordless.getUserById({ userId: authid }))!.phoneNumber!;
+      const createProfile = createProfileDto;
+      createProfile.authid = authid;
+      createProfile.mobile = mobile;
+      return await this.profilesService.create(createProfile);
+    } catch (err) {
+      throw new CreateException(err);
+    }
   }
 
   @Get()
-  findAll(): Profile[] {
-    return this.profilesService.findAll();
+  async read(
+    @Req() req: any,
+    @Res({ passthrough: true }) res: any,
+    @Session() session: SessionContainer
+  ) {
+    let authid: string;
+    try {
+      authid = session.getUserId();
+      return await this.profilesService.read(authid);
+    } catch (err) {
+      throw new ReadException(err);
+    }
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string): Profile {
-    return this.profilesService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateProfileDto: UpdateProfileDto): Profile {
-    return this.profilesService.update(+id, updateProfileDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string): Profile {
-    return this.profilesService.remove(+id);
+  @Patch()
+  async update(
+    @Req() req: any,
+    @Res({ passthrough: true }) res: any,
+    @Body() updateProfileDto: UpdateProfileDto,
+    @Session() session: SessionContainer
+  ) {
+    let authid: string;
+    try {
+      authid = session.getUserId();
+      return await this.profilesService.update(authid, updateProfileDto);
+    } catch (err) {
+      throw new UpdateException(err);
+    }
   }
 }
