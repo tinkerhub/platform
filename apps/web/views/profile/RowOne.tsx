@@ -1,17 +1,10 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import {
-  Stack,
-  FormControl,
-  FormLabel,
-  Input,
-  FormErrorMessage,
-  Box,
-  Text,
-} from '@chakra-ui/react';
-import { GroupBase, OptionBase, Select as MultiSeclect } from 'chakra-react-select';
+import { FormControl, FormLabel, Input, FormErrorMessage, Box, VStack } from '@chakra-ui/react';
+import { OptionBase, Select } from 'chakra-react-select';
 import React from 'react';
-import { Controller, useFormContext } from 'react-hook-form';
-import { Form } from '../../types';
+import { useController, useFormContext } from 'react-hook-form';
+import { InferType } from 'yup';
+import { firstFormValidator } from '../wizard';
 import { IsEdit } from './types';
 
 interface Options extends OptionBase {
@@ -24,21 +17,26 @@ const PronounOpt: Options[] = [
   { label: 'She/Her', value: 'She/Her' },
   { label: 'They/Them', value: 'They/Them' },
 ];
+type FormType = InferType<typeof firstFormValidator>;
 
 export const RowOne = ({ edit }: IsEdit) => {
   const {
     register,
     control,
     formState: { errors },
-  } = useFormContext<Form>();
+  } = useFormContext<FormType>();
+
+  const {
+    field: { onChange: prochange, onBlur: proBlur, ref: proRef, value: pro },
+    fieldState: { error: proError },
+  } = useController({
+    name: 'Pronoun',
+    control,
+  });
 
   return (
-    <Stack
-      spacing={{ base: '10px', lg: '120px' }}
-      direction={{ base: 'column', lg: 'row' }}
-      mb="10px"
-    >
-      <Box>
+    <VStack spacing={2} align="stretch" mt="15px" w="350px" height="425px">
+      <Box display="flex" flexDirection="column" justifyContent="space-between">
         <FormControl label="Name" isInvalid={!!errors.FullName} id="FullName">
           <FormLabel>Name</FormLabel>
           <Input
@@ -46,54 +44,48 @@ export const RowOne = ({ edit }: IsEdit) => {
             variant="filled"
             placeholder="JhonDoe"
             {...register('FullName')}
-            disabled={edit}
+            isDisabled={edit}
           />
-          <FormErrorMessage mb="20px">{errors.FullName?.message}</FormErrorMessage>
+          <FormErrorMessage>{errors.FullName?.message}</FormErrorMessage>
         </FormControl>
       </Box>
-      <Box width={{ lg: '240px' }}>
-        <Controller
-          control={control}
-          name="describe"
-          render={({ field: { onChange, onBlur, name, ref } }) => (
-            <>
-              <FormControl>
-                <FormLabel>Best way to describe yourself</FormLabel>
-                <MultiSeclect<Options, true, GroupBase<Options>>
-                  onChange={onChange}
-                  onBlur={onBlur}
-                  name={name}
-                  ref={ref}
-                  options={PronounOpt}
-                  placeholder="I am"
-                  closeMenuOnSelect
-                  isDisabled={edit}
-                  size="md"
-                />
-              </FormControl>
-              <Text color="red" fontSize="12px" mt="12px">
-                {errors.Pronoun?.message}
-              </Text>
-            </>
-          )}
-        />
-        <Text color="red" fontSize="12px" mt="12px">
-          {errors.describe?.message}
-        </Text>
+
+      <Box display="flex" flexDirection="column" justifyContent="space-between" mt="29px">
+        <FormControl label="Mobile" isInvalid={!!errors.Mobile} id="Mobile">
+          <FormLabel>Mobile Number</FormLabel>
+          <Input {...register('Mobile')} type="number" isDisabled={edit} />
+          <FormErrorMessage>{errors.Mobile?.message}</FormErrorMessage>
+        </FormControl>
       </Box>
-      <Box>
-        <FormLabel>House Name</FormLabel>
-        <Input
-          mt="7px"
-          variant="filled"
-          placeholder="Home"
-          disabled={edit}
-          {...register('House_Name')}
-        />
-        <Text color="red" fontSize="12px" mt="12px">
-          {errors.House_Name?.message}
-        </Text>
+      <Box display="flex" flexDirection="column" justifyContent="space-between">
+        <FormControl label="Email" isInvalid={!!errors.Email} id="Email">
+          <FormLabel>Email</FormLabel>
+          <Input {...register('Email')} isDisabled={edit} />
+          <FormErrorMessage>{errors.Email?.message}</FormErrorMessage>
+        </FormControl>
       </Box>
-    </Stack>
+      <Box display="flex" flexDirection="column" justifyContent="space-between">
+        <FormControl label="DOB" isInvalid={!!errors.DOB} id="DOB">
+          <FormLabel>Date of Birth</FormLabel>
+          <Input {...register('DOB')} type="date" isDisabled={edit} />
+          <FormErrorMessage>{errors.DOB?.message}</FormErrorMessage>
+        </FormControl>
+      </Box>
+      <Box display="flex" flexDirection="column" justifyContent="space-between">
+        <FormControl label="pronoun" isInvalid={!!proError} id="pronoun">
+          <FormLabel>Prefered Pronoun</FormLabel>
+          <Select
+            isDisabled={edit}
+            options={PronounOpt}
+            ref={proRef}
+            name="Pronoun"
+            onChange={prochange}
+            onBlur={proBlur}
+            value={pro}
+          />
+          <FormErrorMessage>Please Pick an Option</FormErrorMessage>
+        </FormControl>
+      </Box>
+    </VStack>
   );
 };

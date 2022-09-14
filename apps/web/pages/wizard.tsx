@@ -15,18 +15,18 @@ import {
   firstFormValidator,
   secondValidator,
   registerFormValidator,
+  thirdValidator,
 } from '../views/wizard';
 import { useData } from '../hooks';
 
 type FormType = InferType<typeof registerFormValidator>;
 
 const Index: NextPage = () => {
-  const [step, setStep] = useState<number>(1);
+  const [step, setStep] = useState<number>(2);
   const [validator, setValidator] = useState<any>(firstFormValidator);
 
   const methods = useForm<FormType>({ mode: 'all', resolver: yupResolver(validator) });
   const { properties, sendData } = useData<FormType>('/user/profile');
-
   useEffect(() => {
     if (step === 1) {
       setValidator(firstFormValidator);
@@ -35,7 +35,7 @@ const Index: NextPage = () => {
       setValidator(secondValidator);
     }
     if (step === 3) {
-      setValidator(registerFormValidator);
+      setValidator(thirdValidator);
     }
   }, [step]);
 
@@ -47,6 +47,7 @@ const Index: NextPage = () => {
     setStep((ste) => ste - 1);
   };
   const handleData: SubmitHandler<FormType> = (val) => {
+    console.log(val);
     if (step === 3) {
       // increase the step to 4 to render the sucess/ fail UI
       stepAdd();

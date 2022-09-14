@@ -11,12 +11,14 @@ import {
 import { motion } from 'framer-motion';
 import { useController, useFormContext } from 'react-hook-form';
 import { OptionBase, Select } from 'chakra-react-select';
-import { Form } from '../../types';
+import { InferType } from 'yup';
+import { thirdValidator } from './validator';
 
 interface Options extends OptionBase {
   label: string;
   value: string;
 }
+type Third = InferType<typeof thirdValidator>;
 
 export const District: Options[] = [
   { value: 'Alappuzha', label: 'Alappuzha' },
@@ -40,7 +42,7 @@ export const Three = () => {
     register,
     control,
     formState: { errors },
-  } = useFormContext<Form>();
+  } = useFormContext<Third>();
 
   const {
     field: {
@@ -79,14 +81,13 @@ export const Three = () => {
         <Box display="flex" flexDirection="column" justifyContent="space-between">
           <FormControl label="District" isInvalid={!!distError} id="District">
             <FormLabel>District</FormLabel>
-
             <Select
               options={District}
               ref={districtRef}
               name="District"
               onChange={districtChange}
               onBlur={ndistrictBlur}
-              value={districtValue || District[0]}
+              value={districtValue}
             />
             <FormErrorMessage>{distError?.message}</FormErrorMessage>
           </FormControl>
