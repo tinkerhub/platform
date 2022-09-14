@@ -2,15 +2,17 @@
 import React, { useState } from 'react';
 import type { NextPage } from 'next';
 import { Box, Flex, useToast } from '@chakra-ui/react';
+import { InferType } from 'yup';
 import { useForm, SubmitHandler, FormProvider } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { registerFormValidator } from '../views/wizard';
-import { Form } from '../types';
-import { RowOne, RowTwo, RowThree, RowFour, ProfileBar, Arrow } from '../views/profile';
+import { RowOne, RowTwo, RowThree, ProfileBar, Arrow } from '../views/profile';
+
+type FormType = InferType<typeof registerFormValidator>;
 
 const Index: NextPage = () => {
   const [edit, setEdit] = useState<boolean>(true);
-  const methods = useForm<Form>({ mode: 'all', resolver: yupResolver(registerFormValidator) });
+  const methods = useForm<FormType>({ mode: 'all', resolver: yupResolver(registerFormValidator) });
 
   const toast = useToast();
 
@@ -30,23 +32,28 @@ const Index: NextPage = () => {
     });
   };
 
-  const updateProfile: SubmitHandler<Form> = (data) => {
+  const updateProfile: SubmitHandler<FormType> = (data) => {
     console.log(data);
     setEdit((el) => !el);
   };
   return (
-    <Box mt="2" mb="30px">
-      <Box>
-        <Arrow />
-        <ProfileBar copyFile={copyFile} edit={edit} editHandler={editHandler} />
-      </Box>
+    <Box mt="2" mb="150px">
       <FormProvider {...methods}>
         <form onSubmit={methods.handleSubmit(updateProfile)}>
-          <Flex flexDirection="column" mt="40px">
+          <Box>
+            <Arrow />
+            <ProfileBar copyFile={copyFile} edit={edit} editHandler={editHandler} />
+          </Box>
+          <Flex
+            flexDirection={{ base: 'column', lg: 'row' }}
+            mt="25px"
+            w="100%"
+            justifyContent="space-between"
+            alignItems="center"
+          >
             <RowOne edit={edit} />
             <RowTwo edit={edit} />
             <RowThree edit={edit} />
-            <RowFour edit={edit} />
           </Flex>
         </form>
       </FormProvider>

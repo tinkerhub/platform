@@ -22,7 +22,7 @@ export const Bar = ({ val, back }: Prop) => {
   }, [val]);
   const step = [1, 2, 3];
   return (
-    <Box>
+    <Box px="13px">
       {val === 3 && (
         <Flex justifyContent="flex-end" mb="12px">
           <Text
@@ -60,7 +60,7 @@ export const Bar = ({ val, back }: Prop) => {
           initial={{ opacity: 0, scale: 0.5, alignSelf: 'start' }}
           transition={{ duration: 0.5 }}
         >
-          <Heading as="h2" size="lg">
+          <Heading as="h2" size="lg" fontWeight="bold">
             About You
           </Heading>
         </motion.div>
