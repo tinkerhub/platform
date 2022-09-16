@@ -11,20 +11,20 @@ datasource db {
 }
 
 model User {
-  id       String   @id @unique @default(cuid()) @db.VarChar(25)
-  authid   String?  @unique // SuperTokens Authentication ID
-  name     String
-  email    String   @unique
-  campus   String?
-  passyear Int?
-  desc     String
-  district String?
-  dob      DateTime
-  house    String?
-  mentor   Boolean
-  mobile   String?  @unique
-  pin      String?
-  pronoun  String?
-  skills   String[]
-  street   String?
+  id                    String   @id @unique @default(cuid()) @db.VarChar(25)
+  authid                String?  @unique // SuperTokens Authentication ID
+  name                  String
+  email                 String   @unique
+  campus                String?
+  desc                  String
+  district              String?
+  dob                   DateTime
+  house                 String?
+  mentor                Boolean?
+  mobile                String?  @unique
+  pin                   String?
+  pronoun               String?
+  skills                String[]
+  street                String?
+  CampusCommunityActive String?
 }

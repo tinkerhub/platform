@@ -1,24 +1,30 @@
 export type Child = {
   children: React.ReactNode;
 };
+enum Act {
+  'Yes',
+  'No',
+}
 
 export type Form = {
-  FullName: string;
-  DOB: string;
-  Email: string;
-  Pronoun: string;
-  Mobile: number;
-  College: string;
-  describe: string;
-  Mentor: boolean | string;
-  RegistrationType: string;
-  accept: boolean;
-  House_Name?: string;
-  District?: string;
-  Pincode?: string;
-  My_Skills: string[];
-  StudyStream: string;
-  Street?: string;
-  GraduationDate: Date;
-  CampusCommunityActive: boolean | string;
+  name?: string;
+  dob?: Date;
+  email?: string;
+  pronoun?: string;
+  mobile?: string;
+  campus?: string;
+  desc?: string;
+  mentor?: boolean;
+  accept?: boolean;
+  house?: string;
+  district?: string;
+  pin?: string;
+  skills?: string[];
+  street?: string;
+  CampusCommunityActive: Act;
+  id?: string;
 };
+
+export interface Errors {
+  message: string;
+}

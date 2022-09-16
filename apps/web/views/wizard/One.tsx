@@ -11,7 +11,7 @@ import {
 import React, { useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { InferType } from 'yup';
-import { useFormContext, useController } from 'react-hook-form';
+import { useFormContext, Controller } from 'react-hook-form';
 import { Select, OptionBase } from 'chakra-react-select';
 import { firstFormValidator } from './validator';
 
@@ -35,14 +35,6 @@ export const One = () => {
     control,
     formState: { errors },
   } = useFormContext<FormType>();
-
-  const {
-    field: { onChange: prochange, onBlur: proBlur, ref: proRef, value: pro },
-    fieldState: { error: proError },
-  } = useController({
-    name: 'Pronoun',
-    control,
-  });
 
   useEffect(() => {
     setFocus('FullName');
@@ -86,18 +78,17 @@ export const One = () => {
           </FormControl>
         </Box>
         <Box display="flex" flexDirection="column" justifyContent="space-between">
-          <FormControl label="pronoun" isInvalid={!!proError} id="pronoun">
-            <FormLabel>Prefered Pronoun</FormLabel>
-            <Select
-              options={PronounOpt}
-              ref={proRef}
-              name="describe"
-              onChange={prochange}
-              onBlur={proBlur}
-              value={pro}
-            />
-            <FormErrorMessage>{proError?.message}</FormErrorMessage>
-          </FormControl>
+          <Controller
+            control={control}
+            name="Pronoun"
+            render={({ field, fieldState: { error: proError } }) => (
+              <FormControl label="Pronoun" isInvalid={!!proError} id="Pronoun">
+                <FormLabel>Prefered Pronoun</FormLabel>
+                <Select defaultValue={PronounOpt[0]} options={PronounOpt} {...field} />
+                <FormErrorMessage>Please pick an option</FormErrorMessage>
+              </FormControl>
+            )}
+          />
         </Box>
         <Box>
           <Button
