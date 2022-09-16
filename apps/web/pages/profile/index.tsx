@@ -1,5 +1,4 @@
-/* eslint-disable react/jsx-props-no-spreading */
-/* eslint-disable react-hooks/rules-of-hooks */
+/* eslint-disable react/jsx-props-no-spreading */ /* eslint-disable react-hooks/rules-of-hooks */
 import React, { useState } from 'react';
 import type { NextPage } from 'next';
 import { signOut } from 'supertokens-auth-react/recipe/passwordless';
@@ -25,7 +24,7 @@ export type Form = {
   street: string;
 };
 
-const index: NextPage = () => {
+const Index: NextPage = () => {
   const router = useRouter();
   const [edit, setEdit] = useState<boolean>(true);
   const LogOut = async () => {
@@ -36,8 +35,10 @@ const index: NextPage = () => {
     register,
     handleSubmit,
     setFocus,
-    formState: { errors },
+    // formState: { errors },
   } = useForm<Form>();
+
+  const toast = useToast();
 
   const editHandler = () => {
     setEdit(false);
@@ -45,7 +46,6 @@ const index: NextPage = () => {
     setFocus('name');
   };
 
-  const toast = useToast();
   const copyFile = () => {
     toast({
       title: 'Membership id copied.',
@@ -56,30 +56,6 @@ const index: NextPage = () => {
   };
 
   const updateProfile = (data: Form) => {
-    if (
-      errors.campus ||
-      errors.desc ||
-      errors.district ||
-      errors.dob ||
-      errors.email ||
-      errors.house ||
-      errors.mentor ||
-      errors.mobile ||
-      errors.name ||
-      errors.pin ||
-      errors.pronoun ||
-      errors.skills
-    ) {
-      toast({
-        title: 'Input required',
-        description: 'All inputs are required',
-        status: 'error',
-        duration: 5000,
-        isClosable: true,
-      });
-    } else {
-      setEdit(true);
-    }
     // eslint-disable-next-line no-console
     console.log(data);
   };
@@ -109,20 +85,31 @@ const index: NextPage = () => {
               <CopyIcon
                 onClick={copyFile}
                 color="black"
-                w={6}
-                h={6}
-                ml={8}
+                w={4}
+                h={4}
+                ml={3}
                 _hover={{ cursor: 'pointer', color: 'grey' }}
+                alignSelf="center"
               />
             </Box>
             <Box>
               {edit && (
-                <Button colorScheme="blue" alignSelf="center" onClick={editHandler}>
+                <Button
+                  colorScheme="blue"
+                  backgroundColor="rgba(65, 83, 240, 1)"
+                  alignSelf="center"
+                  onClick={editHandler}
+                >
                   Edit
                 </Button>
               )}
               {!edit && (
-                <Button colorScheme="blue" alignSelf="center" type="submit">
+                <Button
+                  colorScheme="blue"
+                  alignSelf="center"
+                  type="submit"
+                  backgroundColor="rgba(65, 83, 240, 1)"
+                >
                   Save
                 </Button>
               )}
@@ -333,4 +320,4 @@ const index: NextPage = () => {
   );
 };
 
-export default index;
+export default Index;
