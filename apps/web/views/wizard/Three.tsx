@@ -9,7 +9,7 @@ import {
   VStack,
 } from '@chakra-ui/react';
 import { motion } from 'framer-motion';
-import { useController, useFormContext } from 'react-hook-form';
+import { Controller, useFormContext } from 'react-hook-form';
 import { OptionBase, Select } from 'chakra-react-select';
 import { InferType } from 'yup';
 import { thirdValidator } from './validator';
@@ -44,19 +44,6 @@ export const Three = () => {
     formState: { errors },
   } = useFormContext<Third>();
 
-  const {
-    field: {
-      onChange: districtChange,
-      onBlur: ndistrictBlur,
-      ref: districtRef,
-      value: districtValue,
-    },
-    fieldState: { error: distError },
-  } = useController({
-    name: 'District',
-    control,
-  });
-
   return (
     <motion.div
       animate={{ scale: 1, opacity: 1 }}
@@ -79,19 +66,19 @@ export const Three = () => {
           </FormControl>
         </Box>
         <Box display="flex" flexDirection="column" justifyContent="space-between">
-          <FormControl label="District" isInvalid={!!distError} id="District">
-            <FormLabel>District</FormLabel>
-            <Select
-              options={District}
-              ref={districtRef}
-              name="District"
-              onChange={districtChange}
-              onBlur={ndistrictBlur}
-              value={districtValue}
-            />
-            <FormErrorMessage>{distError?.message}</FormErrorMessage>
-          </FormControl>
+          <Controller
+            control={control}
+            name="District"
+            render={({ field, fieldState: { error: proError } }) => (
+              <FormControl label="District" isInvalid={!!proError} id="District">
+                <FormLabel>District</FormLabel>
+                <Select defaultValue={District[0]} options={District} {...field} />
+                <FormErrorMessage>Please pick an option</FormErrorMessage>
+              </FormControl>
+            )}
+          />
         </Box>
+
         <Box display="flex" flexDirection="column" justifyContent="space-between">
           <FormControl label="Pincode" isInvalid={!!errors.Pincode} id="Pincode">
             <FormLabel>Pincode</FormLabel>

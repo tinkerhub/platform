@@ -7,16 +7,17 @@ interface BarProp {
   copyFile: () => void;
   edit: boolean;
   editHandler: () => void;
+  id: string | undefined;
 }
 
-export const ProfileBar = ({ copyFile, edit, editHandler }: BarProp) => (
+export const ProfileBar = ({ copyFile, edit, editHandler, id = 'Error' }: BarProp) => (
   <Box display="flex" justifyContent="space-between" mt="4">
     <Box display="flex" justifyContent="space-between">
       <Heading as="h2" size="xl" alignSelf="center">
         My Profile
       </Heading>
       <Heading as="h2" fontSize={{ base: '16px', md: 'md' }} alignSelf="center" pl={5}>
-        2852179
+        {id}
       </Heading>
       <CopyIcon
         onClick={copyFile}

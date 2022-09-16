@@ -64,10 +64,6 @@ export const authConfig = () => ({
       },
       getRedirectionURL: async (context) => {
         if (context.action === 'SUCCESS') {
-          if (context.isNewUser) {
-            // user signed up
-            return '/wizard';
-          }
           // user signed in
           return '/profile';
         }

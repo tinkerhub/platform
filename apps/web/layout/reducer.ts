@@ -27,7 +27,7 @@ export const AuthReducer = (state: ReducerState, action: Action) => {
       };
     case ActionKind.Auth_OtherPage:
       return {
-        btnText: 'LogOut',
+        btnText: 'Log Out',
         showBtn: true,
         btnFunction: payload,
       };

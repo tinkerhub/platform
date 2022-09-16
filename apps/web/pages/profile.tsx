@@ -7,14 +7,18 @@ import { useForm, SubmitHandler, FormProvider } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { registerFormValidator } from '../views/wizard';
 import { RowOne, RowTwo, RowThree, ProfileBar, Arrow } from '../views/profile';
+import { Errors } from '../types';
+import { useAuthCtx } from '../hooks';
+import { apiHandler } from '../api';
 
 type FormType = InferType<typeof registerFormValidator>;
 
 const Index: NextPage = () => {
   const [edit, setEdit] = useState<boolean>(true);
   const methods = useForm<FormType>({ mode: 'all', resolver: yupResolver(registerFormValidator) });
-
   const toast = useToast();
+  const { user } = useAuthCtx();
+  const { isUserLoading } = useAuthCtx();
 
   const editHandler = () => {
     setEdit(false);
@@ -23,30 +27,81 @@ const Index: NextPage = () => {
   };
 
   const copyFile = () => {
-    window.navigator.clipboard.writeText('8078153360');
-    toast({
-      title: 'Id copied to clipboard.',
-      status: 'success',
-      duration: 1000,
-      isClosable: true,
-    });
+    if (user && user.id) {
+      window.navigator.clipboard.writeText(user?.id);
+      toast({
+        title: 'Id copied to clipboard.',
+        status: 'success',
+        duration: 1000,
+        isClosable: true,
+      });
+    } else {
+      toast({
+        title: 'Error copying to clipboard.',
+        status: 'error',
+        duration: 1000,
+        isClosable: true,
+      });
+    }
   };
 
-  const updateProfile: SubmitHandler<FormType> = (data) => {
-    console.log(data);
+  const updateProfile: SubmitHandler<FormType> = async (val) => {
+    const skillsArr: string[] = [];
+    val.My_Skills?.map((el) => skillsArr.push(el.value));
+    const Dbdata = {
+      house: val.House_Name,
+      mobile: val.Mobile,
+      street: val.Street,
+      pin: val.Pincode,
+      dob: val.DOB,
+      name: val.FullName,
+      email: val.Email,
+      skills: skillsArr,
+      desc: val.describe.value,
+      pronoun: val.Pronoun.value,
+      district: val.District?.value,
+      CampusCommunityActive: val.CampusCommunityActive?.value,
+      campus: val.College?.value,
+      mentor: val.Mentor,
+    };
     setEdit((el) => !el);
+    // sending the post request
+    try {
+      const { data } = await apiHandler.patch('/users/profile', Dbdata);
+      // need to rerender the  page from context
+      if (!data.Sucess) throw new Error(data.message);
+      toast({
+        title: 'user info was updated',
+        status: 'success',
+        duration: 1000,
+        isClosable: true,
+      });
+    } catch (e) {
+      const msg = e as Errors;
+      toast({
+        title: msg.message,
+        status: 'error',
+        duration: 1000,
+        isClosable: true,
+      });
+    }
   };
+
+  if (isUserLoading) {
+    return <h1>Loading</h1>;
+  }
+
   return (
     <Box mt="2" mb="150px">
       <FormProvider {...methods}>
         <form onSubmit={methods.handleSubmit(updateProfile)}>
           <Box>
             <Arrow />
-            <ProfileBar copyFile={copyFile} edit={edit} editHandler={editHandler} />
+            <ProfileBar copyFile={copyFile} edit={edit} editHandler={editHandler} id={user?.id} />
           </Box>
           <Flex
             flexDirection={{ base: 'column', lg: 'row' }}
-            mt="25px"
+            mt="10px"
             w="100%"
             justifyContent="space-between"
             alignItems="center"

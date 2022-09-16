@@ -6,6 +6,7 @@ import SuperTokens, { SuperTokensWrapper } from 'supertokens-auth-react';
 import { authConfig } from '../auth';
 import { theme } from '../theme';
 import { Layout } from '../layout';
+import { AuthContext } from '../context';
 
 if (typeof window !== 'undefined') {
   SuperTokens.init(authConfig());
@@ -13,11 +14,13 @@ if (typeof window !== 'undefined') {
 
 const MyApp = ({ Component, pageProps }: AppProps) => (
   <SuperTokensWrapper>
-    <ChakraProvider theme={theme}>
-      <Layout>
-        <Component {...pageProps} />
-      </Layout>
-    </ChakraProvider>
+    <AuthContext>
+      <ChakraProvider theme={theme}>
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
+      </ChakraProvider>
+    </AuthContext>
   </SuperTokensWrapper>
 );
 

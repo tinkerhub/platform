@@ -2,15 +2,22 @@
 import { Center, Spinner, Heading, Box, Button, useToast, Flex } from '@chakra-ui/react';
 import React from 'react';
 import { CopyIcon } from '@chakra-ui/icons';
+import { useRouter } from 'next/router';
 
 interface Prop {
   isLoading: boolean;
-  id: number;
+  id: string | undefined;
 }
 
-export const Final = ({ isLoading, id }: Prop) => {
+export const Final = ({ isLoading, id = 'ERROR' }: Prop) => {
   const toast = useToast();
+  const router = useRouter();
+
+  const goHome = () => {
+    router.replace('/profile');
+  };
   const copyFile = () => {
+    window.navigator.clipboard.writeText(id);
     toast({
       title: 'Id copied to clipboard.',
       status: 'success',
@@ -30,9 +37,6 @@ export const Final = ({ isLoading, id }: Prop) => {
         borderWidth=".5px"
       >
         <Flex flexDirection="column">
-          {/* <Text as="h5" fontSize="30px" mb="20px">
-            Loading...
-          </Text> */}
           <Spinner
             thickness="4px"
             speed="0.65s"
@@ -105,6 +109,7 @@ export const Final = ({ isLoading, id }: Prop) => {
           color="black"
           fontSize="20px"
           _hover={{ cursor: 'pointer', borderColor: '#4299e1' }}
+          onClick={goHome}
         >
           Continue to Home
         </Button>

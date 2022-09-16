@@ -14,6 +14,7 @@ export class CreateProfileDto {
   @IsEmail()
   email: string;
 
+  @ValidateIf((el) => el.desc === 'Student')
   @IsString()
   campus: string;
 
@@ -36,10 +37,13 @@ export class CreateProfileDto {
   @IsString()
   house: string;
 
+  @ValidateIf((el) => el.desc === 'Professional')
   @IsNotEmpty()
   @IsBoolean()
   mentor: boolean;
 
+  @IsNotEmpty()
+  @IsString()
   mobile: string;
 
   @IsString()
@@ -48,10 +52,11 @@ export class CreateProfileDto {
   @IsString()
   pronoun: string;
 
-  @IsNotEmpty()
   @IsArray()
   skills: string[];
 
   @IsString()
   street: string;
+
+  CampusCommunityActive: string;
 }
