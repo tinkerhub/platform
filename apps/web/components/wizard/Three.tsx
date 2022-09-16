@@ -11,8 +11,10 @@ export const Three = ({ next }: Prop) => {
   const { register, handleSubmit } = useForm<Form>();
   const wizardCtx = useContext(WizardContext);
 
-  const handleData = (data: Form) => {
+  const handleData = async (data: Form) => {
     wizardCtx.addData(data);
+    // sending the all user info to database
+    await wizardCtx.sendData();
     next();
   };
   return (
