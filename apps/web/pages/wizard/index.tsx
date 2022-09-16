@@ -10,7 +10,6 @@ import { Form } from '../../types';
 const Index: NextPage = () => {
   const [step, setStep] = useState<number>(1);
   const methods = useForm<Form>({ mode: 'all', resolver: yupResolver(registerFormValidator) });
-
   const stepAdd = (): void => {
     setStep((ste) => ste + 1);
   };
@@ -18,12 +17,11 @@ const Index: NextPage = () => {
   const stepSub = (): void => {
     setStep((ste) => ste - 1);
   };
-  const handleData = (val: any): void => {
+  const handleData = (val: Form): void => {
     if (step === 3) {
+      // increase the step to 4 to render the sucess/ fail UI
       stepAdd();
-
       // send post request to backend
-      // then increase the step to 4 to render the sucess/ fail UI
     }
     stepAdd();
 
