@@ -1,10 +1,19 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import { Box, Text, FormLabel, FormControl, Input, Button } from '@chakra-ui/react';
+import {
+  Box,
+  FormLabel,
+  FormControl,
+  Input,
+  Button,
+  FormErrorMessage,
+  VStack,
+} from '@chakra-ui/react';
 import React, { useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { useFormContext, Controller } from 'react-hook-form';
-import { Select as MultiSeclect, OptionBase, GroupBase } from 'chakra-react-select';
+import { useFormContext } from 'react-hook-form';
+import type { OptionBase } from 'chakra-react-select';
 import { Form } from '../../types';
+import { ControlledSelect } from './ControlledSelect';
 
 interface Options extends OptionBase {
   label: string;
@@ -36,94 +45,46 @@ export const One = () => {
       initial={{ opacity: 0, scale: 0.5 }}
       transition={{ duration: 0.5 }}
     >
-      <Box mt="30px" display="flex" flexDirection="column" justifyContent="space-between">
-        <Box display="flex" flexDirection="column" h="75px" justifyContent="space-between">
-          <FormControl>
+      <VStack spacing={2} align="stretch" mt="15px">
+        <Box display="flex" flexDirection="column" justifyContent="space-between">
+          <FormControl label="Name" isInvalid={!!errors.FullName} id="FullName">
             <FormLabel>Name</FormLabel>
             <Input mt="7px" variant="filled" placeholder="JhonDoe" {...register('FullName')} />
-            <Text color="red" fontSize="12px" mt="6px">
-              {errors.FullName?.message}
-            </Text>
+            <FormErrorMessage>{errors.FullName?.message}</FormErrorMessage>
           </FormControl>
         </Box>
-        <Box
-          display="flex"
-          flexDirection="column"
-          h="75px"
-          justifyContent="space-between"
-          mt="29px"
-        >
-          <FormControl>
+
+        <Box display="flex" flexDirection="column" justifyContent="space-between" mt="29px">
+          <FormControl label="Mobile" isInvalid={!!errors.Mobile} id="Mobile">
             <FormLabel>Mobile Number</FormLabel>
             <Input {...register('Mobile')} type="number" />
-            <Text color="red" fontSize="12px" mt="6px">
-              {errors.Mobile?.message}
-            </Text>
+            <FormErrorMessage>{errors.Mobile?.message}</FormErrorMessage>
           </FormControl>
         </Box>
-        <Box
-          display="flex"
-          flexDirection="column"
-          h="75px"
-          justifyContent="space-between"
-          mt="25px"
-        >
-          <FormControl>
+        <Box display="flex" flexDirection="column" justifyContent="space-between">
+          <FormControl label="Email" isInvalid={!!errors.Email} id="Email">
             <FormLabel>Email</FormLabel>
             <Input {...register('Email')} />
-            <Text color="red" fontSize="12px" mt="6px">
-              {errors.Email?.message}
-            </Text>
+            <FormErrorMessage>{errors.Email?.message}</FormErrorMessage>
           </FormControl>
         </Box>
-        <Box
-          display="flex"
-          flexDirection="column"
-          h="75px"
-          justifyContent="space-between"
-          mt="25px"
-        >
-          <FormControl>
+        <Box display="flex" flexDirection="column" justifyContent="space-between">
+          <FormControl label="DOB" isInvalid={!!errors.DOB} id="DOB">
             <FormLabel>Date of Birth</FormLabel>
             <Input {...register('DOB')} type="date" />
-            <Text color="red" fontSize="12px" mt="6px">
-              {errors.DOB?.message}
-            </Text>
+            <FormErrorMessage>{errors.DOB?.message}</FormErrorMessage>
           </FormControl>
         </Box>
-        <Box
-          display="flex"
-          flexDirection="column"
-          h="75px"
-          justifyContent="space-between"
-          mt="25px"
-        >
-          <Controller
-            control={control}
+        <Box display="flex" flexDirection="column" justifyContent="space-between">
+          <ControlledSelect<Form, Options, true>
             name="Pronoun"
-            render={({ field: { onChange, onBlur, name, ref } }) => (
-              <>
-                <FormControl>
-                  <FormLabel>Select your Pronoun</FormLabel>
-                  <MultiSeclect<Options, true, GroupBase<Options>>
-                    onChange={onChange}
-                    onBlur={onBlur}
-                    name={name}
-                    ref={ref}
-                    options={PronounOpt}
-                    placeholder="Select Your Pronoun"
-                    closeMenuOnSelect
-                    size="md"
-                  />
-                </FormControl>
-                <Text color="red" fontSize="12px" mt="12px">
-                  {errors.Pronoun?.message}
-                </Text>
-              </>
-            )}
+            control={control}
+            label="Pronoun"
+            placeholder="My pronoun is"
+            options={PronounOpt}
           />
         </Box>
-        <Box mt="25px">
+        <Box>
           <Button
             colorScheme="blue"
             width="100%"
@@ -135,7 +96,7 @@ export const One = () => {
             Next
           </Button>
         </Box>
-      </Box>
+      </VStack>
     </motion.div>
   );
 };
