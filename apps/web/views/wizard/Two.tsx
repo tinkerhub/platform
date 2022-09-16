@@ -1,18 +1,10 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import {
-  Box,
-  Button,
-  Radio,
-  RadioGroup,
-  Stack,
-  Text,
-  FormControl,
-  FormLabel,
-} from '@chakra-ui/react';
+import { Box, Button, Radio, RadioGroup, Stack, FormLabel } from '@chakra-ui/react';
 import { motion } from 'framer-motion';
-import { useFormContext, Controller } from 'react-hook-form';
-import { Select as MultiSeclect, OptionBase, GroupBase } from 'chakra-react-select';
+import { useFormContext } from 'react-hook-form';
+import { OptionBase } from 'chakra-react-select';
 import { Form } from '../../types';
+import { ControlledSelect } from './ControlledSelect';
 
 export const Skills = [
   { value: 'Java', label: 'Java' },
@@ -36,11 +28,7 @@ const PronounOpt: Options[] = [
 ];
 
 export const Two = () => {
-  const {
-    // register,
-    formState: { errors },
-    control,
-  } = useFormContext<Form>();
+  const { control } = useFormContext<Form>();
 
   return (
     <motion.div
@@ -49,72 +37,26 @@ export const Two = () => {
       transition={{ duration: 0.5 }}
     >
       <Box mt="30px">
-        <Box display="flex" flexDirection="column" h="75px" justifyContent="space-between">
-          <Controller
+        <Box display="flex" flexDirection="column" justifyContent="space-between">
+          <ControlledSelect
+            name="Pronoun"
             control={control}
-            name="describe"
-            render={({ field: { onChange, onBlur, name, ref } }) => (
-              <>
-                <FormControl>
-                  <FormLabel>Select your Pronoun</FormLabel>
-                  <MultiSeclect<Options, true, GroupBase<Options>>
-                    onChange={onChange}
-                    onBlur={onBlur}
-                    name={name}
-                    ref={ref}
-                    options={PronounOpt}
-                    placeholder="Select Your Pronoun"
-                    closeMenuOnSelect
-                    size="md"
-                  />
-                </FormControl>
-                <Text color="red" fontSize="12px" mt="12px">
-                  {errors.Pronoun?.message}
-                </Text>
-              </>
-            )}
+            label="Your Prounoun "
+            placeholder="I am .."
+            options={PronounOpt}
           />
         </Box>
-        <Box
-          display="flex"
-          flexDirection="column"
-          h="75px"
-          justifyContent="space-between"
-          mt="15px"
-        >
-          <Controller
-            control={control}
+        <Box display="flex" flexDirection="column" justifyContent="space-between" mt="15px">
+          <ControlledSelect
+            isMulti
             name="My_Skills"
-            render={({ field: { onChange, onBlur, name, ref } }) => (
-              <>
-                <FormControl>
-                  <FormLabel>Select your Skills</FormLabel>
-                  <MultiSeclect<Options, true, GroupBase<Options>>
-                    isMulti
-                    onChange={onChange}
-                    onBlur={onBlur}
-                    name={name}
-                    ref={ref}
-                    options={Skills}
-                    placeholder="Select Your Skills"
-                    closeMenuOnSelect
-                    size="md"
-                  />
-                </FormControl>
-                <Text color="red" fontSize="12px" mt="12px">
-                  {errors.My_Skills?.message}
-                </Text>
-              </>
-            )}
+            control={control}
+            label="Pick your skills"
+            placeholder="Python"
+            options={Skills}
           />
         </Box>
-        <Box
-          display="flex"
-          flexDirection="column"
-          h="60px"
-          justifyContent="space-between"
-          mt="25px"
-        >
+        <Box display="flex" flexDirection="column" justifyContent="space-between" mt="15px">
           <FormLabel>Can you be a Mentor</FormLabel>
           <RadioGroup defaultValue="2">
             <Stack spacing={5} direction="row">
@@ -134,29 +76,12 @@ export const Two = () => {
           justifyContent="space-between"
           mt="15px"
         >
-          <Controller
-            control={control}
+          <ControlledSelect
             name="College"
-            render={({ field: { onChange, onBlur, name, ref } }) => (
-              <>
-                <FormControl>
-                  <FormLabel>Select your campus</FormLabel>
-                  <MultiSeclect<Options, true, GroupBase<Options>>
-                    onChange={onChange}
-                    onBlur={onBlur}
-                    name={name}
-                    ref={ref}
-                    options={PronounOpt}
-                    placeholder="Select Your Campus"
-                    closeMenuOnSelect
-                    size="md"
-                  />
-                </FormControl>
-                <Text color="red" fontSize="12px" mt="12px">
-                  {errors.College?.message}
-                </Text>
-              </>
-            )}
+            control={control}
+            label="Pick Your college"
+            placeholder="Gec.."
+            options={PronounOpt}
           />
         </Box>
         <Box mt="25px">

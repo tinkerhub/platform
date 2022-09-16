@@ -15,6 +15,32 @@ export const authConfig = () => ({
       contactMethod: 'PHONE',
       signInUpFeature: {
         defaultCountry: 'IN',
+        userInputCodeFormStyle: {
+          button: {
+            backgroundColor: 'rgba(65, 83, 240, 1)',
+            border: '0px',
+            width: '100%',
+            margin: '0 auto',
+          },
+          superTokensBranding: {
+            display: 'none',
+          },
+          headerTitle: {
+            fontFamily: 'sans-serif',
+          },
+          container: {
+            height: '550px',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+          },
+          inputWrapper: {
+            ':focus-within': {
+              // border: '1px solidrgba(65, 83, 240, 1)',
+              // boxShadow: '0 0 0 0.1rem rgba(65, 83, 240, 1)',
+            },
+          },
+        },
         emailOrPhoneFormStyle: {
           button: {
             backgroundColor: 'rgba(65, 83, 240, 1)',
@@ -38,10 +64,6 @@ export const authConfig = () => ({
       },
       getRedirectionURL: async (context) => {
         if (context.action === 'SUCCESS') {
-          if (context.redirectToPath !== undefined) {
-            // we are navigating back to where the user was before they authenticated
-            return context.redirectToPath;
-          }
           if (context.isNewUser) {
             // user signed up
             return '/wizard';

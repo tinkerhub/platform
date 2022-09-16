@@ -13,6 +13,9 @@ import {
   useToast,
   FormControl,
   FormLabel,
+  RadioGroup,
+  Radio,
+  FormErrorMessage,
 } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import { Select as MultiSeclect, OptionBase, GroupBase } from 'chakra-react-select';
@@ -130,18 +133,10 @@ const Index: NextPage = () => {
             mb="10px"
           >
             <Box>
-              <FormControl>
+              <FormControl label="Name" isInvalid={!!errors.FullName} id="FullName">
                 <FormLabel>Name</FormLabel>
-                <Input
-                  mt="7px"
-                  variant="filled"
-                  placeholder="JhonDoe"
-                  readOnly={edit}
-                  {...register('FullName')}
-                />
-                <Text color="red" fontSize="12px" mt="12px">
-                  {errors.FullName?.message}
-                </Text>
+                <Input mt="7px" variant="filled" placeholder="JhonDoe" {...register('FullName')} />
+                <FormErrorMessage mb="20px">{errors.FullName?.message}</FormErrorMessage>
               </FormControl>
             </Box>
             <Box width={{ lg: '240px' }}>
@@ -194,30 +189,24 @@ const Index: NextPage = () => {
             mb="10px"
           >
             <Box>
-              <FormControl>
+              <FormControl label="Mobile" isInvalid={!!errors.Mobile} id="Mobile">
                 <FormLabel>Mobile Number</FormLabel>
-                <Input
-                  mt="7px"
-                  variant="filled"
-                  placeholder="1234567890"
-                  disabled
-                  type="number"
-                  {...register('Mobile')}
-                />
+                <Input {...register('Mobile')} type="number" />
+                <FormErrorMessage>{errors.Mobile?.message}</FormErrorMessage>
               </FormControl>
-              <Text color="red" fontSize="12px" mt="12px">
-                {errors.Mobile?.message}
-              </Text>
             </Box>
             <Box width={{ lg: '245px' }}>
-              <FormLabel>Can you be a mentor</FormLabel>
-              <Input
-                mt="7px"
-                variant="filled"
-                placeholder="Filled"
-                disabled={edit}
-                {...register('Mentor')}
-              />
+              <FormLabel>Can you be a Mentor</FormLabel>
+              <RadioGroup defaultValue="2">
+                <Stack spacing={5} direction="row">
+                  <Radio colorScheme="blue" value="1">
+                    Yes
+                  </Radio>
+                  <Radio colorScheme="blue" value="2">
+                    No
+                  </Radio>
+                </Stack>
+              </RadioGroup>
             </Box>
             <Box>
               <FormControl>
@@ -238,17 +227,11 @@ const Index: NextPage = () => {
             mb="10px"
           >
             <Box>
-              <FormLabel>Email</FormLabel>
-              <Input
-                mt="7px"
-                variant="filled"
-                placeholder="jhondoe@hotmail.com"
-                disabled={edit}
-                {...register('Email')}
-              />
-              <Text color="red" fontSize="12px" mt="12px">
-                {errors.Email?.message}
-              </Text>
+              <FormControl label="Email" isInvalid={!!errors.Email} id="Email">
+                <FormLabel>Email</FormLabel>
+                <Input {...register('Email')} />
+                <FormErrorMessage>{errors.Email?.message}</FormErrorMessage>
+              </FormControl>
             </Box>
             <Box width={{ lg: '240px' }}>
               <Controller
@@ -281,7 +264,10 @@ const Index: NextPage = () => {
               <Controller
                 control={control}
                 name="District"
-                render={({ field: { onChange, onBlur, name, ref } }) => (
+                render={({
+                  field: { onChange, onBlur, name, ref },
+                  fieldState: { error: DistrictError },
+                }) => (
                   <>
                     <FormControl>
                       <FormLabel>Select your District</FormLabel>
@@ -298,7 +284,7 @@ const Index: NextPage = () => {
                       />
                     </FormControl>
                     <Text color="red" fontSize="12px" mt="12px">
-                      {errors.District?.message}
+                      {DistrictError?.message}
                     </Text>
                   </>
                 )}
@@ -311,18 +297,11 @@ const Index: NextPage = () => {
             mb="10px"
           >
             <Box width={{ lg: '220px' }}>
-              <FormLabel>Date of Birth</FormLabel>
-              <Input
-                mt="7px"
-                variant="filled"
-                placeholder="12-12-12"
-                disabled={edit}
-                {...register('DOB')}
-                type="date"
-              />
-              <Text color="red" fontSize="12px" mt="12px">
-                {errors.DOB?.message}
-              </Text>
+              <FormControl label="DOB" isInvalid={!!errors.DOB} id="DOB">
+                <FormLabel>Date of Birth</FormLabel>
+                <Input {...register('DOB')} type="date" />
+                <FormErrorMessage>{errors.DOB?.message}</FormErrorMessage>
+              </FormControl>
             </Box>
             <Box width={{ lg: '240px' }}>
               <Controller

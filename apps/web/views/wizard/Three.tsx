@@ -1,11 +1,25 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import { Box, Button, FormControl, FormLabel, Input, Text } from '@chakra-ui/react';
+import {
+  Box,
+  Button,
+  FormControl,
+  FormErrorMessage,
+  FormLabel,
+  Input,
+  VStack,
+} from '@chakra-ui/react';
 import { motion } from 'framer-motion';
-import { Controller, useFormContext } from 'react-hook-form';
-import { Select as MultiSeclect, GroupBase, OptionBase } from 'chakra-react-select';
+import { useFormContext } from 'react-hook-form';
+import { OptionBase } from 'chakra-react-select';
 import { Form } from '../../types';
+import { ControlledSelect } from './ControlledSelect';
 
-export const District = [
+interface Options extends OptionBase {
+  label: string;
+  value: string;
+}
+
+export const District: Options[] = [
   { value: 'Alappuzha', label: 'Alappuzha' },
   { value: 'Ernakulam', label: 'Ernakulam' },
   { value: 'Idukki', label: 'Idukki' },
@@ -22,11 +36,6 @@ export const District = [
   { value: 'Wayanad', label: 'Wayanad' },
 ];
 
-interface Options extends OptionBase {
-  label: string;
-  value: string;
-}
-
 export const Three = () => {
   const {
     register,
@@ -40,61 +49,35 @@ export const Three = () => {
       initial={{ opacity: 0, scale: 0.5 }}
       transition={{ duration: 0.5 }}
     >
-      <Box mt="30px">
-        <Box display="flex" flexDirection="column" h="75px" justifyContent="space-between">
-          <FormControl>
+      <VStack spacing={2} align="stretch" mt="10px">
+        <Box display="flex" flexDirection="column" justifyContent="space-between">
+          <FormControl label="House_Name" isInvalid={!!errors.House_Name} id="House_Name">
             <FormLabel>House Name</FormLabel>
             <Input {...register('House_Name')} type="string" />
-            <Text color="red" fontSize="12px">
-              {errors.House_Name?.message}
-            </Text>
+            <FormErrorMessage>{errors.House_Name?.message}</FormErrorMessage>
           </FormControl>
         </Box>
-        <Box display="flex" flexDirection="column" h="75px" justifyContent="space-between">
-          <FormControl>
+        <Box display="flex" flexDirection="column" justifyContent="space-between">
+          <FormControl label="Street" isInvalid={!!errors.Street} id="Street">
             <FormLabel>Street Name</FormLabel>
             <Input {...register('Street')} />
-            <Text color="red" fontSize="12px">
-              {errors.Street?.message}
-            </Text>
+            <FormErrorMessage>{errors.Street?.message}</FormErrorMessage>
           </FormControl>
         </Box>
-        <Box display="flex" flexDirection="column" h="75px" justifyContent="space-between">
-          <Controller
-            control={control}
+        <Box display="flex" flexDirection="column" justifyContent="space-between">
+          <ControlledSelect
             name="District"
-            render={({ field: { onChange, onBlur, name, ref } }) => (
-              <>
-                <FormControl>
-                  <FormLabel>Select your District</FormLabel>
-                  <MultiSeclect<Options, true, GroupBase<Options>>
-                    onChange={onChange}
-                    onBlur={onBlur}
-                    name={name}
-                    ref={ref}
-                    options={District}
-                    placeholder="Select Your District"
-                    closeMenuOnSelect
-                    size="md"
-                  />
-                </FormControl>
-                <Text color="red" fontSize="12px" mt="12px">
-                  {errors.District?.message}
-                </Text>
-              </>
-            )}
+            control={control}
+            label="Pick Your District"
+            placeholder="Kozhikode"
+            options={District}
           />
-          <Text color="red" fontSize="12px">
-            {errors.District?.message}
-          </Text>
         </Box>
-        <Box display="flex" flexDirection="column" h="75px" justifyContent="space-between">
-          <FormControl>
+        <Box display="flex" flexDirection="column" justifyContent="space-between">
+          <FormControl label="Pincode" isInvalid={!!errors.Pincode} id="Pincode">
             <FormLabel>Pincode</FormLabel>
             <Input {...register('Pincode')} />
-            <Text color="red" fontSize="12px">
-              {errors.Pincode?.message}
-            </Text>
+            <FormErrorMessage>{errors.Pincode?.message}</FormErrorMessage>
           </FormControl>
         </Box>
         <Box mt="25px">
@@ -108,7 +91,7 @@ export const Three = () => {
             Next
           </Button>
         </Box>
-      </Box>
+      </VStack>
     </motion.div>
   );
 };
