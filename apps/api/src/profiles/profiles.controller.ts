@@ -14,6 +14,11 @@ import { UpdateException } from './exception/update.exception';
 export class ProfilesController {
   constructor(private readonly profilesService: ProfilesService) {}
 
+  @Get('college')
+  collegeName(): any {
+    return this.profilesService.collegeName();
+  }
+
   @Post()
   async create(
     @Req() req: any,

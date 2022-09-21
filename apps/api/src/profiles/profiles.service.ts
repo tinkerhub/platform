@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { readFileSync } from 'node:fs';
 import { CreateProfileDto } from './dto/create-profile.dto';
 import { PrismaService } from '../prisma/prisma.service';
 import { UpdateProfileDto } from './dto/update-profile.dto';
@@ -89,5 +90,17 @@ export class ProfilesService {
       data: resp,
       message: 'User info was updated succesfully',
     });
+  }
+
+  collegeName() {
+    const data = readFileSync('./src/profiles/data.json', { encoding: 'utf8' });
+    const parseData = JSON.parse(data);
+    const collegeJSON = { data: [] };
+    for (let key = 0; key < parseData.length; key += 1) {
+      const collegeName = parseData[key].name;
+      // @ts-ignore
+      collegeJSON.data.push({ name: collegeName });
+    }
+    return collegeJSON;
   }
 }
