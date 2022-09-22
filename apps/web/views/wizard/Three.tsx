@@ -72,7 +72,7 @@ export const Three = () => {
             render={({ field, fieldState: { error: proError } }) => (
               <FormControl label="District" isInvalid={!!proError} id="District">
                 <FormLabel>District</FormLabel>
-                <Select defaultValue={District[0]} options={District} {...field} />
+                <Select options={District} {...field} />
                 <FormErrorMessage>Please pick an option</FormErrorMessage>
               </FormControl>
             )}

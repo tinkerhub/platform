@@ -13,20 +13,44 @@ import { Select } from 'chakra-react-select';
 import React, { useEffect, useState } from 'react';
 import { Controller, useController, useFormContext } from 'react-hook-form';
 import { useAuthCtx } from '../../hooks';
-import { Desp, Skills } from '../wizard/Two';
+import { Comm, Desp, Skills } from '../wizard/Two';
+import { Option } from '../wizard/validator';
 import { IsEdit } from './types';
 
 export const RowTwo = ({ edit }: IsEdit) => {
-  const { control, watch } = useFormContext();
+  const tempArr: Option[] = [];
+  const { control, watch, setValue } = useFormContext();
   const { user: userInfo } = useAuthCtx();
+  const [work, setWork] = useState(0);
 
-  const [prof, setProf] = useState<string>('Student');
+  userInfo?.skills?.map((el) => tempArr.push({ value: el, label: el }));
+
+  const [prof, setProf] = useState<string | null>(null);
 
   useEffect(() => {
     const val = watch('describe')?.value;
-    setProf(val || 'Student');
+    setProf(val);
+
+    if (prof === 'Student') {
+      setValue('mentor', undefined);
+    }
+
+    // setting the value related to opposite of decription to undefined
+    if (prof === 'Professional') {
+      setValue('CampusCommunityActive', undefined);
+      setValue('My_Skills', undefined);
+      setValue('College', undefined);
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [watch('describe')]);
+
+  useEffect(() => {
+    const ind = Desp.findIndex((el) => el.value === userInfo?.desc);
+    if (userInfo?.desc) {
+      setProf(userInfo.desc);
+      setWork(ind);
+    }
+  }, [userInfo]);
 
   const {
     field: { onChange: mentorChange, ref: mentorRef, value: mentorVal },
@@ -42,12 +66,12 @@ export const RowTwo = ({ edit }: IsEdit) => {
         <Box display="flex" flexDirection="column" justifyContent="space-between">
           <Controller
             control={control}
-            defaultValue={userInfo?.desc}
+            defaultValue={Desp[work]}
             name="describe"
             render={({ field, fieldState: { error: descError } }) => (
               <FormControl label="describe" isInvalid={!!descError} id="describe">
                 <FormLabel>Best way to describe yourself</FormLabel>
-                <Select defaultValue={Desp[0]} options={Desp} {...field} />
+                <Select options={Desp} {...field} isDisabled={edit} />
                 <FormErrorMessage>Please pick an option</FormErrorMessage>
               </FormControl>
             )}
@@ -57,7 +81,10 @@ export const RowTwo = ({ edit }: IsEdit) => {
           <Box display="flex" flexDirection="column" justifyContent="space-between" mt="13px">
             <Controller
               control={control}
-              defaultValue={userInfo?.CampusCommunityActive}
+              defaultValue={{
+                vale: userInfo?.CampusCommunityActive,
+                label: userInfo?.CampusCommunityActive,
+              }}
               name="CampusCommunityActive"
               render={({ field, fieldState: { error: commError } }) => (
                 <FormControl
@@ -66,7 +93,7 @@ export const RowTwo = ({ edit }: IsEdit) => {
                   id="CampusCommunityActive"
                 >
                   <FormLabel>Tinkerhub campus community is active</FormLabel>
-                  <Select defaultValue={Desp[0]} options={Desp} {...field} />
+                  <Select options={Comm} {...field} isDisabled={edit} />
                   <FormErrorMessage>Please pick an option</FormErrorMessage>
                 </FormControl>
               )}
@@ -76,13 +103,13 @@ export const RowTwo = ({ edit }: IsEdit) => {
         {prof === 'Student' && (
           <Box display="flex" flexDirection="column" justifyContent="space-between" mt="10px">
             <Controller
-              defaultValue={userInfo?.skills}
+              defaultValue={tempArr.map((el) => el)}
               control={control}
               name="My_Skills"
               render={({ field, fieldState: { error: skillError } }) => (
                 <FormControl label="My_Skills" isInvalid={!!skillError} id="My_Skills">
-                  <FormLabel>Tour skills</FormLabel>
-                  <Select defaultValue={Desp[0]} options={Skills} {...field} isMulti />
+                  <FormLabel>Your skills</FormLabel>
+                  <Select options={Skills} {...field} isMulti isDisabled={edit} />
                   <FormErrorMessage>Please pick an option</FormErrorMessage>
                 </FormControl>
               )}
@@ -122,13 +149,13 @@ export const RowTwo = ({ edit }: IsEdit) => {
         {prof === 'Student' && (
           <Box display="flex" flexDirection="column" justifyContent="space-between" mt="13px">
             <Controller
-              defaultValue={userInfo?.campus}
+              defaultValue={{ vale: userInfo?.campus, label: userInfo?.campus }}
               control={control}
               name="College"
               render={({ field, fieldState: { error: collegeErr } }) => (
                 <FormControl label="College" isInvalid={!!collegeErr} id="College">
                   <FormLabel>I currenlty study at</FormLabel>
-                  <Select defaultValue={Desp[0]} options={Skills} {...field} />
+                  <Select options={Skills} {...field} isDisabled={edit} />
                   <FormErrorMessage>Please pick an option</FormErrorMessage>
                 </FormControl>
               )}

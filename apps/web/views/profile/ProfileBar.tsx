@@ -1,5 +1,5 @@
 import { CopyIcon } from '@chakra-ui/icons';
-import { Heading, Button, Box } from '@chakra-ui/react';
+import { Heading, Button, Box, Flex, Text } from '@chakra-ui/react';
 
 import React from 'react';
 
@@ -12,21 +12,30 @@ interface BarProp {
 
 export const ProfileBar = ({ copyFile, edit, editHandler, id = 'Error' }: BarProp) => (
   <Box display="flex" justifyContent="space-between" mt="4">
-    <Box display="flex" justifyContent="space-between">
-      <Heading as="h2" size="xl" alignSelf="center">
+    <Box
+      display="flex"
+      flexDirection={{ base: 'column', md: 'row' }}
+      alignItems={{ base: 'start', md: 'center' }}
+    >
+      <Heading as="h2" size="xl">
         My Profile
       </Heading>
-      <Heading as="h2" fontSize={{ base: '16px', md: 'md' }} alignSelf="center" pl={5}>
-        {id}
-      </Heading>
-      <CopyIcon
-        onClick={copyFile}
-        w={4}
-        h={4}
-        ml={3}
-        _hover={{ cursor: 'pointer', color: 'grey' }}
-        alignSelf="center"
-      />
+      <Flex mt={{ base: '14px', md: '0px' }}>
+        <Heading as="h2" fontSize={{ base: '16px', md: 'md' }} pl={{ base: '0px', md: '5' }}>
+          <Text fontSize="14px" fontWeight="normal">
+            Membership ID
+          </Text>
+          {id}
+        </Heading>
+        <CopyIcon
+          onClick={copyFile}
+          w={4}
+          h={4}
+          ml={3}
+          alignSelf="end"
+          _hover={{ cursor: 'pointer', color: 'grey' }}
+        />
+      </Flex>
     </Box>
     <Box>
       {edit && (

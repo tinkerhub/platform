@@ -2,7 +2,6 @@
 import { Center, Spinner, Heading, Box, Button, useToast, Flex } from '@chakra-ui/react';
 import React from 'react';
 import { CopyIcon } from '@chakra-ui/icons';
-import { useRouter } from 'next/router';
 
 interface Prop {
   isLoading: boolean;
@@ -11,10 +10,9 @@ interface Prop {
 
 export const Final = ({ isLoading, id = 'ERROR' }: Prop) => {
   const toast = useToast();
-  const router = useRouter();
 
   const goHome = () => {
-    router.replace('/profile');
+    window.location.reload();
   };
   const copyFile = () => {
     window.navigator.clipboard.writeText(id);
@@ -68,7 +66,7 @@ export const Final = ({ isLoading, id = 'ERROR' }: Prop) => {
           Here's your membership ID
         </Heading>
         <Box
-          bg="rgba(210, 210, 210, 1)"
+          bg="rgba(240, 240, 240, 1)"
           py="3"
           px="2"
           mt="14px"
@@ -80,7 +78,7 @@ export const Final = ({ isLoading, id = 'ERROR' }: Prop) => {
           alignItems="center"
           onClick={copyFile}
         >
-          <Heading fontWeight="bold" size="md" color="black">
+          <Heading fontWeight="bold" size="14px" color="black">
             {id}
           </Heading>
           <CopyIcon fontSize="25px" color="black" />

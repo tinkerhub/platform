@@ -9,12 +9,11 @@ import {
   FormLabel,
   FormControl,
   FormErrorMessage,
+  VStack,
 } from '@chakra-ui/react';
 import { motion } from 'framer-motion';
 import { useController, useFormContext, Controller } from 'react-hook-form';
 import { OptionBase, Select } from 'chakra-react-select';
-// import { InferType } from 'yup';
-// import { secondValidator } from './validator';
 
 export const Skills = [
   { value: 'Java', label: 'Java' },
@@ -30,11 +29,10 @@ interface Options extends OptionBase {
   label: string;
   value: string;
 }
-// type StepTwo = InferType<typeof secondValidator>;
 
 export const Desp: Options[] = [
   { label: 'Student', value: 'Student' },
-  { label: 'Profissional', value: 'Professional' },
+  { label: 'Professional', value: 'Professional' },
 ];
 
 export const Comm: Options[] = [
@@ -44,11 +42,21 @@ export const Comm: Options[] = [
 
 export const Two = () => {
   const [prof, setProf] = useState<string | null>(null);
-  const { control, watch } = useFormContext();
+  const { control, watch, setValue } = useFormContext();
 
   useEffect(() => {
     const val = watch('describe')?.value;
-    setProf(val || 'Student');
+    setProf(val);
+
+    if (val === 'Student') {
+      setValue('mentor', undefined);
+    }
+    if (val === 'Professor') {
+      setValue('CampusCommunityActive', undefined);
+      setValue('My_Skills', undefined);
+      setValue('College', undefined);
+    }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [watch('describe')]);
 
@@ -66,7 +74,7 @@ export const Two = () => {
       initial={{ opacity: 0, scale: 0.5 }}
       transition={{ duration: 0.5 }}
     >
-      <Box mt="30px">
+      <VStack mt="30px" spacing={4} align="stretch">
         <Box display="flex" flexDirection="column" justifyContent="space-between">
           <Controller
             control={control}
@@ -74,7 +82,7 @@ export const Two = () => {
             render={({ field, fieldState: { error: descError } }) => (
               <FormControl label="describe" isInvalid={!!descError} id="describe">
                 <FormLabel>Best way to describe yourself</FormLabel>
-                <Select defaultValue={Desp[0]} options={Desp} {...field} />
+                <Select options={Desp} {...field} />
                 {descError && <FormErrorMessage>Please pick an option</FormErrorMessage>}
               </FormControl>
             )}
@@ -92,7 +100,7 @@ export const Two = () => {
                   id="CampusCommunityActive"
                 >
                   <FormLabel>Tinkerhub campus community is active</FormLabel>
-                  <Select defaultValue={Comm[0]} options={Comm} {...field} />
+                  <Select options={Comm} {...field} />
                   {commError && <FormErrorMessage>Please pick an option</FormErrorMessage>}
                 </FormControl>
               )}
@@ -106,8 +114,8 @@ export const Two = () => {
               name="My_Skills"
               render={({ field, fieldState: { error: skillError } }) => (
                 <FormControl label="My_Skills" isInvalid={!!skillError} id="My_Skills">
-                  <FormLabel>Tour skills</FormLabel>
-                  <Select defaultValue={Desp[0]} options={Skills} {...field} isMulti />
+                  <FormLabel>Your skills</FormLabel>
+                  <Select options={Skills} {...field} isMulti />
                   {skillError && <FormErrorMessage>Please pick an option</FormErrorMessage>}
                 </FormControl>
               )}
@@ -145,7 +153,7 @@ export const Two = () => {
               render={({ field, fieldState: { error: collegeErr } }) => (
                 <FormControl label="College" isInvalid={!!collegeErr} id="College">
                   <FormLabel>I currenlty study at</FormLabel>
-                  <Select defaultValue={Desp[0]} options={Skills} {...field} />
+                  <Select options={Skills} {...field} />
                   {collegeErr && <FormErrorMessage>Please pick an option</FormErrorMessage>}
                 </FormControl>
               )}
@@ -163,7 +171,7 @@ export const Two = () => {
             Next
           </Button>
         </Box>
-      </Box>
+      </VStack>
     </motion.div>
   );
 };
