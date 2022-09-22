@@ -42,7 +42,7 @@ export class CreateProfileDto {
   @IsBoolean()
   mentor: boolean;
 
-  @IsNotEmpty()
+  // @IsNotEmpty()
   @IsString()
   mobile: string;
 
@@ -58,5 +58,7 @@ export class CreateProfileDto {
   @IsString()
   street: string;
 
+  @ValidateIf((el) => el.desc === 'Student')
+  @IsString()
   CampusCommunityActive: string;
 }

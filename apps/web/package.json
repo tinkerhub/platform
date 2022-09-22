@@ -20,6 +20,7 @@
     "next": "12.2.2",
     "next-pwa": "5.5.4",
     "react": "18.2.0",
+    "react-confetti": "^6.1.0",
     "react-dom": "18.2.0",
     "react-hook-form": "^7.33.1",
     "supertokens-auth-react": "^0.24.2",

@@ -17,32 +17,48 @@ export const AuthContext = ({ children }: Child) => {
   const [user, setUser] = useState<Form | null>(null);
   const [isUserLoading, setUserLoading] = useState(true);
   const session = useSessionContext();
-  useEffect(() => {
-    const { doesSessionExist } = session as any;
-    if (doesSessionExist) {
-      (async () => {
-        try {
-          const { data } = await apiHandler.get('/users/profile');
-          if (!data.Success) throw new Error();
-          setUser(data.data);
-        } catch (e: unknown) {
-          console.log(e);
-        } finally {
-          setUserLoading(false);
-        }
-      })();
+
+  const { doesSessionExist } = session as any;
+
+  const getData = async () => {
+    try {
+      const { data } = await apiHandler.get('/users/profile');
+      if (!data.Success) {
+        throw new Error();
+      }
+      if (data.Success && data.data === null) {
+        router.push('/wizard');
+      }
+      if (data.Success && data.data) {
+        setUser(data.data);
+      }
+    } catch {
+      console.log('eerir');
+    } finally {
+      setUserLoading(false);
     }
-  }, [session]);
+  };
 
   useEffect(() => {
-    if (!user) {
-      router.replace('/wizard');
+    if (doesSessionExist) {
+      getData();
+    } else {
+      setUserLoading(false);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [doesSessionExist]);
+
+  useEffect(() => {
     if (user && path === 'wizard') {
       router.replace('/profile');
     }
+
+    if (!isUserLoading && !user) {
+      router.push('/wizard');
+    }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user]);
+  }, [user, path]);
 
   const value = useMemo(
     () => ({
@@ -50,7 +66,7 @@ export const AuthContext = ({ children }: Child) => {
       isUserLoading,
     }),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [session, isUserLoading]
+    [doesSessionExist, isUserLoading, getData]
   );
 
   return <AuthCtx.Provider value={value}>{children}</AuthCtx.Provider>;

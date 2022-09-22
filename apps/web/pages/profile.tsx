@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { useState } from 'react';
 import type { NextPage } from 'next';
-import { Box, Flex, useToast } from '@chakra-ui/react';
+import { Box, Button, Flex, useToast } from '@chakra-ui/react';
 import { InferType } from 'yup';
 import { useForm, SubmitHandler, FormProvider } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -18,7 +18,6 @@ const Index: NextPage = () => {
   const methods = useForm<FormType>({ mode: 'all', resolver: yupResolver(registerFormValidator) });
   const toast = useToast();
   const { user } = useAuthCtx();
-  const { isUserLoading } = useAuthCtx();
 
   const editHandler = () => {
     setEdit(false);
@@ -32,14 +31,14 @@ const Index: NextPage = () => {
       toast({
         title: 'Id copied to clipboard.',
         status: 'success',
-        duration: 1000,
+        duration: 3000,
         isClosable: true,
       });
     } else {
       toast({
         title: 'Error copying to clipboard.',
         status: 'error',
-        duration: 1000,
+        duration: 3000,
         isClosable: true,
       });
     }
@@ -47,15 +46,13 @@ const Index: NextPage = () => {
 
   const updateProfile: SubmitHandler<FormType> = async (val) => {
     const skillsArr: string[] = [];
-    val.My_Skills?.map((el) => skillsArr.push(el.value));
+    val.My_Skills?.map((el: any) => skillsArr.push(el.value));
     const Dbdata = {
       house: val.House_Name,
-      mobile: val.Mobile,
       street: val.Street,
       pin: val.Pincode,
       dob: val.DOB,
       name: val.FullName,
-      email: val.Email,
       skills: skillsArr,
       desc: val.describe.value,
       pronoun: val.Pronoun.value,
@@ -69,11 +66,11 @@ const Index: NextPage = () => {
     try {
       const { data } = await apiHandler.patch('/users/profile', Dbdata);
       // need to rerender the  page from context
-      if (!data.Sucess) throw new Error(data.message);
+      if (!data.Success) throw new Error(data.message);
       toast({
         title: 'user info was updated',
         status: 'success',
-        duration: 1000,
+        duration: 3000,
         isClosable: true,
       });
     } catch (e) {
@@ -81,18 +78,14 @@ const Index: NextPage = () => {
       toast({
         title: msg.message,
         status: 'error',
-        duration: 1000,
+        duration: 3000,
         isClosable: true,
       });
     }
   };
 
-  if (isUserLoading) {
-    return <h1>Loading</h1>;
-  }
-
   return (
-    <Box mt="2" mb="150px">
+    <Box mt="2" mb="50px">
       <FormProvider {...methods}>
         <form onSubmit={methods.handleSubmit(updateProfile)}>
           <Box>
@@ -109,6 +102,19 @@ const Index: NextPage = () => {
             <RowOne edit={edit} />
             <RowTwo edit={edit} />
             <RowThree edit={edit} />
+            {!edit && (
+              <Button
+                w="100%"
+                mt="20px"
+                display={{ lg: 'none' }}
+                type="submit"
+                colorScheme="blue"
+                backgroundColor="rgba(65, 83, 240, 1)"
+                color="white"
+              >
+                Save
+              </Button>
+            )}
           </Flex>
         </form>
       </FormProvider>

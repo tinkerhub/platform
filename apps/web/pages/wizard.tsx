@@ -1,10 +1,12 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import { Center, useToast } from '@chakra-ui/react';
-import React, { useEffect, useState } from 'react';
+import { Center, useDimensions, useToast } from '@chakra-ui/react';
+import React, { useEffect, useRef, useState } from 'react';
 import type { NextPage } from 'next';
 import { useForm, FormProvider, SubmitHandler } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { InferType } from 'yup';
+import Confetti from 'react-confetti';
+
 import {
   CardBio,
   Bar,
@@ -27,6 +29,9 @@ const Index: NextPage = () => {
   const [validator, setValidator] = useState<any>(firstFormValidator);
   const methods = useForm<FormType>({ mode: 'all', resolver: yupResolver(validator) });
   const [user, setUser] = useState<Form | null>(null);
+  const elementRef = useRef(null);
+  const dimensions = useDimensions(elementRef, true);
+
   const [isLoading, setIsloading] = useState<boolean>(false);
 
   const toast = useToast();
@@ -57,7 +62,6 @@ const Index: NextPage = () => {
       val.My_Skills?.map((el) => skillsArr.push(el.value));
       const Dbdata = {
         house: val.House_Name,
-        mobile: val.Mobile,
         street: val.Street,
         pin: val.Pincode,
         dob: new Date(val.DOB),
@@ -104,7 +108,10 @@ const Index: NextPage = () => {
 
   if (step === 4) {
     return (
-      <Center mb="60px">
+      <Center mb="60px" ref={elementRef}>
+        {!isLoading && (
+          <Confetti width={dimensions?.borderBox.width} height={dimensions?.borderBox.height} />
+        )}
         <Final isLoading={isLoading} id={user?.id} />
       </Center>
     );

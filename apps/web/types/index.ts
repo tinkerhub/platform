@@ -7,13 +7,13 @@ enum Act {
 }
 
 export type Form = {
-  name?: string;
-  dob?: Date;
-  email?: string;
-  pronoun?: string;
-  mobile?: string;
+  name: string;
+  dob: Date;
+  email: string;
+  pronoun: string;
+  mobile: string;
   campus?: string;
-  desc?: string;
+  desc: string;
   mentor?: boolean;
   accept?: boolean;
   house?: string;
@@ -22,7 +22,7 @@ export type Form = {
   skills?: string[];
   street?: string;
   CampusCommunityActive: Act;
-  id?: string;
+  id: string;
 };
 
 export interface Errors {

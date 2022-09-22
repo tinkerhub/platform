@@ -17,7 +17,7 @@ export const registerFormValidator = Yup.object({
   DOB: Yup.date().typeError('Please provide a valid Date').required(requiredErrorStatement('DOB')),
   Email: Yup.string().email().required(requiredErrorStatement('email')),
   Pronoun: PickAnOptionValidator.nullable().required('Please pick an option'),
-  Mobile: Yup.string().required(requiredErrorStatement('Mobile number')),
+  // Mobile: Yup.string().required(requiredErrorStatement('Mobile number')),
   CampusCommunityActive: Yup.object()
     .nullable()
     .when('describe', {
@@ -57,7 +57,7 @@ export const firstFormValidator = Yup.object({
   DOB: Yup.date().typeError('Please provide a valid Date').required(requiredErrorStatement('DOB')),
   Email: Yup.string().email().required(requiredErrorStatement('email')),
   Pronoun: PickAnOptionValidator.nullable().required('Please pick an option'),
-  Mobile: Yup.string().required(requiredErrorStatement('Mobile number')),
+  // Mobile: Yup.string().required(requiredErrorStatement('Mobile number')),
 });
 export const secondValidator = Yup.object({
   CampusCommunityActive: Yup.object()

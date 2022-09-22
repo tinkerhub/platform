@@ -1,14 +1,19 @@
 import React, { useEffect, useReducer } from 'react';
 import { useRouter } from 'next/router';
-import { Flex } from '@chakra-ui/react';
+import { Box, Flex } from '@chakra-ui/react';
 import { useSessionContext } from 'supertokens-auth-react/recipe/session';
 import { signOut, PasswordlessAuth } from 'supertokens-auth-react/recipe/passwordless';
 import { Topbar, BottomBar } from './Navbar';
 import type { Child } from '../types';
 import { ActionKind, AuthReducer } from './reducer';
+import { useAuthCtx } from '../hooks';
+import { PageLoader } from '../components/loading';
 
 export const Layout = ({ children }: Child) => {
   const router = useRouter();
+  const { isUserLoading } = useAuthCtx();
+  // const isUserLoading = true;
+
   const redirect = () => {
     router.push('/auth');
   };
@@ -50,6 +55,17 @@ export const Layout = ({ children }: Child) => {
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [doesSessionExist, router]);
+
+  // that loading screen
+
+  if (isUserLoading) {
+    return (
+      <Box>
+        <PageLoader />
+        <Box display="none">{children}</Box>
+      </Box>
+    );
+  }
 
   if (path === '/' || base === 'auth') {
     return (

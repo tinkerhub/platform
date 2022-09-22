@@ -47,20 +47,12 @@ export const One = () => {
       initial={{ opacity: 0, scale: 0.5 }}
       transition={{ duration: 0.5 }}
     >
-      <VStack spacing={2} align="stretch" mt="15px">
+      <VStack spacing={4} align="stretch" mt="15px">
         <Box display="flex" flexDirection="column" justifyContent="space-between">
           <FormControl label="Name" isInvalid={!!errors.FullName} id="FullName">
             <FormLabel>Name</FormLabel>
             <Input mt="7px" variant="filled" placeholder="JhonDoe" {...register('FullName')} />
             <FormErrorMessage>{errors.FullName?.message}</FormErrorMessage>
-          </FormControl>
-        </Box>
-
-        <Box display="flex" flexDirection="column" justifyContent="space-between" mt="29px">
-          <FormControl label="Mobile" isInvalid={!!errors.Mobile} id="Mobile">
-            <FormLabel>Mobile Number</FormLabel>
-            <Input {...register('Mobile')} type="number" />
-            <FormErrorMessage>{errors.Mobile?.message}</FormErrorMessage>
           </FormControl>
         </Box>
         <Box display="flex" flexDirection="column" justifyContent="space-between">
@@ -84,7 +76,7 @@ export const One = () => {
             render={({ field, fieldState: { error: proError } }) => (
               <FormControl label="Pronoun" isInvalid={!!proError} id="Pronoun">
                 <FormLabel>Prefered Pronoun</FormLabel>
-                <Select defaultValue={PronounOpt[0]} options={PronounOpt} {...field} />
+                <Select options={PronounOpt} {...field} />
                 <FormErrorMessage>Please pick an option</FormErrorMessage>
               </FormControl>
             )}
