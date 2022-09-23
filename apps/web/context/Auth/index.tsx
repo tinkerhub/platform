@@ -1,5 +1,6 @@
 import React, { createContext, useState, useEffect, useMemo } from 'react';
 import { useRouter } from 'next/router';
+import { useToast } from '@chakra-ui/react';
 import { useSessionContext } from 'supertokens-auth-react/recipe/session';
 import { Child, Form } from '../../types';
 import { apiHandler } from '../../api';
@@ -7,6 +8,7 @@ import { apiHandler } from '../../api';
 interface Pro {
   user: Form | null;
   isUserLoading: boolean;
+  getData: () => Promise<void>;
 }
 
 export const AuthCtx = createContext({} as Pro);
@@ -17,11 +19,12 @@ export const AuthContext = ({ children }: Child) => {
   const [user, setUser] = useState<Form | null>(null);
   const [isUserLoading, setUserLoading] = useState(true);
   const session = useSessionContext();
-
+  const toast = useToast();
   const { doesSessionExist } = session as any;
 
   const getData = async () => {
     try {
+      setUserLoading(true);
       const { data } = await apiHandler.get('/users/profile');
       if (!data.Success) {
         throw new Error();
@@ -33,7 +36,13 @@ export const AuthContext = ({ children }: Child) => {
         setUser(data.data);
       }
     } catch {
-      console.log('eerir');
+      router.push('/');
+      toast({
+        title: 'Something went wrong',
+        status: 'error',
+        duration: 3000,
+        isClosable: true,
+      });
     } finally {
       setUserLoading(false);
     }
@@ -64,6 +73,7 @@ export const AuthContext = ({ children }: Child) => {
     () => ({
       user,
       isUserLoading,
+      getData,
     }),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [doesSessionExist, isUserLoading, getData]

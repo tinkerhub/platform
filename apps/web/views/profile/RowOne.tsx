@@ -1,8 +1,9 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import { FormControl, FormLabel, Input, FormErrorMessage, Box, VStack } from '@chakra-ui/react';
 import { OptionBase, Select } from 'chakra-react-select';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
+// import dayjs from 'dayjs';
 import { InferType } from 'yup';
 import { useAuthCtx } from '../../hooks';
 import { firstFormValidator } from '../wizard';
@@ -23,17 +24,6 @@ type FormType = InferType<typeof firstFormValidator>;
 export const RowOne = ({ edit }: IsEdit) => {
   // Auth context use
   const { user: userInfo } = useAuthCtx();
-  const [dat, setDat] = useState<string | undefined>(undefined);
-  const [proIndex, setProIndex] = useState<number>(2);
-
-  // parsing date to sa sting to call substring function
-
-  useEffect(() => {
-    const def = `${userInfo?.dob}`.substring(0, 10);
-    const pr = PronounOpt.findIndex((el) => el.value === userInfo?.pronoun);
-    setProIndex(pr);
-    setDat(def);
-  }, [userInfo]);
 
   const {
     register,
@@ -47,6 +37,16 @@ export const RowOne = ({ edit }: IsEdit) => {
     if (userInfo?.email) {
       setValue('Email', userInfo?.email);
     }
+    if (userInfo?.pronoun) {
+      setValue('Pronoun', { label: userInfo.pronoun, value: userInfo.pronoun });
+    }
+    if (userInfo?.name) {
+      setValue('FullName', userInfo?.name);
+    }
+    if (userInfo?.dob) {
+      // setValue('DOB', dayjs(userInfo?.dob).format('YYYY-MM-DD'));
+    }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userInfo]);
 
@@ -56,7 +56,6 @@ export const RowOne = ({ edit }: IsEdit) => {
         <FormControl label="Name" isInvalid={!!errors.FullName} id="FullName">
           <FormLabel>Name</FormLabel>
           <Input
-            defaultValue={userInfo?.name}
             mt="7px"
             variant="filled"
             placeholder="JhonDoe"
@@ -81,13 +80,12 @@ export const RowOne = ({ edit }: IsEdit) => {
       <Box display="flex" flexDirection="column" justifyContent="space-between">
         <FormControl label="DOB" isInvalid={!!errors.DOB} id="DOB">
           <FormLabel>Date of Birth</FormLabel>
-          <Input {...register('DOB')} type="date" isDisabled={edit} defaultValue={dat} />
+          <Input {...register('DOB')} type="date" isDisabled={edit} />
           <FormErrorMessage>{errors.DOB?.message}</FormErrorMessage>
         </FormControl>
       </Box>
       <Box display="flex" flexDirection="column" justifyContent="space-between" mb="30px">
         <Controller
-          defaultValue={PronounOpt[proIndex]}
           control={control}
           name="Pronoun"
           render={({ field, fieldState: { error: proError } }) => (

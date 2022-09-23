@@ -14,42 +14,54 @@ import React, { useEffect, useState } from 'react';
 import { Controller, useController, useFormContext } from 'react-hook-form';
 import { useAuthCtx } from '../../hooks';
 import { Comm, Desp, Skills } from '../wizard/Two';
-import { Option } from '../wizard/validator';
-import { IsEdit } from './types';
+import { IsEdit, Options } from './types';
 
 export const RowTwo = ({ edit }: IsEdit) => {
-  const tempArr: Option[] = [];
   const { control, watch, setValue } = useFormContext();
+
   const { user: userInfo } = useAuthCtx();
-  const [work, setWork] = useState(0);
-
-  userInfo?.skills?.map((el) => tempArr.push({ value: el, label: el }));
-
+  const skillArr: Options[] = [];
+  // for conditional rendering of prfessional and student
   const [prof, setProf] = useState<string | null>(null);
-
+  // userinfo.skills returns an array of string so converting to a object here and pushing to a array
+  userInfo?.skills?.map((el) => skillArr.push({ value: el, label: el }));
   useEffect(() => {
     const val = watch('describe')?.value;
     setProf(val);
 
     if (prof === 'Student') {
-      setValue('mentor', undefined);
+      setValue('mentor', null);
     }
 
     // setting the value related to opposite of decription to undefined
+    // making sure that user wont send data from both student and professionall to DB
     if (prof === 'Professional') {
-      setValue('CampusCommunityActive', undefined);
-      setValue('My_Skills', undefined);
-      setValue('College', undefined);
+      setValue('CampusCommunityActive', null);
+      setValue('My_Skills', null);
+      setValue('College', null);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [watch('describe')]);
 
   useEffect(() => {
-    const ind = Desp.findIndex((el) => el.value === userInfo?.desc);
     if (userInfo?.desc) {
+      // setting the state to change on frontend
+      setValue('describe', { value: userInfo?.desc, label: userInfo?.desc });
       setProf(userInfo.desc);
-      setWork(ind);
     }
+    if (userInfo?.skills) {
+      setValue('My_Skills', skillArr);
+    }
+    if (userInfo?.campus) {
+      setValue('College', { label: userInfo.campus, value: userInfo.campus });
+    }
+    if (userInfo?.CampusCommunityActive) {
+      setValue('CampusCommunityActive', {
+        label: userInfo.CampusCommunityActive,
+        value: userInfo.CampusCommunityActive,
+      });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userInfo]);
 
   const {
@@ -62,11 +74,10 @@ export const RowTwo = ({ edit }: IsEdit) => {
 
   return (
     <VStack spacing={2} align="stretch" w="100%" mb="20px" mx="90px">
-      <Box>
+      <Box mt="30px">
         <Box display="flex" flexDirection="column" justifyContent="space-between">
           <Controller
             control={control}
-            defaultValue={Desp[work]}
             name="describe"
             render={({ field, fieldState: { error: descError } }) => (
               <FormControl label="describe" isInvalid={!!descError} id="describe">
@@ -81,10 +92,6 @@ export const RowTwo = ({ edit }: IsEdit) => {
           <Box display="flex" flexDirection="column" justifyContent="space-between" mt="13px">
             <Controller
               control={control}
-              defaultValue={{
-                vale: userInfo?.CampusCommunityActive,
-                label: userInfo?.CampusCommunityActive,
-              }}
               name="CampusCommunityActive"
               render={({ field, fieldState: { error: commError } }) => (
                 <FormControl
@@ -103,7 +110,6 @@ export const RowTwo = ({ edit }: IsEdit) => {
         {prof === 'Student' && (
           <Box display="flex" flexDirection="column" justifyContent="space-between" mt="10px">
             <Controller
-              defaultValue={tempArr.map((el) => el)}
               control={control}
               name="My_Skills"
               render={({ field, fieldState: { error: skillError } }) => (
@@ -127,7 +133,6 @@ export const RowTwo = ({ edit }: IsEdit) => {
             <FormControl label="Mentor" isInvalid={!!mentorError} id="Mentor">
               <FormLabel>Can you be a Mentor</FormLabel>
               <RadioGroup
-                defaultValue={Number(userInfo?.mentor)}
                 ref={mentorRef}
                 onChange={mentorChange}
                 value={Number(mentorVal)}
@@ -149,7 +154,6 @@ export const RowTwo = ({ edit }: IsEdit) => {
         {prof === 'Student' && (
           <Box display="flex" flexDirection="column" justifyContent="space-between" mt="13px">
             <Controller
-              defaultValue={{ vale: userInfo?.campus, label: userInfo?.campus }}
               control={control}
               name="College"
               render={({ field, fieldState: { error: collegeErr } }) => (

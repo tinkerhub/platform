@@ -1,7 +1,8 @@
 /* eslint-disable react/jsx-props-no-spreading */
+import { Heading } from '@chakra-ui/react';
 import Passwordless from 'supertokens-auth-react/recipe/passwordless';
 import Session from 'supertokens-auth-react/recipe/session';
-import { Header, userInputCodeFormStyle, emailOrPhoneFormStyle } from './OverrideStyle';
+import { userInputCodeFormStyle, emailOrPhoneFormStyle } from './OverrideStyle';
 
 export const authConfig = () => ({
   appInfo: {
@@ -20,7 +21,9 @@ export const authConfig = () => ({
           // eslint-disable-next-line react/prop-types, arrow-body-style
           PasswordlessSignInUpHeader_Override: () => (
             <div>
-              <h1 style={Header}>Enter Your Mobile Number</h1>
+              <Heading fontSize="21px" color="black" fontWeight="500" marginBottom="10px">
+                Enter Your Mobile Number
+              </Heading>
             </div>
           ),
         },
