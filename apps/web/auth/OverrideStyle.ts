@@ -38,13 +38,16 @@ export const emailOrPhoneFormStyle = {
     border: '0px',
     width: '100%',
     margin: '0 auto',
-    height: '33px',
+    height: '40px',
   },
   superTokensBranding: {
     display: 'none',
   },
   headerTitle: {
     fontFamily: 'sans-serif',
+  },
+  formRow: {
+    paddingBottom: '17px',
   },
   container: {
     height: '550px',

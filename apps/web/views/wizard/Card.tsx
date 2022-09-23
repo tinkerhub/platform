@@ -4,7 +4,6 @@ import type { Child } from '../../types';
 
 export const CardBio = ({ children }: Child) => (
   <Box
-    minH="400px"
     w="450px"
     p="35px"
     borderRadius="lg"

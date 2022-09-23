@@ -56,18 +56,17 @@ export const Final = ({ isLoading, id = 'ERROR' }: Prop) => {
   return (
     <Center
       mt="30px"
-      minH="550px"
-      w="450px"
+      minH="400px"
       p="35px"
       borderRadius="lg"
       borderColor="rgba(200, 200, 200, 1)"
       borderWidth=".5px"
     >
-      <Box padding="30" height="290px" width="100%">
+      <Box padding="30" width="100%">
         <Heading as="h2" size="xl" textAlign="left">
           Thank You
         </Heading>
-        <Heading as="h3" size="md" textAlign="left" fontSize="18px" fontWeight="450" mt="10px">
+        <Heading as="h3" size="md" textAlign="left" fontSize="18px" fontWeight="450" mt="30px">
           Here's your membership ID
         </Heading>
         <Box
@@ -82,6 +81,7 @@ export const Final = ({ isLoading, id = 'ERROR' }: Prop) => {
           justifyContent="space-between"
           alignItems="center"
           onClick={copyFile}
+          height="40px"
         >
           <Heading fontWeight="bold" size="14px" color="black">
             {id}
@@ -97,12 +97,14 @@ export const Final = ({ isLoading, id = 'ERROR' }: Prop) => {
           mt="14px"
           fontSize="20px"
           color="white"
+          height="40px"
         >
           Continue to Discord
         </Button>
         <Button
           colorScheme="white"
           // borderColor="rgba(65, 83, 240, 1)"
+          height="40px"
           borderWidth="3px"
           py="3"
           px="2"

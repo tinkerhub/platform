@@ -22,7 +22,7 @@ export const Bar = ({ val, back }: Prop) => {
   }, [val]);
   const step = [1, 2, 3];
   return (
-    <Box px="13px">
+    <Box>
       {val === 3 && (
         <Flex justifyContent="flex-end" mb="12px">
           <Text
@@ -46,10 +46,10 @@ export const Bar = ({ val, back }: Prop) => {
           >
             <ArrowBackIcon
               _hover={{ cursor: 'pointer', bg: 'grey', color: 'white', transition: '.2s' }}
-              fontSize="20px"
+              fontSize="16px"
               borderRadius="3xl"
-              w="40px"
-              h="40px"
+              w="34px"
+              h="34px"
               p="1"
               onClick={back}
             />
@@ -60,7 +60,7 @@ export const Bar = ({ val, back }: Prop) => {
           initial={{ opacity: 0, scale: 0.5, alignSelf: 'start' }}
           transition={{ duration: 0.5 }}
         >
-          <Heading as="h2" size="lg" fontWeight="bold">
+          <Heading as="h2" size="lg" fontWeight="bold" ml="10px">
             About You
           </Heading>
         </motion.div>

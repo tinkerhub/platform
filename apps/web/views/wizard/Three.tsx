@@ -50,7 +50,7 @@ export const Three = () => {
       initial={{ opacity: 0, scale: 0.5 }}
       transition={{ duration: 0.5 }}
     >
-      <VStack spacing={2} align="stretch" mt="10px">
+      <VStack spacing={2} align="stretch" mt="30px">
         <Box display="flex" flexDirection="column" justifyContent="space-between">
           <FormControl label="House_Name" isInvalid={!!errors.House_Name} id="House_Name">
             <FormLabel>House Name</FormLabel>
@@ -93,6 +93,7 @@ export const Three = () => {
             type="submit"
             backgroundColor="rgba(65, 83, 240, 1)"
             color="white"
+            marginTop="16px"
           >
             Submit
           </Button>

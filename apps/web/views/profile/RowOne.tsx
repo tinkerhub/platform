@@ -3,7 +3,7 @@ import { FormControl, FormLabel, Input, FormErrorMessage, Box, VStack } from '@c
 import { OptionBase, Select } from 'chakra-react-select';
 import React, { useEffect } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
-// import dayjs from 'dayjs';
+import dayjs from 'dayjs';
 import { InferType } from 'yup';
 import { useAuthCtx } from '../../hooks';
 import { firstFormValidator } from '../wizard';
@@ -44,7 +44,7 @@ export const RowOne = ({ edit }: IsEdit) => {
       setValue('FullName', userInfo?.name);
     }
     if (userInfo?.dob) {
-      // setValue('DOB', dayjs(userInfo?.dob).format('YYYY-MM-DD'));
+      setValue('DOB', dayjs(userInfo?.dob).format('YYYY-MM-DD'));
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -56,7 +56,6 @@ export const RowOne = ({ edit }: IsEdit) => {
         <FormControl label="Name" isInvalid={!!errors.FullName} id="FullName">
           <FormLabel>Name</FormLabel>
           <Input
-            mt="7px"
             variant="filled"
             placeholder="JhonDoe"
             {...register('FullName')}
