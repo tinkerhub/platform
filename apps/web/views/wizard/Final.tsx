@@ -2,6 +2,8 @@
 import { Center, Spinner, Heading, Box, Button, useToast, Flex } from '@chakra-ui/react';
 import React from 'react';
 import { CopyIcon } from '@chakra-ui/icons';
+import { useRouter } from 'next/router';
+import { useAuthCtx } from '../../hooks';
 
 interface Prop {
   isLoading: boolean;
@@ -10,9 +12,12 @@ interface Prop {
 
 export const Final = ({ isLoading, id = 'ERROR' }: Prop) => {
   const toast = useToast();
+  const router = useRouter();
+  const { getData } = useAuthCtx();
 
-  const goHome = () => {
-    window.location.reload();
+  const goHome = async () => {
+    router.replace('/profile');
+    await getData();
   };
   const copyFile = () => {
     window.navigator.clipboard.writeText(id);

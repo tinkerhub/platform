@@ -2,14 +2,6 @@ import '@fontsource/archivo/700.css';
 import '@fontsource/archivo/400.css';
 import '@fontsource/archivo/500.css';
 
-export const Header = {
-  fontSize: '21px',
-  color: 'black',
-  fontWeight: '500',
-  fontFamily: `'Archivo', sans-serif`,
-  marginBottom: '10px',
-};
-
 export const userInputCodeFormStyle = {
   button: {
     backgroundColor: 'rgba(65, 83, 240, 1)',
@@ -61,7 +53,7 @@ export const emailOrPhoneFormStyle = {
     alignItems: 'center',
   },
   inputWrapper: {
-    height: '30px',
+    height: '40px',
     ':focus-within ': {
       border: '2.5px solid rgba(66, 153, 225, 0.6)',
       boxShadow: 'none',

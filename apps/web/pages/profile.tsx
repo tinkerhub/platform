@@ -62,6 +62,7 @@ const Index: NextPage = () => {
       mentor: val.Mentor,
     };
     setEdit((el) => !el);
+
     // sending the post request
     try {
       const { data } = await apiHandler.patch('/users/profile', Dbdata);

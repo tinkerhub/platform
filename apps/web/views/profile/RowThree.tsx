@@ -1,12 +1,13 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import { FormControl, FormLabel, Input, FormErrorMessage, Box, VStack } from '@chakra-ui/react';
 import { Select } from 'chakra-react-select';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 import { InferType } from 'yup';
 import { useAuthCtx } from '../../hooks';
 import { thirdValidator } from '../wizard';
 import { District } from '../wizard/Three';
+
 import { IsEdit } from './types';
 
 type Third = InferType<typeof thirdValidator>;
@@ -16,9 +17,18 @@ export const RowThree: React.FC<IsEdit> = ({ edit }) => {
     register,
     control,
     formState: { errors },
+    setValue,
   } = useFormContext<Third>();
 
   const { user: userInfo } = useAuthCtx();
+
+  //  setting default value for select is not possible so setted an initial value
+  useEffect(() => {
+    if (userInfo?.district) {
+      setValue('District', { label: userInfo.district, value: userInfo.district });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userInfo]);
 
   return (
     <VStack spacing={2} align="stretch" w="100%">
@@ -43,9 +53,6 @@ export const RowThree: React.FC<IsEdit> = ({ edit }) => {
       </Box>
       <Box display="flex" flexDirection="column" justifyContent="space-between">
         <Controller
-          defaultValue={
-            userInfo?.district ? { label: userInfo?.district, value: userInfo?.district } : null
-          }
           control={control}
           name="District"
           render={({ field, fieldState: { error: proError } }) => (

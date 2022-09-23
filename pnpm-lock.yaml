@@ -142,6 +142,7 @@ importers:
       '@typescript-eslint/parser': ^5.30.7
       axios: ^0.27.2
       chakra-react-select: ^4.1.4
+      dayjs: ^1.11.5
       framer-motion: ^6.5.1
       jest: 28.1.2
       jest-environment-jsdom: ^29.0.1
@@ -164,6 +165,7 @@ importers:
       '@hookform/resolvers': 2.9.7_react-hook-form@7.34.0
       axios: 0.27.2
       chakra-react-select: 4.1.4_kwfxfbeyo4cozxldft43mrxxl4
+      dayjs: 1.11.5
       framer-motion: 6.5.1_biqbaboplfbrettd7655fr4n2y
       next: 12.2.2_qugu52izettqdqqm5qcjcltcia
       next-pwa: 5.5.4_25fm6adfgkergigdj2objuzkki

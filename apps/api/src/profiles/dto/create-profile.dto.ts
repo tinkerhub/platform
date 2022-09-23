@@ -43,7 +43,7 @@ export class CreateProfileDto {
   mentor: boolean;
 
   // @IsNotEmpty()
-  @IsString()
+  // @IsString()
   mobile: string;
 
   @IsString()
