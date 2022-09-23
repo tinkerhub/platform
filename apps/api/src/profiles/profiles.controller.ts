@@ -15,7 +15,7 @@ export class ProfilesController {
   constructor(private readonly profilesService: ProfilesService) {}
 
   @Get('college')
-  collegeName(): any {
+  async collegeName() {
     return this.profilesService.collegeName();
   }
 

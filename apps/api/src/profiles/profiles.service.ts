@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { readFileSync } from 'node:fs';
+import { promises as fs } from 'fs';
 import { CreateProfileDto } from './dto/create-profile.dto';
 import { PrismaService } from '../prisma/prisma.service';
 import { UpdateProfileDto } from './dto/update-profile.dto';
@@ -92,15 +92,17 @@ export class ProfilesService {
     });
   }
 
-  collegeName() {
-    const data = readFileSync('./src/profiles/data.json', { encoding: 'utf8' });
-    const parseData = JSON.parse(data);
+  // Method to return college names
+  async collegeName() {
+    const data = await fs.readFile('./src/profiles/data.json', 'utf8');
     const collegeJSON = { data: [] };
-    for (let key = 0; key < parseData.length; key += 1) {
-      const collegeName = parseData[key].name;
+    const parseData = JSON.parse(data);
+
+    parseData.map((key: any) => {
       // @ts-ignore
-      collegeJSON.data.push({ name: collegeName });
-    }
+      collegeJSON.data.push({ name: key.name });
+      return key;
+    });
     return collegeJSON;
   }
 }
