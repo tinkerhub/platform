@@ -54,7 +54,9 @@ export const registerFormValidator = Yup.object({
 
 export const firstFormValidator = Yup.object({
   FullName: Yup.string().required(requiredErrorStatement('full name')),
-  DOB: Yup.date().typeError('Please provide a valid Date').required(requiredErrorStatement('DOB')),
+  DOB: Yup.string()
+    .typeError('Please provide a valid Date')
+    .required(requiredErrorStatement('DOB')),
   Email: Yup.string().email().required(requiredErrorStatement('email')),
   Pronoun: PickAnOptionValidator.nullable().required('Please pick an option'),
   // Mobile: Yup.string().required(requiredErrorStatement('Mobile number')),

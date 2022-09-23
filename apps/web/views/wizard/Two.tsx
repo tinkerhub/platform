@@ -162,6 +162,7 @@ export const Two = () => {
         )}
         <Box mt="25px">
           <Button
+            marginTop="16px"
             colorScheme="blue"
             width="100%"
             type="submit"

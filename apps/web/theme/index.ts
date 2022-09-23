@@ -13,4 +13,14 @@ export const theme = extendTheme({
   fonts: {
     heading: `'Archivo', sans-serif`,
   },
+  styles: {
+    global: {
+      'input[disabled]': {
+        opacity: '.7 !important',
+      },
+      'div[data-disbled=true]': {
+        opacity: '.7 !important',
+      },
+    },
+  },
 });

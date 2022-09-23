@@ -20,7 +20,7 @@ export const ProfileBar = ({ copyFile, edit, editHandler, id = 'Error' }: BarPro
       <Heading as="h2" size="xl">
         My Profile
       </Heading>
-      <Flex mt={{ base: '14px', md: '0px' }}>
+      <Flex mt={{ base: '14px', md: '0px' }} ml={{ sm: '0px', lg: '30px' }}>
         <Heading as="h2" fontSize={{ base: '16px', md: 'md' }} pl={{ base: '0px', md: '5' }}>
           <Text fontSize="14px" fontWeight="normal">
             Membership ID

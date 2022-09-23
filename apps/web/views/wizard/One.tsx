@@ -47,11 +47,11 @@ export const One = () => {
       initial={{ opacity: 0, scale: 0.5 }}
       transition={{ duration: 0.5 }}
     >
-      <VStack spacing={4} align="stretch" mt="15px">
+      <VStack spacing={4} align="stretch" mt="30px">
         <Box display="flex" flexDirection="column" justifyContent="space-between">
           <FormControl label="Name" isInvalid={!!errors.FullName} id="FullName">
             <FormLabel>Name</FormLabel>
-            <Input mt="7px" variant="filled" placeholder="JhonDoe" {...register('FullName')} />
+            <Input variant="filled" placeholder="JhonDoe" {...register('FullName')} />
             <FormErrorMessage>{errors.FullName?.message}</FormErrorMessage>
           </FormControl>
         </Box>
@@ -86,6 +86,7 @@ export const One = () => {
           <Button
             colorScheme="blue"
             width="100%"
+            marginTop="16px"
             type="submit"
             backgroundColor="rgba(65, 83, 240, 1)"
             disabled={false}
