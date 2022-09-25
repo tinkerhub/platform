@@ -1,6 +1,6 @@
-import { Box, Flex, Heading, Text } from '@chakra-ui/react';
+import { Box, Flex, Heading, Text, Icon } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
-import { ArrowBackIcon } from '@chakra-ui/icons';
+import { BiArrowBack } from 'react-icons/bi';
 import { motion } from 'framer-motion';
 
 export interface Prop {
@@ -44,7 +44,8 @@ export const Bar = ({ val, back }: Prop) => {
             initial={{ opacity: 0, scale: 0.5 }}
             transition={{ duration: 0.5 }}
           >
-            <ArrowBackIcon
+            <Icon
+              as={BiArrowBack}
               _hover={{ cursor: 'pointer', bg: 'grey', color: 'white', transition: '.2s' }}
               fontSize="16px"
               borderRadius="3xl"

@@ -8,7 +8,8 @@ import {
   useColorModeValue,
   useColorMode,
 } from '@chakra-ui/react';
-import { MoonIcon, SunIcon } from '@chakra-ui/icons';
+import { IoMdMoon } from 'react-icons/io';
+import { BsFillSunFill } from 'react-icons/bs';
 import React from 'react';
 import Link from 'next/link';
 
@@ -20,7 +21,7 @@ interface NavProp {
 
 export const Topbar = ({ btnFunc, btnText = 'Login/Signup', showBtn }: NavProp) => {
   const { toggleColorMode: toggleMode } = useColorMode();
-  const SwitchIcon = useColorModeValue(MoonIcon, SunIcon);
+  const SwitchIcon = useColorModeValue(IoMdMoon, BsFillSunFill);
   const text = useColorModeValue('dark', 'light');
   return (
     <Box display="flex" justifyContent="space-between" h={65} alignItems="center">
@@ -42,7 +43,7 @@ export const Topbar = ({ btnFunc, btnText = 'Login/Signup', showBtn }: NavProp) 
       <div>
         <IconButton
           size="md"
-          fontSize="lg"
+          fontSize="xl"
           aria-label={`Switch to ${text} mode`}
           variant="ghost"
           color="current"

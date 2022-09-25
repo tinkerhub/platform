@@ -6,7 +6,7 @@ import { InferType } from 'yup';
 import { useForm, SubmitHandler, FormProvider } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { registerFormValidator } from '../views/wizard';
-import { RowOne, RowTwo, RowThree, ProfileBar, Arrow } from '../views/profile';
+import { RowOne, RowTwo, RowThree, ProfileBar } from '../views/profile';
 import { Errors } from '../types';
 import { useAuthCtx } from '../hooks';
 import { apiHandler } from '../api';
@@ -90,15 +90,14 @@ const Index: NextPage = () => {
       <FormProvider {...methods}>
         <form onSubmit={methods.handleSubmit(updateProfile)}>
           <Box>
-            <Arrow />
             <ProfileBar copyFile={copyFile} edit={edit} editHandler={editHandler} id={user?.id} />
           </Box>
           <Flex
             flexDirection={{ base: 'column', lg: 'row' }}
-            mt="10px"
             w="100%"
             justifyContent="space-between"
             alignItems="center"
+            mt="40px"
           >
             <RowOne edit={edit} />
             <RowTwo edit={edit} />

@@ -31,7 +31,7 @@ export const RowThree: React.FC<IsEdit> = ({ edit }) => {
   }, [userInfo]);
 
   return (
-    <VStack spacing={2} align="stretch" w="100%">
+    <VStack spacing={2} align="stretch" w="100%" mb={{ base: '10px', lg: '67px' }}>
       <Box display="flex" flexDirection="column" justifyContent="space-between">
         <FormControl label="House_Name" isInvalid={!!errors.House_Name} id="House_Name">
           <FormLabel>House Name</FormLabel>
