@@ -1,7 +1,7 @@
 /* eslint-disable react/no-unescaped-entities */
-import { Center, Spinner, Heading, Box, Button, useToast, Flex } from '@chakra-ui/react';
+import { Center, Spinner, Heading, Box, Button, useToast, Icon, Flex } from '@chakra-ui/react';
 import React from 'react';
-import { CopyIcon } from '@chakra-ui/icons';
+import { MdOutlineContentCopy } from 'react-icons/md';
 import { useRouter } from 'next/router';
 import { useAuthCtx } from '../../hooks';
 
@@ -86,7 +86,7 @@ export const Final = ({ isLoading, id = 'ERROR' }: Prop) => {
           <Heading fontWeight="bold" size="14px" color="black">
             {id}
           </Heading>
-          <CopyIcon fontSize="25px" color="black" />
+          <Icon as={MdOutlineContentCopy} fontSize="25px" color="black" />
         </Box>
         <Button
           colorScheme="blue"

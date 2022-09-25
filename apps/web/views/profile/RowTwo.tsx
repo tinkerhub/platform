@@ -73,8 +73,8 @@ export const RowTwo = ({ edit }: IsEdit) => {
   });
 
   return (
-    <VStack spacing={2} align="stretch" w="100%" mb="20px" mx="90px">
-      <Box mt="30px">
+    <VStack spacing={2} align="stretch" w="100%" mb={{ base: '16px', lg: '67px' }} mx="90px">
+      <Box>
         <Box display="flex" flexDirection="column" justifyContent="space-between">
           <Controller
             control={control}

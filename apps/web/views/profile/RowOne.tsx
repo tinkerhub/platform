@@ -51,7 +51,7 @@ export const RowOne = ({ edit }: IsEdit) => {
   }, [userInfo]);
 
   return (
-    <VStack spacing={2} align="stretch" mt="15px" w="100%">
+    <VStack spacing={2} align="stretch" w="100%">
       <Box display="flex" flexDirection="column" justifyContent="space-between">
         <FormControl label="Name" isInvalid={!!errors.FullName} id="FullName">
           <FormLabel>Name</FormLabel>
