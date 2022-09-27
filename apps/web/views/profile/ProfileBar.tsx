@@ -1,20 +1,25 @@
 import { Heading, Button, Box, Flex, Text, Icon } from '@chakra-ui/react';
-import { MdOutlineContentCopy } from 'react-icons/md';
+import { MdOutlineContentCopy, MdOutlineCancel } from 'react-icons/md';
 import { BiArrowBack } from 'react-icons/bi';
 import { FiEdit } from 'react-icons/fi';
 import { AiOutlineSave } from 'react-icons/ai';
 import { useRouter } from 'next/router';
-
-import React from 'react';
 
 interface BarProp {
   copyFile: () => void;
   edit: boolean;
   editHandler: () => void;
   id: string | undefined;
+  cancelEditHandler: () => void;
 }
 
-export const ProfileBar = ({ copyFile, edit, editHandler, id = 'Error' }: BarProp) => {
+export const ProfileBar = ({
+  copyFile,
+  edit,
+  editHandler,
+  id = 'Error',
+  cancelEditHandler,
+}: BarProp) => {
   const router = useRouter();
 
   return (
@@ -46,19 +51,35 @@ export const ProfileBar = ({ copyFile, edit, editHandler, id = 'Error' }: BarPro
           />
         </Flex>
       </Box>
-      <Flex justifyContent="space-between" w="290px" flexDirection={{ base: 'column', lg: 'row' }}>
-        <Button
-          p="5"
-          colorScheme="blue"
-          variant="outline"
-          alignSelf="center"
-          bg="white"
-          onClick={() => router.push('/')}
-        >
-          <Flex justifyContent="space-between" color="rgba(65, 83, 240, 1)">
-            <Icon as={BiArrowBack} alignSelf="center" mr="10px" /> Back to home
-          </Flex>
-        </Button>
+      <Flex
+        justifyContent="space-between"
+        w={edit ? '280px' : '230px'}
+        flexDirection={{ base: 'column', lg: 'row' }}
+      >
+        {edit && (
+          <Button
+            p="5"
+            colorScheme="blue"
+            variant="outline"
+            alignSelf="center"
+            leftIcon={<BiArrowBack />}
+            onClick={() => router.push('/')}
+          >
+            Back to home
+          </Button>
+        )}
+        {!edit && (
+          <Button
+            p="5"
+            colorScheme="blue"
+            variant="outline"
+            alignSelf="center"
+            leftIcon={<MdOutlineCancel />}
+            onClick={cancelEditHandler}
+          >
+            cancel
+          </Button>
+        )}
         {edit && (
           <Button
             p="5"
@@ -66,11 +87,10 @@ export const ProfileBar = ({ copyFile, edit, editHandler, id = 'Error' }: BarPro
             backgroundColor="rgba(65, 83, 240, 1)"
             alignSelf="center"
             onClick={editHandler}
+            leftIcon={<FiEdit />}
             color="white"
           >
-            <Flex justifyContent="space-between">
-              <Icon as={FiEdit} alignSelf="center" mr="10px" /> Edit
-            </Flex>
+            Edit
           </Button>
         )}
         {!edit && (
@@ -80,11 +100,9 @@ export const ProfileBar = ({ copyFile, edit, editHandler, id = 'Error' }: BarPro
             type="submit"
             backgroundColor="rgba(65, 83, 240, 1)"
             color="white"
+            leftIcon={<AiOutlineSave />}
           >
-            <Flex justifyContent="space-between">
-              <Icon as={AiOutlineSave} alignSelf="center" mr="10px" fontSize="20px" />
-              Save
-            </Flex>
+            Save
           </Button>
         )}
       </Flex>

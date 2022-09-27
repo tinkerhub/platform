@@ -24,6 +24,9 @@ const Index: NextPage = () => {
     // name input gets focused after pressing edit button
     methods.setFocus('FullName');
   };
+  const cancelEditHandler = () => {
+    setEdit(true);
+  };
 
   const copyFile = () => {
     if (user && user.id) {
@@ -90,7 +93,13 @@ const Index: NextPage = () => {
       <FormProvider {...methods}>
         <form onSubmit={methods.handleSubmit(updateProfile)}>
           <Box>
-            <ProfileBar copyFile={copyFile} edit={edit} editHandler={editHandler} id={user?.id} />
+            <ProfileBar
+              copyFile={copyFile}
+              edit={edit}
+              editHandler={editHandler}
+              id={user?.id}
+              cancelEditHandler={cancelEditHandler}
+            />
           </Box>
           <Flex
             flexDirection={{ base: 'column', lg: 'row' }}

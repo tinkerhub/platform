@@ -14,6 +14,7 @@ import {
 import { motion } from 'framer-motion';
 import { useController, useFormContext, Controller } from 'react-hook-form';
 import { OptionBase, Select } from 'chakra-react-select';
+import { apiHandler } from '../../api';
 
 export const Skills = [
   { value: 'Java', label: 'Java' },
@@ -43,6 +44,20 @@ export const Comm: Options[] = [
 export const Two = () => {
   const [prof, setProf] = useState<string | null>(null);
   const { control, watch, setValue } = useFormContext();
+  const [college, setCollege] = useState<any>(null);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const { data } = await apiHandler.get('/users/profile/college');
+        if (data.Success) {
+          setCollege(data);
+        }
+      } catch {
+        console.log('Error');
+      }
+    })();
+  }, []);
 
   useEffect(() => {
     const val = watch('describe')?.value;
@@ -153,7 +168,7 @@ export const Two = () => {
               render={({ field, fieldState: { error: collegeErr } }) => (
                 <FormControl label="College" isInvalid={!!collegeErr} id="College">
                   <FormLabel>I currenlty study at</FormLabel>
-                  <Select options={Skills} {...field} />
+                  <Select options={college} {...field} />
                   {collegeErr && <FormErrorMessage>Please pick an option</FormErrorMessage>}
                 </FormControl>
               )}

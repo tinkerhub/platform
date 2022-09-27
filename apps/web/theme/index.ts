@@ -16,10 +16,20 @@ export const theme = extendTheme({
   styles: {
     global: {
       'input[disabled]': {
+        opacity: '1 !important',
+      },
+      'div[data-disabled=true]': {
         opacity: '.7 !important',
       },
-      'div[data-disbled=true]': {
-        opacity: '.7 !important',
+    },
+  },
+  components: {
+    Button: {
+      baseStyle: {
+        _hover: {
+          // bg: '#1328EC',
+          bg: 'red',
+        },
       },
     },
   },
