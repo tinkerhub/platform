@@ -1,14 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
-import {
-  IsArray,
-  IsBoolean,
-  IsEmail,
-  IsNotEmpty,
-  IsNumber,
-  IsString,
-  ValidateIf,
-} from 'class-validator';
+import { IsArray, IsBoolean, IsEmail, IsNotEmpty, IsString, ValidateIf } from 'class-validator';
 
 export class CreateProfileDto {
   @ApiProperty()
@@ -25,8 +17,9 @@ export class CreateProfileDto {
   @IsString()
   campus: string;
 
-  @ValidateIf((o) => o.campus !== undefined)
-  @IsNumber()
+  @ValidateIf((el) => el.desc === 'Student')
+  @IsString()
+  @Type(() => Number)
   passyear: number;
 
   @IsNotEmpty()
