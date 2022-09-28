@@ -16,6 +16,7 @@ model User {
   name     String
   email    String   @unique
   campus   String?
+  passyear Int
   desc     String
   district String?
   dob      DateTime

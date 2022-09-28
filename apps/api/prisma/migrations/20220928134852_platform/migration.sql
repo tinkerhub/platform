@@ -5,6 +5,7 @@ CREATE TABLE "User" (
     "name" TEXT NOT NULL,
     "email" TEXT NOT NULL,
     "campus" TEXT,
+    "passyear" INTEGER NOT NULL,
     "desc" TEXT NOT NULL,
     "district" TEXT,
     "dob" TIMESTAMP(3) NOT NULL,
