@@ -5,7 +5,7 @@ import '@fontsource/archivo/500.css';
 export const userInputCodeFormStyle = {
   button: {
     ':hover': {
-      color: '#1328EC',
+      backgroundColor: '#1328EC',
     },
     backgroundColor: 'rgba(65, 83, 240, 1)',
     border: '0px',
@@ -33,9 +33,6 @@ export const userInputCodeFormStyle = {
 };
 
 export const emailOrPhoneFormStyle = {
-  label: {
-    display: 'none',
-  },
   button: {
     backgroundColor: 'rgba(65, 83, 240, 1)',
     border: '0px',
