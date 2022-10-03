@@ -89,6 +89,7 @@ export const One = () => {
             marginTop="16px"
             type="submit"
             backgroundColor="rgba(65, 83, 240, 1)"
+            _hover={{ cursor: 'pointer', bg: '#1328EC' }}
             disabled={false}
             color="white"
           >

@@ -11,9 +11,10 @@ import {
   FormErrorMessage,
   VStack,
 } from '@chakra-ui/react';
+import dayjs from 'dayjs';
 import { motion } from 'framer-motion';
 import { useController, useFormContext, Controller } from 'react-hook-form';
-import { OptionBase, Select } from 'chakra-react-select';
+import { OptionBase, Select, AsyncSelect } from 'chakra-react-select';
 import { apiHandler } from '../../api';
 
 export const Skills = [
@@ -41,23 +42,26 @@ export const Comm: Options[] = [
   { label: 'No', value: 'No' },
 ];
 
+export interface Clg {
+  name: string;
+}
 export const Two = () => {
   const [prof, setProf] = useState<string | null>(null);
   const { control, watch, setValue } = useFormContext();
-  const [college, setCollege] = useState<any>(null);
+  const [inputValue, setInputValue] = useState<string>('');
 
-  useEffect(() => {
-    (async () => {
-      try {
-        const { data } = await apiHandler.get('/users/profile/college');
-        if (data.Success) {
-          setCollege(data);
-        }
-      } catch {
-        console.log('Error');
-      }
-    })();
-  }, []);
+  const getCollege = async (input: string) => {
+    const { data } = await apiHandler.get(`/users/profile/college?name=${input}`);
+    const college: Options[] = [];
+    // pushing the fetched data to a array to make sure that it is in right format
+    data.data.map((el: Clg) => college.push({ label: el.name, value: el.name }));
+    return college;
+  };
+
+  // handle input change event
+  const handleInputChange = (value: string) => {
+    setInputValue(value);
+  };
 
   useEffect(() => {
     const val = watch('describe')?.value;
@@ -168,8 +172,38 @@ export const Two = () => {
               render={({ field, fieldState: { error: collegeErr } }) => (
                 <FormControl label="College" isInvalid={!!collegeErr} id="College">
                   <FormLabel>I currenlty study at</FormLabel>
-                  <Select options={college} {...field} />
+                  <AsyncSelect
+                    {...field}
+                    isClearable
+                    defaultOptions
+                    loadOptions={() => getCollege(inputValue)}
+                    onInputChange={handleInputChange}
+                  />
                   {collegeErr && <FormErrorMessage>Please pick an option</FormErrorMessage>}
+                </FormControl>
+              )}
+            />
+          </Box>
+        )}
+        {prof === 'Student' && (
+          <Box display="flex" flexDirection="column" justifyContent="space-between">
+            <Controller
+              control={control}
+              name="Passout"
+              render={({ field, fieldState: { error: descError } }) => (
+                <FormControl label="Passout" isInvalid={!!descError} id="Passout">
+                  <FormLabel>Year of Passout</FormLabel>
+                  <Select
+                    options={[
+                      { label: dayjs().year(), value: dayjs().year() },
+                      { label: dayjs().year() + 1, value: dayjs().year() + 1 },
+                      { label: dayjs().year() + 2, value: dayjs().year() + 2 },
+                      { label: dayjs().year() + 3, value: dayjs().year() + 3 },
+                      { label: dayjs().year() + 4, value: dayjs().year() + 4 },
+                    ]}
+                    {...field}
+                  />
+                  {descError && <FormErrorMessage>Please pick an option</FormErrorMessage>}
                 </FormControl>
               )}
             />
@@ -182,6 +216,7 @@ export const Two = () => {
             width="100%"
             type="submit"
             color="white"
+            _hover={{ cursor: 'pointer', bg: '#1328EC' }}
             backgroundColor="rgba(65, 83, 240, 1)"
           >
             Next

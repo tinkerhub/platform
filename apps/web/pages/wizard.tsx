@@ -21,6 +21,7 @@ import {
 } from '../views/wizard';
 import { apiHandler } from '../api';
 import { Errors, Form } from '../types';
+import { Quotes } from '../views/wizard/Quotes';
 
 type FormType = InferType<typeof registerFormValidator>;
 
@@ -30,6 +31,7 @@ const Index: NextPage = () => {
   const methods = useForm<FormType>({ mode: 'all', resolver: yupResolver(validator) });
   const [user, setUser] = useState<Form | null>(null);
   const elementRef = useRef(null);
+  const [stopConfetti, setStopConfetti] = useState<boolean>(false);
   const dimensions = useDimensions(elementRef, true);
 
   const [isLoading, setIsloading] = useState<boolean>(false);
@@ -75,6 +77,7 @@ const Index: NextPage = () => {
         campus: val.College?.value,
         mentor: Boolean(Number(val.Mentor)),
         isNewuser: false,
+        passyear: val.Passout?.value,
       };
 
       stepAdd();
@@ -109,16 +112,16 @@ const Index: NextPage = () => {
   if (step === 4) {
     return (
       <Center mb="60px" ref={elementRef}>
-        {!isLoading && (
+        {!isLoading && !stopConfetti && (
           <Confetti width={dimensions?.borderBox.width} height={dimensions?.borderBox.height} />
         )}
-        <Final isLoading={isLoading} id={user?.id} />
+        <Final isLoading={isLoading} id={user?.id} stopConfetti={setStopConfetti} />
       </Center>
     );
   }
 
   return (
-    <Center mb="60px">
+    <Quotes word="“80% of engineering graduates don’t have the skills needed for the industry. We’ are here to change that.”">
       <CardBio>
         <Bar val={step} back={stepSub} />
         <FormProvider {...methods}>
@@ -129,7 +132,7 @@ const Index: NextPage = () => {
           </form>
         </FormProvider>
       </CardBio>
-    </Center>
+    </Quotes>
   );
 };
 

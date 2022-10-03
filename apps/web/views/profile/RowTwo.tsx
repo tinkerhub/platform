@@ -9,12 +9,14 @@ import {
   Stack,
   VStack,
 } from '@chakra-ui/react';
-import { Select } from 'chakra-react-select';
+import { AsyncSelect, Select } from 'chakra-react-select';
 import React, { useEffect, useState } from 'react';
 import { Controller, useController, useFormContext } from 'react-hook-form';
+import dayjs from 'dayjs';
 import { useAuthCtx } from '../../hooks';
-import { Comm, Desp, Skills } from '../wizard/Two';
+import { Clg, Comm, Desp, Skills } from '../wizard/Two';
 import { IsEdit, Options } from './types';
+import { apiHandler } from '../../api';
 
 export const RowTwo = ({ edit }: IsEdit) => {
   const { control, watch, setValue } = useFormContext();
@@ -25,6 +27,22 @@ export const RowTwo = ({ edit }: IsEdit) => {
   const [prof, setProf] = useState<string | null>(null);
   // userinfo.skills returns an array of string so converting to a object here and pushing to a array
   userInfo?.skills?.map((el) => skillArr.push({ value: el, label: el }));
+
+  const [inputValue, setInputValue] = useState<string>('');
+
+  const getCollege = async (input: string) => {
+    const { data } = await apiHandler.get(`/users/profile/college?name=${input}`);
+    const college: Options[] = [];
+    // pushing the fetched data to a array to make sure that it is in right format
+    data.data.map((el: Clg) => college.push({ label: el.name, value: el.name }));
+    return college;
+  };
+
+  // handle input change event
+  const handleInputChange = (value: string) => {
+    setInputValue(value);
+  };
+
   useEffect(() => {
     const val = watch('describe')?.value;
     setProf(val);
@@ -73,7 +91,14 @@ export const RowTwo = ({ edit }: IsEdit) => {
   });
 
   return (
-    <VStack spacing={2} align="stretch" w="100%" mb={{ base: '16px', lg: '67px' }} mx="90px">
+    <VStack
+      spacing={2}
+      align="stretch"
+      w="100%"
+      mb={{ base: '16px', lg: '25px' }}
+      mx="90px"
+      mt="30px"
+    >
       <Box>
         <Box display="flex" flexDirection="column" justifyContent="space-between">
           <Controller
@@ -159,7 +184,13 @@ export const RowTwo = ({ edit }: IsEdit) => {
               render={({ field, fieldState: { error: collegeErr } }) => (
                 <FormControl label="College" isInvalid={!!collegeErr} id="College">
                   <FormLabel>I currenlty study at</FormLabel>
-                  <Select options={Skills} {...field} isDisabled={edit} />
+                  <AsyncSelect
+                    {...field}
+                    isClearable
+                    defaultOptions
+                    loadOptions={() => getCollege(inputValue)}
+                    onInputChange={handleInputChange}
+                  />
                   <FormErrorMessage>Please pick an option</FormErrorMessage>
                 </FormControl>
               )}
@@ -167,6 +198,30 @@ export const RowTwo = ({ edit }: IsEdit) => {
           </Box>
         )}
       </Box>
+      {prof === 'Student' && (
+        <Box display="flex" flexDirection="column" justifyContent="space-between">
+          <Controller
+            control={control}
+            name="Passout"
+            render={({ field, fieldState: { error: descError } }) => (
+              <FormControl label="Passout" isInvalid={!!descError} id="Passout">
+                <FormLabel>Year of Passout</FormLabel>
+                <Select
+                  options={[
+                    { label: dayjs().year(), value: dayjs().year() },
+                    { label: dayjs().year() + 1, value: dayjs().year() + 1 },
+                    { label: dayjs().year() + 2, value: dayjs().year() + 2 },
+                    { label: dayjs().year() + 3, value: dayjs().year() + 3 },
+                    { label: dayjs().year() + 4, value: dayjs().year() + 4 },
+                  ]}
+                  {...field}
+                />
+                {descError && <FormErrorMessage>Please pick an option</FormErrorMessage>}
+              </FormControl>
+            )}
+          />
+        </Box>
+      )}
     </VStack>
   );
 };

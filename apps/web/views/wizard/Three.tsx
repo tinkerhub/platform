@@ -93,6 +93,7 @@ export const Three = () => {
             type="submit"
             backgroundColor="rgba(65, 83, 240, 1)"
             color="white"
+            _hover={{ cursor: 'pointer', bg: '#1328EC' }}
             marginTop="16px"
           >
             Submit
