@@ -18,6 +18,7 @@ const Index: NextPage = () => {
   const methods = useForm<FormType>({ mode: 'all', resolver: yupResolver(registerFormValidator) });
   const toast = useToast();
   const { user } = useAuthCtx();
+  console.log(methods.formState.errors);
 
   const editHandler = () => {
     setEdit(false);

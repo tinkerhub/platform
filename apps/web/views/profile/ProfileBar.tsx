@@ -23,7 +23,13 @@ export const ProfileBar = ({
   const router = useRouter();
 
   return (
-    <Box display="flex" justifyContent="space-between" mt="4">
+    <Box
+      display="flex"
+      justifyContent="space-between"
+      mt="4"
+      mb="40px"
+      flexDirection={{ base: 'column-reverse', lg: 'row' }}
+    >
       <Box
         display="flex"
         flexDirection={{ base: 'column', md: 'row' }}
@@ -53,12 +59,12 @@ export const ProfileBar = ({
       </Box>
       <Flex
         justifyContent="space-between"
-        w={edit ? '280px' : '230px'}
-        flexDirection={{ base: 'column', lg: 'row' }}
+        w={{ base: '100%', lg: edit ? '280px' : '230px' }}
+        mb={{ base: '20px', lg: '0px' }}
       >
         {edit && (
           <Button
-            p="5"
+            p="3"
             colorScheme="blue"
             variant="outline"
             alignSelf="center"
@@ -92,7 +98,6 @@ export const ProfileBar = ({
             _hover={{ cursor: 'pointer', bg: '#1328EC' }}
             leftIcon={<FiEdit />}
             color="white"
-            minWidth={{ base: '165px', lg: 'auto' }}
           >
             Edit
           </Button>

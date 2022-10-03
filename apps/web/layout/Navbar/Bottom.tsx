@@ -5,12 +5,12 @@ import { AiOutlineInstagram, AiOutlineTwitter, AiOutlineYoutube } from 'react-ic
 export const BottomBar = () => (
   <Box>
     {/* <Divider orientation="horizontal" bgColor="rgba(177, 177, 177, 1)" width="60.5%" height="1px" /> */}
-    <Flex justifyContent="space-between" flexDirection={{ base: 'column', md: 'row' }}>
+    <Flex justifyContent="space-between" flexDirection={{ base: 'column-reverse', md: 'row' }}>
       <Text color="rgba(177, 177, 177, 1)" mt="20px" maxW="900px" fontSize="18px">
         We are a community of tinkerers, makers, policy geeks & students and are working towards
         mapping and empowering people who share a passion to innovate.
       </Text>
-      <Flex minW="100px" justifyContent="space-between" mt="15px">
+      <Flex minW="100px" justifyContent={{ base: 'space-around', md: 'space-between' }} mt="15px">
         <a href="https://www.instagram.com/tinkerhub/" rel="noopener">
           <Icon
             as={AiOutlineInstagram}
@@ -41,6 +41,7 @@ export const BottomBar = () => (
       justifyContent="space-between"
       mt="20px"
       flexDirection={{ base: 'column-reverse', md: 'row' }}
+      alignItems="center"
     >
       <Flex>
         <Text
@@ -51,7 +52,12 @@ export const BottomBar = () => (
           Made with 💙 by TinkerHub
         </Text>
       </Flex>
-      <Flex flexDirection="row" justifyContent="space-between" minW="350px">
+      <Flex
+        // flexDirection={{ base: 'column', md: 'row' }}
+        justifyContent="space-between"
+        // alignItems="center"
+        minW="350px"
+      >
         <Text
           color="rgba(177, 177, 177, 1)"
           _hover={{ cursor: 'pointer', color: 'grey' }}

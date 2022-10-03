@@ -11,7 +11,7 @@ import {
 } from '@chakra-ui/react';
 import { AsyncSelect, Select } from 'chakra-react-select';
 import React, { useEffect, useState } from 'react';
-import { Controller, useController, useFormContext } from 'react-hook-form';
+import { Controller, useFormContext } from 'react-hook-form';
 import dayjs from 'dayjs';
 import { useAuthCtx } from '../../hooks';
 import { Clg, Comm, Desp, Skills } from '../wizard/Two';
@@ -83,6 +83,9 @@ export const RowTwo = ({ edit }: IsEdit) => {
         value: userInfo.CampusCommunityActive,
       });
     }
+    if (userInfo?.mentor) {
+      setValue('mentor', userInfo.mentor ? 1 : 0);
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userInfo]);
 
@@ -95,14 +98,6 @@ export const RowTwo = ({ edit }: IsEdit) => {
     }),
   };
 
-  const {
-    field: { onChange: mentorChange, ref: mentorRef, value: mentorVal },
-    fieldState: { error: mentorError },
-  } = useController({
-    name: 'Mentor',
-    control,
-  });
-
   return (
     <VStack
       spacing={2}
@@ -110,7 +105,7 @@ export const RowTwo = ({ edit }: IsEdit) => {
       w="100%"
       mb={{ base: '16px', lg: '25px' }}
       mx="90px"
-      mt="30px"
+      mt={{ base: '20px', lg: prof === 'Student' ? '30px' : '-220px' }}
     >
       <Box>
         <Box display="flex" flexDirection="column" justifyContent="space-between">
@@ -168,25 +163,26 @@ export const RowTwo = ({ edit }: IsEdit) => {
             mt="15px"
             w="350px"
           >
-            <FormControl label="Mentor" isInvalid={!!mentorError} id="Mentor">
-              <FormLabel>Can you be a Mentor</FormLabel>
-              <RadioGroup
-                ref={mentorRef}
-                onChange={mentorChange}
-                value={Number(mentorVal)}
-                isDisabled={edit}
-              >
-                <Stack spacing={5} direction="row">
-                  <Radio colorScheme="blue" value={1}>
-                    Yes
-                  </Radio>
-                  <Radio colorScheme="blue" value={0}>
-                    No
-                  </Radio>
-                </Stack>
-              </RadioGroup>
-              <FormErrorMessage>{mentorError?.message}</FormErrorMessage>
-            </FormControl>
+            <Controller
+              control={control}
+              name="mentor"
+              render={({ field, fieldState: { error: mentorError } }) => (
+                <FormControl label="Mentor" isInvalid={!!mentorError} id="Mentor">
+                  <FormLabel>Can you be a Mentor</FormLabel>
+                  <RadioGroup {...field} isDisabled={edit}>
+                    <Stack spacing={5} direction="row">
+                      <Radio colorScheme="blue" value={1}>
+                        Yes
+                      </Radio>
+                      <Radio colorScheme="blue" value={0}>
+                        No
+                      </Radio>
+                    </Stack>
+                  </RadioGroup>
+                  <FormErrorMessage>{mentorError?.message}</FormErrorMessage>
+                </FormControl>
+              )}
+            />
           </Box>
         )}
         {prof === 'Student' && (

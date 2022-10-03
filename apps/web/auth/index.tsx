@@ -2,7 +2,6 @@
 import { Heading } from '@chakra-ui/react';
 import Passwordless from 'supertokens-auth-react/recipe/passwordless';
 import Session from 'supertokens-auth-react/recipe/session';
-import Image from 'next/image';
 import { userInputCodeFormStyle, emailOrPhoneFormStyle } from './OverrideStyle';
 
 export const authConfig = () => ({
@@ -22,10 +21,8 @@ export const authConfig = () => ({
           // eslint-disable-next-line react/prop-types, arrow-body-style
           PasswordlessSignInUpHeader_Override: () => (
             <div>
-              <Heading>Tinkerhub</Heading>
-              <Image src="/icon-384x384.png" width="250" height="250" />
-              <Heading fontSize="21px" color="black" fontWeight="500" marginBottom="10px">
-                Enter Your Mobile Number
+              <Heading fontSize="40px" color="black" fontWeight="500" marginBottom="10px" mb="40px">
+                Welcome to TinkerHub
               </Heading>
             </div>
           ),
