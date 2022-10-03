@@ -51,7 +51,7 @@ export const Two = () => {
   const [inputValue, setInputValue] = useState<string>('');
 
   const getCollege = async (input: string) => {
-    const { data } = await apiHandler.get(`/users/profile/college?name=${input}`);
+    const { data } = await apiHandler.get(`users/profile/college?search=${input}`);
     const college: Options[] = [];
     // pushing the fetched data to a array to make sure that it is in right format
     data.data.map((el: Clg) => college.push({ label: el.name, value: el.name }));
