@@ -8,7 +8,7 @@ import {
   Req,
   Res,
   Patch,
-  Param,
+  Query,
 } from '@nestjs/common';
 import { AuthGuard } from 'src/auth/auth.guard';
 import { SessionContainer } from 'supertokens-node/recipe/session';
@@ -25,9 +25,9 @@ import { UpdateException } from './exception/update.exception';
 export class ProfilesController {
   constructor(private readonly profilesService: ProfilesService) {}
 
-  @Get('college/:cname')
-  async collegeName(@Param('cname') cname: string) {
-    return this.profilesService.collegeName(cname);
+  @Get('college')
+  async collegeName(@Query('search') search: string) {
+    return this.profilesService.collegeName(search);
   }
 
   @Post()

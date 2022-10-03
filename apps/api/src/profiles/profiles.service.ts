@@ -11,26 +11,6 @@ interface Resp {
   data?: unknown;
 }
 
-interface CollegeData {
-  id: string;
-  name: string;
-  address: string;
-  type: string;
-  country: string;
-  minority: string;
-  women: string;
-  state: string;
-  district: string;
-}
-
-interface CollegeDataResp {
-  data: Array<CollegeName>;
-}
-
-interface CollegeName {
-  name: string;
-}
-
 @Injectable()
 export class ProfilesService {
   constructor(private prismaService: PrismaService) {}
@@ -115,15 +95,9 @@ export class ProfilesService {
   // Method to return college names
   async collegeName(cname: string) {
     const data = await fs.readFile('./src/profiles/data.json', 'utf8');
-    const collegeJSON: CollegeDataResp = { data: [] };
-    const parseData = JSON.parse(data);
-
-    parseData.filter((key: CollegeData) => {
-      if (key.name.includes(cname.toLocaleLowerCase()) === true) {
-        collegeJSON.data.push({ name: key.name });
-      }
-      return key;
-    });
+    const collegeJSON = JSON.parse(data).filter(({ name }) =>
+      name.includes(cname.toLocaleLowerCase())
+    );
     return collegeJSON;
   }
 }
