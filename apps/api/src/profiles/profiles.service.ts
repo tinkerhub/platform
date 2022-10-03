@@ -93,16 +93,11 @@ export class ProfilesService {
   }
 
   // Method to return college names
-  async collegeName() {
+  async collegeName(cname: string) {
     const data = await fs.readFile('./src/profiles/data.json', 'utf8');
-    const collegeJSON = { data: [] };
-    const parseData = JSON.parse(data);
-
-    parseData.map((key: any) => {
-      // @ts-ignore
-      collegeJSON.data.push({ name: key.name });
-      return key;
-    });
+    const collegeJSON = JSON.parse(data).filter(({ name }) =>
+      name.includes(cname.toLocaleLowerCase())
+    );
     return collegeJSON;
   }
 }
