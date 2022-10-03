@@ -118,8 +118,8 @@ export class ProfilesService {
     const collegeJSON: CollegeDataResp = { data: [] };
     const parseData = JSON.parse(data);
 
-    parseData.map((key: CollegeData) => {
-      if (key.name.startsWith(cname.toLocaleLowerCase()) === true) {
+    parseData.filter((key: CollegeData) => {
+      if (key.name.includes(cname.toLocaleLowerCase()) === true) {
         collegeJSON.data.push({ name: key.name });
       }
       return key;
