@@ -23,6 +23,7 @@ export type Form = {
   street?: string;
   CampusCommunityActive: Act;
   id: string;
+  passyear?: number;
 };
 
 export interface Errors {

@@ -36,6 +36,7 @@ const Index: NextPage = () => {
         status: 'success',
         duration: 3000,
         isClosable: true,
+        position: 'bottom-left',
       });
     } else {
       toast({
@@ -43,6 +44,7 @@ const Index: NextPage = () => {
         status: 'error',
         duration: 3000,
         isClosable: true,
+        position: 'bottom-left',
       });
     }
   };
@@ -106,7 +108,7 @@ const Index: NextPage = () => {
             w="100%"
             justifyContent="space-between"
             alignItems="center"
-            mt="40px"
+            mt={{ base: '20px', lg: '0px' }}
           >
             <RowOne edit={edit} />
             <RowTwo edit={edit} />
@@ -115,6 +117,7 @@ const Index: NextPage = () => {
               <Button
                 w="100%"
                 mt="20px"
+                _hover={{ cursor: 'pointer', bg: '#1328EC' }}
                 display={{ lg: 'none' }}
                 type="submit"
                 colorScheme="blue"

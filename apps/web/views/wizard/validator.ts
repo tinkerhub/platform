@@ -50,6 +50,14 @@ export const registerFormValidator = Yup.object({
   Street: Yup.string(),
   District: PickAnOptionValidator.nullable(),
   Pincode: Yup.string(),
+  Passout: Yup.object()
+    .nullable()
+    .when('describe', {
+      is: (val: Option) => val?.value === 'Student',
+      then: PickAnOptionValidator.nullable().required(
+        requiredErrorStatement('Please pick an option')
+      ),
+    }),
 });
 
 export const firstFormValidator = Yup.object({
@@ -91,6 +99,14 @@ export const secondValidator = Yup.object({
     is: (val: Option) => val?.value === 'Student',
     then: PickAnOptionValidator.nullable().required('Please pick an option'),
   }),
+  Passout: Yup.object()
+    .nullable()
+    .when('describe', {
+      is: (val: Option) => val?.value === 'Student',
+      then: PickAnOptionValidator.nullable().required(
+        requiredErrorStatement('Please pick an option')
+      ),
+    }),
 });
 
 export const thirdValidator = Yup.object({

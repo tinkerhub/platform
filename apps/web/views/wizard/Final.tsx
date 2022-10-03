@@ -1,6 +1,6 @@
 /* eslint-disable react/no-unescaped-entities */
 import { Center, Spinner, Heading, Box, Button, useToast, Icon, Flex } from '@chakra-ui/react';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { MdOutlineContentCopy } from 'react-icons/md';
 import { useRouter } from 'next/router';
 import { useAuthCtx } from '../../hooks';
@@ -8,12 +8,20 @@ import { useAuthCtx } from '../../hooks';
 interface Prop {
   isLoading: boolean;
   id: string | undefined;
+  stopConfetti: React.Dispatch<boolean>;
 }
 
-export const Final = ({ isLoading, id = 'ERROR' }: Prop) => {
+export const Final = ({ isLoading, id = 'ERROR', stopConfetti }: Prop) => {
   const toast = useToast();
   const router = useRouter();
   const { getData } = useAuthCtx();
+
+  useEffect(() => {
+    setTimeout(() => {
+      stopConfetti(true);
+    }, 15000);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const goHome = async () => {
     router.replace('/profile');

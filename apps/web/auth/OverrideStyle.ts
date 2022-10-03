@@ -4,6 +4,9 @@ import '@fontsource/archivo/500.css';
 
 export const userInputCodeFormStyle = {
   button: {
+    ':hover': {
+      color: '#1328EC',
+    },
     backgroundColor: 'rgba(65, 83, 240, 1)',
     border: '0px',
     width: '100%',

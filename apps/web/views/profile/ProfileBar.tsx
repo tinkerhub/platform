@@ -62,6 +62,7 @@ export const ProfileBar = ({
             colorScheme="blue"
             variant="outline"
             alignSelf="center"
+            _hover={{ cursor: 'pointer', bg: '#1328EC' }}
             leftIcon={<BiArrowBack />}
             onClick={() => router.push('/')}
           >
@@ -74,6 +75,7 @@ export const ProfileBar = ({
             colorScheme="blue"
             variant="outline"
             alignSelf="center"
+            _hover={{ cursor: 'pointer', bg: '#1328EC' }}
             leftIcon={<MdOutlineCancel />}
             onClick={cancelEditHandler}
           >
@@ -87,8 +89,10 @@ export const ProfileBar = ({
             backgroundColor="rgba(65, 83, 240, 1)"
             alignSelf="center"
             onClick={editHandler}
+            _hover={{ cursor: 'pointer', color: '#1328EC' }}
             leftIcon={<FiEdit />}
             color="white"
+            minWidth={{ base: '165px', lg: 'auto' }}
           >
             Edit
           </Button>
@@ -100,6 +104,7 @@ export const ProfileBar = ({
             type="submit"
             backgroundColor="rgba(65, 83, 240, 1)"
             color="white"
+            _hover={{ cursor: 'pointer', bg: '#1328EC' }}
             leftIcon={<AiOutlineSave />}
           >
             Save
