@@ -31,8 +31,12 @@ export const RowTwo = ({ edit }: IsEdit) => {
   const [inputValue, setInputValue] = useState<string>('');
 
   const getCollege = async (input: string) => {
-    const { data } = await apiHandler.get(`/users/profile/college?name=${input}`);
     const college: Options[] = [];
+    // clearing all the array whenever  function is called
+    while (college.length > 0) {
+      college.pop();
+    }
+    const { data } = await apiHandler.get(`users/profile/college?search=${input}`);
     // pushing the fetched data to a array to make sure that it is in right format
     data.data.map((el: Clg) => college.push({ label: el.name, value: el.name }));
     return college;
