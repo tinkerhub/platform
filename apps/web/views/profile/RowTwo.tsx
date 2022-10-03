@@ -82,6 +82,15 @@ export const RowTwo = ({ edit }: IsEdit) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userInfo]);
 
+  const customStyles = {
+    // For the select it self, not the options of the select
+    control: (styles: any, { isDisabled }: { isDisabled: boolean }) => ({
+      ...styles,
+      // This is an example: backgroundColor: isDisabled ? 'rgba(206, 217, 224, 0.5)' : 'white'
+      color: isDisabled ? 'red' : 'white',
+    }),
+  };
+
   const {
     field: { onChange: mentorChange, ref: mentorRef, value: mentorVal },
     fieldState: { error: mentorError },
@@ -125,7 +134,7 @@ export const RowTwo = ({ edit }: IsEdit) => {
                   id="CampusCommunityActive"
                 >
                   <FormLabel>Tinkerhub campus community is active</FormLabel>
-                  <Select options={Comm} {...field} isDisabled={edit} />
+                  <Select options={Comm} {...field} isDisabled={edit} styles={customStyles} />
                   <FormErrorMessage>Please pick an option</FormErrorMessage>
                 </FormControl>
               )}
@@ -187,7 +196,6 @@ export const RowTwo = ({ edit }: IsEdit) => {
                   <AsyncSelect
                     {...field}
                     isClearable
-                    defaultOptions
                     loadOptions={() => getCollege(inputValue)}
                     onInputChange={handleInputChange}
                   />

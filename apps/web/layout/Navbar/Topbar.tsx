@@ -11,9 +11,6 @@ import {
 import { IoMdMoon } from 'react-icons/io';
 import { BsFillSunFill } from 'react-icons/bs';
 import React from 'react';
-import { useRouter } from 'next/router';
-import { signOut } from 'supertokens-auth-react/recipe/passwordless';
-import { useSessionContext } from 'supertokens-auth-react/recipe/session';
 import Link from 'next/link';
 
 interface NavProp {
@@ -24,8 +21,7 @@ interface NavProp {
 
 export const Topbar = ({ btnFunc, btnText = 'Login/Signup', showBtn }: NavProp) => {
   const { toggleColorMode: toggleMode } = useColorMode();
-  const router = useRouter();
-  const { doesSessionExist } = useSessionContext() as any;
+
   const SwitchIcon = useColorModeValue(IoMdMoon, BsFillSunFill);
   const text = useColorModeValue('dark', 'light');
   return (
@@ -56,7 +52,7 @@ export const Topbar = ({ btnFunc, btnText = 'Login/Signup', showBtn }: NavProp) 
           onClick={toggleMode}
           icon={<SwitchIcon />}
         />
-        {doesSessionExist && router.pathname === '/' && (
+        {/* {doesSessionExist && router.pathname === '/' && (
           <Button
             colorScheme="blue"
             backgroundColor="rgba(65, 83, 240, 1)"
@@ -68,7 +64,7 @@ export const Topbar = ({ btnFunc, btnText = 'Login/Signup', showBtn }: NavProp) 
           >
             Logout
           </Button>
-        )}
+        )} */}
         {showBtn && (
           <Button
             colorScheme="blue"
@@ -76,7 +72,6 @@ export const Topbar = ({ btnFunc, btnText = 'Login/Signup', showBtn }: NavProp) 
             onClick={btnFunc}
             _hover={{ cursor: 'pointer', bg: '#1328EC' }}
             color="white"
-            px={{ base: '25px', lg: '50px' }}
           >
             {btnText}
           </Button>

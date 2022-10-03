@@ -48,7 +48,7 @@ export const BottomBar = () => (
           _hover={{ cursor: 'pointer', color: 'grey' }}
           mt={{ base: '20px', md: '0px' }}
         >
-          Made with ❤️ by TinkerHub
+          Made with 💙 by TinkerHub
         </Text>
       </Flex>
       <Flex flexDirection="row" justifyContent="space-between" minW="350px">
