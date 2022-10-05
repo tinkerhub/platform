@@ -1,15 +1,4 @@
-import {
-  Controller,
-  Post,
-  Body,
-  UseGuards,
-  Session,
-  Get,
-  Req,
-  Res,
-  Patch,
-  Query,
-} from '@nestjs/common';
+import { Controller, Post, Body, UseGuards, Session, Get, Req, Res, Patch } from '@nestjs/common';
 import { AuthGuard } from 'src/auth/auth.guard';
 import { SessionContainer } from 'supertokens-node/recipe/session';
 import Passwordless from 'supertokens-node/recipe/passwordless';
@@ -24,11 +13,6 @@ import { UpdateException } from './exception/update.exception';
 @Controller('users/profile')
 export class ProfilesController {
   constructor(private readonly profilesService: ProfilesService) {}
-
-  @Get('college')
-  async collegeName(@Query('search') search: string) {
-    return this.profilesService.collegeName(search);
-  }
 
   @Post()
   async create(
