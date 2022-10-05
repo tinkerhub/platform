@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 
 @Injectable()
-export class CollegeService {
+export class NocoService {
   // Method to return college names
   async collegeName(cname: string, limit: string, page: string) {
     const collegeJSON = this.data.filter(({ name }) => name.includes(cname.toLocaleLowerCase()));

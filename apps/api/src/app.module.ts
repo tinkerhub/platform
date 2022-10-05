@@ -6,7 +6,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ProfilesModule } from './profiles/profiles.module';
 import { AuthModule } from './auth/auth.module';
-import { CollegeModule } from './college/college.module';
+import { NocoModule } from './noco/noco.module';
 
 const apiModules = [ProfilesModule];
 
@@ -49,7 +49,7 @@ const coreModules = [
         websiteBasePath: process.env.SUPERTOKENS_PATH,
       },
     }),
-    CollegeModule,
+    NocoModule,
   ],
   controllers: [AppController],
   providers: [AppService],
