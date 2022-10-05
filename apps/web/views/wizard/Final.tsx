@@ -39,14 +39,7 @@ export const Final = ({ isLoading, id = 'ERROR', stopConfetti }: Prop) => {
 
   if (isLoading) {
     return (
-      <Center
-        minH="550px"
-        w="450px"
-        p="35px"
-        borderRadius="lg"
-        borderColor="rgba(200, 200, 200, 1)"
-        borderWidth=".5px"
-      >
+      <Center minH="550px" w="450px" p="35px" borderRadius="lg">
         <Flex flexDirection="column">
           <Spinner
             thickness="4px"
@@ -62,14 +55,7 @@ export const Final = ({ isLoading, id = 'ERROR', stopConfetti }: Prop) => {
   }
 
   return (
-    <Center
-      mt="30px"
-      minH="400px"
-      p="35px"
-      borderRadius="lg"
-      borderColor="rgba(200, 200, 200, 1)"
-      borderWidth=".5px"
-    >
+    <Center mt="30px" minH="400px" p="35px" borderRadius="lg">
       <Box padding="30" width="100%">
         <Heading as="h2" size="xl" textAlign="left">
           Thank You
