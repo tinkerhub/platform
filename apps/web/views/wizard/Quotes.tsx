@@ -6,8 +6,13 @@ interface Word extends Child {
 }
 
 export const Quotes = ({ word, children }: Word) => (
-  <Flex mb="80px">
-    <Box width={{ base: '100%', lg: '50%' }}>{children}</Box>
+  <Flex
+    mb="80px"
+    justifyContent="space-between"
+    flexDirection={{ base: 'column', lg: 'row' }}
+    alignItems={{ base: 'center', lg: 'normal' }}
+  >
+    <Box>{children}</Box>
     <Box width="50%" display={{ base: 'none', lg: 'block' }}>
       <Heading color="#4153F0" mt="100px" fontWeight="400">
         We want to change this

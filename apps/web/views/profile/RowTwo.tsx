@@ -17,6 +17,7 @@ import { useAuthCtx } from '../../hooks';
 import { Clg, Comm, Desp, Skills } from '../wizard/Two';
 import { IsEdit, Options } from './types';
 import { apiHandler } from '../../api';
+import { debounce } from '../../utils';
 
 export const RowTwo = ({ edit }: IsEdit) => {
   const { control, watch, setValue } = useFormContext();
@@ -64,6 +65,9 @@ export const RowTwo = ({ edit }: IsEdit) => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [watch('describe')]);
+
+  // debounce function to  limit the user search
+  const debounceCollege = debounce(getCollege);
 
   useEffect(() => {
     if (userInfo?.desc) {
@@ -196,7 +200,7 @@ export const RowTwo = ({ edit }: IsEdit) => {
                   <AsyncSelect
                     {...field}
                     isClearable
-                    loadOptions={() => getCollege(inputValue)}
+                    loadOptions={() => debounceCollege(inputValue)}
                     onInputChange={handleInputChange}
                   />
                   <FormErrorMessage>Please pick an option</FormErrorMessage>

@@ -16,6 +16,7 @@ import { motion } from 'framer-motion';
 import { useController, useFormContext, Controller } from 'react-hook-form';
 import { OptionBase, Select, AsyncSelect } from 'chakra-react-select';
 import { apiHandler } from '../../api';
+import { debounce } from '../../utils';
 
 export const Skills = [
   { value: 'Java', label: 'Java' },
@@ -57,6 +58,9 @@ export const Two = () => {
     data.data.map((el: Clg) => college.push({ label: el.name, value: el.name }));
     return college;
   };
+
+  // debounce function to  limit the user search
+  const debounceCollege = debounce(getCollege);
 
   // handle input change event
   const handleInputChange = (value: string) => {
@@ -176,7 +180,7 @@ export const Two = () => {
                     {...field}
                     isClearable
                     defaultOptions
-                    loadOptions={() => getCollege(inputValue)}
+                    loadOptions={() => debounceCollege(inputValue)}
                     onInputChange={handleInputChange}
                   />
                   {collegeErr && <FormErrorMessage>Please pick an option</FormErrorMessage>}
