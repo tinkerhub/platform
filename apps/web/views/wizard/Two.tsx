@@ -50,17 +50,35 @@ export const Two = () => {
   const [prof, setProf] = useState<string | null>(null);
   const { control, watch, setValue } = useFormContext();
   const [inputValue, setInputValue] = useState<string>('');
+  const [skilErr, setSkillErr] = useState<string>('Please pick an option');
 
   const getCollege = async (input: string) => {
-    const { data } = await apiHandler.get(`users/profile/college?search=${input}`);
     const college: Options[] = [];
+    // clearing all the array whenever  function is called
+    while (college.length > 0) {
+      college.pop();
+    }
+    const { data } = await apiHandler.get(`/college?search=${input}&limit=20&page=1`);
     // pushing the fetched data to a array to make sure that it is in right format
-    data.data.map((el: Clg) => college.push({ label: el.name, value: el.name }));
+    data.map((el: Clg) => college.push({ label: el.name, value: el.name }));
     return college;
   };
 
   // debounce function to  limit the user search
   const debounceCollege = debounce(getCollege);
+
+  console.log(debounceCollege(inputValue));
+
+  //  yup form validation in skill not working properly so tried to do the error handling manually
+  useEffect(() => {
+    const skills = watch('My_Skills');
+    if (skills.length > 5) {
+      setSkillErr('Pick 5 skills maximum');
+    } else {
+      setSkillErr('Please pick an option');
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [watch('My_Skills')]);
 
   // handle input change event
   const handleInputChange = (value: string) => {
@@ -139,7 +157,7 @@ export const Two = () => {
                 <FormControl label="My_Skills" isInvalid={!!skillError} id="My_Skills">
                   <FormLabel>Your skills</FormLabel>
                   <Select options={Skills} {...field} isMulti />
-                  {skillError && <FormErrorMessage>Please pick an option</FormErrorMessage>}
+                  {skillError && <FormErrorMessage>{skilErr}</FormErrorMessage>}
                 </FormControl>
               )}
             />

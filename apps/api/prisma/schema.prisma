@@ -27,4 +27,5 @@ model User {
   skills                String[]
   street                String?
   CampusCommunityActive String?
+  passyear              Int?
 }

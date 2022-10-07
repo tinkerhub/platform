@@ -1,11 +1,10 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import { Center, useDimensions, useToast } from '@chakra-ui/react';
-import React, { useEffect, useRef, useState } from 'react';
+import { Center, useToast } from '@chakra-ui/react';
+import React, { useEffect, useState } from 'react';
 import type { NextPage } from 'next';
 import { useForm, FormProvider, SubmitHandler } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { InferType } from 'yup';
-import Confetti from 'react-confetti';
 
 import {
   CardBio,
@@ -30,9 +29,6 @@ const Index: NextPage = () => {
   const [validator, setValidator] = useState<any>(firstFormValidator);
   const methods = useForm<FormType>({ mode: 'all', resolver: yupResolver(validator) });
   const [user, setUser] = useState<Form | null>(null);
-  const elementRef = useRef(null);
-  const [stopConfetti, setStopConfetti] = useState<boolean>(false);
-  const dimensions = useDimensions(elementRef, true);
 
   const [isLoading, setIsloading] = useState<boolean>(false);
 
@@ -111,11 +107,8 @@ const Index: NextPage = () => {
 
   if (step === 4) {
     return (
-      <Center mb="60px" ref={elementRef}>
-        {!isLoading && !stopConfetti && (
-          <Confetti width={dimensions?.borderBox.width} height={dimensions?.borderBox.height} />
-        )}
-        <Final isLoading={isLoading} id={user?.id} stopConfetti={setStopConfetti} />
+      <Center mb="60px">
+        <Final isLoading={isLoading} id={user?.id} />
       </Center>
     );
   }
