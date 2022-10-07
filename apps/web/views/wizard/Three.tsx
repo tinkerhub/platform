@@ -73,7 +73,7 @@ export const Three = () => {
               <FormControl label="District" isInvalid={!!proError} id="District">
                 <FormLabel>District</FormLabel>
                 <Select options={District} {...field} />
-                <FormErrorMessage>Please pick an option</FormErrorMessage>
+                {proError && <FormErrorMessage>Please pick an option</FormErrorMessage>}
               </FormControl>
             )}
           />

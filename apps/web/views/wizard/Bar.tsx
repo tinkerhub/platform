@@ -67,6 +67,16 @@ export const Bar = ({ val, back }: Prop) => {
         </motion.div>
 
         <Box display="flex" justifyContent="space-between" alignSelf="center" w="50px">
+          {/* <Center
+            borderRadius="full"
+            borderColor="#rgba(231, 231, 231, 1)"
+            borderWidth="3px"
+            p="3px"
+          >
+            <Text size="sm" fontSize="14px" fontFamily="sans-serif" color=" #747474">
+              {val}/3
+            </Text>
+          </Center> */}
           {step.map((el) => (
             <Text
               fontWeight={el === val ? 'extrabold' : 'normal'}

@@ -23,11 +23,14 @@ export const userInputCodeFormStyle = {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: 'transparent',
   },
   inputWrapper: {
     ':focus-within ': {
       border: '2.5px solid rgba(66, 153, 225, 0.6)',
       boxShadow: 'none',
+      backgroundColor: 'white',
+      color: 'black',
     },
   },
 };
@@ -54,12 +57,18 @@ export const emailOrPhoneFormStyle = {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: 'transparent',
   },
   inputWrapper: {
     height: '40px',
     ':focus-within ': {
       border: '2.5px solid rgba(66, 153, 225, 0.6)',
       boxShadow: 'none',
+      backgroundColor: 'white',
+      color: 'black',
     },
+  },
+  label: {
+    fontFamily: `'Archivo', sans-serif`,
   },
 };

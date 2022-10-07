@@ -37,7 +37,7 @@ export const RowTwo = ({ edit }: IsEdit) => {
     while (college.length > 0) {
       college.pop();
     }
-    const { data } = await apiHandler.get(`users/profile/college?search=${input}`);
+    const { data } = await apiHandler.get(`/college?search=${input}&limit=20&page=1`);
     // pushing the fetched data to a array to make sure that it is in right format
     data.data.map((el: Clg) => college.push({ label: el.name, value: el.name }));
     return college;
@@ -193,6 +193,7 @@ export const RowTwo = ({ edit }: IsEdit) => {
           <Box display="flex" flexDirection="column" justifyContent="space-between" mt="13px">
             <Controller
               control={control}
+              defaultValue={null}
               name="College"
               render={({ field, fieldState: { error: collegeErr } }) => (
                 <FormControl label="College" isInvalid={!!collegeErr} id="College">
@@ -203,7 +204,7 @@ export const RowTwo = ({ edit }: IsEdit) => {
                     loadOptions={() => debounceCollege(inputValue)}
                     onInputChange={handleInputChange}
                   />
-                  <FormErrorMessage>Please pick an option</FormErrorMessage>
+                  {collegeErr && <FormErrorMessage>Please pick an option</FormErrorMessage>}
                 </FormControl>
               )}
             />
