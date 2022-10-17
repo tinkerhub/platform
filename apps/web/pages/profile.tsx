@@ -18,7 +18,6 @@ const Index: NextPage = () => {
   const methods = useForm<FormType>({ mode: 'all', resolver: yupResolver(registerFormValidator) });
   const toast = useToast();
   const { user } = useAuthCtx();
-  console.log(methods.formState.errors);
 
   const editHandler = () => {
     setEdit(false);
@@ -110,7 +109,7 @@ const Index: NextPage = () => {
             w="100%"
             justifyContent="space-between"
             alignItems="center"
-            mt={{ base: '20px', lg: '0px' }}
+            mt={{ base: '20px', lg: '40px' }}
           >
             <RowOne edit={edit} />
             <RowTwo edit={edit} />

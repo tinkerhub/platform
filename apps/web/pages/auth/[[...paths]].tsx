@@ -37,8 +37,12 @@ const Auth: NextPage = () => {
   }
 
   return (
-    <Center mb="120px">
-      <Box>
+    <Center mb="120px" mt="30px">
+      <Box
+        borderRadius="lg"
+        borderColor={{ base: 'none', lg: 'rgba(200, 200, 200, 1)' }}
+        borderWidth={{ base: 'none', lg: '.5px' }}
+      >
         <SuperTokensComponentNoSSR />
       </Box>
     </Center>

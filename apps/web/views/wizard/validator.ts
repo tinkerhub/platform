@@ -42,10 +42,14 @@ export const registerFormValidator = Yup.object({
       is: (val: Option) => val?.value === 'Professional',
       then: Yup.boolean().required(),
     }),
-  College: Yup.object().when('describe', {
-    is: (val: Option) => val?.value === 'Student',
-    then: PickAnOptionValidator.nullable().required('Please pick an option'),
-  }),
+  College: Yup.object()
+    .nullable()
+    .when('describe', {
+      is: (val: Option) => val?.value === 'Student',
+      then: PickAnOptionValidator.nullable().required(
+        requiredErrorStatement('Please pick an option')
+      ),
+    }),
   House_Name: Yup.string(),
   Street: Yup.string(),
   District: PickAnOptionValidator.nullable(),
@@ -95,10 +99,14 @@ export const secondValidator = Yup.object({
       is: (val: Option) => val?.value === 'Professional',
       then: Yup.boolean().required(),
     }),
-  College: Yup.object().when('describe', {
-    is: (val: Option) => val?.value === 'Student',
-    then: PickAnOptionValidator.nullable().required('Please pick an option'),
-  }),
+  College: Yup.object()
+    .nullable()
+    .when('describe', {
+      is: (val: Option) => val?.value === 'Student',
+      then: PickAnOptionValidator.nullable().required(
+        requiredErrorStatement('Please pick an option')
+      ),
+    }),
   Passout: Yup.object()
     .nullable()
     .when('describe', {

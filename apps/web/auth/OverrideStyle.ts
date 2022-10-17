@@ -19,11 +19,12 @@ export const userInputCodeFormStyle = {
     fontFamily: `'Archivo', sans-serif`,
   },
   container: {
-    height: '550px',
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: 'transparent',
+    boxShadow: 'none',
+    height: 'auto',
   },
   inputWrapper: {
     ':focus-within ': {
@@ -53,11 +54,12 @@ export const emailOrPhoneFormStyle = {
     paddingBottom: '17px',
   },
   container: {
-    height: '550px',
+    height: 'auto',
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: 'transparent',
+    boxShadow: 'none',
   },
   inputWrapper: {
     height: '40px',

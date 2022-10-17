@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import { Heading, Text } from '@chakra-ui/react';
+import { Box, Flex, Heading, Text } from '@chakra-ui/react';
 import Passwordless from 'supertokens-auth-react/recipe/passwordless';
 import Session from 'supertokens-auth-react/recipe/session';
 import { userInputCodeFormStyle, emailOrPhoneFormStyle } from './OverrideStyle';
@@ -20,21 +20,25 @@ export const authConfig = () => ({
         components: {
           // eslint-disable-next-line react/prop-types, arrow-body-style
           PasswordlessSignInUpHeader_Override: () => (
-            <div>
+            <Flex flexDirection="column">
               <Heading
                 fontSize="40px"
-                fontWeight="500"
+                fontWeight="700"
                 marginBottom="10px"
-                mb="30px"
+                mb="25px"
                 textAlign="left"
               >
-                Welcome to TinkerHub 👋
+                Welcome to TinkerHub{' '}
+                <Box as="span" alignItems="flex-end">
+                  👋
+                </Box>
               </Heading>
-              <Text mb="10px">
+
+              <Text mb="20px" textAlign="left" fontWeight={400} maxHeight="300px">
                 We are thrilled to know that you want to join the TinkerHub mission. Let get
                 started.
               </Text>
-            </div>
+            </Flex>
           ),
         },
       },
@@ -45,9 +49,17 @@ export const authConfig = () => ({
       },
       getRedirectionURL: async (context) => {
         if (context.action === 'SUCCESS') {
+          // called on a successful sign in / up. Where should the user go next?
+          const isWizardComplted = localStorage.getItem('isWizardComplted'); // returns null or "YES"
+
+          if (!isWizardComplted) {
+            // user signed up but not completed wizardform
+            return '/wizard';
+          }
           // user signed in
           return '/profile';
         }
+        // return undefined to let the default behaviour play out
         return undefined;
       },
     }),

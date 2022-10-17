@@ -1,5 +1,5 @@
 import React, { useEffect, useReducer } from 'react';
-import { useRouter } from 'next/router';
+import Router, { useRouter } from 'next/router';
 import { Box, Flex } from '@chakra-ui/react';
 import { useSessionContext } from 'supertokens-auth-react/recipe/session';
 import { signOut, PasswordlessAuth } from 'supertokens-auth-react/recipe/passwordless';
@@ -11,7 +11,7 @@ import { PageLoader } from '../components/loading';
 
 export const Layout = ({ children }: Child) => {
   const router = useRouter();
-  const { isUserLoading } = useAuthCtx();
+  const { isUserLoading, setUserLoading } = useAuthCtx();
   // const isUserLoading = true;
 
   const redirect = () => {
@@ -55,6 +55,15 @@ export const Layout = ({ children }: Child) => {
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [doesSessionExist, router]);
+
+  // listening for route change events
+  Router.events.on('routeChangeStart', () => {
+    // when route change loading screen popup
+    setUserLoading(true);
+  });
+  Router.events.on('routeChangeComplete', () => {
+    setUserLoading(false);
+  });
 
   // that loading screen
 

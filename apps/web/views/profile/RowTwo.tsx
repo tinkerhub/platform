@@ -11,17 +11,15 @@ import {
 } from '@chakra-ui/react';
 import { AsyncSelect, Select } from 'chakra-react-select';
 import React, { useEffect, useState } from 'react';
-import { Controller, useFormContext } from 'react-hook-form';
+import { Controller, useFormContext, useController } from 'react-hook-form';
 import dayjs from 'dayjs';
 import { useAuthCtx } from '../../hooks';
 import { Clg, Comm, Desp, Skills } from '../wizard/Two';
 import { IsEdit, Options } from './types';
 import { apiHandler } from '../../api';
-import { debounce } from '../../utils';
 
 export const RowTwo = ({ edit }: IsEdit) => {
   const { control, watch, setValue } = useFormContext();
-
   const { user: userInfo } = useAuthCtx();
   const skillArr: Options[] = [];
   // for conditional rendering of prfessional and student
@@ -29,17 +27,14 @@ export const RowTwo = ({ edit }: IsEdit) => {
   // userinfo.skills returns an array of string so converting to a object here and pushing to a array
   userInfo?.skills?.map((el) => skillArr.push({ value: el, label: el }));
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [inputValue, setInputValue] = useState<string>('');
 
   const getCollege = async (input: string) => {
     const college: Options[] = [];
-    // clearing all the array whenever  function is called
-    while (college.length > 0) {
-      college.pop();
-    }
     const { data } = await apiHandler.get(`/college?search=${input}&limit=20&page=1`);
     // pushing the fetched data to a array to make sure that it is in right format
-    data.data.map((el: Clg) => college.push({ label: el.name, value: el.name }));
+    data.map((el: Clg) => college.push({ label: el.name, value: el.name }));
     return college;
   };
 
@@ -47,6 +42,14 @@ export const RowTwo = ({ edit }: IsEdit) => {
   const handleInputChange = (value: string) => {
     setInputValue(value);
   };
+
+  const {
+    field: { onChange: mentorChange, ref: mentorRef, value: mentorVal },
+    fieldState: { error: mentorError },
+  } = useController({
+    name: 'Mentor',
+    control,
+  });
 
   useEffect(() => {
     const val = watch('describe')?.value;
@@ -67,7 +70,6 @@ export const RowTwo = ({ edit }: IsEdit) => {
   }, [watch('describe')]);
 
   // debounce function to  limit the user search
-  const debounceCollege = debounce(getCollege);
 
   useEffect(() => {
     if (userInfo?.desc) {
@@ -107,9 +109,10 @@ export const RowTwo = ({ edit }: IsEdit) => {
       spacing={2}
       align="stretch"
       w="100%"
-      mb={{ base: '16px', lg: '25px' }}
+      height={{ base: '10%', lg: '400px' }}
       mx="90px"
-      mt={{ base: '20px', lg: prof === 'Student' ? '30px' : '-220px' }}
+      justifyContent="flex-start"
+      mt={{ base: '14px', lg: '0' }}
     >
       <Box>
         <Box display="flex" flexDirection="column" justifyContent="space-between">
@@ -153,7 +156,7 @@ export const RowTwo = ({ edit }: IsEdit) => {
                 <FormControl label="My_Skills" isInvalid={!!skillError} id="My_Skills">
                   <FormLabel>Your skills</FormLabel>
                   <Select options={Skills} {...field} isMulti isDisabled={edit} />
-                  <FormErrorMessage>Please pick an option</FormErrorMessage>
+                  {skillError && <FormErrorMessage>Pick 5 skills maximum</FormErrorMessage>}
                 </FormControl>
               )}
             />
@@ -167,7 +170,29 @@ export const RowTwo = ({ edit }: IsEdit) => {
             mt="15px"
             w="350px"
           >
-            <Controller
+            <Box display="flex" flexDirection="column" justifyContent="space-between" mt="15px">
+              <FormControl label="Mentor" isInvalid={!!mentorError} id="Mentor">
+                <FormLabel>Can you be a Mentor</FormLabel>
+                <RadioGroup
+                  defaultValue={0}
+                  ref={mentorRef}
+                  onChange={mentorChange}
+                  value={Number(mentorVal)}
+                  isDisabled={edit}
+                >
+                  <Stack spacing={5} direction="row">
+                    <Radio colorScheme="blue" value={1}>
+                      Yes
+                    </Radio>
+                    <Radio colorScheme="blue" value={0}>
+                      No
+                    </Radio>
+                  </Stack>
+                </RadioGroup>
+                <FormErrorMessage>{mentorError?.message}</FormErrorMessage>
+              </FormControl>
+            </Box>
+            {/* <Controller
               control={control}
               name="mentor"
               render={({ field, fieldState: { error: mentorError } }) => (
@@ -186,14 +211,13 @@ export const RowTwo = ({ edit }: IsEdit) => {
                   <FormErrorMessage>{mentorError?.message}</FormErrorMessage>
                 </FormControl>
               )}
-            />
+            /> */}
           </Box>
         )}
         {prof === 'Student' && (
           <Box display="flex" flexDirection="column" justifyContent="space-between" mt="13px">
             <Controller
               control={control}
-              defaultValue={null}
               name="College"
               render={({ field, fieldState: { error: collegeErr } }) => (
                 <FormControl label="College" isInvalid={!!collegeErr} id="College">
@@ -201,7 +225,7 @@ export const RowTwo = ({ edit }: IsEdit) => {
                   <AsyncSelect
                     {...field}
                     isClearable
-                    loadOptions={() => debounceCollege(inputValue)}
+                    loadOptions={getCollege}
                     onInputChange={handleInputChange}
                   />
                   {collegeErr && <FormErrorMessage>Please pick an option</FormErrorMessage>}
