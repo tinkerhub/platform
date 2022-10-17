@@ -8,6 +8,7 @@ import { apiHandler } from '../../api';
 interface Pro {
   user: Form | null;
   isUserLoading: boolean;
+  setUserLoading: React.Dispatch<boolean>;
   getData: () => Promise<void>;
 }
 
@@ -33,7 +34,9 @@ export const AuthContext = ({ children }: Child) => {
         router.push('/wizard');
       }
       if (data.Success && data.data) {
+        // setting the info about the wizard in localstorage so that we can access it in supertokens redirection
         setUser(data.data);
+        localStorage.setItem('isWizardComplted', 'YES');
       }
     } catch {
       router.push('/');
@@ -58,6 +61,7 @@ export const AuthContext = ({ children }: Child) => {
   }, [doesSessionExist]);
 
   useEffect(() => {
+    // preventing the wizard router after onboarding process
     if (user && path === 'wizard') {
       router.replace('/profile');
     }
@@ -74,6 +78,7 @@ export const AuthContext = ({ children }: Child) => {
       user,
       isUserLoading,
       getData,
+      setUserLoading,
     }),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [doesSessionExist, isUserLoading, getData]

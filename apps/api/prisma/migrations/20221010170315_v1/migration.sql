@@ -5,17 +5,18 @@ CREATE TABLE "User" (
     "name" TEXT NOT NULL,
     "email" TEXT NOT NULL,
     "campus" TEXT,
-    "passyear" INTEGER,
     "desc" TEXT NOT NULL,
     "district" TEXT,
     "dob" TIMESTAMP(3) NOT NULL,
     "house" TEXT,
-    "mentor" BOOLEAN NOT NULL,
+    "mentor" BOOLEAN,
     "mobile" TEXT,
     "pin" TEXT,
     "pronoun" TEXT,
     "skills" TEXT[],
     "street" TEXT,
+    "CampusCommunityActive" TEXT,
+    "passyear" INTEGER,
 
     CONSTRAINT "User_pkey" PRIMARY KEY ("id")
 );

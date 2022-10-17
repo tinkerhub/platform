@@ -1,11 +1,12 @@
-export const debounce = <F extends (...args: any[]) => any>(func: F, waitFor = 300) => {
-  let timeout: ReturnType<typeof setTimeout> | null = null;
-
+export const debounce = <F extends (...args: any) => any>(func: F, waitFor = 1000) => {
+  let timeout: NodeJS.Timeout;
+  // let data;
   return (...args: Parameters<F>) => {
-    if (timeout !== null) {
-      clearTimeout(timeout);
-      timeout = null;
-    }
-    timeout = setTimeout(() => func(...args), waitFor);
+    clearTimeout(timeout);
+
+    timeout = setTimeout(() => {
+      func(...args);
+    }, waitFor);
+    console.log(timeout);
   };
 };

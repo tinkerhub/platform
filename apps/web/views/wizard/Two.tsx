@@ -16,7 +16,6 @@ import { motion } from 'framer-motion';
 import { useController, useFormContext, Controller } from 'react-hook-form';
 import { OptionBase, Select, AsyncSelect } from 'chakra-react-select';
 import { apiHandler } from '../../api';
-import { debounce } from '../../utils';
 
 export const Skills = [
   { value: 'Java', label: 'Java' },
@@ -49,8 +48,8 @@ export interface Clg {
 export const Two = () => {
   const [prof, setProf] = useState<string | null>(null);
   const { control, watch, setValue } = useFormContext();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [inputValue, setInputValue] = useState<string>('');
-  const [skilErr, setSkillErr] = useState<string>('Please pick an option');
 
   const getCollege = async (input: string) => {
     const college: Options[] = [];
@@ -63,22 +62,6 @@ export const Two = () => {
     data.map((el: Clg) => college.push({ label: el.name, value: el.name }));
     return college;
   };
-
-  // debounce function to  limit the user search
-  const debounceCollege = debounce(getCollege);
-
-  console.log(debounceCollege(inputValue));
-
-  //  yup form validation in skill not working properly so tried to do the error handling manually
-  useEffect(() => {
-    const skills = watch('My_Skills');
-    if (skills.length > 5) {
-      setSkillErr('Pick 5 skills maximum');
-    } else {
-      setSkillErr('Please pick an option');
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [watch('My_Skills')]);
 
   // handle input change event
   const handleInputChange = (value: string) => {
@@ -157,7 +140,7 @@ export const Two = () => {
                 <FormControl label="My_Skills" isInvalid={!!skillError} id="My_Skills">
                   <FormLabel>Your skills</FormLabel>
                   <Select options={Skills} {...field} isMulti />
-                  {skillError && <FormErrorMessage>{skilErr}</FormErrorMessage>}
+                  {skillError && <FormErrorMessage>Pick 5 skills maximum</FormErrorMessage>}
                 </FormControl>
               )}
             />
@@ -198,7 +181,7 @@ export const Two = () => {
                     {...field}
                     isClearable
                     defaultOptions
-                    loadOptions={() => debounceCollege(inputValue)}
+                    loadOptions={getCollege}
                     onInputChange={handleInputChange}
                   />
                   {collegeErr && <FormErrorMessage>Please pick an option</FormErrorMessage>}

@@ -27,7 +27,6 @@ export const ProfileBar = ({
       display="flex"
       justifyContent="space-between"
       mt="4"
-      mb="40px"
       flexDirection={{ base: 'column-reverse', lg: 'row' }}
     >
       <Box
