@@ -15,6 +15,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { signOut } from 'supertokens-auth-react/recipe/passwordless';
 import { useSessionContext } from 'supertokens-auth-react/recipe/session';
+import { Option } from '../Option';
 
 interface NavProp {
   btnText?: string;
@@ -61,26 +62,47 @@ export const Topbar = ({ btnFunc, btnText = 'Login/Signup', showBtn }: NavProp) 
           onClick={toggleMode}
           icon={<SwitchIcon />}
         />
-        {doesSessionExist && router.pathname === '/' && (
+        {doesSessionExist && (
+          <Box display={{ base: 'inline', md: 'none' }}>
+            <Option />
+          </Box>
+        )}
+
+        <Box display={{ base: 'none', md: 'inline' }}>
+          {doesSessionExist && router.pathname === '/' && (
+            <Button
+              onClick={logOut}
+              _hover={{ cursor: 'pointer', bg: '#1328EC', color: 'white' }}
+              px={{ base: '25px', lg: '50px' }}
+              mr="20px"
+              variant="outline"
+            >
+              Logout
+            </Button>
+          )}
+          {showBtn && (
+            <Button
+              colorScheme="blue"
+              backgroundColor="rgba(65, 83, 240, 1)"
+              onClick={btnFunc}
+              _hover={{ cursor: 'pointer', bg: '#1328EC' }}
+              color="white"
+            >
+              {btnText}
+            </Button>
+          )}
+        </Box>
+        {/* // renders only in  mobile when user is not logged in */}
+        {!doesSessionExist && router.pathname === '/' && (
           <Button
-            onClick={logOut}
+            display={{ base: 'inline', md: 'none' }}
+            onClick={() => router.push('/auth')}
             _hover={{ cursor: 'pointer', bg: '#1328EC', color: 'white' }}
             px={{ base: '25px', lg: '50px' }}
             mr="20px"
             variant="outline"
           >
-            Logout
-          </Button>
-        )}
-        {showBtn && (
-          <Button
-            colorScheme="blue"
-            backgroundColor="rgba(65, 83, 240, 1)"
-            onClick={btnFunc}
-            _hover={{ cursor: 'pointer', bg: '#1328EC' }}
-            color="white"
-          >
-            {btnText}
+            Login
           </Button>
         )}
       </div>

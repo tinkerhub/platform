@@ -17,7 +17,7 @@ const Index: NextPage = () => {
   const [edit, setEdit] = useState<boolean>(true);
   const methods = useForm<FormType>({ mode: 'all', resolver: yupResolver(registerFormValidator) });
   const toast = useToast();
-  const { user } = useAuthCtx();
+  const { user, getData } = useAuthCtx();
 
   const editHandler = () => {
     setEdit(false);
@@ -80,6 +80,7 @@ const Index: NextPage = () => {
         duration: 3000,
         isClosable: true,
       });
+      await getData();
     } catch (e) {
       const msg = e as Errors;
       toast({
