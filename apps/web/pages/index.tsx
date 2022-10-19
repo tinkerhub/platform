@@ -10,7 +10,12 @@ const Home: NextPage = () => {
       <Head>
         <title>Tinkerhub</title>
       </Head>
-      <Flex justifyContent="space-between" minH="450px" alignItems="center">
+      <Flex
+        justifyContent="space-between"
+        minH="450px"
+        alignItems="center"
+        flexDirection={{ base: 'column-reverse', lg: 'row' }}
+      >
         <Box p={2} maxW="600px">
           <Heading as="h2" size="4xl" color="rgba(65, 83, 240, 1)" fontWeight="extrabold">
             {' '}
@@ -27,8 +32,8 @@ const Home: NextPage = () => {
             everyone has access to the knowledge required to set the course for a better future.
           </Box>
         </Box>
-        <Box display={{ base: 'none', lg: 'block' }}>
-          <Image src="/hero.svg" width={400} height={400} />
+        <Box>
+          <Image src="/hero.svg" width={550} height={500} />
         </Box>
       </Flex>
     </>

@@ -22,8 +22,6 @@ export const RowTwo = ({ edit }: IsEdit) => {
   const { control, watch, setValue } = useFormContext();
   const { user: userInfo } = useAuthCtx();
   const skillArr: Options[] = [];
-  // for conditional rendering of prfessional and student
-  const [prof, setProf] = useState<string | null>(null);
   // userinfo.skills returns an array of string so converting to a object here and pushing to a array
   userInfo?.skills?.map((el) => skillArr.push({ value: el, label: el }));
 
@@ -51,23 +49,21 @@ export const RowTwo = ({ edit }: IsEdit) => {
     control,
   });
 
+  const role = watch('describe')?.value;
   useEffect(() => {
-    const val = watch('describe')?.value;
-    setProf(val);
-
-    if (prof === 'Student') {
-      setValue('mentor', null);
+    if (role === 'Student') {
+      setValue('Mentor', null);
     }
 
     // setting the value related to opposite of decription to undefined
     // making sure that user wont send data from both student and professionall to DB
-    if (prof === 'Professional') {
+    if (role === 'Professional') {
       setValue('CampusCommunityActive', null);
       setValue('My_Skills', null);
       setValue('College', null);
+      setValue('Passout', null);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [watch('describe')]);
+  }, [role, setValue]);
 
   // debounce function to  limit the user search
 
@@ -75,7 +71,6 @@ export const RowTwo = ({ edit }: IsEdit) => {
     if (userInfo?.desc) {
       // setting the state to change on frontend
       setValue('describe', { value: userInfo?.desc, label: userInfo?.desc });
-      setProf(userInfo.desc);
     }
     if (userInfo?.skills) {
       setValue('My_Skills', skillArr);
@@ -90,7 +85,13 @@ export const RowTwo = ({ edit }: IsEdit) => {
       });
     }
     if (userInfo?.mentor) {
-      setValue('mentor', userInfo.mentor ? 1 : 0);
+      setValue('Mentor', userInfo.mentor ? 1 : 0);
+    }
+    if (userInfo?.passyear) {
+      setValue('Passout', {
+        value: userInfo?.passyear?.toString(),
+        label: userInfo.passyear.toString(),
+      });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userInfo]);
@@ -128,7 +129,7 @@ export const RowTwo = ({ edit }: IsEdit) => {
             )}
           />
         </Box>
-        {prof === 'Student' && (
+        {role === 'Student' && (
           <Box display="flex" flexDirection="column" justifyContent="space-between" mt="13px">
             <Controller
               control={control}
@@ -147,7 +148,7 @@ export const RowTwo = ({ edit }: IsEdit) => {
             />
           </Box>
         )}
-        {prof === 'Student' && (
+        {role === 'Student' && (
           <Box display="flex" flexDirection="column" justifyContent="space-between" mt="10px">
             <Controller
               control={control}
@@ -162,7 +163,7 @@ export const RowTwo = ({ edit }: IsEdit) => {
             />
           </Box>
         )}
-        {prof === 'Professional' && (
+        {role === 'Professional' && (
           <Box
             display="flex"
             flexDirection="column"
@@ -214,7 +215,7 @@ export const RowTwo = ({ edit }: IsEdit) => {
             /> */}
           </Box>
         )}
-        {prof === 'Student' && (
+        {role === 'Student' && (
           <Box display="flex" flexDirection="column" justifyContent="space-between" mt="13px">
             <Controller
               control={control}
@@ -223,6 +224,7 @@ export const RowTwo = ({ edit }: IsEdit) => {
                 <FormControl label="College" isInvalid={!!collegeErr} id="College">
                   <FormLabel>I currenlty study at</FormLabel>
                   <AsyncSelect
+                    isDisabled={edit}
                     {...field}
                     isClearable
                     loadOptions={getCollege}
@@ -235,7 +237,7 @@ export const RowTwo = ({ edit }: IsEdit) => {
           </Box>
         )}
       </Box>
-      {prof === 'Student' && (
+      {role === 'Student' && (
         <Box display="flex" flexDirection="column" justifyContent="space-between">
           <Controller
             control={control}
@@ -244,6 +246,7 @@ export const RowTwo = ({ edit }: IsEdit) => {
               <FormControl label="Passout" isInvalid={!!descError} id="Passout">
                 <FormLabel>Year of Passout</FormLabel>
                 <Select
+                  isDisabled={edit}
                   options={[
                     { label: dayjs().year(), value: dayjs().year() },
                     { label: dayjs().year() + 1, value: dayjs().year() + 1 },

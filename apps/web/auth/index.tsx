@@ -47,21 +47,20 @@ export const authConfig = () => ({
         userInputCodeFormStyle,
         emailOrPhoneFormStyle,
       },
-      getRedirectionURL: async (context) => {
-        if (context.action === 'SUCCESS') {
-          // called on a successful sign in / up. Where should the user go next?
-          const isWizardComplted = localStorage.getItem('isWizardComplted'); // returns null or "YES"
+      getRedirectionURL: async () =>
+        // if (context.action === 'SUCCESS') {
+        //   // called on a successful sign in / up. Where should the user go next?
+        //   const isWizardComplted = localStorage.getItem('isWizardComplted'); // returns null or "YES"
 
-          if (!isWizardComplted) {
-            // user signed up but not completed wizardform
-            return '/wizard';
-          }
-          // user signed in
-          return '/profile';
-        }
+        //   if (!isWizardComplted) {
+        //     // user signed up but not completed wizardform
+        //     return '/wizard';
+        //   }
+        //   // user signed in
+        //   return '/profile';
+        // }
         // return undefined to let the default behaviour play out
-        return undefined;
-      },
+        undefined,
     }),
     Session.init(),
   ],

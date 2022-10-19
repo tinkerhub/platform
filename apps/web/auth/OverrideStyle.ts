@@ -17,6 +17,10 @@ export const userInputCodeFormStyle = {
   },
   headerTitle: {
     fontFamily: `'Archivo', sans-serif`,
+    color: '#adb5bd',
+  },
+  label: {
+    color: '#adb5bd',
   },
   container: {
     display: 'flex',

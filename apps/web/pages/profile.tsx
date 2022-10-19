@@ -65,7 +65,7 @@ const Index: NextPage = () => {
       CampusCommunityActive: val.CampusCommunityActive?.value,
       campus: val.College?.value,
       mentor: val.Mentor,
-      passyear: val.Passout?.value,
+      passyear: Number(val.Passout?.value),
     };
     setEdit((el) => !el);
 
