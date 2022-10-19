@@ -1,6 +1,16 @@
 /* eslint-disable react/style-prop-object */
 /* eslint-disable react/no-unescaped-entities */
-import { Center, Spinner, Heading, Box, useToast, Icon, Flex, Text } from '@chakra-ui/react';
+import {
+  Center,
+  Spinner,
+  Heading,
+  Box,
+  useToast,
+  Icon,
+  Flex,
+  Text,
+  useColorMode,
+} from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
 import { MdOutlineContentCopy } from 'react-icons/md';
 import { FiExternalLink } from 'react-icons/fi';
@@ -8,8 +18,8 @@ import { TiTick } from 'react-icons/ti';
 import { BiArrowBack } from 'react-icons/bi';
 
 import { useRouter } from 'next/router';
-import { useAuthCtx } from '../../hooks';
 import { LottieAnim } from './Lottie';
+import { useAuthCtx } from '../../hooks';
 
 interface Prop {
   isLoading: boolean;
@@ -21,7 +31,7 @@ export const Final = ({ isLoading, id = 'ERROR' }: Prop) => {
   const router = useRouter();
   const [result, setResult] = useState<boolean>(false);
   const { getData } = useAuthCtx();
-
+  const { colorMode } = useColorMode();
   useEffect(() => {
     if (isLoading) {
       setTimeout(() => {
@@ -78,7 +88,7 @@ export const Final = ({ isLoading, id = 'ERROR' }: Prop) => {
       borderRadius="lg"
       flexDirection={{ base: 'column', md: 'row' }}
     >
-      <Box padding="30px">
+      <Box pb="30px">
         <Center>
           <Icon
             w="20px"
@@ -102,7 +112,7 @@ export const Final = ({ isLoading, id = 'ERROR' }: Prop) => {
         <Heading as="h2" size={{ base: 'lg', lg: 'xl' }} textAlign="center" mt="15px">
           Welcome to TinkerHub
         </Heading>
-        <Box border="1.5px solid #C8C8C8" mt="40px" borderRadius="lg" px="30px">
+        <Box border="1.5px solid #C8C8C8" mt="40px" borderRadius="lg" px="30px" w="100%">
           <Heading
             as="h3"
             size="md"
@@ -117,7 +127,7 @@ export const Final = ({ isLoading, id = 'ERROR' }: Prop) => {
           <Box
             p="3"
             px="2"
-            mt="14px"
+            mb="10px"
             borderRadius="md"
             fontSize="19px"
             _hover={{ cursor: 'pointer' }}
@@ -130,14 +140,14 @@ export const Final = ({ isLoading, id = 'ERROR' }: Prop) => {
             <Heading fontWeight="500" size="14px" marginRight="14px" color="rgba(65, 83, 240, 1)">
               {id}
             </Heading>
-            <Icon as={MdOutlineContentCopy} fontSize="18px" />
+            <Icon as={MdOutlineContentCopy} fontSize="18px" color="rgba(65, 83, 240, 1)" />
           </Box>
         </Box>
       </Box>
       <Box>
         <Heading>Next Step</Heading>
-        <Text>Come lets network with community people</Text>
-        <Text>🚀</Text>
+        <Text>Come lets network with community people 🚀</Text>
+
         <Box
           border="1.5px solid #C8C8C8"
           p="3"
@@ -148,14 +158,13 @@ export const Final = ({ isLoading, id = 'ERROR' }: Prop) => {
         >
           <Center
             position="absolute"
-            bg="white"
+            bg={colorMode === 'light' ? '#1A202C' : 'white'}
             borderRadius="full"
             w="35px"
             h="35px"
             left="-19"
             top="6"
             border="1.5px solid #C8C8C8"
-            color="black"
           >
             1
           </Center>
@@ -177,14 +186,13 @@ export const Final = ({ isLoading, id = 'ERROR' }: Prop) => {
         >
           <Center
             position="absolute"
-            bg="white"
+            bg={colorMode === 'light' ? '#1A202C' : 'white'}
             borderRadius="full"
             w="35px"
             h="35px"
             left="-19"
             top="6"
             border="1.5px solid #C8C8C8"
-            color="black"
           >
             2
           </Center>
@@ -213,13 +221,12 @@ export const Final = ({ isLoading, id = 'ERROR' }: Prop) => {
         >
           <Center
             position="absolute"
-            bg="white"
+            bg={colorMode === 'light' ? '#1A202C' : 'white'}
             borderRadius="full"
             w="35px"
             h="35px"
             left="-19"
-            top="6"
-            color="black"
+            top={{ base: '8', md: '12++', lg: '6' }}
             border="1.5px solid #C8C8C8"
           >
             3

@@ -33,7 +33,7 @@ const Home: NextPage = () => {
           </Box>
         </Box>
         <Box>
-          <Image src="/hero.svg" width={550} height={500} />
+          <Image src="/hero1.png" width={550} height={500} />
         </Box>
       </Flex>
     </>
