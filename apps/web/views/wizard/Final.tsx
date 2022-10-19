@@ -108,14 +108,14 @@ export const Final = ({ isLoading, id = 'ERROR' }: Prop) => {
             size="md"
             fontSize="18px"
             fontWeight="450"
-            mt="30px"
+            p="4"
             textAlign="center"
             color="rgba(116, 116, 116, 1)"
           >
             Your membership ID
           </Heading>
           <Box
-            py="3"
+            p="3"
             px="2"
             mt="14px"
             borderRadius="md"
@@ -127,7 +127,7 @@ export const Final = ({ isLoading, id = 'ERROR' }: Prop) => {
             onClick={copyFile}
             height="40px"
           >
-            <Heading fontWeight="500" size="14px" marginRight="14px">
+            <Heading fontWeight="500" size="14px" marginRight="14px" color="rgba(65, 83, 240, 1)">
               {id}
             </Heading>
             <Icon as={MdOutlineContentCopy} fontSize="18px" />
@@ -161,10 +161,10 @@ export const Final = ({ isLoading, id = 'ERROR' }: Prop) => {
           </Center>
           <Heading size="md">Copy Membership ID</Heading>
           <Flex mt="15px" onClick={copyFile} _hover={{ cursor: 'pointer' }}>
-            <Heading fontWeight="500" size="14px" marginRight="14px">
+            <Heading fontWeight="500" size="14px" marginRight="14px" color="rgba(65, 83, 240, 1)">
               {id}
             </Heading>
-            <Icon as={MdOutlineContentCopy} fontSize="18px" />
+            <Icon as={MdOutlineContentCopy} fontSize="18px" color="rgba(65, 83, 240, 1)" />
           </Flex>
         </Box>
         <Box

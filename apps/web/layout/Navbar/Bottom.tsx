@@ -10,7 +10,7 @@ export const BottomBar = () => (
         We are a community of tinkerers, makers, policy geeks & students and are working towards
         mapping and empowering people who share a passion to innovate.
       </Text>
-      <Flex minW="100px" justifyContent={{ base: 'space-around', md: 'space-between' }} mt="15px">
+      <Flex minW="100px" justifyContent={{ base: 'space-around', md: 'space-between' }} mt="38px">
         <a href="https://www.instagram.com/tinkerhub/" rel="noopener">
           <Icon
             as={AiOutlineInstagram}
@@ -39,7 +39,7 @@ export const BottomBar = () => (
     </Flex>
     <Flex
       justifyContent="space-between"
-      mt="20px"
+      mt="10px"
       flexDirection={{ base: 'column-reverse', md: 'row' }}
       alignItems="center"
     >

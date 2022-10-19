@@ -31,6 +31,7 @@ export const AuthContext = ({ children }: Child) => {
         throw new Error();
       }
       if (data.Success && data.data === null) {
+        localStorage.removeItem('isWizardComplted');
         router.push('/wizard');
       }
       if (data.Success && data.data) {
@@ -65,8 +66,8 @@ export const AuthContext = ({ children }: Child) => {
     if (user && path === 'wizard') {
       router.replace('/profile');
     }
-
-    if (!isUserLoading && !user) {
+    // prevent the profile route before onboarding process
+    if ((!isUserLoading && !user) || (!user && path === 'profile')) {
       router.push('/wizard');
     }
 
