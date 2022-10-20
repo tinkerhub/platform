@@ -10,7 +10,7 @@ import {
   VStack,
 } from '@chakra-ui/react';
 import { AsyncSelect, Select } from 'chakra-react-select';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Controller, useFormContext, useController } from 'react-hook-form';
 import dayjs from 'dayjs';
 import { useAuthCtx } from '../../hooks';

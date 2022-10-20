@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer } from 'react';
+import { useEffect, useReducer } from 'react';
 import Router, { useRouter } from 'next/router';
 import { Box, Flex } from '@chakra-ui/react';
 import { useSessionContext } from 'supertokens-auth-react/recipe/session';

@@ -1,4 +1,4 @@
-import React, { createContext, useState, useEffect, useMemo } from 'react';
+import { createContext, useState, useEffect, useMemo } from 'react';
 import { useRouter } from 'next/router';
 import { useToast } from '@chakra-ui/react';
 import { useSessionContext } from 'supertokens-auth-react/recipe/session';

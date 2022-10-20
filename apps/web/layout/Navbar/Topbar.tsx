@@ -10,7 +10,6 @@ import {
 } from '@chakra-ui/react';
 import { IoMdMoon } from 'react-icons/io';
 import { BsFillSunFill } from 'react-icons/bs';
-import React from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { signOut } from 'supertokens-auth-react/recipe/passwordless';

@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import React, { useState } from 'react';
+import { useState } from 'react';
 import type { NextPage } from 'next';
 import { Box, Button, Flex, useToast } from '@chakra-ui/react';
 import { InferType } from 'yup';

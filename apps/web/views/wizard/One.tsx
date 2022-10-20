@@ -8,7 +8,7 @@ import {
   FormErrorMessage,
   VStack,
 } from '@chakra-ui/react';
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { InferType } from 'yup';
 import { useFormContext, Controller } from 'react-hook-form';

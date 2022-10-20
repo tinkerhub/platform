@@ -1,5 +1,4 @@
 import { Box, Flex, Icon, Text } from '@chakra-ui/react';
-import React from 'react';
 import { AiOutlineInstagram, AiOutlineTwitter, AiOutlineYoutube } from 'react-icons/ai';
 
 export const BottomBar = () => (

@@ -1,4 +1,3 @@
-import React from 'react';
 import { IconButton, Menu, MenuButton, MenuItem, MenuList } from '@chakra-ui/react';
 import { BiLogOut } from 'react-icons/bi';
 import { AiOutlineUser } from 'react-icons/ai';
