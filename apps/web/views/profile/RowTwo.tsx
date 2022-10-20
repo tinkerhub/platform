@@ -114,6 +114,7 @@ export const RowTwo = ({ edit }: IsEdit) => {
       mx="90px"
       justifyContent="flex-start"
       mt={{ base: '14px', lg: '0' }}
+      mb={{ base: '10px', lg: '0px' }}
     >
       <Box>
         <Box display="flex" flexDirection="column" justifyContent="space-between">
