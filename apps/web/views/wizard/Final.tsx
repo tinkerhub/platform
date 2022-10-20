@@ -158,7 +158,7 @@ export const Final = ({ isLoading, id = 'ERROR' }: Prop) => {
         >
           <Center
             position="absolute"
-            bg={colorMode === 'light' ? '#1A202C' : 'white'}
+            bg={colorMode === 'dark' ? '#1A202C' : 'white'}
             borderRadius="full"
             w="35px"
             h="35px"
@@ -186,7 +186,7 @@ export const Final = ({ isLoading, id = 'ERROR' }: Prop) => {
         >
           <Center
             position="absolute"
-            bg={colorMode === 'light' ? '#1A202C' : 'white'}
+            bg={colorMode === 'dark' ? '#1A202C' : 'white'}
             borderRadius="full"
             w="35px"
             h="35px"
@@ -221,7 +221,7 @@ export const Final = ({ isLoading, id = 'ERROR' }: Prop) => {
         >
           <Center
             position="absolute"
-            bg={colorMode === 'light' ? '#1A202C' : 'white'}
+            bg={colorMode === 'dark' ? '#1A202C' : 'white'}
             borderRadius="full"
             w="35px"
             h="35px"

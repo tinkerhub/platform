@@ -46,7 +46,6 @@ export interface Clg {
   name: string;
 }
 export const Two = () => {
-  const [prof, setProf] = useState<string | null>(null);
   const { control, watch, setValue } = useFormContext();
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [inputValue, setInputValue] = useState<string>('');
@@ -68,21 +67,20 @@ export const Two = () => {
     setInputValue(value);
   };
 
-  useEffect(() => {
-    const val = watch('describe')?.value;
-    setProf(val);
+  const role = watch('describe')?.value;
 
-    if (val === 'Student') {
-      setValue('mentor', undefined);
+  useEffect(() => {
+    if (role === 'Student') {
+      setValue('Mentor', undefined);
     }
-    if (val === 'Professor') {
+    if (role === 'Professor') {
       setValue('CampusCommunityActive', undefined);
       setValue('My_Skills', undefined);
       setValue('College', undefined);
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [watch('describe')]);
+  }, [role, setValue]);
 
   const {
     field: { onChange: mentorChange, ref: mentorRef, value: mentorVal },
@@ -112,7 +110,7 @@ export const Two = () => {
             )}
           />
         </Box>
-        {prof === 'Student' && (
+        {role === 'Student' && (
           <Box display="flex" flexDirection="column" justifyContent="space-between">
             <Controller
               control={control}
@@ -131,7 +129,7 @@ export const Two = () => {
             />
           </Box>
         )}
-        {prof === 'Student' && (
+        {role === 'Student' && (
           <Box display="flex" flexDirection="column" justifyContent="space-between">
             <Controller
               control={control}
@@ -146,7 +144,7 @@ export const Two = () => {
             />
           </Box>
         )}
-        {prof === 'Professional' && (
+        {role === 'Professional' && (
           <Box display="flex" flexDirection="column" justifyContent="space-between" mt="15px">
             <FormControl label="Mentor" isInvalid={!!mentorError} id="Mentor">
               <FormLabel>Can you be a Mentor</FormLabel>
@@ -169,7 +167,7 @@ export const Two = () => {
             </FormControl>
           </Box>
         )}
-        {prof === 'Student' && (
+        {role === 'Student' && (
           <Box display="flex" flexDirection="column" justifyContent="space-between">
             <Controller
               control={control}
@@ -190,7 +188,7 @@ export const Two = () => {
             />
           </Box>
         )}
-        {prof === 'Student' && (
+        {role === 'Student' && (
           <Box display="flex" flexDirection="column" justifyContent="space-between">
             <Controller
               control={control}
