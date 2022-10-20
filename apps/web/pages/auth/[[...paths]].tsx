@@ -1,6 +1,6 @@
 import { Box, Center, Spinner } from '@chakra-ui/react';
 import dynamic from 'next/dynamic';
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import type { NextPage } from 'next';
 import SuperTokens from 'supertokens-auth-react';
 import { redirectToAuth } from 'supertokens-auth-react/recipe/passwordless';

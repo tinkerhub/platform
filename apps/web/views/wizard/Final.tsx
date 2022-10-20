@@ -11,7 +11,7 @@ import {
   Text,
   useColorMode,
 } from '@chakra-ui/react';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { MdOutlineContentCopy } from 'react-icons/md';
 import { FiExternalLink } from 'react-icons/fi';
 import { TiTick } from 'react-icons/ti';

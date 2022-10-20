@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import { FormControl, FormLabel, Input, FormErrorMessage, Box, VStack } from '@chakra-ui/react';
 import { OptionBase, Select } from 'chakra-react-select';
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 import dayjs from 'dayjs';
 import { InferType } from 'yup';
