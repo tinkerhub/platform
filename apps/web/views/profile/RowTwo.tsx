@@ -16,9 +16,9 @@ import dayjs from 'dayjs';
 import { useAuthCtx } from '../../hooks';
 import { Clg, Comm, Desp, Skills } from '../wizard/Two';
 import { IsEdit, Options } from './types';
-import { apiHandler } from '../../api';
+import { platformAPI } from '../../config';
 
-export const RowTwo = ({ edit }: IsEdit) => {
+export const RowTwo = ({ isEdit }: IsEdit) => {
   const { control, watch, setValue } = useFormContext();
   const { user: userInfo } = useAuthCtx();
   const skillArr: Options[] = [];
@@ -29,10 +29,9 @@ export const RowTwo = ({ edit }: IsEdit) => {
   const [inputValue, setInputValue] = useState<string>('');
 
   const getCollege = async (input: string) => {
-    const college: Options[] = [];
-    const { data } = await apiHandler.get(`/college?search=${input}&limit=20&page=1`);
+    const { data } = await platformAPI.get(`/college?search=${input}&limit=20&page=1`);
     // pushing the fetched data to a array to make sure that it is in right format
-    data.map((el: Clg) => college.push({ label: el.name, value: el.name }));
+    const college = data.map((el: Clg) => ({ label: el.name, value: el.name }));
     return college;
   };
 
@@ -124,7 +123,7 @@ export const RowTwo = ({ edit }: IsEdit) => {
             render={({ field, fieldState: { error: descError } }) => (
               <FormControl label="describe" isInvalid={!!descError} id="describe">
                 <FormLabel>Best way to describe yourself</FormLabel>
-                <Select options={Desp} {...field} isDisabled={edit} />
+                <Select options={Desp} {...field} isDisabled={isEdit} />
                 <FormErrorMessage>Please pick an option</FormErrorMessage>
               </FormControl>
             )}
@@ -142,7 +141,7 @@ export const RowTwo = ({ edit }: IsEdit) => {
                   id="CampusCommunityActive"
                 >
                   <FormLabel>Tinkerhub campus community is active</FormLabel>
-                  <Select options={Comm} {...field} isDisabled={edit} styles={customStyles} />
+                  <Select options={Comm} {...field} isDisabled={isEdit} styles={customStyles} />
                   <FormErrorMessage>Please pick an option</FormErrorMessage>
                 </FormControl>
               )}
@@ -157,7 +156,7 @@ export const RowTwo = ({ edit }: IsEdit) => {
               render={({ field, fieldState: { error: skillError } }) => (
                 <FormControl label="My_Skills" isInvalid={!!skillError} id="My_Skills">
                   <FormLabel>Your skills</FormLabel>
-                  <Select options={Skills} {...field} isMulti isDisabled={edit} />
+                  <Select options={Skills} {...field} isMulti isDisabled={isEdit} />
                   {skillError && <FormErrorMessage>Pick 5 skills maximum</FormErrorMessage>}
                 </FormControl>
               )}
@@ -180,7 +179,7 @@ export const RowTwo = ({ edit }: IsEdit) => {
                   ref={mentorRef}
                   onChange={mentorChange}
                   value={Number(mentorVal)}
-                  isDisabled={edit}
+                  isDisabled={isEdit}
                 >
                   <Stack spacing={5} direction="row">
                     <Radio colorScheme="blue" value={1}>
@@ -225,7 +224,7 @@ export const RowTwo = ({ edit }: IsEdit) => {
                 <FormControl label="College" isInvalid={!!collegeErr} id="College">
                   <FormLabel>I currenlty study at</FormLabel>
                   <AsyncSelect
-                    isDisabled={edit}
+                    isDisabled={isEdit}
                     {...field}
                     isClearable
                     loadOptions={getCollege}
@@ -247,7 +246,7 @@ export const RowTwo = ({ edit }: IsEdit) => {
               <FormControl label="Passout" isInvalid={!!descError} id="Passout">
                 <FormLabel>Year of Passout</FormLabel>
                 <Select
-                  isDisabled={edit}
+                  isDisabled={isEdit}
                   options={[
                     { label: dayjs().year(), value: dayjs().year() },
                     { label: dayjs().year() + 1, value: dayjs().year() + 1 },

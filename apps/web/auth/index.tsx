@@ -2,15 +2,16 @@
 import { Box, Flex, Heading, Text } from '@chakra-ui/react';
 import Passwordless from 'supertokens-auth-react/recipe/passwordless';
 import Session from 'supertokens-auth-react/recipe/session';
-import { userInputCodeFormStyle, emailOrPhoneFormStyle } from './OverrideStyle';
+import { userInputCodeFormStyle, emailOrPhoneFormStyle } from './overrideStyle';
+import { ENV } from '../config';
 
 export const authConfig = () => ({
   appInfo: {
-    appName: process.env.NEXT_PUBLIC_APPNAME,
-    apiDomain: process.env.NEXT_PUBLIC_APIDOMAIN,
-    websiteDomain: process.env.NEXT_PUBLIC_DOMAIN,
-    apiBasePath: process.env.NEXT_PUBLIC_APIPATH,
-    websiteBasePath: process.env.NEXT_PUBLIC_PATH,
+    appName: ENV.appName,
+    apiDomain: ENV.apiDomain,
+    websiteDomain: ENV.domain,
+    apiBasePath: ENV.apiPath,
+    websiteBasePath: ENV.webPath,
   },
   recipeList: [
     Passwordless.init({
@@ -50,9 +51,9 @@ export const authConfig = () => ({
       getRedirectionURL: async () =>
         // if (context.action === 'SUCCESS') {
         //   // called on a successful sign in / up. Where should the user go next?
-        //   const isWizardComplted = localStorage.getItem('isWizardComplted'); // returns null or "YES"
+        //   const isWizardCompleted = localStorage.getItem('isWizardCompleted'); // returns null or "YES"
 
-        //   if (!isWizardComplted) {
+        //   if (!isWizardCompleted) {
         //     // user signed up but not completed wizardform
         //     return '/wizard';
         //   }

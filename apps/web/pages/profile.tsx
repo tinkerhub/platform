@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import { useState } from 'react';
-import type { NextPage } from 'next';
+import type { NextPageWithLayout } from 'next';
 import { Box, Button, Flex, useToast } from '@chakra-ui/react';
 import { InferType } from 'yup';
 import { useForm, SubmitHandler, FormProvider } from 'react-hook-form';
@@ -9,15 +9,16 @@ import { registerFormValidator } from '../views/wizard';
 import { RowOne, RowTwo, RowThree, ProfileBar } from '../views/profile';
 import { Errors } from '../types';
 import { useAuthCtx } from '../hooks';
-import { apiHandler } from '../api';
+import { platformAPI } from '../config';
+import { ProfileLayout } from '../layout';
 
 type FormType = InferType<typeof registerFormValidator>;
 
-const Index: NextPage = () => {
-  const [edit, setEdit] = useState<boolean>(true);
+const Index: NextPageWithLayout = () => {
+  const [isEdit, setEdit] = useState<boolean>(true);
   const methods = useForm<FormType>({ mode: 'all', resolver: yupResolver(registerFormValidator) });
   const toast = useToast();
-  const { user, getData } = useAuthCtx();
+  const { user, setUser } = useAuthCtx();
 
   const editHandler = () => {
     setEdit(false);
@@ -28,7 +29,7 @@ const Index: NextPage = () => {
     setEdit(true);
   };
 
-  const copyFile = () => {
+  const copyMembershipId = () => {
     if (user && user.id) {
       window.navigator.clipboard.writeText(user?.id);
       toast({
@@ -50,8 +51,8 @@ const Index: NextPage = () => {
   };
 
   const updateProfile: SubmitHandler<FormType> = async (val) => {
-    const skillsArr: string[] = [];
-    val.My_Skills?.map((el: any) => skillsArr.push(el.value));
+    const skillsArr = val.My_Skills?.map((el: any) => el.value);
+
     const Dbdata = {
       house: val.House_Name,
       street: val.Street,
@@ -71,7 +72,7 @@ const Index: NextPage = () => {
 
     // sending the post request
     try {
-      const { data } = await apiHandler.patch('/users/profile', Dbdata);
+      const { data } = await platformAPI.patch('/users/profile', Dbdata);
       // need to rerender the  page from context
       if (!data.Success) throw new Error(data.message);
       toast({
@@ -80,7 +81,8 @@ const Index: NextPage = () => {
         duration: 3000,
         isClosable: true,
       });
-      await getData();
+      // setting the new updated value to context
+      setUser(data.data);
     } catch (e) {
       const msg = e as Errors;
       toast({
@@ -98,8 +100,8 @@ const Index: NextPage = () => {
         <form onSubmit={methods.handleSubmit(updateProfile)}>
           <Box>
             <ProfileBar
-              copyFile={copyFile}
-              edit={edit}
+              copyMembershipId={copyMembershipId}
+              isEdit={isEdit}
               editHandler={editHandler}
               id={user?.id}
               cancelEditHandler={cancelEditHandler}
@@ -112,10 +114,10 @@ const Index: NextPage = () => {
             alignItems="center"
             mt={{ base: '20px', lg: '40px' }}
           >
-            <RowOne edit={edit} />
-            <RowTwo edit={edit} />
-            <RowThree edit={edit} />
-            {!edit && (
+            <RowOne isEdit={isEdit} />
+            <RowTwo isEdit={isEdit} />
+            <RowThree isEdit={isEdit} />
+            {!isEdit && (
               <Button
                 w="100%"
                 mt="20px"
@@ -135,5 +137,7 @@ const Index: NextPage = () => {
     </Box>
   );
 };
+
+Index.Layout = ProfileLayout;
 
 export default Index;

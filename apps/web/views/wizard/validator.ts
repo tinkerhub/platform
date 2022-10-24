@@ -1,4 +1,5 @@
 import * as Yup from 'yup';
+import { OptionalObjectSchema } from 'yup/lib/object';
 
 const PickAnOptionValidator = Yup.object({
   value: Yup.string().required(),
@@ -123,3 +124,9 @@ export const thirdValidator = Yup.object({
   District: PickAnOptionValidator.nullable(),
   Pincode: Yup.string(),
 });
+
+export const stepByStepValidator: Record<number, OptionalObjectSchema<any>> = {
+  1: firstFormValidator,
+  2: secondValidator,
+  3: thirdValidator,
+};

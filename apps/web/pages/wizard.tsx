@@ -1,10 +1,12 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import { Center, useToast } from '@chakra-ui/react';
-import { useEffect, useState } from 'react';
-import type { NextPage } from 'next';
+import { useState } from 'react';
+import type { NextPageWithLayout } from 'next';
 import { useForm, FormProvider, SubmitHandler } from 'react-hook-form';
+import { SessionAuth } from 'supertokens-auth-react/recipe/session';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { InferType } from 'yup';
+import { BaseLayout } from '../layout';
 
 import {
   CardBio,
@@ -13,38 +15,27 @@ import {
   Two,
   Three,
   Final,
-  firstFormValidator,
-  secondValidator,
   registerFormValidator,
-  thirdValidator,
+  stepByStepValidator,
 } from '../views/wizard';
-import { apiHandler } from '../api';
+import { platformAPI } from '../config';
 import { Errors, Form } from '../types';
 import { Quotes } from '../views/wizard/Quotes';
 
 type FormType = InferType<typeof registerFormValidator>;
 
-const Index: NextPage = () => {
+const Wizard: NextPageWithLayout = () => {
   const [step, setStep] = useState<number>(1);
-  const [validator, setValidator] = useState<any>(firstFormValidator);
-  const methods = useForm<FormType>({ mode: 'all', resolver: yupResolver(validator) });
+  const methods = useForm<FormType>({
+    mode: 'all',
+    resolver: yupResolver(stepByStepValidator[step]),
+  });
   const [user, setUser] = useState<Form | null>(null);
 
   const [isLoading, setIsloading] = useState<boolean>(false);
 
   const toast = useToast();
-
-  useEffect(() => {
-    if (step === 1) {
-      setValidator(firstFormValidator);
-    }
-    if (step === 2) {
-      setValidator(secondValidator);
-    }
-    if (step === 3) {
-      setValidator(thirdValidator);
-    }
-  }, [step]);
+  const isReadyForSubmission = step === 3;
 
   const stepAdd = (): void => {
     setStep((ste) => ste + 1);
@@ -54,10 +45,9 @@ const Index: NextPage = () => {
     setStep((ste) => ste - 1);
   };
   const handleData: SubmitHandler<FormType> = async (val) => {
-    if (step === 3) {
+    if (isReadyForSubmission) {
       // increase the step to 4 to render the sucess/ fail UI
-      const skillsArr: string[] = [];
-      val.My_Skills?.map((el) => skillsArr.push(el.value));
+      const skillsArr = val.My_Skills?.map((el) => el.value);
       const Dbdata = {
         house: val.House_Name,
         street: val.Street,
@@ -80,7 +70,7 @@ const Index: NextPage = () => {
       // send post request to backend
       try {
         setIsloading(true);
-        const { data } = await apiHandler.post('/users/profile', Dbdata);
+        const { data } = await platformAPI.post('/users/profile', Dbdata);
         if (!data.Success) throw new Error(data.message);
         setUser(data.data);
         toast({
@@ -107,26 +97,32 @@ const Index: NextPage = () => {
 
   if (step === 4) {
     return (
-      <Center mb="60px">
-        <Final isLoading={isLoading} id={user?.id} />
-      </Center>
+      <SessionAuth>
+        <Center mb="60px">
+          <Final isLoading={isLoading} id={user?.id} />
+        </Center>
+      </SessionAuth>
     );
   }
 
   return (
-    <Quotes word="“80% of engineering graduates don’t have the skills needed for the industry. We’ are here to change that.”">
-      <CardBio>
-        <Bar val={step} back={stepSub} />
-        <FormProvider {...methods}>
-          <form onSubmit={methods.handleSubmit(handleData)}>
-            {step === 1 && <One />}
-            {step === 2 && <Two />}
-            {step === 3 && <Three />}
-          </form>
-        </FormProvider>
-      </CardBio>
-    </Quotes>
+    <SessionAuth>
+      <Quotes word="“80% of engineering graduates don’t have the skills needed for the industry. We’ are here to change that.”">
+        <CardBio>
+          <Bar val={step} back={stepSub} />
+          <FormProvider {...methods}>
+            <form onSubmit={methods.handleSubmit(handleData)}>
+              {step === 1 && <One />}
+              {step === 2 && <Two />}
+              {step === 3 && <Three />}
+            </form>
+          </FormProvider>
+        </CardBio>
+      </Quotes>
+    </SessionAuth>
   );
 };
 
-export default Index;
+Wizard.Layout = BaseLayout;
+
+export default Wizard;

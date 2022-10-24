@@ -1,9 +1,9 @@
 import { Box, Center, Spinner } from '@chakra-ui/react';
 import dynamic from 'next/dynamic';
 import { useEffect } from 'react';
-import type { NextPage } from 'next';
 import SuperTokens from 'supertokens-auth-react';
 import { redirectToAuth } from 'supertokens-auth-react/recipe/passwordless';
+import { BaseLayout } from '../../layout';
 
 const SuperTokensComponentNoSSR = dynamic(
   // eslint-disable-next-line no-promise-executor-return
@@ -11,7 +11,7 @@ const SuperTokensComponentNoSSR = dynamic(
   { ssr: false }
 );
 
-const Auth: NextPage = () => {
+const Auth = () => {
   // redirect to "/auth" page if "/auth/random" route occur
   useEffect(() => {
     if (SuperTokens.canHandleRoute() === false) {
@@ -48,5 +48,7 @@ const Auth: NextPage = () => {
     </Center>
   );
 };
+
+Auth.Layout = BaseLayout;
 
 export default Auth;

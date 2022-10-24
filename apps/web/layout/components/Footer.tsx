@@ -1,9 +1,8 @@
 import { Box, Flex, Icon, Text } from '@chakra-ui/react';
 import { AiOutlineInstagram, AiOutlineTwitter, AiOutlineYoutube } from 'react-icons/ai';
 
-export const BottomBar = () => (
+export const Footer = () => (
   <Box>
-    {/* <Divider orientation="horizontal" bgColor="rgba(177, 177, 177, 1)" width="60.5%" height="1px" /> */}
     <Flex justifyContent="space-between" flexDirection={{ base: 'column-reverse', md: 'row' }}>
       <Text color="rgba(177, 177, 177, 1)" mt="20px" maxW="900px" fontSize="18px">
         We are a community of tinkerers, makers, policy geeks & students and are working towards
