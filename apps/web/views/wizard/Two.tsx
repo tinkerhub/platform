@@ -15,7 +15,7 @@ import dayjs from 'dayjs';
 import { motion } from 'framer-motion';
 import { useController, useFormContext, Controller } from 'react-hook-form';
 import { OptionBase, Select, AsyncSelect } from 'chakra-react-select';
-import { apiHandler } from '../../api';
+import { platformAPI } from '../../config';
 
 export const Skills = [
   { value: 'Java', label: 'Java' },
@@ -51,14 +51,9 @@ export const Two = () => {
   const [inputValue, setInputValue] = useState<string>('');
 
   const getCollege = async (input: string) => {
-    const college: Options[] = [];
-    // clearing all the array whenever  function is called
-    while (college.length > 0) {
-      college.pop();
-    }
-    const { data } = await apiHandler.get(`/college?search=${input}&limit=20&page=1`);
+    const { data } = await platformAPI.get(`/college?search=${input}&limit=20&page=1`);
     // pushing the fetched data to a array to make sure that it is in right format
-    data.map((el: Clg) => college.push({ label: el.name, value: el.name }));
+    const college = data.map((el: Clg) => ({ label: el.name, value: el.name }));
     return college;
   };
 
@@ -66,6 +61,11 @@ export const Two = () => {
   const handleInputChange = (value: string) => {
     setInputValue(value);
   };
+
+  const yaerOfPassout = new Array(4).fill(null).map((el, index) => ({
+    label: dayjs().year() + index,
+    value: dayjs().year() + index,
+  }));
 
   const role = watch('describe')?.value;
 
@@ -196,16 +196,7 @@ export const Two = () => {
               render={({ field, fieldState: { error: descError } }) => (
                 <FormControl label="Passout" isInvalid={!!descError} id="Passout">
                   <FormLabel>Year of Passout</FormLabel>
-                  <Select
-                    options={[
-                      { label: dayjs().year(), value: dayjs().year() },
-                      { label: dayjs().year() + 1, value: dayjs().year() + 1 },
-                      { label: dayjs().year() + 2, value: dayjs().year() + 2 },
-                      { label: dayjs().year() + 3, value: dayjs().year() + 3 },
-                      { label: dayjs().year() + 4, value: dayjs().year() + 4 },
-                    ]}
-                    {...field}
-                  />
+                  <Select options={yaerOfPassout} {...field} />
                   {descError && <FormErrorMessage>Please pick an option</FormErrorMessage>}
                 </FormControl>
               )}

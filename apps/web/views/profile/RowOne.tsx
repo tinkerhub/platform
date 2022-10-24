@@ -21,7 +21,7 @@ const PronounOpt: Options[] = [
 ];
 type FormType = InferType<typeof firstFormValidator>;
 
-export const RowOne = ({ edit }: IsEdit) => {
+export const RowOne = ({ isEdit }: IsEdit) => {
   // Auth context use
   const { user: userInfo } = useAuthCtx();
 
@@ -59,7 +59,7 @@ export const RowOne = ({ edit }: IsEdit) => {
             variant="filled"
             placeholder="JhonDoe"
             {...register('FullName')}
-            isDisabled={edit}
+            isDisabled={isEdit}
           />
           <FormErrorMessage>{errors.FullName?.message}</FormErrorMessage>
         </FormControl>
@@ -79,7 +79,7 @@ export const RowOne = ({ edit }: IsEdit) => {
       <Box display="flex" flexDirection="column" justifyContent="space-between">
         <FormControl label="DOB" isInvalid={!!errors.DOB} id="DOB">
           <FormLabel>Date of Birth</FormLabel>
-          <Input {...register('DOB')} type="date" isDisabled={edit} />
+          <Input {...register('DOB')} type="date" isDisabled={isEdit} />
           <FormErrorMessage>{errors.DOB?.message}</FormErrorMessage>
         </FormControl>
       </Box>
@@ -90,7 +90,7 @@ export const RowOne = ({ edit }: IsEdit) => {
           render={({ field, fieldState: { error: proError } }) => (
             <FormControl label="Pronoun" isInvalid={!!proError} id="Pronoun">
               <FormLabel>Prefered Pronoun</FormLabel>
-              <Select options={PronounOpt} {...field} isDisabled={edit} />
+              <Select options={PronounOpt} {...field} isDisabled={isEdit} />
               {proError && <FormErrorMessage>Please pick an option</FormErrorMessage>}
             </FormControl>
           )}

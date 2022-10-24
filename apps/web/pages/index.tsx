@@ -1,9 +1,10 @@
 import { Box, Flex, Heading, useColorMode } from '@chakra-ui/react';
-import type { NextPage } from 'next';
+import { NextPageWithLayout } from 'next';
 import Head from 'next/head';
 import Image from 'next/image';
+import { BaseLayout } from '../layout';
 
-const Home: NextPage = () => {
+const Home: NextPageWithLayout = () => {
   const { colorMode } = useColorMode();
   return (
     <>
@@ -39,5 +40,7 @@ const Home: NextPage = () => {
     </>
   );
 };
+
+Home.Layout = BaseLayout;
 
 export default Home;

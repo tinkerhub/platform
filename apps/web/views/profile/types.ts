@@ -6,7 +6,7 @@ export interface Options extends OptionBase {
 }
 
 export interface IsEdit {
-  edit: boolean;
+  isEdit: boolean;
 }
 
 export const PronounOpt: Options[] = [

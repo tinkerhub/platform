@@ -19,7 +19,6 @@ import { BiArrowBack } from 'react-icons/bi';
 
 import { useRouter } from 'next/router';
 import { LottieAnim } from './Lottie';
-import { useAuthCtx } from '../../hooks';
 
 interface Prop {
   isLoading: boolean;
@@ -30,7 +29,6 @@ export const Final = ({ isLoading, id = 'ERROR' }: Prop) => {
   const toast = useToast();
   const router = useRouter();
   const [result, setResult] = useState<boolean>(false);
-  const { getData } = useAuthCtx();
   const { colorMode } = useColorMode();
   useEffect(() => {
     if (isLoading) {
@@ -42,7 +40,6 @@ export const Final = ({ isLoading, id = 'ERROR' }: Prop) => {
 
   const goHome = async () => {
     router.replace('/profile');
-    await getData();
   };
   const copyFile = () => {
     window.navigator.clipboard.writeText(id);

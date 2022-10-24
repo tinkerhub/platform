@@ -12,7 +12,7 @@ import { IsEdit } from './types';
 
 type Third = InferType<typeof thirdValidator>;
 
-export const RowThree = ({ edit }: IsEdit) => {
+export const RowThree = ({ isEdit }: IsEdit) => {
   const {
     register,
     control,
@@ -38,7 +38,7 @@ export const RowThree = ({ edit }: IsEdit) => {
           <Input
             {...register('House_Name')}
             type="string"
-            isDisabled={edit}
+            isDisabled={isEdit}
             defaultValue={userInfo?.house}
           />
           <FormErrorMessage>{errors.House_Name?.message}</FormErrorMessage>
@@ -47,7 +47,7 @@ export const RowThree = ({ edit }: IsEdit) => {
       <Box display="flex" flexDirection="column" justifyContent="space-between">
         <FormControl label="Street" isInvalid={!!errors.Street} id="Street">
           <FormLabel>Street Name</FormLabel>
-          <Input {...register('Street')} isDisabled={edit} defaultValue={userInfo?.street} />
+          <Input {...register('Street')} isDisabled={isEdit} defaultValue={userInfo?.street} />
           <FormErrorMessage>{errors.Street?.message}</FormErrorMessage>
         </FormControl>
       </Box>
@@ -58,7 +58,7 @@ export const RowThree = ({ edit }: IsEdit) => {
           render={({ field, fieldState: { error: proError } }) => (
             <FormControl label="District" isInvalid={!!proError} id="District">
               <FormLabel>District</FormLabel>
-              <Select options={District} {...field} isDisabled={edit} />
+              <Select options={District} {...field} isDisabled={isEdit} />
               <FormErrorMessage>Please pick an option</FormErrorMessage>
             </FormControl>
           )}
@@ -67,7 +67,7 @@ export const RowThree = ({ edit }: IsEdit) => {
       <Box display="flex" flexDirection="column" justifyContent="space-between">
         <FormControl label="Pincode" isInvalid={!!errors.Pincode} id="Pincode">
           <FormLabel>Pincode</FormLabel>
-          <Input {...register('Pincode')} isDisabled={edit} defaultValue={userInfo?.pin} />
+          <Input {...register('Pincode')} isDisabled={isEdit} defaultValue={userInfo?.pin} />
           <FormErrorMessage>{errors.Pincode?.message}</FormErrorMessage>
         </FormControl>
       </Box>

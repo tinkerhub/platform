@@ -1,18 +1,17 @@
 import { createContext, useState, useEffect, useMemo } from 'react';
-import { useRouter } from 'next/router';
+import Router, { useRouter } from 'next/router';
 import { useToast } from '@chakra-ui/react';
 import { useSessionContext } from 'supertokens-auth-react/recipe/session';
 import { Child, Form } from '../../types';
-import { apiHandler } from '../../api';
+import { platformAPI } from '../../config';
 
-interface Pro {
+interface Prop {
   user: Form | null;
   isUserLoading: boolean;
-  setUserLoading: React.Dispatch<boolean>;
-  getData: () => Promise<void>;
+  setUser: React.Dispatch<Form | null>;
 }
 
-export const AuthCtx = createContext({} as Pro);
+export const AuthCtx = createContext({} as Prop);
 
 export const AuthContext = ({ children }: Child) => {
   const router = useRouter();
@@ -23,21 +22,30 @@ export const AuthContext = ({ children }: Child) => {
   const toast = useToast();
   const { doesSessionExist } = session as any;
 
+  // listening for route change events
+  Router.events.on('routeChangeStart', () => {
+    // when route change loading screen popup
+    setUserLoading(true);
+  });
+  Router.events.on('routeChangeComplete', () => {
+    setUserLoading(false);
+  });
+
   const getData = async () => {
     try {
       setUserLoading(true);
-      const { data } = await apiHandler.get('/users/profile');
+      const { data } = await platformAPI.get('/users/profile');
       if (!data.Success) {
         throw new Error();
       }
       if (data.Success && data.data === null) {
-        localStorage.removeItem('isWizardComplted');
+        localStorage.removeItem('isWizardCompleted');
         router.push('/wizard');
       }
       if (data.Success && data.data) {
         // setting the info about the wizard in localstorage so that we can access it in supertokens redirection
         setUser(data.data);
-        localStorage.setItem('isWizardComplted', 'YES');
+        localStorage.setItem('isWizardCompleted', 'YES');
       }
     } catch {
       router.push('/');
@@ -78,8 +86,7 @@ export const AuthContext = ({ children }: Child) => {
     () => ({
       user,
       isUserLoading,
-      getData,
-      setUserLoading,
+      setUser,
     }),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [doesSessionExist, isUserLoading, getData]

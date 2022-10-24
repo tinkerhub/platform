@@ -4,6 +4,7 @@ export {
   firstFormValidator,
   secondValidator,
   thirdValidator,
+  stepByStepValidator,
 } from './validator';
 export { CardBio } from './Card';
 export { Bar } from './Bar';

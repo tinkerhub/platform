@@ -5,7 +5,7 @@ export class AppService {
   getHello() {
     return {
       ok: true,
-      message: 'server running succesfully',
+      message: 'server running successfully',
     };
   }
 }

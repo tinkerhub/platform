@@ -6,16 +6,16 @@ import { AiOutlineSave } from 'react-icons/ai';
 import { useRouter } from 'next/router';
 
 interface BarProp {
-  copyFile: () => void;
-  edit: boolean;
+  copyMembershipId: () => void;
+  isEdit: boolean;
   editHandler: () => void;
   id: string | undefined;
   cancelEditHandler: () => void;
 }
 
 export const ProfileBar = ({
-  copyFile,
-  edit,
+  copyMembershipId,
+  isEdit,
   editHandler,
   id = 'Error',
   cancelEditHandler,
@@ -47,7 +47,7 @@ export const ProfileBar = ({
 
           <Icon
             as={MdOutlineContentCopy}
-            onClick={copyFile}
+            onClick={copyMembershipId}
             w={4}
             h={4}
             ml={3}
@@ -58,10 +58,10 @@ export const ProfileBar = ({
       </Box>
       <Flex
         justifyContent="space-between"
-        w={{ base: '100%', lg: edit ? '280px' : '230px' }}
+        w={{ base: '100%', lg: isEdit ? '280px' : '230px' }}
         mb={{ base: '20px', lg: '0px' }}
       >
-        {edit && (
+        {isEdit && (
           <Button
             p="3"
             colorScheme="blue"
@@ -74,7 +74,7 @@ export const ProfileBar = ({
             Back to home
           </Button>
         )}
-        {!edit && (
+        {!isEdit && (
           <Button
             p="5"
             colorScheme="blue"
@@ -87,7 +87,7 @@ export const ProfileBar = ({
             cancel
           </Button>
         )}
-        {edit && (
+        {isEdit && (
           <Button
             p="5"
             colorScheme="blue"
@@ -101,7 +101,7 @@ export const ProfileBar = ({
             Edit
           </Button>
         )}
-        {!edit && (
+        {!isEdit && (
           <Button
             colorScheme="blue"
             alignSelf="center"
