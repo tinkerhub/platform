@@ -23,7 +23,7 @@ const Index: NextPageWithLayout = () => {
   const editHandler = () => {
     setEdit(false);
     // name input gets focused after pressing edit button
-    methods.setFocus('FullName');
+    methods.setFocus('name');
   };
   const cancelEditHandler = () => {
     setEdit(true);
@@ -54,19 +54,8 @@ const Index: NextPageWithLayout = () => {
     const skillsArr = val.My_Skills?.map((el: any) => el.value);
 
     const Dbdata = {
-      house: val.House_Name,
-      street: val.Street,
-      pin: val.Pincode,
-      dob: val.DOB,
-      name: val.FullName,
+      ...val,
       skills: skillsArr,
-      desc: val.describe.value,
-      pronoun: val.Pronoun.value,
-      district: val.District?.value,
-      CampusCommunityActive: val.CampusCommunityActive?.value,
-      campus: val.College?.value,
-      mentor: val.Mentor,
-      passyear: Number(val.Passout?.value),
     };
     setEdit((el) => !el);
 

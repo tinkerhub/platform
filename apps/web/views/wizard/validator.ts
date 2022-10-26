@@ -14,10 +14,10 @@ export type Option = {
 const requiredErrorStatement = (value: string): string => `Please type your ${value}`;
 
 export const registerFormValidator = Yup.object({
-  FullName: Yup.string().required(requiredErrorStatement('full name')),
-  DOB: Yup.date().typeError('Please provide a valid Date').required(requiredErrorStatement('DOB')),
-  Email: Yup.string().email().required(requiredErrorStatement('email')),
-  Pronoun: PickAnOptionValidator.nullable().required('Please pick an option'),
+  name: Yup.string().required(requiredErrorStatement('full name')),
+  dob: Yup.date().typeError('Please provide a valid Date').required(requiredErrorStatement('DOB')),
+  email: Yup.string().email().required(requiredErrorStatement('email')),
+  pronoun: PickAnOptionValidator.nullable().required('Please pick an option'),
   // Mobile: Yup.string().required(requiredErrorStatement('Mobile number')),
   CampusCommunityActive: Yup.object()
     .nullable()
@@ -27,7 +27,7 @@ export const registerFormValidator = Yup.object({
         requiredErrorStatement('Please pick an option')
       ),
     }),
-  describe: PickAnOptionValidator.nullable().required('Please pick an option'),
+  desc: PickAnOptionValidator.nullable().required('Please pick an option'),
   My_Skills: Yup.array()
     .nullable()
     .max(5, 'Pick 5 skills maximum')
@@ -37,13 +37,13 @@ export const registerFormValidator = Yup.object({
         label: Yup.string().required(),
       })
     ),
-  Mentor: Yup.boolean()
+  mentor: Yup.boolean()
     .nullable()
     .when('describe', {
       is: (val: Option) => val?.value === 'Professional',
       then: Yup.boolean().required(),
     }),
-  College: Yup.object()
+  campus: Yup.object()
     .nullable()
     .when('describe', {
       is: (val: Option) => val?.value === 'Student',
@@ -51,11 +51,11 @@ export const registerFormValidator = Yup.object({
         requiredErrorStatement('Please pick an option')
       ),
     }),
-  House_Name: Yup.string(),
-  Street: Yup.string(),
-  District: PickAnOptionValidator.nullable(),
-  Pincode: Yup.string(),
-  Passout: Yup.object()
+  house: Yup.string(),
+  street: Yup.string(),
+  district: PickAnOptionValidator.nullable(),
+  pin: Yup.string(),
+  passyear: Yup.object()
     .nullable()
     .when('describe', {
       is: (val: Option) => val?.value === 'Student',
@@ -66,12 +66,12 @@ export const registerFormValidator = Yup.object({
 });
 
 export const firstFormValidator = Yup.object({
-  FullName: Yup.string().required(requiredErrorStatement('full name')),
-  DOB: Yup.string()
+  name: Yup.string().required(requiredErrorStatement('full name')),
+  dob: Yup.string()
     .typeError('Please provide a valid Date')
     .required(requiredErrorStatement('DOB')),
-  Email: Yup.string().email().required(requiredErrorStatement('email')),
-  Pronoun: PickAnOptionValidator.nullable().required('Please pick an option'),
+  email: Yup.string().email().required(requiredErrorStatement('email')),
+  pronoun: PickAnOptionValidator.nullable().required('Please pick an option'),
   // Mobile: Yup.string().required(requiredErrorStatement('Mobile number')),
 });
 export const secondValidator = Yup.object({
@@ -83,8 +83,8 @@ export const secondValidator = Yup.object({
         requiredErrorStatement('Please pick an option')
       ),
     }),
-  Pronoun: PickAnOptionValidator.nullable().required('Please pick an option'),
-  describe: PickAnOptionValidator.nullable().required('Please pick an option'),
+  pronoun: PickAnOptionValidator.nullable().required('Please pick an option'),
+  desc: PickAnOptionValidator.nullable().required('Please pick an option'),
   My_Skills: Yup.array()
     .nullable()
     .max(5, 'Pick 5 skills maximum')
@@ -94,13 +94,13 @@ export const secondValidator = Yup.object({
         label: Yup.string().required(),
       })
     ),
-  Mentor: Yup.boolean()
+  mentor: Yup.boolean()
     .nullable()
     .when('describe', {
       is: (val: Option) => val?.value === 'Professional',
       then: Yup.boolean().required(),
     }),
-  College: Yup.object()
+  campus: Yup.object()
     .nullable()
     .when('describe', {
       is: (val: Option) => val?.value === 'Student',
@@ -108,7 +108,7 @@ export const secondValidator = Yup.object({
         requiredErrorStatement('Please pick an option')
       ),
     }),
-  Passout: Yup.object()
+  passyear: Yup.object()
     .nullable()
     .when('describe', {
       is: (val: Option) => val?.value === 'Student',
@@ -119,10 +119,10 @@ export const secondValidator = Yup.object({
 });
 
 export const thirdValidator = Yup.object({
-  House_Name: Yup.string(),
-  Street: Yup.string(),
-  District: PickAnOptionValidator.nullable(),
-  Pincode: Yup.string(),
+  house: Yup.string(),
+  street: Yup.string(),
+  district: PickAnOptionValidator.nullable(),
+  pin: Yup.string(),
 });
 
 export const stepByStepValidator: Record<number, OptionalObjectSchema<any>> = {

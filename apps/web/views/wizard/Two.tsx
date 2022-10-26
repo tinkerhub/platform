@@ -67,16 +67,16 @@ export const Two = () => {
     value: dayjs().year() + index,
   }));
 
-  const role = watch('describe')?.value;
+  const role = watch('desc')?.value;
 
   useEffect(() => {
     if (role === 'Student') {
-      setValue('Mentor', undefined);
+      setValue('mentor', undefined);
     }
     if (role === 'Professor') {
       setValue('CampusCommunityActive', undefined);
       setValue('My_Skills', undefined);
-      setValue('College', undefined);
+      setValue('campus', undefined);
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -86,7 +86,7 @@ export const Two = () => {
     field: { onChange: mentorChange, ref: mentorRef, value: mentorVal },
     fieldState: { error: mentorError },
   } = useController({
-    name: 'Mentor',
+    name: 'mentor',
     control,
   });
 
@@ -100,7 +100,7 @@ export const Two = () => {
         <Box display="flex" flexDirection="column" justifyContent="space-between">
           <Controller
             control={control}
-            name="describe"
+            name="desc"
             render={({ field, fieldState: { error: descError } }) => (
               <FormControl label="describe" isInvalid={!!descError} id="describe">
                 <FormLabel>Best way to describe yourself</FormLabel>
@@ -171,7 +171,7 @@ export const Two = () => {
           <Box display="flex" flexDirection="column" justifyContent="space-between">
             <Controller
               control={control}
-              name="College"
+              name="campus"
               render={({ field, fieldState: { error: collegeErr } }) => (
                 <FormControl label="College" isInvalid={!!collegeErr} id="College">
                   <FormLabel>I currenlty study at</FormLabel>
@@ -192,7 +192,7 @@ export const Two = () => {
           <Box display="flex" flexDirection="column" justifyContent="space-between">
             <Controller
               control={control}
-              name="Passout"
+              name="passyear"
               render={({ field, fieldState: { error: descError } }) => (
                 <FormControl label="Passout" isInvalid={!!descError} id="Passout">
                   <FormLabel>Year of Passout</FormLabel>

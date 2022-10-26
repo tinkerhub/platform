@@ -49,21 +49,8 @@ const Wizard: NextPageWithLayout = () => {
       // increase the step to 4 to render the sucess/ fail UI
       const skillsArr = val.My_Skills?.map((el) => el.value);
       const Dbdata = {
-        house: val.House_Name,
-        street: val.Street,
-        pin: val.Pincode,
-        dob: new Date(val.DOB),
-        name: val.FullName,
-        email: val.Email,
+        ...val,
         skills: skillsArr,
-        desc: val.describe.value,
-        pronoun: val.Pronoun.value,
-        district: val.District?.value,
-        CampusCommunityActive: val.CampusCommunityActive?.value,
-        campus: val.College?.value,
-        mentor: Boolean(Number(val.Mentor)),
-        isNewuser: false,
-        passyear: val.Passout?.value,
       };
 
       stepAdd();
