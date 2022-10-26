@@ -52,23 +52,23 @@ export const Three = () => {
     >
       <VStack spacing={2} align="stretch" mt="30px">
         <Box display="flex" flexDirection="column" justifyContent="space-between">
-          <FormControl label="House_Name" isInvalid={!!errors.House_Name} id="House_Name">
+          <FormControl label="House_Name" isInvalid={!!errors.house} id="House_Name">
             <FormLabel>House Name</FormLabel>
-            <Input {...register('House_Name')} type="string" />
-            <FormErrorMessage>{errors.House_Name?.message}</FormErrorMessage>
+            <Input {...register('house')} type="string" />
+            <FormErrorMessage>{errors.house?.message}</FormErrorMessage>
           </FormControl>
         </Box>
         <Box display="flex" flexDirection="column" justifyContent="space-between">
-          <FormControl label="Street" isInvalid={!!errors.Street} id="Street">
+          <FormControl label="Street" isInvalid={!!errors.street} id="Street">
             <FormLabel>Street Name</FormLabel>
-            <Input {...register('Street')} />
-            <FormErrorMessage>{errors.Street?.message}</FormErrorMessage>
+            <Input {...register('street')} />
+            <FormErrorMessage>{errors.street?.message}</FormErrorMessage>
           </FormControl>
         </Box>
         <Box display="flex" flexDirection="column" justifyContent="space-between">
           <Controller
             control={control}
-            name="District"
+            name="district"
             render={({ field, fieldState: { error: proError } }) => (
               <FormControl label="District" isInvalid={!!proError} id="District">
                 <FormLabel>District</FormLabel>
@@ -80,10 +80,10 @@ export const Three = () => {
         </Box>
 
         <Box display="flex" flexDirection="column" justifyContent="space-between">
-          <FormControl label="Pincode" isInvalid={!!errors.Pincode} id="Pincode">
+          <FormControl label="Pincode" isInvalid={!!errors.pin} id="Pincode">
             <FormLabel>Pincode</FormLabel>
-            <Input {...register('Pincode')} />
-            <FormErrorMessage>{errors.Pincode?.message}</FormErrorMessage>
+            <Input {...register('pin')} />
+            <FormErrorMessage>{errors.pin?.message}</FormErrorMessage>
           </FormControl>
         </Box>
         <Box mt="25px">

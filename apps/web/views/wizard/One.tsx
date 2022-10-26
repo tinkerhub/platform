@@ -37,7 +37,7 @@ export const One = () => {
   } = useFormContext<FormType>();
 
   useEffect(() => {
-    setFocus('FullName');
+    setFocus('name');
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -49,30 +49,30 @@ export const One = () => {
     >
       <VStack spacing={4} align="stretch" mt="30px">
         <Box display="flex" flexDirection="column" justifyContent="space-between">
-          <FormControl label="Name" isInvalid={!!errors.FullName} id="FullName">
+          <FormControl label="Name" isInvalid={!!errors.name} id="FullName">
             <FormLabel>Name</FormLabel>
-            <Input variant="filled" placeholder="JhonDoe" {...register('FullName')} />
-            <FormErrorMessage>{errors.FullName?.message}</FormErrorMessage>
+            <Input variant="filled" placeholder="JhonDoe" {...register('name')} />
+            <FormErrorMessage>{errors.name?.message}</FormErrorMessage>
           </FormControl>
         </Box>
         <Box display="flex" flexDirection="column" justifyContent="space-between">
-          <FormControl label="Email" isInvalid={!!errors.Email} id="Email">
+          <FormControl label="Email" isInvalid={!!errors.email} id="Email">
             <FormLabel>Email</FormLabel>
-            <Input {...register('Email')} />
-            <FormErrorMessage>{errors.Email?.message}</FormErrorMessage>
+            <Input {...register('email')} />
+            <FormErrorMessage>{errors.email?.message}</FormErrorMessage>
           </FormControl>
         </Box>
         <Box display="flex" flexDirection="column" justifyContent="space-between">
-          <FormControl label="DOB" isInvalid={!!errors.DOB} id="DOB">
+          <FormControl label="DOB" isInvalid={!!errors.dob} id="DOB">
             <FormLabel>Date of Birth</FormLabel>
-            <Input {...register('DOB')} type="date" />
-            <FormErrorMessage>{errors.DOB?.message}</FormErrorMessage>
+            <Input {...register('dob')} type="date" />
+            <FormErrorMessage>{errors.dob?.message}</FormErrorMessage>
           </FormControl>
         </Box>
         <Box display="flex" flexDirection="column" justifyContent="space-between">
           <Controller
             control={control}
-            name="Pronoun"
+            name="pronoun"
             render={({ field, fieldState: { error: proError } }) => (
               <FormControl label="Pronoun" isInvalid={!!proError} id="Pronoun">
                 <FormLabel>Prefered Pronoun</FormLabel>

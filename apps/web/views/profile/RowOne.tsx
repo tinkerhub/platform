@@ -35,16 +35,16 @@ export const RowOne = ({ isEdit }: IsEdit) => {
   useEffect(() => {
     // if dont want to do this we might need to change the whole validation schema
     if (userInfo?.email) {
-      setValue('Email', userInfo?.email);
+      setValue('email', userInfo?.email);
     }
     if (userInfo?.pronoun) {
-      setValue('Pronoun', { label: userInfo.pronoun, value: userInfo.pronoun });
+      setValue('pronoun', { label: userInfo.pronoun, value: userInfo.pronoun });
     }
     if (userInfo?.name) {
-      setValue('FullName', userInfo?.name);
+      setValue('name', userInfo?.name);
     }
     if (userInfo?.dob) {
-      setValue('DOB', dayjs(userInfo?.dob).format('YYYY-MM-DD'));
+      setValue('dob', dayjs(userInfo?.dob).format('YYYY-MM-DD'));
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -53,15 +53,10 @@ export const RowOne = ({ isEdit }: IsEdit) => {
   return (
     <VStack spacing={2} align="stretch" w="100%">
       <Box display="flex" flexDirection="column" justifyContent="space-between">
-        <FormControl label="Name" isInvalid={!!errors.FullName} id="FullName">
+        <FormControl label="Name" isInvalid={!!errors.name} id="FullName">
           <FormLabel>Name</FormLabel>
-          <Input
-            variant="filled"
-            placeholder="JhonDoe"
-            {...register('FullName')}
-            isDisabled={isEdit}
-          />
-          <FormErrorMessage>{errors.FullName?.message}</FormErrorMessage>
+          <Input variant="filled" placeholder="JhonDoe" {...register('name')} isDisabled={isEdit} />
+          <FormErrorMessage>{errors.name?.message}</FormErrorMessage>
         </FormControl>
       </Box>
 
@@ -70,23 +65,23 @@ export const RowOne = ({ isEdit }: IsEdit) => {
         <Input type="string" isDisabled value={userInfo?.mobile} />
       </Box>
       <Box display="flex" flexDirection="column" justifyContent="space-between">
-        <FormControl label="Email" isInvalid={!!errors.Email} id="Email">
+        <FormControl label="Email" isInvalid={!!errors.email} id="Email">
           <FormLabel>Email</FormLabel>
-          <Input {...register('Email')} isDisabled value={userInfo?.email} />
-          <FormErrorMessage>{errors.Email?.message}</FormErrorMessage>
+          <Input {...register('email')} isDisabled value={userInfo?.email} />
+          <FormErrorMessage>{errors.email?.message}</FormErrorMessage>
         </FormControl>
       </Box>
       <Box display="flex" flexDirection="column" justifyContent="space-between">
-        <FormControl label="DOB" isInvalid={!!errors.DOB} id="DOB">
+        <FormControl label="DOB" isInvalid={!!errors.dob} id="DOB">
           <FormLabel>Date of Birth</FormLabel>
-          <Input {...register('DOB')} type="date" isDisabled={isEdit} />
-          <FormErrorMessage>{errors.DOB?.message}</FormErrorMessage>
+          <Input {...register('dob')} type="date" isDisabled={isEdit} />
+          <FormErrorMessage>{errors.dob?.message}</FormErrorMessage>
         </FormControl>
       </Box>
       <Box display="flex" flexDirection="column" justifyContent="space-between" mb="30px">
         <Controller
           control={control}
-          name="Pronoun"
+          name="pronoun"
           render={({ field, fieldState: { error: proError } }) => (
             <FormControl label="Pronoun" isInvalid={!!proError} id="Pronoun">
               <FormLabel>Prefered Pronoun</FormLabel>

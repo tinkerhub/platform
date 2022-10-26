@@ -25,7 +25,7 @@ export const RowThree = ({ isEdit }: IsEdit) => {
   //  setting default value for select is not possible so setted an initial value
   useEffect(() => {
     if (userInfo?.district) {
-      setValue('District', { label: userInfo.district, value: userInfo.district });
+      setValue('district', { label: userInfo.district, value: userInfo.district });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userInfo]);
@@ -33,28 +33,28 @@ export const RowThree = ({ isEdit }: IsEdit) => {
   return (
     <VStack spacing={2} align="stretch" w="100%" mb={{ base: '10px', lg: '67px' }}>
       <Box display="flex" flexDirection="column" justifyContent="space-between">
-        <FormControl label="House_Name" isInvalid={!!errors.House_Name} id="House_Name">
+        <FormControl label="House_Name" isInvalid={!!errors.house} id="House_Name">
           <FormLabel>House Name</FormLabel>
           <Input
-            {...register('House_Name')}
+            {...register('house')}
             type="string"
             isDisabled={isEdit}
             defaultValue={userInfo?.house}
           />
-          <FormErrorMessage>{errors.House_Name?.message}</FormErrorMessage>
+          <FormErrorMessage>{errors.house?.message}</FormErrorMessage>
         </FormControl>
       </Box>
       <Box display="flex" flexDirection="column" justifyContent="space-between">
-        <FormControl label="Street" isInvalid={!!errors.Street} id="Street">
+        <FormControl label="Street" isInvalid={!!errors.street} id="Street">
           <FormLabel>Street Name</FormLabel>
-          <Input {...register('Street')} isDisabled={isEdit} defaultValue={userInfo?.street} />
-          <FormErrorMessage>{errors.Street?.message}</FormErrorMessage>
+          <Input {...register('street')} isDisabled={isEdit} defaultValue={userInfo?.street} />
+          <FormErrorMessage>{errors.street?.message}</FormErrorMessage>
         </FormControl>
       </Box>
       <Box display="flex" flexDirection="column" justifyContent="space-between">
         <Controller
           control={control}
-          name="District"
+          name="district"
           render={({ field, fieldState: { error: proError } }) => (
             <FormControl label="District" isInvalid={!!proError} id="District">
               <FormLabel>District</FormLabel>
@@ -65,10 +65,10 @@ export const RowThree = ({ isEdit }: IsEdit) => {
         />
       </Box>
       <Box display="flex" flexDirection="column" justifyContent="space-between">
-        <FormControl label="Pincode" isInvalid={!!errors.Pincode} id="Pincode">
+        <FormControl label="Pincode" isInvalid={!!errors.pin} id="Pincode">
           <FormLabel>Pincode</FormLabel>
-          <Input {...register('Pincode')} isDisabled={isEdit} defaultValue={userInfo?.pin} />
-          <FormErrorMessage>{errors.Pincode?.message}</FormErrorMessage>
+          <Input {...register('pin')} isDisabled={isEdit} defaultValue={userInfo?.pin} />
+          <FormErrorMessage>{errors.pin?.message}</FormErrorMessage>
         </FormControl>
       </Box>
     </VStack>

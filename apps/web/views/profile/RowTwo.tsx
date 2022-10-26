@@ -44,14 +44,19 @@ export const RowTwo = ({ isEdit }: IsEdit) => {
     field: { onChange: mentorChange, ref: mentorRef, value: mentorVal },
     fieldState: { error: mentorError },
   } = useController({
-    name: 'Mentor',
+    name: 'mentor',
     control,
   });
 
-  const role = watch('describe')?.value;
+  const yaerOfPassout = new Array(4).fill(null).map((el, index) => ({
+    label: dayjs().year() + index,
+    value: dayjs().year() + index,
+  }));
+
+  const role = watch('desc')?.value;
   useEffect(() => {
     if (role === 'Student') {
-      setValue('Mentor', null);
+      setValue('mentor', null);
     }
 
     // setting the value related to opposite of decription to undefined
@@ -59,8 +64,8 @@ export const RowTwo = ({ isEdit }: IsEdit) => {
     if (role === 'Professional') {
       setValue('CampusCommunityActive', null);
       setValue('My_Skills', null);
-      setValue('College', null);
-      setValue('Passout', null);
+      setValue('campus', null);
+      setValue('passyear', null);
     }
   }, [role, setValue]);
 
@@ -69,13 +74,13 @@ export const RowTwo = ({ isEdit }: IsEdit) => {
   useEffect(() => {
     if (userInfo?.desc) {
       // setting the state to change on frontend
-      setValue('describe', { value: userInfo?.desc, label: userInfo?.desc });
+      setValue('desc', { value: userInfo?.desc, label: userInfo?.desc });
     }
     if (userInfo?.skills) {
       setValue('My_Skills', skillArr);
     }
     if (userInfo?.campus) {
-      setValue('College', { label: userInfo.campus, value: userInfo.campus });
+      setValue('college', { label: userInfo.campus, value: userInfo.campus });
     }
     if (userInfo?.CampusCommunityActive) {
       setValue('CampusCommunityActive', {
@@ -84,10 +89,10 @@ export const RowTwo = ({ isEdit }: IsEdit) => {
       });
     }
     if (userInfo?.mentor) {
-      setValue('Mentor', userInfo.mentor ? 1 : 0);
+      setValue('mentor', userInfo.mentor ? 1 : 0);
     }
     if (userInfo?.passyear) {
-      setValue('Passout', {
+      setValue('passyear', {
         value: userInfo?.passyear?.toString(),
         label: userInfo.passyear.toString(),
       });
@@ -219,7 +224,7 @@ export const RowTwo = ({ isEdit }: IsEdit) => {
           <Box display="flex" flexDirection="column" justifyContent="space-between" mt="13px">
             <Controller
               control={control}
-              name="College"
+              name="campus"
               render={({ field, fieldState: { error: collegeErr } }) => (
                 <FormControl label="College" isInvalid={!!collegeErr} id="College">
                   <FormLabel>I currenlty study at</FormLabel>
@@ -245,17 +250,7 @@ export const RowTwo = ({ isEdit }: IsEdit) => {
             render={({ field, fieldState: { error: descError } }) => (
               <FormControl label="Passout" isInvalid={!!descError} id="Passout">
                 <FormLabel>Year of Passout</FormLabel>
-                <Select
-                  isDisabled={isEdit}
-                  options={[
-                    { label: dayjs().year(), value: dayjs().year() },
-                    { label: dayjs().year() + 1, value: dayjs().year() + 1 },
-                    { label: dayjs().year() + 2, value: dayjs().year() + 2 },
-                    { label: dayjs().year() + 3, value: dayjs().year() + 3 },
-                    { label: dayjs().year() + 4, value: dayjs().year() + 4 },
-                  ]}
-                  {...field}
-                />
+                <Select isDisabled={isEdit} options={yaerOfPassout} {...field} />
                 {descError && <FormErrorMessage>Please pick an option</FormErrorMessage>}
               </FormControl>
             )}
