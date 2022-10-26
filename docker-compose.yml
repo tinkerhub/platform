@@ -12,6 +12,8 @@ services:
       - DATABASE_URL:postgresql://postgres:postgres@localhost:5432/platform?schema=public
     depends_on:
       - db
+    env_file:
+      - apps/api/.env
   db:
     image: postgres
     volumes:
