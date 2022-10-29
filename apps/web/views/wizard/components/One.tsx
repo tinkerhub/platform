@@ -13,7 +13,7 @@ import { motion } from 'framer-motion';
 import { InferType } from 'yup';
 import { useFormContext, Controller } from 'react-hook-form';
 import { Select, OptionBase } from 'chakra-react-select';
-import { firstFormValidator } from './validator';
+import { firstFormValidator } from '../validator';
 
 type FormType = InferType<typeof firstFormValidator>;
 

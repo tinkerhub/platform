@@ -1,6 +1,21 @@
 import { Box, Flex, Icon, Text } from '@chakra-ui/react';
 import { AiOutlineInstagram, AiOutlineTwitter, AiOutlineYoutube } from 'react-icons/ai';
 
+const Social = [
+  {
+    link: 'https://www.instagram.com/tinkerhub/',
+    icon: AiOutlineInstagram,
+  },
+  {
+    link: 'https://www.youtube.com/c/TinkerHubFoundation',
+    icon: AiOutlineYoutube,
+  },
+  {
+    link: 'https://twitter.com/TinkerHub',
+    icon: AiOutlineTwitter,
+  },
+];
+
 export const Footer = () => (
   <Box>
     <Flex justifyContent="space-between" flexDirection={{ base: 'column-reverse', md: 'row' }}>
@@ -9,30 +24,17 @@ export const Footer = () => (
         mapping and empowering people who share a passion to innovate.
       </Text>
       <Flex minW="100px" justifyContent={{ base: 'space-around', md: 'space-between' }} mt="38px">
-        <a href="https://www.instagram.com/tinkerhub/" rel="noopener">
-          <Icon
-            as={AiOutlineInstagram}
-            fontSize="20px"
-            color="rgba(177, 177, 177, 1)"
-            _hover={{ cursor: 'pointer', color: 'grey' }}
-          />
-        </a>
-        <a href="https://www.youtube.com/c/TinkerHubFoundation" rel="noopener">
-          <Icon
-            as={AiOutlineYoutube}
-            fontSize="20px"
-            color="rgba(177, 177, 177, 1)"
-            _hover={{ cursor: 'pointer', color: 'grey' }}
-          />
-        </a>
-        <a href="https://twitter.com/TinkerHub">
-          <Icon
-            as={AiOutlineTwitter}
-            fontSize="20px"
-            color="rgba(177, 177, 177, 1)"
-            _hover={{ cursor: 'pointer', color: 'grey' }}
-          />
-        </a>
+        {Social.map((el, index) => (
+          // eslint-disable-next-line react/no-array-index-key
+          <a href={el.link} rel="noopener" key={index}>
+            <Icon
+              as={el.icon}
+              fontSize="20px"
+              color="rgba(177, 177, 177, 1)"
+              _hover={{ cursor: 'pointer', color: 'grey' }}
+            />
+          </a>
+        ))}
       </Flex>
     </Flex>
     <Flex
@@ -50,12 +52,7 @@ export const Footer = () => (
           Made with 💙 by TinkerHub
         </Text>
       </Flex>
-      <Flex
-        // flexDirection={{ base: 'column', md: 'row' }}
-        justifyContent="space-between"
-        // alignItems="center"
-        minW="350px"
-      >
+      <Flex justifyContent="space-between" minW="350px">
         <Text
           color="rgba(177, 177, 177, 1)"
           _hover={{ cursor: 'pointer', color: 'grey' }}

@@ -52,10 +52,15 @@ const Index: NextPageWithLayout = () => {
 
   const updateProfile: SubmitHandler<FormType> = async (val) => {
     const skillsArr = val.My_Skills?.map((el: any) => el.value);
+    const Dummey: string[] = [];
 
     const Dbdata = {
       ...val,
-      skills: skillsArr,
+      mentor: Boolean(Number(val?.mentor)),
+      pronoun: val.pronoun.value,
+      district: val.district?.value,
+      desc: val.desc.value,
+      skills: skillsArr || Dummey,
     };
     setEdit((el) => !el);
 

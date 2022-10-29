@@ -1,6 +1,6 @@
 import { Box } from '@chakra-ui/react';
 
-import type { Child } from '../../types';
+import type { Child } from '../../../types';
 
 export const CardBio = ({ children }: Child) => (
   <Box

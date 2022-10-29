@@ -20,7 +20,7 @@ import {
 } from '../views/wizard';
 import { platformAPI } from '../config';
 import { Errors, Form } from '../types';
-import { Quotes } from '../views/wizard/Quotes';
+import { Quotes } from '../views/wizard/components/Quotes';
 
 type FormType = InferType<typeof registerFormValidator>;
 
@@ -31,8 +31,6 @@ const Wizard: NextPageWithLayout = () => {
     resolver: yupResolver(stepByStepValidator[step]),
   });
   const [user, setUser] = useState<Form | null>(null);
-
-  const [isLoading, setIsloading] = useState<boolean>(false);
 
   const toast = useToast();
   const isReadyForSubmission = step === 3;
@@ -47,16 +45,20 @@ const Wizard: NextPageWithLayout = () => {
   const handleData: SubmitHandler<FormType> = async (val) => {
     if (isReadyForSubmission) {
       // increase the step to 4 to render the sucess/ fail UI
+      const Dummey: string[] = [];
       const skillsArr = val.My_Skills?.map((el) => el.value);
       const Dbdata = {
         ...val,
-        skills: skillsArr,
+        mentor: Boolean(Number(val?.mentor)),
+        pronoun: val.pronoun.value,
+        district: val.district?.value,
+        desc: val.desc.value,
+        skills: skillsArr || Dummey,
       };
 
       stepAdd();
       // send post request to backend
       try {
-        setIsloading(true);
         const { data } = await platformAPI.post('/users/profile', Dbdata);
         if (!data.Success) throw new Error(data.message);
         setUser(data.data);
@@ -74,8 +76,6 @@ const Wizard: NextPageWithLayout = () => {
           duration: 1000,
           isClosable: true,
         });
-      } finally {
-        setIsloading(false);
       }
     } else {
       stepAdd();
@@ -86,7 +86,7 @@ const Wizard: NextPageWithLayout = () => {
     return (
       <SessionAuth>
         <Center mb="60px">
-          <Final isLoading={isLoading} id={user?.id} />
+          <Final isLoading={methods.formState.isSubmitting} id={user?.id} />
         </Center>
       </SessionAuth>
     );
@@ -94,6 +94,7 @@ const Wizard: NextPageWithLayout = () => {
 
   return (
     <SessionAuth>
+      {step === 1}
       <Quotes word="“80% of engineering graduates don’t have the skills needed for the industry. We’ are here to change that.”">
         <CardBio>
           <Bar val={step} back={stepSub} />

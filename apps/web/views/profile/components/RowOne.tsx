@@ -5,9 +5,9 @@ import { useEffect } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 import dayjs from 'dayjs';
 import { InferType } from 'yup';
-import { useAuthCtx } from '../../hooks';
-import { firstFormValidator } from '../wizard';
-import { IsEdit } from './types';
+import { useAuthCtx } from '../../../hooks';
+import { firstFormValidator } from '../../wizard';
+import { IsEdit } from '../types';
 
 interface Options extends OptionBase {
   label: string;
