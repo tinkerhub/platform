@@ -12,7 +12,7 @@ import { motion } from 'framer-motion';
 import { Controller, useFormContext } from 'react-hook-form';
 import { OptionBase, Select } from 'chakra-react-select';
 import { InferType } from 'yup';
-import { thirdValidator } from './validator';
+import { thirdValidator } from '../validator';
 
 interface Options extends OptionBase {
   label: string;

@@ -1,5 +1,5 @@
 import { Center, Flex, Heading } from '@chakra-ui/react';
-import { Pulse } from '../../animations/Loader';
+import { Pulse } from '../animation';
 
 export const PageLoader = () => (
   <Pulse>

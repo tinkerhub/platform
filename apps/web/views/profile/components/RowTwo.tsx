@@ -13,10 +13,10 @@ import { AsyncSelect, Select } from 'chakra-react-select';
 import { useEffect, useState } from 'react';
 import { Controller, useFormContext, useController } from 'react-hook-form';
 import dayjs from 'dayjs';
-import { useAuthCtx } from '../../hooks';
-import { Clg, Comm, Desp, Skills } from '../wizard/Two';
-import { IsEdit, Options } from './types';
-import { platformAPI } from '../../config';
+import { useAuthCtx } from '../../../hooks';
+import { Clg, Comm, Desp, Skills } from '../../wizard/components/Two';
+import { IsEdit, Options } from '../types';
+import { platformAPI } from '../../../config';
 
 export const RowTwo = ({ isEdit }: IsEdit) => {
   const { control, watch, setValue } = useFormContext();

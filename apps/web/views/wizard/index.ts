@@ -1,4 +1,4 @@
-export { Final } from './Final';
+export { Final } from './components/Final';
 export {
   registerFormValidator,
   firstFormValidator,
@@ -6,8 +6,8 @@ export {
   thirdValidator,
   stepByStepValidator,
 } from './validator';
-export { CardBio } from './Card';
-export { Bar } from './Bar';
-export { One } from './One';
-export { Two } from './Two';
-export { Three } from './Three';
+export { CardBio } from './components/Card';
+export { Bar } from './components/Bar';
+export { One } from './components/One';
+export { Two } from './components/Two';
+export { Three } from './components/Three';

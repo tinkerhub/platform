@@ -4,11 +4,11 @@ import { Select } from 'chakra-react-select';
 import { useEffect } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 import { InferType } from 'yup';
-import { useAuthCtx } from '../../hooks';
-import { thirdValidator } from '../wizard';
-import { District } from '../wizard/Three';
+import { useAuthCtx } from '../../../hooks';
+import { thirdValidator } from '../../wizard';
+import { District } from '../../wizard/components/Three';
 
-import { IsEdit } from './types';
+import { IsEdit } from '../types';
 
 type Third = InferType<typeof thirdValidator>;
 

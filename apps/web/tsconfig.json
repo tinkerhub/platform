@@ -13,5 +13,9 @@
   "baseUrl": ".",
   "compilerOptions": {
     "incremental": true
-  }
+  },
+  "paths": {
+    "@app/*": ["./*"]
+  },
+  "typeRoots": ["./node_modules/@types/"]
 }

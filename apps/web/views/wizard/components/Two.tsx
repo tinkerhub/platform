@@ -15,7 +15,7 @@ import dayjs from 'dayjs';
 import { motion } from 'framer-motion';
 import { useController, useFormContext, Controller } from 'react-hook-form';
 import { OptionBase, Select, AsyncSelect } from 'chakra-react-select';
-import { platformAPI } from '../../config';
+import { platformAPI } from '../../../config';
 
 export const Skills = [
   { value: 'Java', label: 'Java' },
