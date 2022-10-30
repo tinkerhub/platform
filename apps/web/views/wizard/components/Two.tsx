@@ -77,6 +77,7 @@ export const Two = () => {
       setValue('CampusCommunityActive', undefined);
       setValue('My_Skills', undefined);
       setValue('campus', undefined);
+      setValue('passyear', null);
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps

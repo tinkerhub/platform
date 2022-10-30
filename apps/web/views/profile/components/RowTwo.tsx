@@ -40,6 +40,8 @@ export const RowTwo = ({ isEdit }: IsEdit) => {
     setInputValue(value);
   };
 
+  const role = watch('desc')?.value;
+
   const {
     field: { onChange: mentorChange, ref: mentorRef, value: mentorVal },
     fieldState: { error: mentorError },
@@ -53,7 +55,6 @@ export const RowTwo = ({ isEdit }: IsEdit) => {
     value: dayjs().year() + index,
   }));
 
-  const role = watch('desc')?.value;
   useEffect(() => {
     if (role === 'Student') {
       setValue('mentor', null);
@@ -74,7 +75,7 @@ export const RowTwo = ({ isEdit }: IsEdit) => {
   useEffect(() => {
     if (userInfo?.desc) {
       // setting the state to change on frontend
-      setValue('desc', { value: userInfo?.desc, label: userInfo?.desc });
+      setValue('desc', { label: userInfo?.desc, value: userInfo?.desc });
     }
     if (userInfo?.skills) {
       setValue('My_Skills', skillArr);
@@ -124,7 +125,7 @@ export const RowTwo = ({ isEdit }: IsEdit) => {
         <Box display="flex" flexDirection="column" justifyContent="space-between">
           <Controller
             control={control}
-            name="describe"
+            name="desc"
             render={({ field, fieldState: { error: descError } }) => (
               <FormControl label="describe" isInvalid={!!descError} id="describe">
                 <FormLabel>Best way to describe yourself</FormLabel>

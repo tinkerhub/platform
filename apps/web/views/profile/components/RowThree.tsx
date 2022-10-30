@@ -59,7 +59,7 @@ export const RowThree = ({ isEdit }: IsEdit) => {
             <FormControl label="District" isInvalid={!!proError} id="District">
               <FormLabel>District</FormLabel>
               <Select options={District} {...field} isDisabled={isEdit} />
-              <FormErrorMessage>Please pick an option</FormErrorMessage>
+              {proError && <FormErrorMessage>Please pick an option</FormErrorMessage>}
             </FormControl>
           )}
         />
