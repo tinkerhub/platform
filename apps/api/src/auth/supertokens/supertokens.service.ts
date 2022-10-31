@@ -31,9 +31,6 @@ export class SupertokensService {
               async sendSms(input) {
                 // @ts-ignore
                 send(input.phoneNumber, input.userInputCode);
-                // TODO: before sending SMS
-                // await originalImplementation.sendSms(input);
-                // TODO: after sending SMS
               },
             }),
           },
