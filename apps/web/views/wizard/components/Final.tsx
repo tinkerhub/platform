@@ -16,16 +16,18 @@ import { MdOutlineContentCopy } from 'react-icons/md';
 import { FiExternalLink } from 'react-icons/fi';
 import { TiTick } from 'react-icons/ti';
 import { BiArrowBack } from 'react-icons/bi';
-
 import { useRouter } from 'next/router';
+
 import { LottieAnim } from './Lottie';
+import { Oops } from './Oops';
 
 interface Prop {
   isLoading: boolean;
   id: string | undefined;
+  error: boolean;
 }
 
-export const Final = ({ isLoading, id = 'ERROR' }: Prop) => {
+export const Final = ({ isLoading, id = 'ERROR', error }: Prop) => {
   const toast = useToast();
   const router = useRouter();
   const [result, setResult] = useState<boolean>(false);
@@ -67,7 +69,12 @@ export const Final = ({ isLoading, id = 'ERROR' }: Prop) => {
       </Center>
     );
   }
-  if (!isLoading && !result) {
+
+  if (error) {
+    return <Oops />;
+  }
+
+  if (!isLoading && !result && !error) {
     return (
       <Center mt="30px" minH="400px" p="35px" borderRadius="lg" _hover={{ cursor: 'not-allowed' }}>
         <LottieAnim />
