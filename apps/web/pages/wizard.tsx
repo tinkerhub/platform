@@ -19,7 +19,7 @@ import {
   stepByStepValidator,
 } from '../views/wizard';
 import { platformAPI } from '../config';
-import { Errors, Form } from '../types';
+import { Form } from '../types';
 import { Quotes } from '../views/wizard/components/Quotes';
 
 type FormType = InferType<typeof registerFormValidator>;
@@ -31,6 +31,7 @@ const Wizard: NextPageWithLayout = () => {
     resolver: yupResolver(stepByStepValidator[step]),
   });
   const [user, setUser] = useState<Form | null>(null);
+  const [formError, setFormError] = useState<boolean>(false);
 
   const toast = useToast();
   const isReadyForSubmission = step === 3;
@@ -69,13 +70,7 @@ const Wizard: NextPageWithLayout = () => {
           isClosable: true,
         });
       } catch (e) {
-        const msg = e as Errors;
-        toast({
-          title: msg.message,
-          status: 'error',
-          duration: 1000,
-          isClosable: true,
-        });
+        setFormError(true);
       }
     } else {
       stepAdd();
@@ -86,7 +81,7 @@ const Wizard: NextPageWithLayout = () => {
     return (
       <SessionAuth>
         <Center mb="60px">
-          <Final isLoading={methods.formState.isSubmitting} id={user?.id} />
+          <Final isLoading={methods.formState.isSubmitting} id={user?.id} error={formError} />
         </Center>
       </SessionAuth>
     );
