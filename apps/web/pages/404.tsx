@@ -16,10 +16,10 @@ const Error = () => (
     <Heading textAlign="center" color="#407BFF" size="2xl">
       Looks Like You&apos;re Lost
     </Heading>
-    <Heading textAlign="center" size="md" fontWeight="300">
+    <Heading textAlign="center" size="md" fontWeight="300" mt="20px">
       Here&apos;s is your way back to home
     </Heading>
-    <Flex justifyContent="center">
+    <Flex justifyContent="center" mt="20px">
       <Button variant="outline" mr="10px" outline="1px solid #407BFF">
         Home
       </Button>
