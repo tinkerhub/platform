@@ -33,15 +33,15 @@ export const Final = ({ isLoading, id = 'ERROR', error }: Prop) => {
   const [result, setResult] = useState<boolean>(false);
   const { colorMode } = useColorMode();
   useEffect(() => {
-    if (isLoading) {
+    if (isLoading && !error) {
       setTimeout(() => {
         setResult(true);
-      }, 4000);
+      }, 5000);
     }
-  }, [isLoading]);
+  }, [isLoading, error]);
 
-  const goHome = async () => {
-    router.replace('/profile');
+  const goHome = () => {
+    router.push('/profile');
   };
   const copyFile = () => {
     window.navigator.clipboard.writeText(id);

@@ -19,11 +19,10 @@ const Home: NextPageWithLayout = () => {
       >
         <Box p={2} maxW="600px">
           <Heading as="h2" size="4xl" color="rgba(65, 83, 240, 1)" fontWeight="extrabold">
-            {' '}
             What are you learning today?
           </Heading>
           <Box
-            p={4}
+            py={4}
             fontSize={20}
             maxW="600px"
             mt="30px"

@@ -67,7 +67,12 @@ export const ProfileBar = ({
             colorScheme="blue"
             variant="outline"
             alignSelf="center"
-            _hover={{ cursor: 'pointer', bg: '#1328EC', color: 'white', border: 'none' }}
+            _hover={{
+              cursor: 'pointer',
+              bg: '#1328EC',
+              color: 'white',
+              borderColor: 'transparent',
+            }}
             leftIcon={<BiArrowBack />}
             onClick={() => router.push('/')}
           >
@@ -80,7 +85,12 @@ export const ProfileBar = ({
             colorScheme="blue"
             variant="outline"
             alignSelf="center"
-            _hover={{ cursor: 'pointer', bg: '#1328EC', color: 'white', border: 'none' }}
+            _hover={{
+              cursor: 'pointer',
+              bg: '#1328EC',
+              color: 'white',
+              borderColor: 'transparent',
+            }}
             leftIcon={<MdOutlineCancel />}
             onClick={cancelEditHandler}
           >

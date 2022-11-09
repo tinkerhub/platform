@@ -75,8 +75,8 @@ export const AuthContext = ({ children }: Child) => {
       router.replace('/profile');
     }
     // prevent the profile route before onboarding process
-    if ((!isUserLoading && !user) || (!user && path === 'profile')) {
-      router.push('/wizard');
+    if (!user && path === 'profile') {
+      router.replace('/wizard');
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps

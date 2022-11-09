@@ -52,7 +52,7 @@ export const Topbar = ({ btnFunc, btnText = 'Login/Signup', showBtn }: NavProp) 
                 Hub
               </Heading>
             </Flex>
-            <Heading fontSize="13px" fontWeight="500">
+            <Heading fontSize="13px" fontWeight="500" ml="2.5px">
               Foundation
             </Heading>
           </a>
