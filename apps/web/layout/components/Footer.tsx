@@ -19,7 +19,13 @@ const Social = [
 export const Footer = () => (
   <Box>
     <Flex justifyContent="space-between" flexDirection={{ base: 'column-reverse', md: 'row' }}>
-      <Text color="rgba(177, 177, 177, 1)" mt="20px" maxW="900px" fontSize="18px">
+      <Text
+        color="rgba(177, 177, 177, 1)"
+        mt="20px"
+        maxW="900px"
+        fontSize="18px"
+        textAlign={{ base: 'center', md: 'initial' }}
+      >
         We are a community of tinkerers, makers, policy geeks & students and are working towards
         mapping and empowering people who share a passion to innovate.
       </Text>

@@ -30,7 +30,8 @@ const Wizard: NextPageWithLayout = () => {
     mode: 'all',
     resolver: yupResolver(stepByStepValidator[step]),
   });
-  const [user, setUser] = useState<Form | null>(null);
+
+  const [user, setAuthUser] = useState<Form | null>(null);
   const [formError, setFormError] = useState<boolean>(false);
 
   const toast = useToast();
@@ -47,7 +48,7 @@ const Wizard: NextPageWithLayout = () => {
     if (isReadyForSubmission) {
       // increase the step to 4 to render the sucess/ fail UI
       const Dummey: string[] = [];
-      const skillsArr = val.My_Skills?.map((el) => el.value);
+      const skillsArr = val.My_Skills?.map((el: { value: string }) => el.value);
       const Dbdata = {
         ...val,
         mentor: Boolean(Number(val?.mentor)),
@@ -62,7 +63,7 @@ const Wizard: NextPageWithLayout = () => {
       try {
         const { data } = await platformAPI.post('/users/profile', Dbdata);
         if (!data.Success) throw new Error(data.message);
-        setUser(data.data);
+        setAuthUser(data.data);
         toast({
           title: 'User created succesfully',
           status: 'success',
@@ -81,7 +82,12 @@ const Wizard: NextPageWithLayout = () => {
     return (
       <SessionAuth>
         <Center mb="60px">
-          <Final isLoading={methods.formState.isSubmitting} id={user?.id} error={formError} />
+          <Final
+            isLoading={methods.formState.isSubmitting}
+            id={user?.id}
+            error={formError}
+            user={user}
+          />
         </Center>
       </SessionAuth>
     );

@@ -20,14 +20,18 @@ import { useRouter } from 'next/router';
 
 import { LottieAnim } from './Lottie';
 import { Oops } from './Oops';
+import { Form } from '../../../types';
+import { useAuthCtx } from '../../../hooks';
 
 interface Prop {
   isLoading: boolean;
   id: string | undefined;
   error: boolean;
+  user: Form | null;
 }
 
-export const Final = ({ isLoading, id = 'ERROR', error }: Prop) => {
+export const Final = ({ isLoading, id = 'ERROR', error, user }: Prop) => {
+  const { setUser } = useAuthCtx();
   const toast = useToast();
   const router = useRouter();
   const [result, setResult] = useState<boolean>(false);
@@ -41,6 +45,8 @@ export const Final = ({ isLoading, id = 'ERROR', error }: Prop) => {
   }, [isLoading, error]);
 
   const goHome = () => {
+    // updating the context to new return value from post req
+    setUser(user);
     router.push('/profile');
   };
   const copyFile = () => {
