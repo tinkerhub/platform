@@ -199,26 +199,6 @@ export const RowTwo = ({ isEdit }: IsEdit) => {
                 <FormErrorMessage>{mentorError?.message}</FormErrorMessage>
               </FormControl>
             </Box>
-            {/* <Controller
-              control={control}
-              name="mentor"
-              render={({ field, fieldState: { error: mentorError } }) => (
-                <FormControl label="Mentor" isInvalid={!!mentorError} id="Mentor">
-                  <FormLabel>Can you be a Mentor</FormLabel>
-                  <RadioGroup {...field} isDisabled={edit}>
-                    <Stack spacing={5} direction="row">
-                      <Radio colorScheme="blue" value={1}>
-                        Yes
-                      </Radio>
-                      <Radio colorScheme="blue" value={0}>
-                        No
-                      </Radio>
-                    </Stack>
-                  </RadioGroup>
-                  <FormErrorMessage>{mentorError?.message}</FormErrorMessage>
-                </FormControl>
-              )}
-            /> */}
           </Box>
         )}
         {role === 'Student' && (
