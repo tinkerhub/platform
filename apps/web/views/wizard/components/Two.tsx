@@ -29,7 +29,7 @@ export const Skills = [
 
 interface Options extends OptionBase {
   label: string;
-  value: string;
+  value: string | boolean;
 }
 
 export const Desp: Options[] = [
@@ -38,8 +38,8 @@ export const Desp: Options[] = [
 ];
 
 export const Comm: Options[] = [
-  { label: 'Yes', value: 'Yes' },
-  { label: 'No', value: 'No' },
+  { label: 'Yes', value: true },
+  { label: 'No', value: false },
 ];
 
 export interface Clg {
@@ -101,7 +101,7 @@ export const Two = () => {
         <Box display="flex" flexDirection="column" justifyContent="space-between">
           <Controller
             control={control}
-            name="desc"
+            name="description"
             render={({ field, fieldState: { error: descError } }) => (
               <FormControl label="describe" isInvalid={!!descError} id="describe">
                 <FormLabel>Best way to describe yourself</FormLabel>
@@ -172,7 +172,7 @@ export const Two = () => {
           <Box display="flex" flexDirection="column" justifyContent="space-between">
             <Controller
               control={control}
-              name="campus"
+              name="collegeId"
               render={({ field, fieldState: { error: collegeErr } }) => (
                 <FormControl label="College" isInvalid={!!collegeErr} id="College">
                   <FormLabel>I currenlty study at</FormLabel>
@@ -193,7 +193,7 @@ export const Two = () => {
           <Box display="flex" flexDirection="column" justifyContent="space-between">
             <Controller
               control={control}
-              name="passyear"
+              name="passYear"
               render={({ field, fieldState: { error: descError } }) => (
                 <FormControl label="Passout" isInvalid={!!descError} id="Passout">
                   <FormLabel>Year of Passout</FormLabel>

@@ -19,15 +19,13 @@ export const registerFormValidator = Yup.object({
   email: Yup.string().email().required(requiredErrorStatement('email')),
   pronoun: PickAnOptionValidator.nullable().required('Please pick an option'),
   // Mobile: Yup.string().required(requiredErrorStatement('Mobile number')),
-  CampusCommunityActive: Yup.object()
+  description: PickAnOptionValidator.nullable().required('Please pick an option'),
+  campusCommunityActive: Yup.boolean()
     .nullable()
-    .when('describe', {
+    .when('description', {
       is: (val: Option) => val?.value === 'Student',
-      then: PickAnOptionValidator.nullable().required(
-        requiredErrorStatement('Please pick an option')
-      ),
+      then: Yup.boolean().required(),
     }),
-  desc: PickAnOptionValidator.nullable().required('Please pick an option'),
   My_Skills: Yup.array()
     .nullable()
     .max(5, 'Pick 5 skills maximum')
@@ -39,13 +37,13 @@ export const registerFormValidator = Yup.object({
     ),
   mentor: Yup.boolean()
     .nullable()
-    .when('describe', {
+    .when('description', {
       is: (val: Option) => val?.value === 'Professional',
       then: Yup.boolean().required(),
     }),
-  campus: Yup.object()
+  collegeId: Yup.object()
     .nullable()
-    .when('describe', {
+    .when('description', {
       is: (val: Option) => val?.value === 'Student',
       then: PickAnOptionValidator.nullable().required(
         requiredErrorStatement('Please pick an option')
@@ -55,9 +53,9 @@ export const registerFormValidator = Yup.object({
   street: Yup.string(),
   district: PickAnOptionValidator.nullable(),
   pin: Yup.string(),
-  passyear: Yup.object()
+  passYear: Yup.object()
     .nullable()
-    .when('describe', {
+    .when('description', {
       is: (val: Option) => val?.value === 'Student',
       then: PickAnOptionValidator.nullable().required(
         requiredErrorStatement('Please pick an option')
@@ -75,16 +73,14 @@ export const firstFormValidator = Yup.object({
   // Mobile: Yup.string().required(requiredErrorStatement('Mobile number')),
 });
 export const secondValidator = Yup.object({
-  CampusCommunityActive: Yup.object()
+  description: PickAnOptionValidator.nullable().required('Please pick an option'),
+  CampusCommunityActive: Yup.boolean()
     .nullable()
-    .when('describe', {
+    .when('description', {
       is: (val: Option) => val?.value === 'Student',
-      then: PickAnOptionValidator.nullable().required(
-        requiredErrorStatement('Please pick an option')
-      ),
+      then: Yup.boolean().required(),
     }),
   pronoun: PickAnOptionValidator.nullable().required('Please pick an option'),
-  desc: PickAnOptionValidator.nullable().required('Please pick an option'),
   My_Skills: Yup.array()
     .nullable()
     .max(5, 'Pick 5 skills maximum')
@@ -96,11 +92,11 @@ export const secondValidator = Yup.object({
     ),
   mentor: Yup.boolean()
     .nullable()
-    .when('describe', {
+    .when('description', {
       is: (val: Option) => val?.value === 'Professional',
       then: Yup.boolean().required(),
     }),
-  campus: Yup.object()
+  collegeId: Yup.object()
     .nullable()
     .when('describe', {
       is: (val: Option) => val?.value === 'Student',
@@ -108,9 +104,9 @@ export const secondValidator = Yup.object({
         requiredErrorStatement('Please pick an option')
       ),
     }),
-  passyear: Yup.object()
+  passYear: Yup.object()
     .nullable()
-    .when('describe', {
+    .when('description', {
       is: (val: Option) => val?.value === 'Student',
       then: PickAnOptionValidator.nullable().required(
         requiredErrorStatement('Please pick an option')

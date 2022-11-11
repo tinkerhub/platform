@@ -59,7 +59,7 @@ const Index: NextPageWithLayout = () => {
       mentor: Boolean(Number(val?.mentor)),
       pronoun: val.pronoun.value,
       district: val.district?.value,
-      desc: val.desc.value,
+      description: val.description.value,
       skills: skillsArr || Dummey,
     };
     setEdit((el) => !el);
@@ -68,7 +68,7 @@ const Index: NextPageWithLayout = () => {
     try {
       const { data } = await platformAPI.patch('/users/profile', Dbdata);
       // need to rerender the  page from context
-      if (!data.Success) throw new Error(data.message);
+      if (!data.success) throw new Error(data.message);
       toast({
         title: 'user info was updated',
         status: 'success',

@@ -54,7 +54,7 @@ const Wizard: NextPageWithLayout = () => {
         mentor: Boolean(Number(val?.mentor)),
         pronoun: val.pronoun.value,
         district: val.district?.value,
-        desc: val.desc.value,
+        description: val.description.value,
         skills: skillsArr || Dummey,
       };
 
@@ -62,7 +62,7 @@ const Wizard: NextPageWithLayout = () => {
       // send post request to backend
       try {
         const { data } = await platformAPI.post('/users/profile', Dbdata);
-        if (!data.Success) throw new Error(data.message);
+        if (!data.success) throw new Error(data.message);
         setAuthUser(data.data);
         toast({
           title: 'User created succesfully',

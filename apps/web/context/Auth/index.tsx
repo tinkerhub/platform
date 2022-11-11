@@ -35,14 +35,14 @@ export const AuthContext = ({ children }: Child) => {
     try {
       setUserLoading(true);
       const { data } = await platformAPI.get('/users/profile');
-      if (!data.Success) {
+      if (!data.success) {
         throw new Error();
       }
-      if (data.Success && data.data === null) {
+      if (data.success && data.data === null) {
         localStorage.removeItem('isWizardCompleted');
         router.push('/wizard');
       }
-      if (data.Success && data.data) {
+      if (data.success && data.data) {
         // setting the info about the wizard in localstorage so that we can access it in supertokens redirection
         setUser(data.data);
         localStorage.setItem('isWizardCompleted', 'YES');

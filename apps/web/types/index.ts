@@ -1,10 +1,6 @@
 export type Child = {
   children: React.ReactNode;
 };
-enum Act {
-  'Yes',
-  'No',
-}
 
 export type Form = {
   name: string;
@@ -12,8 +8,8 @@ export type Form = {
   email: string;
   pronoun: string;
   mobile: string;
-  campus?: string;
-  desc: string;
+  collegeId?: string;
+  description: string;
   mentor?: boolean;
   accept?: boolean;
   house?: string;
@@ -21,9 +17,9 @@ export type Form = {
   pin?: string;
   skills?: string[];
   street?: string;
-  CampusCommunityActive: Act;
+  CampusCommunityActive: boolean;
   id: string;
-  passyear?: number;
+  passYear?: number;
 };
 
 export interface Errors {

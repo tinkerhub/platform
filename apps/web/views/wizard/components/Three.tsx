@@ -68,6 +68,7 @@ export const Three = () => {
         <Box display="flex" flexDirection="column" justifyContent="space-between">
           <Controller
             control={control}
+            defaultValue={null}
             name="district"
             render={({ field, fieldState: { error: proError } }) => (
               <FormControl label="District" isInvalid={!!proError} id="District">

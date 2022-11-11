@@ -40,7 +40,7 @@ export const RowTwo = ({ isEdit }: IsEdit) => {
     setInputValue(value);
   };
 
-  const role = watch('desc')?.value;
+  const role = watch('description')?.value;
 
   const {
     field: { onChange: mentorChange, ref: mentorRef, value: mentorVal },
@@ -65,37 +65,37 @@ export const RowTwo = ({ isEdit }: IsEdit) => {
     if (role === 'Professional') {
       setValue('CampusCommunityActive', null);
       setValue('My_Skills', null);
-      setValue('campus', null);
-      setValue('passyear', null);
+      setValue('collegeId', null);
+      setValue('passYear', null);
     }
   }, [role, setValue]);
 
   // debounce function to  limit the user search
 
   useEffect(() => {
-    if (userInfo?.desc) {
+    if (userInfo?.description) {
       // setting the state to change on frontend
-      setValue('desc', { label: userInfo?.desc, value: userInfo?.desc });
+      setValue('description', { label: userInfo?.description, value: userInfo?.description });
     }
     if (userInfo?.skills) {
       setValue('My_Skills', skillArr);
     }
-    if (userInfo?.campus) {
-      setValue('college', { label: userInfo.campus, value: userInfo.campus });
+    if (userInfo?.collegeId) {
+      setValue('collegeId', { label: userInfo.collegeId, value: userInfo.collegeId });
     }
     if (userInfo?.CampusCommunityActive) {
       setValue('CampusCommunityActive', {
-        label: userInfo.CampusCommunityActive,
+        label: userInfo.CampusCommunityActive === true ? 'YES' : 'NO',
         value: userInfo.CampusCommunityActive,
       });
     }
     if (userInfo?.mentor) {
       setValue('mentor', userInfo.mentor ? 1 : 0);
     }
-    if (userInfo?.passyear) {
-      setValue('passyear', {
-        value: userInfo?.passyear?.toString(),
-        label: userInfo.passyear.toString(),
+    if (userInfo?.passYear) {
+      setValue('passYear', {
+        value: userInfo?.passYear?.toString(),
+        label: userInfo.passYear.toString(),
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -125,7 +125,7 @@ export const RowTwo = ({ isEdit }: IsEdit) => {
         <Box display="flex" flexDirection="column" justifyContent="space-between">
           <Controller
             control={control}
-            name="desc"
+            name="description"
             render={({ field, fieldState: { error: descError } }) => (
               <FormControl label="describe" isInvalid={!!descError} id="describe">
                 <FormLabel>Best way to describe yourself</FormLabel>
@@ -205,7 +205,7 @@ export const RowTwo = ({ isEdit }: IsEdit) => {
           <Box display="flex" flexDirection="column" justifyContent="space-between" mt="13px">
             <Controller
               control={control}
-              name="campus"
+              name="collegeId"
               render={({ field, fieldState: { error: collegeErr } }) => (
                 <FormControl label="College" isInvalid={!!collegeErr} id="College">
                   <FormLabel>I currenlty study at</FormLabel>
@@ -227,7 +227,7 @@ export const RowTwo = ({ isEdit }: IsEdit) => {
         <Box display="flex" flexDirection="column" justifyContent="space-between">
           <Controller
             control={control}
-            name="Passout"
+            name="passYear"
             render={({ field, fieldState: { error: descError } }) => (
               <FormControl label="Passout" isInvalid={!!descError} id="Passout">
                 <FormLabel>Year of Passout</FormLabel>
