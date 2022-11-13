@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
-import { IsBoolean, IsEmail, IsNotEmpty, IsString, ValidateIf } from 'class-validator';
+import { IsArray, IsBoolean, IsEmail, IsNotEmpty, IsString, ValidateIf } from 'class-validator';
 
 export class CreateProfileDto {
   @ApiProperty()
@@ -48,8 +48,8 @@ export class CreateProfileDto {
   @IsString()
   pronoun: string;
 
-  @IsNotEmpty()
-  skillId: string;
+  @IsArray()
+  skills: Array<string>;
 
   @IsString()
   street: string;

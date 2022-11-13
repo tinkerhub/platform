@@ -33,9 +33,20 @@ export class ProfilesService {
     if (EmailResp != null && EmailResp.data != null) {
       throw new CreateException('User with same email exists');
     }
+
+    const skillArray = createProfileDto.skills.map((e: any) => ({
+      create: { name: e.name },
+      where: {
+        id: e.id,
+      },
+    }));
     const resp = await this.prismaService.user.create({
-      data: createProfileDto,
+      data: {
+        ...createProfileDto,
+        skills: { connectOrCreate: skillArray },
+      },
     });
+
     return this.Success({
       data: resp,
       message: 'User was created succesfully',
@@ -78,13 +89,33 @@ export class ProfilesService {
       throw new UpdateException('Email exists');
     }
 
-    // It works
-    const resp = await this.prismaService.user.update({
-      where: { authid },
-      data: updateProfileDto,
-    });
-    // Magic :)
+    let resp: object;
+    if (updateProfileDto.skills === undefined) {
+      // It works
+      resp = await this.prismaService.user.update({
+        where: { authid },
+        // @ts-ignore
+        data: updateProfileDto,
+      });
+      // Magic :)
+    } else {
+      // @ts-ignore
+      const skillArray = updateProfileDto.skills.map((e: any) => ({
+        create: { name: e.name },
+        where: {
+          id: e.id,
+        },
+      }));
 
+      resp = await this.prismaService.user.update({
+        where: { authid },
+        data: {
+          ...updateProfileDto,
+          // @ts-ignore
+          skills: { connectOrCreate: skillArray },
+        },
+      });
+    }
     return this.Success({
       data: resp,
       message: 'User info was updated succesfully',

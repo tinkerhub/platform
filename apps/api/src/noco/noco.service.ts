@@ -21,12 +21,16 @@ export class NocoService {
   }
 
   async skills(cname: string, limit: string, page: string) {
-    const data2 = await this.prismaService.skill.create({
-      data: {
-        id: '12345',
-        name: 'TypeScript',
+    const data = await this.prismaService.skill.findMany({
+      where: {
+        name: {
+          contains: cname,
+        },
       },
     });
-    return { cname, limit, page, data2 };
+
+    const startIndex = (parseInt(page, 10) - 1) * parseInt(limit, 10);
+    const endIndex = parseInt(page, 10) * parseInt(limit, 10);
+    return data.slice(startIndex, endIndex);
   }
 }
