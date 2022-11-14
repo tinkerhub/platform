@@ -22,10 +22,10 @@ export class ProfilesController {
     @Session() session: SessionContainer
   ) {
     try {
-      const authid = session.getUserId();
-      const mobile = (await Passwordless.getUserById({ userId: authid }))!.phoneNumber!;
+      const AuthId = session.getUserId();
+      const mobile = (await Passwordless.getUserById({ userId: AuthId }))!.phoneNumber!;
       const createProfile = createProfileDto;
-      createProfile.authid = authid;
+      createProfile.AuthId = AuthId;
       createProfile.mobile = mobile;
       return await this.profilesService.create(createProfile);
     } catch (err) {
@@ -39,10 +39,10 @@ export class ProfilesController {
     @Res({ passthrough: true }) res: any,
     @Session() session: SessionContainer
   ) {
-    let authid: string;
+    let AuthId: string;
     try {
-      authid = session.getUserId();
-      return await this.profilesService.read(authid);
+      AuthId = session.getUserId();
+      return await this.profilesService.read(AuthId);
     } catch (err) {
       throw new ReadException(err);
     }
@@ -55,10 +55,10 @@ export class ProfilesController {
     @Body() updateProfileDto: UpdateProfileDto,
     @Session() session: SessionContainer
   ) {
-    let authid: string;
+    let AuthId: string;
     try {
-      authid = session.getUserId();
-      return await this.profilesService.update(authid, updateProfileDto);
+      AuthId = session.getUserId();
+      return await this.profilesService.update(AuthId, updateProfileDto);
     } catch (err) {
       throw new UpdateException(err);
     }

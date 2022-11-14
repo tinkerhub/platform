@@ -25,7 +25,7 @@ export class ProfilesService {
 
   // Method to CREATE a new profile
   async create(createProfileDto: CreateProfileDto) {
-    const ReadResp = await this.read(createProfileDto.authid);
+    const ReadResp = await this.read(createProfileDto.AuthId);
     const EmailResp = await this.EmailRead(createProfileDto.email);
     if (ReadResp.data != null) {
       throw new CreateException('User Exists');
@@ -54,10 +54,10 @@ export class ProfilesService {
   }
 
   // Method to READ an existing profile
-  async read(authid: string) {
+  async read(AuthId: string) {
     const resp = await this.prismaService.user.findFirst({
       where: {
-        authid,
+        authid: AuthId,
       },
     });
     return this.Success({
@@ -83,7 +83,7 @@ export class ProfilesService {
   }
 
   // Method to UPDATE an existing profile
-  async update(authid: string, updateProfileDto: UpdateProfileDto) {
+  async update(AuthId: string, updateProfileDto: UpdateProfileDto) {
     const EmailResp = await this.EmailRead(updateProfileDto.email);
     if (EmailResp.data != null) {
       throw new UpdateException('Email exists');
@@ -93,7 +93,7 @@ export class ProfilesService {
     if (updateProfileDto.skills === undefined) {
       // It works
       resp = await this.prismaService.user.update({
-        where: { authid },
+        where: { authid: AuthId },
         // @ts-ignore
         data: updateProfileDto,
       });
@@ -105,7 +105,7 @@ export class ProfilesService {
       }));
 
       resp = await this.prismaService.user.update({
-        where: { authid },
+        where: { authid: AuthId },
         data: {
           ...updateProfileDto,
           skills: { set: skillArray },
