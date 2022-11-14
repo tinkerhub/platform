@@ -25,12 +25,12 @@ export class ProfilesService {
 
   // Method to CREATE a new profile
   async create(createProfileDto: CreateProfileDto) {
-    const ReadResp = await this.read(createProfileDto.authId);
-    const EmailResp = await this.EmailRead(createProfileDto.email);
-    if (ReadResp.data != null) {
+    const user = await this.getUserById(createProfileDto.authId);
+    const userByEmail = await this.getEmailRead(createProfileDto.email);
+    if (user.data != null) {
       throw new CreateException('User Exists');
     }
-    if (EmailResp != null && EmailResp.data != null) {
+    if (userByEmail != null && userByEmail.data != null) {
       throw new CreateException('User with same email exists');
     }
 
@@ -54,10 +54,10 @@ export class ProfilesService {
   }
 
   // Method to READ an existing profile
-  async read(authId: string) {
+  async getUserById(authId: string) {
     const resp = await this.prismaService.user.findFirst({
       where: {
-        authid: authId,
+        authId,
       },
     });
     return this.Success({
@@ -67,7 +67,7 @@ export class ProfilesService {
   }
 
   // Method to READ an existing profile with Email
-  async EmailRead(email: string | undefined) {
+  async getEmailRead(email: string | undefined) {
     if (typeof email === 'undefined') {
       return { data: null };
     }
@@ -84,7 +84,7 @@ export class ProfilesService {
 
   // Method to UPDATE an existing profile
   async update(authId: string, updateProfileDto: UpdateProfileDto) {
-    const EmailResp = await this.EmailRead(updateProfileDto.email);
+    const EmailResp = await this.getEmailRead(updateProfileDto.email);
     if (EmailResp.data != null) {
       throw new UpdateException('Email exists');
     }
@@ -93,7 +93,7 @@ export class ProfilesService {
     if (updateProfileDto.skills === undefined) {
       // It works
       resp = await this.prismaService.user.update({
-        where: { authid: authId },
+        where: { authId },
         // @ts-ignore
         data: updateProfileDto,
       });
@@ -105,7 +105,7 @@ export class ProfilesService {
       }));
 
       resp = await this.prismaService.user.update({
-        where: { authid: authId },
+        where: { authId },
         data: {
           ...updateProfileDto,
           skills: { set: skillArray },

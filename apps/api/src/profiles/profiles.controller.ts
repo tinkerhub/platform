@@ -42,7 +42,7 @@ export class ProfilesController {
     let authId: string;
     try {
       authId = session.getUserId();
-      return await this.profilesService.read(authId);
+      return await this.profilesService.getUserById(authId);
     } catch (err) {
       throw new ReadException(err);
     }
