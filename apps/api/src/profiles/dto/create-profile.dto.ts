@@ -4,7 +4,7 @@ import { IsArray, IsBoolean, IsEmail, IsNotEmpty, IsString, ValidateIf } from 'c
 
 export class CreateProfileDto {
   @ApiProperty()
-  authid: string;
+  authId: string;
 
   @IsNotEmpty()
   @IsString()
@@ -15,16 +15,16 @@ export class CreateProfileDto {
   email: string;
 
   @IsString()
-  campus: string;
+  collegeId: string;
 
   @ValidateIf((el) => el.desc === 'Student')
   @IsString()
   @Type(() => Number)
-  passyear: number;
+  passYear: number;
 
   @IsNotEmpty()
   @IsString()
-  desc: string;
+  description: string;
 
   @IsString()
   district: string;
@@ -48,9 +48,8 @@ export class CreateProfileDto {
   @IsString()
   pronoun: string;
 
-  @IsNotEmpty()
   @IsArray()
-  skills: string[];
+  skills: Array<string>;
 
   @IsString()
   street: string;

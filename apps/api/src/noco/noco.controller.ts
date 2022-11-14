@@ -13,4 +13,13 @@ export class NocoController {
   ) {
     return this.nocoService.collegeName(search, limit, page);
   }
+
+  @Get('skills')
+  async skills(
+    @Query('search') search: string,
+    @Query('limit') limit: string,
+    @Query('page') page: string
+  ) {
+    return this.nocoService.skills(search, limit, page);
+  }
 }
