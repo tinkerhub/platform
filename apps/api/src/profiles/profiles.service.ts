@@ -100,19 +100,15 @@ export class ProfilesService {
       // Magic :)
     } else {
       // @ts-ignore
-      const skillArray = updateProfileDto.skills.map((e: any) => ({
-        create: { name: e.name },
-        where: {
-          id: e.id,
-        },
+      const skillArray = updateProfileDto.skills.map((id: any) => ({
+        id,
       }));
 
       resp = await this.prismaService.user.update({
         where: { authid },
         data: {
           ...updateProfileDto,
-          // @ts-ignore
-          skills: { connectOrCreate: skillArray },
+          skills: { set: skillArray },
         },
       });
     }
