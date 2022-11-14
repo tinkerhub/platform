@@ -4,7 +4,7 @@ import { IsArray, IsBoolean, IsEmail, IsNotEmpty, IsString, ValidateIf } from 'c
 
 export class CreateProfileDto {
   @ApiProperty()
-  AuthId: string;
+  authId: string;
 
   @IsNotEmpty()
   @IsString()

@@ -22,10 +22,10 @@ export class ProfilesController {
     @Session() session: SessionContainer
   ) {
     try {
-      const AuthId = session.getUserId();
-      const mobile = (await Passwordless.getUserById({ userId: AuthId }))!.phoneNumber!;
+      const authId = session.getUserId();
+      const mobile = (await Passwordless.getUserById({ userId: authId }))!.phoneNumber!;
       const createProfile = createProfileDto;
-      createProfile.AuthId = AuthId;
+      createProfile.authId = authId;
       createProfile.mobile = mobile;
       return await this.profilesService.create(createProfile);
     } catch (err) {
@@ -39,10 +39,10 @@ export class ProfilesController {
     @Res({ passthrough: true }) res: any,
     @Session() session: SessionContainer
   ) {
-    let AuthId: string;
+    let authId: string;
     try {
-      AuthId = session.getUserId();
-      return await this.profilesService.read(AuthId);
+      authId = session.getUserId();
+      return await this.profilesService.read(authId);
     } catch (err) {
       throw new ReadException(err);
     }
@@ -55,10 +55,10 @@ export class ProfilesController {
     @Body() updateProfileDto: UpdateProfileDto,
     @Session() session: SessionContainer
   ) {
-    let AuthId: string;
+    let authId: string;
     try {
-      AuthId = session.getUserId();
-      return await this.profilesService.update(AuthId, updateProfileDto);
+      authId = session.getUserId();
+      return await this.profilesService.update(authId, updateProfileDto);
     } catch (err) {
       throw new UpdateException(err);
     }

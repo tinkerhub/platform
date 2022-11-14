@@ -12,7 +12,7 @@ datasource db {
 
 model User {
   id                    String   @id @unique @default(cuid()) @db.VarChar(25)
-  authid                String?  @unique // SuperTokens Authentication ID
+  authId                String?  @unique // SuperTokens Authentication ID
   name                  String
   email                 String   @unique
   college               College  @relation(fields: [collegeId], references: [id])
