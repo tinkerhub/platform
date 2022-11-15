@@ -12,20 +12,33 @@ datasource db {
 
 model User {
   id                    String   @id @unique @default(cuid()) @db.VarChar(25)
-  authid                String?  @unique // SuperTokens Authentication ID
+  authId                String?  @unique // SuperTokens Authentication ID
   name                  String
   email                 String   @unique
-  campus                String?
-  desc                  String
+  college               College  @relation(fields: [collegeId], references: [id])
+  collegeId             String
+  campusCommunityActive Boolean?
+  passYear              Int?
+  description           String
   district              String?
   dob                   DateTime
   house                 String?
-  mentor                Boolean?
+  mentor                Boolean
   mobile                String?  @unique
   pin                   String?
   pronoun               String?
-  skills                String[]
   street                String?
-  CampusCommunityActive String?
-  passyear              Int?
+  skills                Skill[]
+}
+
+model College {
+  id   String @id
+  name String @unique
+  user User[]
+}
+
+model Skill {
+  id   String @id @default(cuid()) @db.VarChar(25)
+  name String @unique
+  user User[]
 }

@@ -1,18 +1,10 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
-import {
-  IsArray,
-  IsBoolean,
-  IsEmail,
-  IsNotEmpty,
-  IsString,
-  ValidateIf,
-  IsNumber,
-} from 'class-validator';
+import { IsArray, IsBoolean, IsEmail, IsNotEmpty, IsString, ValidateIf } from 'class-validator';
 
 export class CreateProfileDto {
   @ApiProperty()
-  authid: string;
+  authId: string;
 
   @IsNotEmpty()
   @IsString()
@@ -24,15 +16,16 @@ export class CreateProfileDto {
 
   @ValidateIf((el) => el.desc === 'Student')
   @IsString()
-  campus: string;
+  collegeId: string;
 
   @ValidateIf((el) => el.desc === 'Student')
-  @IsNumber()
-  passyear: number;
+  @IsString()
+  @Type(() => Number)
+  passYear: number;
 
   @IsNotEmpty()
   @IsString()
-  desc: string;
+  description: string;
 
   @IsString()
   district: string;
@@ -60,12 +53,12 @@ export class CreateProfileDto {
   pronoun: string;
 
   @IsArray()
-  skills: string[];
+  skills: Array<string>;
 
   @IsString()
   street: string;
 
   @ValidateIf((el) => el.desc === 'Student')
-  @IsString()
-  CampusCommunityActive: string;
+  @IsBoolean()
+  campusCommunityActive: boolean;
 }
