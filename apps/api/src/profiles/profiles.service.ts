@@ -36,9 +36,6 @@ export class ProfilesService {
     const skillArray = createProfileDto.skills.map((id: string) => ({
       id,
     }));
-    createProfileDto.skills.forEach((id) => {
-      console.log(id);
-    });
     const resp = await this.prismaService.user.create({
       data: {
         ...createProfileDto,
