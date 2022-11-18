@@ -24,26 +24,25 @@ export class ProfilesService {
   }
 
   // Method to CREATE a new profile
-  async create(createProfileDto: CreateProfileDto) {
+  async createUser(createProfileDto: CreateProfileDto) {
     const user = await this.getUserById(createProfileDto.authId);
-    const userByEmail = await this.getEmailRead(createProfileDto.email);
+    const userByEmail = await this.getUserByEmail(createProfileDto.email);
     if (user.data != null) {
       throw new CreateException('User Exists');
     }
     if (userByEmail != null && userByEmail.data != null) {
       throw new CreateException('User with same email exists');
     }
-
-    const skillArray = createProfileDto.skills.map((e: any) => ({
-      create: { name: e.name },
-      where: {
-        id: e.id,
-      },
+    const skillArray = createProfileDto.skills.map((id: string) => ({
+      id,
     }));
+    createProfileDto.skills.forEach((id) => {
+      console.log(id);
+    });
     const resp = await this.prismaService.user.create({
       data: {
         ...createProfileDto,
-        skills: { connectOrCreate: skillArray },
+        skills: { connect: skillArray },
       },
     });
 
@@ -53,11 +52,26 @@ export class ProfilesService {
     });
   }
 
+  async getSkillById(id: string) {
+    const resp = await this.prismaService.skill.findFirst({
+      where: {
+        id,
+      },
+    });
+    return this.Success({
+      data: resp,
+      message: 'User info was read succesfully',
+    });
+  }
+
   // Method to READ an existing profile
   async getUserById(authId: string) {
     const resp = await this.prismaService.user.findFirst({
       where: {
         authId,
+      },
+      include: {
+        skills: true,
       },
     });
     return this.Success({
@@ -67,7 +81,7 @@ export class ProfilesService {
   }
 
   // Method to READ an existing profile with Email
-  async getEmailRead(email: string | undefined) {
+  async getUserByEmail(email: string | undefined) {
     if (typeof email === 'undefined') {
       return { data: null };
     }
@@ -83,8 +97,8 @@ export class ProfilesService {
   }
 
   // Method to UPDATE an existing profile
-  async update(authId: string, updateProfileDto: UpdateProfileDto) {
-    const EmailResp = await this.getEmailRead(updateProfileDto.email);
+  async updateUser(authId: string, updateProfileDto: UpdateProfileDto) {
+    const EmailResp = await this.getUserByEmail(updateProfileDto.email);
     if (EmailResp.data != null) {
       throw new UpdateException('Email exists');
     }
@@ -99,7 +113,6 @@ export class ProfilesService {
       });
       // Magic :)
     } else {
-      // @ts-ignore
       const skillArray = updateProfileDto.skills.map((id: any) => ({
         id,
       }));

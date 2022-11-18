@@ -15,7 +15,7 @@ export class ProfilesController {
   constructor(private readonly profilesService: ProfilesService) {}
 
   @Post()
-  async create(
+  async createUser(
     @Req() req: any,
     @Res({ passthrough: true }) res: any,
     @Body() createProfileDto: CreateProfileDto,
@@ -27,14 +27,14 @@ export class ProfilesController {
       const createProfile = createProfileDto;
       createProfile.authId = authId;
       createProfile.mobile = mobile;
-      return await this.profilesService.create(createProfile);
+      return await this.profilesService.createUser(createProfile);
     } catch (err) {
       throw new CreateException(err);
     }
   }
 
   @Get()
-  async read(
+  async getUser(
     @Req() req: any,
     @Res({ passthrough: true }) res: any,
     @Session() session: SessionContainer
@@ -49,7 +49,7 @@ export class ProfilesController {
   }
 
   @Patch()
-  async update(
+  async updateUser(
     @Req() req: any,
     @Res({ passthrough: true }) res: any,
     @Body() updateProfileDto: UpdateProfileDto,
@@ -58,7 +58,7 @@ export class ProfilesController {
     let authId: string;
     try {
       authId = session.getUserId();
-      return await this.profilesService.update(authId, updateProfileDto);
+      return await this.profilesService.updateUser(authId, updateProfileDto);
     } catch (err) {
       throw new UpdateException(err);
     }
