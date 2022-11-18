@@ -6,7 +6,7 @@ export class NocoService {
   constructor(private prismaService: PrismaService) {}
 
   // Method to return college names
-  async collegeName(cname: string, limit: string, page: string) {
+  async getCollegeName(cname: string, limit: string, page: string) {
     const data = await this.prismaService.college.findMany({
       where: {
         name: {
@@ -20,7 +20,7 @@ export class NocoService {
     return data.slice(startIndex, endIndex);
   }
 
-  async skills(cname: string, limit: string, page: string) {
+  async getSkills(cname: string, limit: string, page: string) {
     const data = await this.prismaService.skill.findMany({
       where: {
         name: {

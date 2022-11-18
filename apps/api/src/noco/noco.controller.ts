@@ -6,20 +6,20 @@ export class NocoController {
   constructor(private readonly nocoService: NocoService) {}
 
   @Get('college')
-  async collegeName(
+  async getCollegeName(
     @Query('search') search: string,
     @Query('limit') limit: string,
     @Query('page') page: string
   ) {
-    return this.nocoService.collegeName(search, limit, page);
+    return this.nocoService.getCollegeName(search, limit, page);
   }
 
   @Get('skills')
-  async skills(
+  async getSkills(
     @Query('search') search: string,
     @Query('limit') limit: string,
     @Query('page') page: string
   ) {
-    return this.nocoService.skills(search, limit, page);
+    return this.nocoService.getSkills(search, limit, page);
   }
 }
