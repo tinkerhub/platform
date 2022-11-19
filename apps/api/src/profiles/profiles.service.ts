@@ -69,6 +69,7 @@ export class ProfilesService {
       },
       include: {
         skills: true,
+        college: true,
       },
     });
     return this.Success({
