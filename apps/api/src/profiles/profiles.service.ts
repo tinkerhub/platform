@@ -41,6 +41,10 @@ export class ProfilesService {
         ...createProfileDto,
         skills: { connect: skillArray },
       },
+      include: {
+        skills: true,
+        college: true,
+      },
     });
 
     return this.Success({
@@ -108,6 +112,10 @@ export class ProfilesService {
         where: { authId },
         // @ts-ignore
         data: updateProfileDto,
+        include: {
+          skills: true,
+          college: true,
+        },
       });
       // Magic :)
     } else {
@@ -120,6 +128,10 @@ export class ProfilesService {
         data: {
           ...updateProfileDto,
           skills: { set: skillArray },
+        },
+        include: {
+          skills: true,
+          college: true,
         },
       });
     }

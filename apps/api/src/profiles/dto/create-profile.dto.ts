@@ -14,10 +14,11 @@ export class CreateProfileDto {
   @IsEmail()
   email: string;
 
+  @ValidateIf((el) => el.description === 'Student')
   @IsString()
   collegeId: string;
 
-  @ValidateIf((el) => el.desc === 'Student')
+  @ValidateIf((el) => el.description === 'Student')
   @IsString()
   @Type(() => Number)
   passYear: number;
@@ -54,7 +55,7 @@ export class CreateProfileDto {
   @IsString()
   street: string;
 
-  @ValidateIf((el) => el.desc === 'Student')
+  @ValidateIf((el) => el.description === 'Student')
   @IsBoolean()
   campusCommunityActive: boolean;
 }

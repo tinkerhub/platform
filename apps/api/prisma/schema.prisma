@@ -15,8 +15,8 @@ model User {
   authId                String?  @unique // SuperTokens Authentication ID
   name                  String
   email                 String   @unique
-  college               College  @relation(fields: [collegeId], references: [id])
-  collegeId             String
+  college               College? @relation(fields: [collegeId], references: [id])
+  collegeId             String?
   campusCommunityActive Boolean?
   passYear              Int?
   description           String
