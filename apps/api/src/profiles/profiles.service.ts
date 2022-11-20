@@ -41,6 +41,10 @@ export class ProfilesService {
         ...createProfileDto,
         skills: { connect: skillArray },
       },
+      include: {
+        skills: true,
+        college: true,
+      },
     });
 
     return this.Success({
