@@ -7,11 +7,11 @@ import { ENV } from '../config';
 
 export const authConfig = () => ({
   appInfo: {
-    appName: ENV.appName,
+    appName: ENV.appName || 'platform',
     apiDomain: ENV.apiDomain,
-    websiteDomain: ENV.domain,
-    apiBasePath: ENV.apiPath,
-    websiteBasePath: ENV.webPath,
+    websiteDomain: ENV.domain || 'http://localhost:3000',
+    apiBasePath: ENV.apiPath || '/auth',
+    websiteBasePath: ENV.webPath || '/auth',
   },
   recipeList: [
     Passwordless.init({
