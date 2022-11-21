@@ -10,7 +10,12 @@
   "exclude": [
     "node_modules"
   ],
+  "baseUrl": ".",
   "compilerOptions": {
     "incremental": true
-  }
+  },
+  "paths": {
+    "@app/*": ["./*"]
+  },
+  "typeRoots": ["./node_modules/@types/"]
 }
