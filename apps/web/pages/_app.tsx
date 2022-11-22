@@ -2,6 +2,7 @@
 import { ChakraProvider } from '@chakra-ui/react';
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
 import SuperTokens, { SuperTokensWrapper } from 'supertokens-auth-react';
 import { authConfig } from '../auth';
@@ -19,6 +20,8 @@ if (typeof window !== 'undefined') {
   SuperTokens.init(authConfig());
 }
 
+const queryClient = new QueryClient();
+
 const MyApp = ({ Component, pageProps }: ComponentWithPageLayout) => {
   const router = useRouter();
   const path = router.pathname.split('/')[1];
@@ -27,17 +30,19 @@ const MyApp = ({ Component, pageProps }: ComponentWithPageLayout) => {
       <Head>
         <title>{path} / tinkerhub</title>
       </Head>
-      <AuthContext>
-        <ChakraProvider theme={theme}>
-          {Component.Layout ? (
-            <Component.Layout>
+      <QueryClientProvider client={queryClient}>
+        <AuthContext>
+          <ChakraProvider theme={theme}>
+            {Component.Layout ? (
+              <Component.Layout>
+                <Component {...pageProps} />
+              </Component.Layout>
+            ) : (
               <Component {...pageProps} />
-            </Component.Layout>
-          ) : (
-            <Component {...pageProps} />
-          )}
-        </ChakraProvider>
-      </AuthContext>
+            )}
+          </ChakraProvider>
+        </AuthContext>
+      </QueryClientProvider>
     </SuperTokensWrapper>
   );
 };
