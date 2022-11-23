@@ -2,7 +2,7 @@
 import { Box, Flex, Heading, Text } from '@chakra-ui/react';
 import Passwordless from 'supertokens-auth-react/recipe/passwordless';
 import Session from 'supertokens-auth-react/recipe/session';
-import { userInputCodeFormStyle, emailOrPhoneFormStyle } from './overrideStyle';
+import { userInputCodeFormStyle, emailOrPhoneFormStyle } from './OverrideStyle';
 import { ENV } from '../config';
 
 export const authConfig = () => ({

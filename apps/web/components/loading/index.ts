@@ -1,2 +1,2 @@
 export { Circle } from './Circle';
-export { PageLoader } from './PageLoader';
+export { PageLoader } from './Loader';
