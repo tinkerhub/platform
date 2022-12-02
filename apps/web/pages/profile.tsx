@@ -3,6 +3,7 @@ import { useState } from 'react';
 import type { NextPageWithLayout } from 'next';
 import { Box, Button, Flex, useToast } from '@chakra-ui/react';
 import { InferType } from 'yup';
+import { SessionAuth } from 'supertokens-auth-react/recipe/session';
 import { useForm, SubmitHandler, FormProvider } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { registerFormValidator } from '../views/wizard';
@@ -60,9 +61,8 @@ const Index: NextPageWithLayout = () => {
       district: val.district?.value || '',
       description: val.description.value,
       skills: skillsArr || Dummey,
-      campusCommunityActive: val.campusCommunityActive?.value,
       collegeId: val.collegeId?.value,
-      passYear: val.passYear?.value,
+      passYear: `${val.passYear?.value}`,
       email: undefined,
     };
     setEdit((el) => !el);
@@ -92,46 +92,48 @@ const Index: NextPageWithLayout = () => {
   };
 
   return (
-    <Box mt="2" mb="50px">
-      <FormProvider {...methods}>
-        <form onSubmit={methods.handleSubmit(updateProfile)}>
-          <Box>
-            <ProfileBar
-              copyMembershipId={copyMembershipId}
-              isEdit={isEdit}
-              editHandler={editHandler}
-              id={user?.id}
-              cancelEditHandler={cancelEditHandler}
-            />
-          </Box>
-          <Flex
-            flexDirection={{ base: 'column', lg: 'row' }}
-            w="100%"
-            justifyContent="space-between"
-            alignItems="center"
-            mt={{ base: '20px', lg: '40px' }}
-          >
-            <RowOne isEdit={isEdit} />
-            <RowTwo isEdit={isEdit} />
-            <RowThree isEdit={isEdit} />
-            {!isEdit && (
-              <Button
-                w="100%"
-                mt="20px"
-                _hover={{ cursor: 'pointer', bg: '#1328EC' }}
-                display={{ lg: 'none' }}
-                type="submit"
-                colorScheme="blue"
-                backgroundColor="rgba(65, 83, 240, 1)"
-                color="white"
-              >
-                Save
-              </Button>
-            )}
-          </Flex>
-        </form>
-      </FormProvider>
-    </Box>
+    <SessionAuth>
+      <Box mt="2" mb="50px">
+        <FormProvider {...methods}>
+          <form onSubmit={methods.handleSubmit(updateProfile)}>
+            <Box>
+              <ProfileBar
+                copyMembershipId={copyMembershipId}
+                isEdit={isEdit}
+                editHandler={editHandler}
+                id={user?.id}
+                cancelEditHandler={cancelEditHandler}
+              />
+            </Box>
+            <Flex
+              flexDirection={{ base: 'column', lg: 'row' }}
+              w="100%"
+              justifyContent="space-between"
+              alignItems="center"
+              mt={{ base: '20px', lg: '40px' }}
+            >
+              <RowOne isEdit={isEdit} />
+              <RowTwo isEdit={isEdit} />
+              <RowThree isEdit={isEdit} />
+              {!isEdit && (
+                <Button
+                  w="100%"
+                  mt="20px"
+                  _hover={{ cursor: 'pointer', bg: '#1328EC' }}
+                  display={{ lg: 'none' }}
+                  type="submit"
+                  colorScheme="blue"
+                  backgroundColor="rgba(65, 83, 240, 1)"
+                  color="white"
+                >
+                  Save
+                </Button>
+              )}
+            </Flex>
+          </form>
+        </FormProvider>
+      </Box>
+    </SessionAuth>
   );
 };
 
