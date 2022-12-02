@@ -4,6 +4,7 @@ const runtimeCaching = require('next-pwa/cache');
 const nextConfig = withPwa({
   reactStrictMode: true,
   swcMinify: true,
+  target: 'serverless',
   pwa: {
     dest: 'public',
     scope: '/',
