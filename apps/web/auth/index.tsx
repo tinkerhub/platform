@@ -17,6 +17,10 @@ export const authConfig = () => ({
     Passwordless.init({
       useShadowDom: false,
       contactMethod: 'PHONE',
+      palette: {
+        textLabel: '#adb5bd',
+        //   textTitle: localStorage.getItem('chakra-ui-color-mode') === 'light' ? 'black' : 'white',
+      },
       override: {
         components: {
           // eslint-disable-next-line react/prop-types, arrow-body-style
@@ -48,20 +52,17 @@ export const authConfig = () => ({
         userInputCodeFormStyle,
         emailOrPhoneFormStyle,
       },
-      getRedirectionURL: async () =>
-        // if (context.action === 'SUCCESS') {
-        //   // called on a successful sign in / up. Where should the user go next?
-        //   const isWizardCompleted = localStorage.getItem('isWizardCompleted'); // returns null or "YES"
-
-        //   if (!isWizardCompleted) {
-        //     // user signed up but not completed wizardform
-        //     return '/wizard';
-        //   }
-        //   // user signed in
-        //   return '/profile';
-        // }
-        // return undefined to let the default behaviour play out
-        undefined,
+      getRedirectionURL: async (context) => {
+        // called on a successful sign in / up. Where should the user go next?
+        if (context.action === 'SUCCESS') {
+          const isWizardCompleted = localStorage.getItem('isWizardCompleted'); // returns null or "YES"
+          if (isWizardCompleted) {
+            // user signed up and have wizardform completed
+            return '/profile'; // redirect to profile page
+          }
+        }
+        return undefined;
+      },
     }),
     Session.init(),
   ],

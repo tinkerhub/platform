@@ -27,11 +27,6 @@ export const Desp: Options[] = [
   { label: 'Professional', value: 'Professional' },
 ];
 
-export const Comm: Options[] = [
-  { label: 'Yes', value: true },
-  { label: 'No', value: false },
-];
-
 export interface Clg {
   name: string;
   id: string;
@@ -109,25 +104,6 @@ export const Two = () => {
             )}
           />
         </Box>
-        {role === 'Student' && (
-          <Box display="flex" flexDirection="column" justifyContent="space-between">
-            <Controller
-              control={control}
-              name="campusCommunityActive"
-              render={({ field, fieldState: { error: commError } }) => (
-                <FormControl
-                  label="CampusCommunityActive"
-                  isInvalid={!!commError}
-                  id="CampusCommunityActive"
-                >
-                  <FormLabel>Tinkerhub campus community is active</FormLabel>
-                  <Select options={Comm} {...field} />
-                  {commError && <FormErrorMessage>Please pick an option</FormErrorMessage>}
-                </FormControl>
-              )}
-            />
-          </Box>
-        )}
         {role === 'Student' && (
           <Box display="flex" flexDirection="column" justifyContent="space-between">
             <Controller

@@ -76,6 +76,7 @@ services:
       API_KEYS: ${SUPERTOKENS_API_KEY}
     networks:
       - app_network
+      - default
     restart: unless-stopped
     healthcheck:
       test: >
