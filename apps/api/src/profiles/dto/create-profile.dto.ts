@@ -54,8 +54,4 @@ export class CreateProfileDto {
 
   @IsString()
   street: string;
-
-  @ValidateIf((el) => el.description === 'Student')
-  @IsBoolean()
-  campusCommunityActive: boolean;
 }
