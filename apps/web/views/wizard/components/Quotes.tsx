@@ -7,7 +7,7 @@ interface Word extends Child {
 
 export const Quotes = ({ word, children }: Word) => (
   <Flex
-    mb="80px"
+    // mb="80px"
     justifyContent="space-between"
     flexDirection={{ base: 'column', lg: 'row' }}
     alignItems={{ base: 'center', lg: 'normal' }}

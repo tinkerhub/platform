@@ -40,7 +40,7 @@ export const Final = ({ isLoading, id = 'ERROR', error, user }: Prop) => {
     if (isLoading && !error) {
       setTimeout(() => {
         setResult(true);
-      }, 4200);
+      }, 4600);
     }
   }, [isLoading, error]);
 
