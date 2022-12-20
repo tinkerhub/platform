@@ -23,7 +23,7 @@ const Home: NextPageWithLayout = () => {
           </Heading>
           <Box
             py={4}
-            fontSize={20}
+            fontSize={{ base: '16px', md: '20px' }}
             maxW="600px"
             mt="30px"
             color={colorMode === 'light' ? 'rgba(27, 27, 27, 1)' : '#e0e0e0'}

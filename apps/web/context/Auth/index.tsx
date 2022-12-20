@@ -46,6 +46,7 @@ export const AuthContext = ({ children }: Child) => {
         // setting the info about the wizard in localstorage so that we can access it in supertokens redirection
         setUser(data.data);
         localStorage.setItem('isWizardCompleted', 'YES');
+        router.push('/profile');
       }
     } catch {
       router.push('/');

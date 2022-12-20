@@ -1,4 +1,4 @@
-import { Box, Center, Spinner } from '@chakra-ui/react';
+import { Box, Center } from '@chakra-ui/react';
 import dynamic from 'next/dynamic';
 import { useEffect } from 'react';
 import SuperTokens from 'supertokens-auth-react';
@@ -19,25 +19,8 @@ const Auth = () => {
     }
   }, []);
 
-  if (!SuperTokensComponentNoSSR) {
-    return (
-      <Center
-        minH="550px"
-        w="450px"
-        bg="white"
-        p="35px"
-        borderRadius="lg"
-        borderColor="rgba(200, 200, 200, 1)"
-        borderWidth=".5px"
-        mb="90px"
-      >
-        <Spinner thickness="4px" speed="0.65s" emptyColor="gray.200" color="blue.500" size="xl" />
-      </Center>
-    );
-  }
-
   return (
-    <Center mb="120px" mt="30px">
+    <Center mb="100px" mt="30px">
       <Box
         borderRadius="lg"
         borderColor={{ base: 'none', lg: 'rgba(200, 200, 200, 1)' }}

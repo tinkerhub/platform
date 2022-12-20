@@ -23,7 +23,7 @@ export const Footer = () => (
         color="rgba(177, 177, 177, 1)"
         mt="20px"
         maxW="900px"
-        fontSize="18px"
+        fontSize={{ base: '15px', md: '18px' }}
         textAlign={{ base: 'center', md: 'initial' }}
       >
         We are a community of tinkerers, makers, policy geeks & students and are working towards

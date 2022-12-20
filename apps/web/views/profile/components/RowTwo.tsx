@@ -14,7 +14,7 @@ import { useEffect, useState } from 'react';
 import { Controller, useFormContext, useController } from 'react-hook-form';
 import dayjs from 'dayjs';
 import { useAuthCtx } from '../../../hooks';
-import { Clg, Comm, Desp } from '../../wizard/components/Two';
+import { Clg, Desp } from '../../wizard/components/Two';
 import { IsEdit } from '../types';
 import { platformAPI } from '../../../config';
 
@@ -81,12 +81,7 @@ export const RowTwo = ({ isEdit }: IsEdit) => {
       // setting the state to change on frontend
       setValue('description', { label: userInfo?.description, value: userInfo?.description });
     }
-    if (userInfo?.campusCommunityActive) {
-      setValue('campusCommunityActive', {
-        label: userInfo.campusCommunityActive === true ? 'YES' : 'NO',
-        value: userInfo.campusCommunityActive,
-      });
-    }
+
     if (userInfo?.mentor) {
       setValue('mentor', userInfo.mentor ? 1 : 0);
     }
@@ -108,14 +103,14 @@ export const RowTwo = ({ isEdit }: IsEdit) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userInfo]);
 
-  const customStyles = {
-    // For the select it self, not the options of the select
-    control: (styles: any, { isDisabled }: { isDisabled: boolean }) => ({
-      ...styles,
-      // This is an example: backgroundColor: isDisabled ? 'rgba(206, 217, 224, 0.5)' : 'white'
-      color: isDisabled ? 'red' : 'white',
-    }),
-  };
+  // const customStyles = {
+  //   // For the select it self, not the options of the select
+  //   control: (styles: any, { isDisabled }: { isDisabled: boolean }) => ({
+  //     ...styles,
+  //     // This is an example: backgroundColor: isDisabled ? 'rgba(206, 217, 224, 0.5)' : 'white'
+  //     color: isDisabled ? 'red' : 'white',
+  //   }),
+  // };
 
   return (
     <VStack
@@ -142,25 +137,6 @@ export const RowTwo = ({ isEdit }: IsEdit) => {
             )}
           />
         </Box>
-        {role === 'Student' && (
-          <Box display="flex" flexDirection="column" justifyContent="space-between" mt="13px">
-            <Controller
-              control={control}
-              name="campusCommunityActive"
-              render={({ field, fieldState: { error: commError } }) => (
-                <FormControl
-                  label="CampusCommunityActive"
-                  isInvalid={!!commError}
-                  id="CampusCommunityActive"
-                >
-                  <FormLabel>Tinkerhub campus community is active</FormLabel>
-                  <Select options={Comm} {...field} isDisabled={isEdit} styles={customStyles} />
-                  <FormErrorMessage>Please pick an option</FormErrorMessage>
-                </FormControl>
-              )}
-            />
-          </Box>
-        )}
         {role === 'Student' && (
           <Box display="flex" flexDirection="column" justifyContent="space-between">
             <Controller

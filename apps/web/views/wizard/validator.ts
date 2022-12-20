@@ -6,11 +6,6 @@ const PickAnOptionValidator = Yup.object({
   label: Yup.string().required(),
 }).nullable();
 
-const campusCommValidator = Yup.object({
-  value: Yup.boolean().required(),
-  label: Yup.string().required(),
-}).nullable();
-
 export type Option = {
   label: string;
   value: string;
@@ -25,14 +20,6 @@ export const registerFormValidator = Yup.object({
   pronoun: PickAnOptionValidator.nullable().required('Please pick an option'),
   // Mobile: Yup.string().required(requiredErrorStatement('Mobile number')),
   description: PickAnOptionValidator.nullable().required('Please pick an option'),
-  campusCommunityActive: Yup.object()
-    .nullable()
-    .when('description', {
-      is: (val: Option) => val?.value === 'Student',
-      then: campusCommValidator
-        .nullable()
-        .required(requiredErrorStatement('Please pick an option')),
-    }),
   skills: Yup.array()
     .nullable()
     .max(5, 'Pick 5 skills maximum')
@@ -81,14 +68,6 @@ export const firstFormValidator = Yup.object({
 });
 export const secondValidator = Yup.object({
   description: PickAnOptionValidator.nullable().required('Please pick an option'),
-  campusCommunityActive: Yup.object()
-    .nullable()
-    .when('description', {
-      is: (val: Option) => val?.value === 'Student',
-      then: campusCommValidator
-        .nullable()
-        .required(requiredErrorStatement('Please pick an option')),
-    }),
   pronoun: PickAnOptionValidator.nullable().required('Please pick an option'),
   skills: Yup.array()
     .nullable()

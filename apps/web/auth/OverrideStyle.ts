@@ -38,6 +38,9 @@ export const userInputCodeFormStyle = {
       color: 'black',
     },
   },
+  secondaryLinkWithLeftArrow: {
+    display: 'none',
+  },
 };
 
 export const emailOrPhoneFormStyle = {

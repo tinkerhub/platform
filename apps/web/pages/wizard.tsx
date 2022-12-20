@@ -55,7 +55,6 @@ const Wizard: NextPageWithLayout = () => {
         district: val.district?.value || '',
         description: val.description.value,
         skills: skillsArr || Dummey,
-        campusCommunityActive: val.campusCommunityActive?.value,
         collegeId: val.collegeId?.value,
         passYear: val.passYear?.value,
       };
