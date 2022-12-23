@@ -114,3 +114,16 @@ export const stepByStepValidator: Record<number, OptionalObjectSchema<any>> = {
   2: secondValidator,
   3: thirdValidator,
 };
+
+// phone number validation for login page
+
+const phoneRegExp =
+  /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
+
+export const phoneNumber = Yup.object({
+  phoneNumber: Yup.string()
+    .required()
+    .min(10)
+    .max(10)
+    .matches(phoneRegExp, 'Phone number is not valid'),
+});
