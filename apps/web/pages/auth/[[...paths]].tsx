@@ -11,48 +11,95 @@ import {
   useToast,
   InputGroup,
   InputLeftAddon,
+  Divider,
   Text,
 } from '@chakra-ui/react';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import * as Yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import SuperTokens from 'supertokens-auth-react';
 import { useForm } from 'react-hook-form';
-import { redirectToAuth, createCode, resendCode } from 'supertokens-auth-react/recipe/passwordless';
+import {
+  redirectToAuth,
+  createCode,
+  resendCode,
+  consumeCode,
+  getLoginAttemptInfo,
+} from 'supertokens-auth-react/recipe/passwordless';
 import { BaseLayout } from '../../layout';
-import { phoneNumber } from '../../views/wizard/validator';
+import { phoneNumber, OTP } from '../../views/wizard/validator';
 
 type FormType = Yup.InferType<typeof phoneNumber>;
+type OTPType = Yup.InferType<typeof OTP>;
 
 const Auth = () => {
   // redirect to "/auth" page if "/auth/random" route occur
+  useEffect(() => {
+    if (SuperTokens.canHandleRoute() === false) {
+      redirectToAuth();
+    }
+  }, []);
+
+  // this state is used to determine if the user has recieved the otp and is ready to enter the otp
+  const [isOTPscreenisVisible, setOTPscreenisVisible] = useState<boolean>(false);
+
+  const hasInitialOTPBeenSent = async () => (await getLoginAttemptInfo()) !== undefined;
 
   const toast = useToast();
 
   const {
     register,
     handleSubmit,
+    getValues,
     formState: { errors },
   } = useForm<FormType>({
     mode: 'onSubmit',
     resolver: yupResolver(phoneNumber),
   });
 
+  const {
+    register: registerOTP,
+    handleSubmit: handleOTPsubmit,
+    formState: { errors: otpError },
+  } = useForm<OTPType>({
+    mode: 'onSubmit',
+    resolver: yupResolver(OTP),
+  });
+
   const sendOTP = async (phone: string) => {
     try {
       await createCode({
-        phoneNumber: phone,
+        phoneNumber: `+91${phone}`,
       });
-
       // OTP sent successfully.
+      toast({
+        title: 'OTP sent successfully',
+        description: 'Please check your Phone for an OTP',
+        status: 'success',
+        duration: 9000,
+        isClosable: true,
+      });
       // 'Please check your Phone for an OTP')
     } catch (err: any) {
       if (err.isSuperTokensGeneralError === true) {
         // this may be a custom error message sent from the API by you,
         // or if the input email / phone number is not valid.
-        //   window.alert(err.message);
+        toast({
+          title: "Couldn't send OTP",
+          description: 'something went wrong while trying to send otp',
+          status: 'error',
+          duration: 9000,
+          isClosable: true,
+        });
       } else {
         //  window.alert('Oops! Something went wrong.');
+        toast({
+          title: "Couldn't send OTP",
+          description: 'something went wrong while trying to send otp',
+          status: 'error',
+          duration: 9000,
+          isClosable: true,
+        });
       }
     }
   };
@@ -76,13 +123,34 @@ const Auth = () => {
         window.location.assign('/auth');
       } else {
         // OTP resent successfully.
-        // 'Please check your email for the OTP');
+        // 'Please check your phone for the OTP');
+        toast({
+          title: 'OTP resent succesfully',
+          description: 'Please check your phone for the OTP',
+          status: 'success',
+          duration: 9000,
+          isClosable: true,
+        });
       }
     } catch (err: any) {
       if (err.isSuperTokensGeneralError === true) {
+        toast({
+          title: "Couldn't send OTP",
+          description: 'something went wrong while trying to send otp',
+          status: 'error',
+          duration: 9000,
+          isClosable: true,
+        });
         // this may be a custom error message sent from the API by you.
       } else {
         //         window.alert('Oops! Something went wrong.');
+        toast({
+          title: "Couldn't send OTP",
+          description: 'something went wrong while trying to send otp',
+          status: 'error',
+          duration: 9000,
+          isClosable: true,
+        });
       }
     }
   };
@@ -92,10 +160,77 @@ const Auth = () => {
   };
 
   useEffect(() => {
-    if (SuperTokens.canHandleRoute() === false) {
-      redirectToAuth();
-    }
+    (async () => {
+      const loginAttemptInfo = await hasInitialOTPBeenSent();
+      setOTPscreenisVisible(loginAttemptInfo);
+    })();
   }, []);
+
+  // used to verify the otp
+  const handleOTPInput = async (otp: string) => {
+    try {
+      const response = await consumeCode({
+        userInputCode: otp,
+      });
+
+      if (response.status === 'OK') {
+        // if (response.createdNewUser) {
+        //   // user sign up success
+        // } else {
+        //   // user sign in success
+        // }
+        window.location.assign('/wizard');
+      } else if (response.status === 'INCORRECT_USER_INPUT_CODE_ERROR') {
+        // the user entered an invalid OTP
+        toast({
+          title: 'Incorrect OTP',
+          description: 'The enterd OTP is wrong please try again',
+          status: 'error',
+          duration: 9000,
+          isClosable: true,
+        });
+      } else if (response.status === 'EXPIRED_USER_INPUT_CODE_ERROR') {
+        // it can come here if the entered OTP was correct, but has expired because
+        // it was generated too long ago.
+        toast({
+          title: 'OTP Expired',
+          description: 'Old OTP entered , Please regenerate a new one and try again',
+          status: 'error',
+          duration: 9000,
+          isClosable: true,
+        });
+      } else {
+        // this can happen if the user tried an incorrect OTP too many times.
+        toast({
+          title: 'Login Failed',
+          description: 'multiple incorrect otp entry, please try again later',
+          status: 'error',
+          duration: 9000,
+          isClosable: true,
+        });
+        window.location.assign('/auth');
+      }
+    } catch (err: any) {
+      // if (err.isSuperTokensGeneralError === true) {
+      //   // this may be a custom error message sent from the API by you.
+      //   window.alert(err.message);
+      // } else {
+      //   window.alert('Oops! Something went wrong.');
+      // }
+    }
+    toast({
+      title: 'Something went wrong',
+      description: 'Please try again later',
+      status: 'error',
+      duration: 9000,
+      isClosable: true,
+    });
+  };
+
+  // sending otp to verify
+  const handleOTPSubmition = async (OTPObj: { otp: string }) => {
+    await handleOTPInput(OTPObj.otp);
+  };
 
   return (
     <Center mb="100px" mt="30px">
@@ -106,39 +241,81 @@ const Auth = () => {
         borderColor={{ base: 'none', lg: 'rgba(200, 200, 200, 1)' }}
         borderWidth={{ base: 'none', lg: '.5px' }}
       >
-        <Heading fontSize="40px" fontWeight="700" marginBottom="10px" mb="25px" textAlign="left">
-          Welcome to TinkerHub{' '}
-          <Box as="span" alignItems="flex-end">
-            👋
-          </Box>
-        </Heading>
+        {!isOTPscreenisVisible ? (
+          <>
+            <Heading
+              fontSize="40px"
+              fontWeight="700"
+              marginBottom="10px"
+              mb="25px"
+              textAlign="left"
+            >
+              Welcome to TinkerHub{' '}
+              <Box as="span" alignItems="flex-end">
+                👋
+              </Box>
+            </Heading>
 
-        <Text mb="20px" textAlign="left" fontWeight={400} maxHeight="300px">
-          We are thrilled to know that you want to join the TinkerHub mission. Let get started.
-        </Text>
+            <Text mb="20px" textAlign="left" fontWeight={400} maxHeight="300px">
+              We are thrilled to know that you want to join the TinkerHub mission. Let get started.
+            </Text>
+          </>
+        ) : (
+          <>
+            <Heading fontSize="2xl" textAlign="center">
+              Enter OTP
+            </Heading>
+            <Text textAlign="center" mt="10px" fontWeight="semibold" fontSize="sm">
+              An OTP was sent to you at <br /> {getValues('phoneNumber')}
+            </Text>
+            <Divider my="14px" />
+          </>
+        )}
+
         <Box>
-          <form onSubmit={handleSubmit(handlePhoneSubmition)}>
-            <FormControl isInvalid={!!errors.phoneNumber}>
-              <FormLabel>Phone number</FormLabel>
-              <InputGroup>
-                <InputLeftAddon>+91</InputLeftAddon>
-                <Input type="number" {...register('phoneNumber')} />
-              </InputGroup>
-              <FormErrorMessage>Phone number is not valid</FormErrorMessage>
+          {!isOTPscreenisVisible ? (
+            <form onSubmit={handleSubmit(handlePhoneSubmition)}>
+              <FormControl isInvalid={!!errors.phoneNumber}>
+                <FormLabel>Phone number</FormLabel>
+                <InputGroup>
+                  <InputLeftAddon>+91</InputLeftAddon>
+                  <Input type="number" {...register('phoneNumber')} />
+                </InputGroup>
+                <FormErrorMessage>Phone number is not valid</FormErrorMessage>
 
-              <Button
-                colorScheme="blue"
-                width="100%"
-                backgroundColor="rgba(65, 83, 240, 1)"
-                color="white"
-                _hover={{ cursor: 'pointer', bg: '#1328EC' }}
-                marginTop="16px"
-                type="submit"
-              >
-                Send OTP
-              </Button>
-            </FormControl>
-          </form>
+                <Button
+                  colorScheme="blue"
+                  width="100%"
+                  backgroundColor="rgba(65, 83, 240, 1)"
+                  color="white"
+                  _hover={{ cursor: 'pointer', bg: '#1328EC' }}
+                  marginTop="16px"
+                  type="submit"
+                >
+                  Send OTP
+                </Button>
+              </FormControl>
+            </form>
+          ) : (
+            <form onSubmit={handleOTPsubmit(handleOTPSubmition)}>
+              <FormControl isInvalid={!!otpError}>
+                <FormLabel>OTP</FormLabel>
+                <Input type="number" {...registerOTP('otp')} />
+                <FormErrorMessage>Please enter a valid OTP</FormErrorMessage>
+                <Button
+                  colorScheme="blue"
+                  width="100%"
+                  backgroundColor="rgba(65, 83, 240, 1)"
+                  color="white"
+                  _hover={{ cursor: 'pointer', bg: '#1328EC' }}
+                  marginTop="16px"
+                  type="submit"
+                >
+                  Verify OTP
+                </Button>
+              </FormControl>
+            </form>
+          )}
         </Box>
       </Box>
     </Center>

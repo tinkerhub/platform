@@ -127,3 +127,7 @@ export const phoneNumber = Yup.object({
     .max(10)
     .matches(phoneRegExp, 'Phone number is not valid'),
 });
+
+export const OTP = Yup.object({
+  otp: Yup.string().min(6).max(6).required('Please Enter a valid otp'),
+});
