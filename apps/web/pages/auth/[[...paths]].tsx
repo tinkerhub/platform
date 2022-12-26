@@ -42,11 +42,18 @@ const Auth = () => {
   }, []);
 
   // this state is used to determine if the user has recieved the otp and is ready to enter the otp
-  const [isOTPscreenisVisible, setOTPscreenisVisible] = useState<boolean>(false);
+  const [isOTPscreenisVisible, setOTPscreenisVisible] = useState<boolean>(true);
 
   const hasInitialOTPBeenSent = async () => (await getLoginAttemptInfo()) !== undefined;
 
   const toast = useToast();
+
+  const changePhoneNumber = () => {
+    // supertokens check whether an otp is sended or not by accessing the local storage
+    // so here we are removing it
+    localStorage.removeItem('supertokens-passwordless-loginAttemptInfo');
+    setOTPscreenisVisible(false);
+  };
 
   const {
     register,
@@ -298,7 +305,7 @@ const Auth = () => {
             </form>
           ) : (
             <form onSubmit={handleOTPsubmit(handleOTPSubmition)}>
-              <FormControl isInvalid={!!otpError}>
+              <FormControl isInvalid={!!otpError.otp}>
                 <Flex justifyContent="space-between">
                   <FormLabel>OTP</FormLabel>
                   <FormLabel
@@ -309,7 +316,7 @@ const Auth = () => {
                     Resend SMS
                   </FormLabel>
                 </Flex>
-                <Input type="number" {...registerOTP('otp')} />
+                <Input type="number" {...registerOTP('otp')} placeholder="Enter otp" />
                 <FormErrorMessage>Please enter a valid OTP</FormErrorMessage>
                 <Button
                   colorScheme="blue"
@@ -321,6 +328,16 @@ const Auth = () => {
                   type="submit"
                 >
                   Verify OTP
+                </Button>
+                <Button
+                  variant="outline"
+                  width="100%"
+                  marginTop="16px"
+                  type="submit"
+                  colorScheme="blue"
+                  onClick={changePhoneNumber}
+                >
+                  Change phoneNumber
                 </Button>
               </FormControl>
             </form>
