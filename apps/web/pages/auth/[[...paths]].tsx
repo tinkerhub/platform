@@ -13,6 +13,7 @@ import {
   InputLeftAddon,
   Divider,
   Text,
+  Flex,
 } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import * as Yup from 'yup';
@@ -70,8 +71,8 @@ const Auth = () => {
     try {
       await createCode({
         phoneNumber: `+91${phone}`,
-      });
-      // OTP sent successfully.
+      }); // OTP sent successfully.
+
       toast({
         title: 'OTP sent successfully',
         description: 'Please check your Phone for an OTP',
@@ -104,7 +105,6 @@ const Auth = () => {
     }
   };
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const resendOTP = async () => {
     try {
       const response = await resendCode();
@@ -299,7 +299,16 @@ const Auth = () => {
           ) : (
             <form onSubmit={handleOTPsubmit(handleOTPSubmition)}>
               <FormControl isInvalid={!!otpError}>
-                <FormLabel>OTP</FormLabel>
+                <Flex justifyContent="space-between">
+                  <FormLabel>OTP</FormLabel>
+                  <FormLabel
+                    onClick={resendOTP}
+                    color="#0075E4"
+                    _hover={{ cursor: 'pointer', textDecoration: 'underline' }}
+                  >
+                    Resend SMS
+                  </FormLabel>
+                </Flex>
                 <Input type="number" {...registerOTP('otp')} />
                 <FormErrorMessage>Please enter a valid OTP</FormErrorMessage>
                 <Button
