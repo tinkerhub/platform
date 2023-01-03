@@ -18,9 +18,6 @@ export const authConfig = () => ({
       palette: {
         textLabel: '#adb5bd',
       },
-      signInUpFeature: {
-        defaultCountry: 'IN',
-      },
     }),
     Session.init(),
   ],

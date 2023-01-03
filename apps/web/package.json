@@ -23,7 +23,7 @@
     "react-hook-form": "^7.33.1",
     "react-icons": "^4.4.0",
     "react-lottie": "^1.2.3",
-    "supertokens-auth-react": "^0.24.2",
+    "supertokens-auth-react": "^0.28.1",
     "yup": "^0.32.11"
   },
   "devDependencies": {

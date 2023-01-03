@@ -18,10 +18,10 @@ import {
 import { useEffect, useState } from 'react';
 import * as Yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
-import SuperTokens from 'supertokens-auth-react';
+import SuperTokens, { redirectToAuth } from 'supertokens-auth-react';
 import { useForm } from 'react-hook-form';
+import { useRouter } from 'next/router';
 import {
-  redirectToAuth,
   createCode,
   resendCode,
   consumeCode,
@@ -41,8 +41,10 @@ const Auth = () => {
     }
   }, []);
 
+  const router = useRouter();
+
   // this state is used to determine if the user has recieved the otp and is ready to enter the otp
-  const [isOTPscreenisVisible, setOTPscreenisVisible] = useState<boolean>(true);
+  const [isOTPscreenisVisible, setOTPscreenisVisible] = useState<boolean>(false);
 
   const hasInitialOTPBeenSent = async () => (await getLoginAttemptInfo()) !== undefined;
 
@@ -58,7 +60,6 @@ const Auth = () => {
   const {
     register,
     handleSubmit,
-    getValues,
     formState: { errors },
   } = useForm<FormType>({
     mode: 'onSubmit',
@@ -74,7 +75,7 @@ const Auth = () => {
     resolver: yupResolver(OTP),
   });
 
-  const sendOTP = async (phone: string) => {
+  const sendOTP = async (phone: string): Promise<void> => {
     try {
       await createCode({
         phoneNumber: `+91${phone}`,
@@ -88,6 +89,7 @@ const Auth = () => {
         isClosable: true,
       });
       // 'Please check your Phone for an OTP')
+      setOTPscreenisVisible(true);
     } catch (err: any) {
       if (err.isSuperTokensGeneralError === true) {
         // this may be a custom error message sent from the API by you,
@@ -127,7 +129,6 @@ const Auth = () => {
           duration: 9000,
           isClosable: true,
         });
-        window.location.assign('/auth');
       } else {
         // OTP resent successfully.
         // 'Please check your phone for the OTP');
@@ -171,7 +172,7 @@ const Auth = () => {
       const loginAttemptInfo = await hasInitialOTPBeenSent();
       setOTPscreenisVisible(loginAttemptInfo);
     })();
-  }, []);
+  }, [handleSubmit]);
 
   // used to verify the otp
   const handleOTPInput = async (otp: string) => {
@@ -179,6 +180,7 @@ const Auth = () => {
       const response = await consumeCode({
         userInputCode: otp,
       });
+      localStorage.removeItem('supertokens-passwordless-loginAttemptInfo');
 
       if (response.status === 'OK') {
         // if (response.createdNewUser) {
@@ -186,7 +188,7 @@ const Auth = () => {
         // } else {
         //   // user sign in success
         // }
-        window.location.assign('/wizard');
+        router.push('/profile');
       } else if (response.status === 'INCORRECT_USER_INPUT_CODE_ERROR') {
         // the user entered an invalid OTP
         toast({
@@ -215,7 +217,6 @@ const Auth = () => {
           duration: 9000,
           isClosable: true,
         });
-        window.location.assign('/auth');
       }
     } catch (err: any) {
       // if (err.isSuperTokensGeneralError === true) {
@@ -273,7 +274,7 @@ const Auth = () => {
               Enter OTP
             </Heading>
             <Text textAlign="center" mt="10px" fontWeight="semibold" fontSize="sm">
-              An OTP was sent to you at <br /> {getValues('phoneNumber')}
+              An OTP was sent to your phone
             </Text>
             <Divider my="14px" />
           </>
@@ -334,7 +335,6 @@ const Auth = () => {
                   width="100%"
                   marginTop="16px"
                   type="submit"
-                  colorScheme="blue"
                   onClick={changePhoneNumber}
                 >
                   Change phoneNumber
