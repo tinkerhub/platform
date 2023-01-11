@@ -7,6 +7,5 @@ export const debounce = <F extends (...args: any) => any>(func: F, waitFor = 100
     timeout = setTimeout(() => {
       func(...args);
     }, waitFor);
-    console.log(timeout);
   };
 };

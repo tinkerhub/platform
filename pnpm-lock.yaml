@@ -157,7 +157,7 @@ importers:
       react-hook-form: ^7.33.1
       react-icons: ^4.4.0
       react-lottie: ^1.2.3
-      supertokens-auth-react: ^0.24.2
+      supertokens-auth-react: ^0.28.1
       typescript: 4.7.4
       yup: ^0.32.11
     dependencies:
@@ -176,7 +176,7 @@ importers:
       react-hook-form: 7.34.0_react@18.2.0
       react-icons: 4.4.0_react@18.2.0
       react-lottie: 1.2.3_react@18.2.0
-      supertokens-auth-react: 0.24.2_nzjbfc7eybcehockioa7br7kbi
+      supertokens-auth-react: 0.28.1_nzjbfc7eybcehockioa7br7kbi
       yup: 0.32.11
     devDependencies:
       '@babel/core': 7.18.9
@@ -9518,6 +9518,7 @@ packages:
 
   /sourcemap-codec/1.4.8:
     resolution: {integrity: sha512-9NykojV5Uih4lgo5So5dtw+f0JgJX30KCNI8gwhz2J9A15wD0Ml6tjHKwf6fTSa6fAdVBdZeNOs9eJ71qCk8vA==}
+    deprecated: Please use @jridgewell/sourcemap-codec instead
 
   /spdx-correct/3.1.1:
     resolution: {integrity: sha512-cOYcUWwhCuHCXi49RhFRCyJEK3iPj1Ziz9DpViV3tbZOwXD49QzIN3MpOLJNxh2qwq2lJJZaKMVw9qNi4jTC0w==}
@@ -9762,8 +9763,8 @@ packages:
       - supports-color
     dev: true
 
-  /supertokens-auth-react/0.24.2_nzjbfc7eybcehockioa7br7kbi:
-    resolution: {integrity: sha512-xqaK+jG9OTQdvjA+1l98nd135tidF1SY2CbF5dUMh+jIY1vcaBZJRW+508eQ9LlD9g52xOp+HQhAJgLstAe5qQ==}
+  /supertokens-auth-react/0.28.1_nzjbfc7eybcehockioa7br7kbi:
+    resolution: {integrity: sha512-3ewCezwD+x3ZHxBcCTUSZH/5ME6W6lcNsqa19/a0O7CHqv2t8PF9HS5e6Jv+Bqy0GhvH/PM55fl1N/+I2sRGjg==}
     engines: {node: '>=16.0.0', npm: ^8}
     peerDependencies:
       react: '>=16.8.0'
@@ -9777,7 +9778,7 @@ packages:
       react-select: 5.2.1_nzjbfc7eybcehockioa7br7kbi
       react-shadow: 19.0.3_v2m5e27vhdewzwhryxwfaorcca
       supertokens-js-override: 0.0.4
-      supertokens-web-js: 0.1.4
+      supertokens-web-js: 0.3.0
     transitivePeerDependencies:
       - '@babel/core'
       - '@types/react'
@@ -9808,15 +9809,15 @@ packages:
       - supports-color
     dev: false
 
-  /supertokens-web-js/0.1.4:
-    resolution: {integrity: sha512-tmpGtZMC+9CYK5zIYn/PKchgoWwbmFQVwniUtpcVqwQG1dWVgJeaBrOtmVfQmn7st6A/Vv7IMHeqc8ZRuWNo3A==}
+  /supertokens-web-js/0.3.0:
+    resolution: {integrity: sha512-OWQt+KCzNrssmBOoMRDdQZ3TGM00HO98i0eQDANJKJbNOaJ+I80mCNV3i8dWLqO1AOClzPAt5oLJNimPjCn9TA==}
     dependencies:
       supertokens-js-override: 0.0.4
-      supertokens-website: 13.0.1
+      supertokens-website: 14.0.3
     dev: false
 
-  /supertokens-website/13.0.1:
-    resolution: {integrity: sha512-lH/pTFn/SHRNvGYgDtApnquUz9+QvirYP+OWBFS7aXvJB3xNr90E0KfEiB+PwN4zzhAm78mnKbCUM7KKgeeKJg==}
+  /supertokens-website/14.0.3:
+    resolution: {integrity: sha512-W/IvK1RjLbthunsMfq0gd9yeYZMGY00yncZ2Csh5kns435PbAr0hp+eKzQehOP/pO/Kmd3qM8GzA0Fod3k4D4A==}
     dependencies:
       browser-tabs-lock: 1.2.15
       supertokens-js-override: 0.0.4
