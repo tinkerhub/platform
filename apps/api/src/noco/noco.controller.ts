@@ -1,6 +1,11 @@
 import { Controller, Get, Query } from '@nestjs/common';
+import { Throttle } from '@nestjs/throttler';
 import { NocoService } from './noco.service';
 
+@Throttle(
+  parseInt(process.env.THROTTLE_LIMIT as string, 10),
+  parseInt(process.env.TIME_TO_LIVE as string, 10)
+)
 @Controller()
 export class NocoController {
   constructor(private readonly nocoService: NocoService) {}

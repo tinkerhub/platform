@@ -36,6 +36,8 @@ services:
       interval: 5s
       timeout: 5s
       retries: 5
+    ports:
+      - 5432:5432
   nocodb:
     image: nocodb/nocodb:0.99.0
     container_name: platform-noco
