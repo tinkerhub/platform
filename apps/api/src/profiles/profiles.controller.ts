@@ -2,6 +2,7 @@ import { Controller, Post, Body, UseGuards, Session, Get, Req, Res, Patch } from
 import { AuthGuard } from 'src/auth/auth.guard';
 import { SessionContainer } from 'supertokens-node/recipe/session';
 import Passwordless from 'supertokens-node/recipe/passwordless';
+import { Throttle } from '@nestjs/throttler';
 import { ProfilesService } from './profiles.service';
 import { CreateProfileDto } from './dto/create-profile.dto';
 import { UpdateProfileDto } from './dto/update-profile.dto';
@@ -10,6 +11,10 @@ import { ReadException } from './exception/read.exception';
 import { UpdateException } from './exception/update.exception';
 
 @UseGuards(AuthGuard)
+@Throttle(
+  parseInt(process.env.THROTTLE_LIMIT as string, 10),
+  parseInt(process.env.TIME_TO_LIVE as string, 10)
+)
 @Controller('users/profile')
 export class ProfilesController {
   constructor(private readonly profilesService: ProfilesService) {}

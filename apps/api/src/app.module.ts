@@ -63,8 +63,8 @@ const coreModules = [
       },
     }),
     ThrottlerModule.forRoot({
-      ttl: parseInt(process.env.TIME_TO_LIVE as string, 10),
-      limit: parseInt(process.env.THROTTLE_LIMIT as string, 10),
+      ttl: 60,
+      limit: 10,
     }),
     NocoModule,
   ],
