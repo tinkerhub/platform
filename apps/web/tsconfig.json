@@ -6,7 +6,7 @@
     "**/*.tsx",
     "pages/index.js",
     ".eslintrc.js"
-  ],
+, "jest.setup.ts", "jest.config.js"  ],
   "exclude": [
     "node_modules"
   ],
@@ -16,7 +16,8 @@
     "incremental": true
   },
   "paths": {
-    "@app/*": ["./*"]
+    "@/pages/*":["pages/*"],
+    "@/components/*":["components/*"]
   },
   "typeRoots": ["./node_modules/@types/"]
 }

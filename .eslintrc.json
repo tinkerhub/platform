@@ -41,7 +41,7 @@
     "import/no-extraneous-dependencies": [
       "error",
       {
-        "devDependencies": ["**/*.e2e-spec.*", "**/*.spec.*", "**/*.test.*"],
+        "devDependencies": ["**/*.e2e-spec.*", "**/*.spec.*", "**/*.test.*", "**/jest.config.js","**/jest.setup.ts"],
         "peerDependencies": true
       }
     ]

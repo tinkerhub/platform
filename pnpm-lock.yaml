@@ -154,10 +154,12 @@ importers:
       '@testing-library/jest-dom': ^5.16.5
       '@testing-library/react': ^13.3.0
       '@testing-library/user-event': ^14.4.3
+      '@types/jest': 28.1.4
       '@types/node': 18.0.6
       '@types/react': 18.0.15
       '@types/react-dom': 18.0.6
       '@types/react-lottie': ^1.2.6
+      '@types/testing-library__jest-dom': ^5.14.5
       '@typescript-eslint/eslint-plugin': ^5.30.7
       '@typescript-eslint/parser': ^5.30.7
       axios: ^0.27.2
@@ -200,10 +202,12 @@ importers:
       '@testing-library/jest-dom': 5.16.5
       '@testing-library/react': 13.3.0_biqbaboplfbrettd7655fr4n2y
       '@testing-library/user-event': 14.4.3
+      '@types/jest': 28.1.4
       '@types/node': 18.0.6
       '@types/react': 18.0.15
       '@types/react-dom': 18.0.6
       '@types/react-lottie': 1.2.6
+      '@types/testing-library__jest-dom': 5.14.5
       '@typescript-eslint/eslint-plugin': 5.30.7_ygyzi5lk3ehufsjugxb2ijsfja
       '@typescript-eslint/parser': 5.30.7_typescript@4.7.4
       jest: 28.1.2_@types+node@18.0.6
