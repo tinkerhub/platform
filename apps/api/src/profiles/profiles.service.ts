@@ -15,7 +15,7 @@ export class ProfilesService {
   constructor(private prismaService: PrismaService) {}
 
   // Response Handler
-  Success(resp: Resp) {
+  success(resp: Resp) {
     return {
       success: true,
       message: resp.message,
@@ -47,7 +47,7 @@ export class ProfilesService {
       },
     });
 
-    return this.Success({
+    return this.success({
       data: resp,
       message: 'User was created succesfully',
     });
@@ -59,7 +59,7 @@ export class ProfilesService {
         id,
       },
     });
-    return this.Success({
+    return this.success({
       data: resp,
       message: 'User info was read succesfully',
     });
@@ -76,7 +76,7 @@ export class ProfilesService {
         college: true,
       },
     });
-    return this.Success({
+    return this.success({
       data: resp,
       message: 'User info was read succesfully',
     });
@@ -92,7 +92,7 @@ export class ProfilesService {
         email,
       },
     });
-    return this.Success({
+    return this.success({
       data: resp,
       message: 'User info was read succesfully',
     });
@@ -135,7 +135,7 @@ export class ProfilesService {
         },
       });
     }
-    return this.Success({
+    return this.success({
       data: resp,
       message: 'User info was updated succesfully',
     });

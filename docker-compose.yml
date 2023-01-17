@@ -42,7 +42,7 @@ services:
     image: nocodb/nocodb:0.99.0
     container_name: platform-noco
     ports:
-      - '8080:8080'
+      - 8080:8080
     restart: always
     networks:
       - app_network
