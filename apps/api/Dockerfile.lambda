@@ -14,14 +14,15 @@ RUN pnpm prisma generate
 RUN pnpm build
 RUN pnpm prune --prod
 
-FROM node:16-alpine AS production
+FROM public.ecr.aws/lambda/nodejs:16 AS production
 
-RUN apk add --update --no-cache openssl1.1-compat
+RUN yum upgrade openssl1.1-compat
 
-WORKDIR /app
 COPY --from=build /app/dist ./dist
 COPY --from=build /app/node_modules ./node_modules
 COPY --from=build /app/package.json ./package.json
 COPY --from=build /app/prisma ./prisma
 
-CMD ["node", "dist/main"]
+RUN npx prisma generate
+
+CMD ["dist/main.handler"]

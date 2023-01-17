@@ -7,7 +7,7 @@
   "license": "UNLICENSED",
   "scripts": {
     "prebuild": "rimraf dist",
-    "build": "nest build",
+    "build": "nest build --webpack",
     "start": "nest start",
     "dev": "nest build --webpack --webpackPath webpack-hmr.config.js --watch | pino-pretty",
     "start:debug": "nest start --debug --watch | pino-pretty",
@@ -21,6 +21,7 @@
     "prisma": "prisma"
   },
   "dependencies": {
+    "@fastify/aws-lambda": "^3.2.0",
     "@fastify/static": "^6.5.0",
     "@nestjs/axios": "^0.1.0",
     "@nestjs/common": "^9.0.0",
@@ -31,6 +32,7 @@
     "@nestjs/swagger": "^6.0.4",
     "@nestjs/throttler": "^3.1.0",
     "@prisma/client": "^4.1.1",
+    "aws-lambda": "^1.0.7",
     "axios": "^1.1.3",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.13.2",
@@ -48,6 +50,7 @@
     "@nestjs/cli": "^9.0.0",
     "@nestjs/schematics": "^9.0.0",
     "@nestjs/testing": "^9.0.0",
+    "@types/aws-lambda": "^8.10.109",
     "@types/jest": "28.1.4",
     "@types/node": "^16.0.0",
     "@types/supertest": "^2.0.11",
@@ -55,6 +58,7 @@
     "run-script-webpack-plugin": "^0.1.1",
     "source-map-support": "^0.5.20",
     "supertest": "^6.1.3",
+    "terser-webpack-plugin": "^5.3.6",
     "ts-jest": "28.0.5",
     "ts-loader": "^9.2.3",
     "ts-node": "^10.0.0",
