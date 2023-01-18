@@ -2,7 +2,9 @@ FROM node:16-alpine AS build
 
 WORKDIR /app
 
-RUN apk add --update --no-cache openssl1.1-compat
+RUN apk add --no-cache libc6-compat
+RUN apk add --no-cache openssl1.1-compat-dev
+
 RUN npm install pnpm -g
 
 COPY apps/api/package.json pnpm-lock.yaml ./
@@ -16,12 +18,12 @@ RUN pnpm prune --prod
 
 FROM node:16-alpine AS production
 
-RUN apk add --update --no-cache openssl1.1-compat
+RUN apk add --no-cache libc6-compat
+RUN apk add --no-cache openssl1.1-compat-dev
 
 WORKDIR /app
 COPY --from=build /app/dist ./dist
-COPY --from=build /app/node_modules ./node_modules
+COPY --from=build /app/node_modules/prisma /tmp/prisma-engines
 COPY --from=build /app/package.json ./package.json
-COPY --from=build /app/prisma ./prisma
 
 CMD ["node", "dist/main"]
