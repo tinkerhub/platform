@@ -63,7 +63,7 @@ const Wizard: NextPageWithLayout = () => {
       // send post request to backend
       try {
         const { data } = await platformAPI.post('/users/profile', Dbdata);
-        if (!data.Success) throw new Error(data.message);
+        if (!data.success) throw new Error(data.message);
         setAuthUser(data.data);
         toast({
           title: 'User created succesfully',
