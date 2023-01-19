@@ -86,7 +86,7 @@ export const secondValidator = Yup.object({
     }),
   collegeId: Yup.object()
     .nullable()
-    .when('describe', {
+    .when('description', {
       is: (val: Option) => val?.value === 'Student',
       then: PickAnOptionValidator.nullable().required(
         requiredErrorStatement('Please pick an option')

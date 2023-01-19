@@ -20,7 +20,6 @@ import * as Yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import SuperTokens, { redirectToAuth } from 'supertokens-auth-react';
 import { useForm } from 'react-hook-form';
-import { useRouter } from 'next/router';
 import {
   createCode,
   resendCode,
@@ -40,8 +39,6 @@ const Auth = () => {
       redirectToAuth();
     }
   }, []);
-
-  const router = useRouter();
 
   // this state is used to determine if the user has recieved the otp and is ready to enter the otp
   const [isOTPscreenisVisible, setOTPscreenisVisible] = useState<boolean>(false);
@@ -183,12 +180,8 @@ const Auth = () => {
       localStorage.removeItem('supertokens-passwordless-loginAttemptInfo');
 
       if (response.status === 'OK') {
-        // if (response.createdNewUser) {
-        //   // user sign up success
-        // } else {
-        //   // user sign in success
-        // }
-        router.push('/profile');
+        // an api call will be automatically sent from context to check the user in db
+        // doesSessionExist is a dependency in useEffect in authCOntext
       } else if (response.status === 'INCORRECT_USER_INPUT_CODE_ERROR') {
         // the user entered an invalid OTP
         toast({
