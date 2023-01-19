@@ -139,7 +139,6 @@ export const Final = ({ isLoading, id = 'ERROR', error, user }: Prop) => {
             px="2"
             mb="10px"
             borderRadius="md"
-            fontSize="19px"
             _hover={{ cursor: 'pointer' }}
             display="flex"
             justifyContent="center"
