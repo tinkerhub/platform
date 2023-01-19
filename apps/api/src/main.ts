@@ -3,8 +3,11 @@ import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { FastifyAdapter, NestFastifyApplication } from '@nestjs/platform-fastify';
-import supertokens from 'supertokens-node';
 import { plugin, errorHandler } from 'supertokens-node/framework/fastify';
+import awsLambdaFastify, { PromiseHandler } from '@fastify/aws-lambda';
+import { APIGatewayProxyEvent, Context } from 'aws-lambda';
+import supertokens from 'supertokens-node';
+
 import { AppModule } from './app.module';
 
 declare const module: any;
@@ -15,6 +18,7 @@ async function bootstrap() {
   });
 
   const app = await NestFactory.create<NestFastifyApplication>(AppModule, fastify, {
+    // logger: console,
     bufferLogs: true,
   });
 
@@ -46,14 +50,43 @@ async function bootstrap() {
       transform: true,
     })
   );
+
+  await app.init();
+
+  return {
+    app,
+    fastify: fastify.getInstance(),
+  };
+}
+
+async function startServer() {
+  const { app } = await bootstrap();
   await app.listen(process.env.PORT as string, '0.0.0.0');
   // eslint-disable-next-line no-console
   console.log(`Application is running on: ${await app.getUrl()}`);
-
   // webpack based hot reloading
   if (module.hot) {
     module.hot.accept();
     module.hot.dispose(() => app.close());
   }
 }
-bootstrap();
+
+// if not in lambda environment
+if (require.main === module) {
+  startServer();
+}
+
+let cachedNestApp;
+
+// lambda execution code
+export const handler = async (
+  event: APIGatewayProxyEvent,
+  context: Context
+): Promise<PromiseHandler> => {
+  if (!cachedNestApp) {
+    const nestApp = await bootstrap();
+    cachedNestApp = awsLambdaFastify(nestApp.fastify, { decorateRequest: true });
+  }
+
+  return cachedNestApp(event, context);
+};
