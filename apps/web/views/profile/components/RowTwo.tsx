@@ -10,20 +10,20 @@ import {
   VStack,
 } from '@chakra-ui/react';
 import { AsyncSelect, Select } from 'chakra-react-select';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect } from 'react';
 import { Controller, useFormContext, useController } from 'react-hook-form';
 import dayjs from 'dayjs';
 import { useAuthCtx } from '../../../hooks';
 import { Clg, Desp } from '../../wizard/components/Two';
 import { IsEdit } from '../types';
 import { platformAPI } from '../../../config';
+import { debounce } from '../../../utils';
 
 export const RowTwo = ({ isEdit }: IsEdit) => {
   const { control, watch, setValue } = useFormContext();
   const { user: userInfo } = useAuthCtx();
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [inputValue, setInputValue] = useState<string>('');
 
   const getCollege = async (input: string) => {
     const { data } = await platformAPI.get(`/college?search=${input}&limit=20&page=1`);
@@ -38,11 +38,24 @@ export const RowTwo = ({ isEdit }: IsEdit) => {
     const skills = data.map((el: Clg) => ({ label: el.name, value: el.id }));
     return skills;
   };
-
-  // handle input change event
-  const handleInputChange = (value: string) => {
-    setInputValue(value);
-  };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const loadCollegedebounced = useCallback(
+    debounce((inputValue: string, callback: (options: any) => void) => {
+      getCollege(inputValue).then((options) => {
+        callback(options);
+      });
+    }),
+    []
+  );
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const loadSkillsdeBounced = useCallback(
+    debounce((inputValue: string, callback: (options: any) => void) => {
+      getSkills().then((options) => {
+        callback(options);
+      });
+    }),
+    []
+  );
 
   const role = watch('description')?.value;
 
@@ -150,7 +163,7 @@ export const RowTwo = ({ isEdit }: IsEdit) => {
                     isDisabled={isEdit}
                     isClearable
                     defaultOptions
-                    loadOptions={getSkills}
+                    loadOptions={loadSkillsdeBounced}
                     isMulti
                   />
                   {skillError && <FormErrorMessage>Pick 5 skills maximum</FormErrorMessage>}
@@ -203,8 +216,7 @@ export const RowTwo = ({ isEdit }: IsEdit) => {
                     isDisabled={isEdit}
                     {...field}
                     isClearable
-                    loadOptions={getCollege}
-                    onInputChange={handleInputChange}
+                    loadOptions={loadCollegedebounced}
                   />
                   {collegeErr && <FormErrorMessage>Please pick an option</FormErrorMessage>}
                 </FormControl>
