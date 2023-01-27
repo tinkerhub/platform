@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import { useState, useEffect } from 'react';
+import { useEffect, useCallback } from 'react';
 import {
   Box,
   Button,
@@ -16,6 +16,7 @@ import { motion } from 'framer-motion';
 import { useController, useFormContext, Controller } from 'react-hook-form';
 import { OptionBase, Select, AsyncSelect } from 'chakra-react-select';
 import { platformAPI } from '../../../config';
+import { debounce } from '../../../utils';
 
 interface Options extends OptionBase {
   label: string;
@@ -34,7 +35,6 @@ export interface Clg {
 export const Two = () => {
   const { control, watch, setValue } = useFormContext();
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [inputValue, setInputValue] = useState<string>('');
 
   const getCollege = async (input: string) => {
     const { data } = await platformAPI.get(`/college?search=${input}&limit=20&page=1`);
@@ -49,11 +49,24 @@ export const Two = () => {
     const skills = data.map((el: Clg) => ({ label: el.name, value: el.id }));
     return skills;
   };
-
-  // handle input change event
-  const handleInputChange = (value: string) => {
-    setInputValue(value);
-  };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const loadCollegedebounced = useCallback(
+    debounce((inputValue: string, callback: (options: any) => void) => {
+      getCollege(inputValue).then((options) => {
+        callback(options);
+      });
+    }),
+    []
+  );
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const loadSkillsdeBounced = useCallback(
+    debounce((inputValue: string, callback: (options: any) => void) => {
+      getSkills().then((options) => {
+        callback(options);
+      });
+    }),
+    []
+  );
 
   const yaerOfPassout = new Array(5).fill(null).map((el, index) => ({
     label: dayjs().year() + index,
@@ -116,8 +129,7 @@ export const Two = () => {
                     {...field}
                     isClearable
                     defaultOptions
-                    loadOptions={getSkills}
-                    onInputChange={handleInputChange}
+                    loadOptions={loadSkillsdeBounced}
                     isMulti
                   />
                   {skillError && <FormErrorMessage>Pick 5 skills maximum</FormErrorMessage>}
@@ -161,8 +173,7 @@ export const Two = () => {
                     {...field}
                     isClearable
                     defaultOptions
-                    loadOptions={getCollege}
-                    onInputChange={handleInputChange}
+                    loadOptions={loadCollegedebounced}
                   />
                   {collegeErr && <FormErrorMessage>Please pick an option</FormErrorMessage>}
                 </FormControl>
