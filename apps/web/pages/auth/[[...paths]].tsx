@@ -182,7 +182,7 @@ const Auth = () => {
       if (response.status === 'OK') {
         toast({
           title: 'Login Successfull',
-          status: 'error',
+          status: 'success',
           duration: 9000,
           isClosable: true,
         });
@@ -193,7 +193,7 @@ const Auth = () => {
         toast({
           title: 'Incorrect OTP',
           description: 'The enterd OTP is wrong please try again',
-          status: 'success',
+          status: 'error',
           duration: 9000,
           isClosable: true,
         });
