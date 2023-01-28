@@ -1,3 +1,4 @@
+/* eslint-disable no-extra-boolean-cast */
 import * as Yup from 'yup';
 import { OptionalObjectSchema } from 'yup/lib/object';
 
@@ -46,7 +47,12 @@ export const registerFormValidator = Yup.object({
   house: Yup.string(),
   street: Yup.string(),
   district: PickAnOptionValidator.nullable(),
-  pin: Yup.string().min(6).max(6),
+  pin: Yup.string()
+    .notRequired()
+    .min(6)
+    .max(6)
+    .nullable()
+    .transform((value) => (!!value ? value : null)),
   passYear: Yup.object()
     .nullable()
     .when('description', {
@@ -106,7 +112,12 @@ export const thirdValidator = Yup.object({
   house: Yup.string(),
   street: Yup.string(),
   district: PickAnOptionValidator.nullable(),
-  pin: Yup.string().min(6).max(6),
+  pin: Yup.string()
+    .notRequired()
+    .min(6)
+    .max(6)
+    .nullable()
+    .transform((value) => (!!value ? value : null)),
 });
 
 export const stepByStepValidator: Record<number, OptionalObjectSchema<any>> = {

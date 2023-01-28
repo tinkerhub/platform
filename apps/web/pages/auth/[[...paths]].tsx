@@ -183,7 +183,7 @@ const Auth = () => {
         toast({
           title: 'Login Successfull',
           status: 'success',
-          duration: 9000,
+          duration: 3000,
           isClosable: true,
         });
         // an api call will be automatically sent from context to check the user in db
