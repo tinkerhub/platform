@@ -83,7 +83,7 @@ export const Three = () => {
         <Box display="flex" flexDirection="column" justifyContent="space-between">
           <FormControl label="Pincode" isInvalid={!!errors.pin} id="Pincode">
             <FormLabel>Pincode</FormLabel>
-            <Input {...register('pin')} />
+            <Input {...register('pin')} type="number" />
             <FormErrorMessage>{errors.pin?.message}</FormErrorMessage>
           </FormControl>
         </Box>

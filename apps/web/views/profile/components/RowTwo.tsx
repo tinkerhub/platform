@@ -151,7 +151,7 @@ export const RowTwo = ({ isEdit }: IsEdit) => {
           />
         </Box>
         {role === 'Student' && (
-          <Box display="flex" flexDirection="column" justifyContent="space-between">
+          <Box display="flex" flexDirection="column" justifyContent="space-between" mt="18px">
             <Controller
               control={control}
               name="skills"

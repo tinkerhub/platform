@@ -46,7 +46,7 @@ export const registerFormValidator = Yup.object({
   house: Yup.string(),
   street: Yup.string(),
   district: PickAnOptionValidator.nullable(),
-  pin: Yup.string(),
+  pin: Yup.string().min(6).max(6),
   passYear: Yup.object()
     .nullable()
     .when('description', {
@@ -106,7 +106,7 @@ export const thirdValidator = Yup.object({
   house: Yup.string(),
   street: Yup.string(),
   district: PickAnOptionValidator.nullable(),
-  pin: Yup.string(),
+  pin: Yup.string().min(6).max(6),
 });
 
 export const stepByStepValidator: Record<number, OptionalObjectSchema<any>> = {
