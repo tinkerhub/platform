@@ -1,7 +1,7 @@
 version: '3.8'
 services:
   api:
-    image: akhilmhdh/tinkerhub-platform-api:v1
+    image: akhilmhdh/tinkerhub-platform:v1
     container_name: platform-api
     ports:
       - 8000:8000

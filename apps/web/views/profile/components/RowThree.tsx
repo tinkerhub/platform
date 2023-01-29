@@ -77,7 +77,12 @@ export const RowThree = ({ isEdit }: IsEdit) => {
       <Box display="flex" flexDirection="column" justifyContent="space-between">
         <FormControl label="Pincode" isInvalid={!!errors.pin} id="Pincode">
           <FormLabel>Pincode</FormLabel>
-          <Input {...register('pin')} isDisabled={isEdit} defaultValue={userInfo?.pin} />
+          <Input
+            {...register('pin')}
+            isDisabled={isEdit}
+            defaultValue={userInfo?.pin}
+            type="number"
+          />
           <FormErrorMessage>{errors.pin?.message}</FormErrorMessage>
         </FormControl>
       </Box>

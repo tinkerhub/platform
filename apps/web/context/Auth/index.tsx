@@ -35,10 +35,10 @@ export const AuthContext = ({ children }: Child) => {
     try {
       setUserLoading(true);
       const { data } = await platformAPI.get('/users/profile');
-
-      if (!data.success) {
+      if (data && !data.success) {
         throw new Error();
       }
+
       if (data.success && data.data === null) {
         localStorage.removeItem('isWizardCompleted');
         router.push('/wizard');

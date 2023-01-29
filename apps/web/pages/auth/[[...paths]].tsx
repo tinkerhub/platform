@@ -180,6 +180,12 @@ const Auth = () => {
       localStorage.removeItem('supertokens-passwordless-loginAttemptInfo');
 
       if (response.status === 'OK') {
+        toast({
+          title: 'Login Successfull',
+          status: 'success',
+          duration: 3000,
+          isClosable: true,
+        });
         // an api call will be automatically sent from context to check the user in db
         // doesSessionExist is a dependency in useEffect in authCOntext
       } else if (response.status === 'INCORRECT_USER_INPUT_CODE_ERROR') {
@@ -212,20 +218,14 @@ const Auth = () => {
         });
       }
     } catch (err: any) {
-      // if (err.isSuperTokensGeneralError === true) {
-      //   // this may be a custom error message sent from the API by you.
-      //   window.alert(err.message);
-      // } else {
-      //   window.alert('Oops! Something went wrong.');
-      // }
+      toast({
+        title: 'Something went wrong',
+        description: 'Please try again later',
+        status: 'error',
+        duration: 9000,
+        isClosable: true,
+      });
     }
-    toast({
-      title: 'Something went wrong',
-      description: 'Please try again later',
-      status: 'error',
-      duration: 9000,
-      isClosable: true,
-    });
   };
 
   // sending otp to verify
