@@ -103,6 +103,7 @@ const Index: NextPageWithLayout = () => {
                 editHandler={editHandler}
                 id={user?.id}
                 cancelEditHandler={cancelEditHandler}
+                doesErrorExist={!methods.formState.isValid}
               />
             </Box>
             <Flex
