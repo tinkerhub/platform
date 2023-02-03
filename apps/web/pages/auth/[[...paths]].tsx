@@ -76,7 +76,18 @@ const Auth = () => {
     try {
       await createCode({
         phoneNumber: `+91${phone}`,
-      }); // OTP sent successfully.
+        options: {
+          preAPIHook: async (context) => {
+            context.requestInit.body = JSON.stringify({
+              ...JSON.parse(context.requestInit.body as string),
+              // How you want to send the OTP. Possible values are VOICE and SMS
+              // For CreateCode we can set the default value is as SMS
+              type: 'SMS',
+            });
+            return context;
+          },
+        },
+      });
 
       toast({
         title: 'OTP sent successfully',
@@ -113,7 +124,20 @@ const Auth = () => {
 
   const resendOTP = async () => {
     try {
-      const response = await resendCode();
+      const response = await resendCode({
+        options: {
+          preAPIHook: async (context) => {
+            context.requestInit.body = JSON.stringify({
+              ...JSON.parse(context.requestInit.body as string),
+              // How you want to send the OTP. Possible values are VOICE and SMS
+              // For Resend we have to use either VOICE or SMS
+              // Since the VOICE is not available now we can use SMS
+              type: 'VOICE',
+            });
+            return context;
+          },
+        },
+      });
 
       if (response.status === 'RESTART_FLOW_ERROR') {
         // this can happen if the user has already successfully logged in into

@@ -28,9 +28,15 @@ export class SupertokensService {
           smsDelivery: {
             override: (originalImplementation) => ({
               ...originalImplementation,
-              async sendSms(input) {
-                // @ts-ignore
-                send(input.phoneNumber, input.userInputCode);
+              async sendSms({ phoneNumber, userInputCode, userContext }) {
+                // eslint-disable-next-line no-underscore-dangle
+                const { type } = await userContext._default.request.getJSONBody();
+                if (type === 'VOICE') {
+                  // Send OTP to via VOICE
+                } else {
+                  // @ts-ignore
+                  await send(phoneNumber, userInputCode);
+                }
               },
             }),
           },
