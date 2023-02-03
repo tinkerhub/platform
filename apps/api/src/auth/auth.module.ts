@@ -4,9 +4,10 @@ import { ConfigModule } from '@nestjs/config';
 import { ConfigInjectionToken, AuthModuleConfig } from './config.interface';
 import { SmsService } from './supertokens/sms.service';
 import { SupertokensService } from './supertokens/supertokens.service';
+import { VoiceService } from './supertokens/voice.service';
 
 @Module({
-  providers: [SupertokensService, SmsService],
+  providers: [SupertokensService, SmsService, VoiceService],
   imports: [HttpModule, ConfigModule],
   exports: [],
   controllers: [],

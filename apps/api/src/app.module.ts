@@ -33,6 +33,10 @@ const coreModules = [
       MSG91_FLOW_ID: Joi.string().required(),
       MSG91_SHORT_URL: Joi.string().default('0'),
       MSG91_AUTH_KEY: Joi.string().required(),
+      MSG91_VOICE_API_DOMAIN: Joi.string().default('https://api.msg91.com/api/v5/voice/call/'),
+      MSG91_VOICE_TEMPLATE_ID: Joi.string().required(),
+      MSG91_VOICE_CALLER_ID: Joi.string().required(),
+      MSG91_VOICE_CALLBACK_URL: Joi.string().required(),
     }),
     validationOptions: {
       abortEarly: true,

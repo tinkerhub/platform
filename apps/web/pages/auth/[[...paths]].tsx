@@ -132,7 +132,7 @@ const Auth = () => {
               // How you want to send the OTP. Possible values are VOICE and SMS
               // For Resend we have to use either VOICE or SMS
               // Since the VOICE is not available now we can use SMS
-              type: 'VOICE',
+              type: 'SMS',
             });
             return context;
           },

@@ -5,15 +5,23 @@ import Passwordless from 'supertokens-node/recipe/passwordless';
 
 import { ConfigInjectionToken, AuthModuleConfig } from '../config.interface';
 import { SmsService } from './sms.service';
+import { VoiceService } from './voice.service';
 
 @Injectable()
 export class SupertokensService {
   constructor(
     @Inject(ConfigInjectionToken) private config: AuthModuleConfig,
-    private readonly smsService: SmsService
+    private readonly smsService: SmsService,
+    private readonly voiceService: VoiceService
   ) {
-    const send = (phone: string, userInput: string) => {
-      this.smsService.smsSend(phone, userInput);
+    const send = (phone: string, userInput: string, type: 'VOICE' | 'SMS') => {
+      if (type === 'VOICE') {
+        this.voiceService.voiceSend(phone, userInput);
+      } else if (type === 'SMS') {
+        this.smsService.smsSend(phone, userInput);
+      } else {
+        throw new Error('Invalid type');
+      }
     };
     supertokens.init({
       appInfo: config.appInfo,
@@ -31,12 +39,8 @@ export class SupertokensService {
               async sendSms({ phoneNumber, userInputCode, userContext }) {
                 // eslint-disable-next-line no-underscore-dangle
                 const { type } = await userContext._default.request.getJSONBody();
-                if (type === 'VOICE') {
-                  // Send OTP to via VOICE
-                } else {
-                  // @ts-ignore
-                  await send(phoneNumber, userInputCode);
-                }
+                // @ts-ignore
+                await send(phoneNumber, userInputCode, type);
               },
             }),
           },
