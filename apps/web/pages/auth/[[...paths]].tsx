@@ -43,6 +43,9 @@ const Auth = () => {
   // this state is used to determine if the user has recieved the otp and is ready to enter the otp
   const [isOTPscreenisVisible, setOTPscreenisVisible] = useState<boolean>(false);
 
+  const [retryCount, setRetryCount] = useState<number>(0);
+  const resendType = retryCount > 1 ? 'VOICE' : 'SMS';
+
   const hasInitialOTPBeenSent = async () => (await getLoginAttemptInfo()) !== undefined;
 
   const toast = useToast();
@@ -124,6 +127,7 @@ const Auth = () => {
 
   const resendOTP = async () => {
     try {
+      setRetryCount((prev) => prev + 1);
       const response = await resendCode({
         options: {
           preAPIHook: async (context) => {
@@ -132,7 +136,7 @@ const Auth = () => {
               // How you want to send the OTP. Possible values are VOICE and SMS
               // For Resend we have to use either VOICE or SMS
               // Since the VOICE is not available now we can use SMS
-              type: 'SMS',
+              type: resendType,
             });
             return context;
           },
@@ -331,10 +335,10 @@ const Auth = () => {
                     color="#0075E4"
                     _hover={{ cursor: 'pointer', textDecoration: 'underline' }}
                   >
-                    Resend SMS
+                    {retryCount > 1 ? `Resend via Call` : 'Resend OTP'}
                   </FormLabel>
                 </Flex>
-                <Input type="number" {...registerOTP('otp')} placeholder="Enter otp" />
+                <Input type="number" {...registerOTP('otp')} placeholder="Enter OTP" />
                 <FormErrorMessage>Please enter a valid OTP</FormErrorMessage>
                 <Button
                   colorScheme="blue"
@@ -354,7 +358,7 @@ const Auth = () => {
                   type="submit"
                   onClick={changePhoneNumber}
                 >
-                  Change phoneNumber
+                  Change Phone Number
                 </Button>
               </FormControl>
             </form>
