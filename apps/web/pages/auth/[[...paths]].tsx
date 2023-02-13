@@ -66,7 +66,7 @@ const Auth = () => {
   const {
     register: registerOTP,
     handleSubmit: handleOTPsubmit,
-    formState: { errors: otpError },
+    formState: { errors: otpError, isSubmitting },
   } = useForm<OTPType>({
     mode: 'onSubmit',
     resolver: yupResolver(OTP),
@@ -320,6 +320,7 @@ const Auth = () => {
                   _hover={{ cursor: 'pointer', bg: '#1328EC' }}
                   marginTop="16px"
                   type="submit"
+                  isLoading={isSubmitting}
                 >
                   Verify OTP
                 </Button>
