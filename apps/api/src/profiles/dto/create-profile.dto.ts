@@ -50,8 +50,11 @@ export class CreateProfileDto {
 
   mobile: string;
 
-  @IsString()
-  pin: string;
+  @IsNumber()
+  pin: number;
+
+  @IsBoolean()
+  discordActive: boolean;
 
   @IsString()
   pronoun: string;
