@@ -22,8 +22,11 @@ RUN apk add --no-cache libc6-compat
 RUN apk add --no-cache openssl1.1-compat-dev
 
 WORKDIR /app
+
+## For DB Migration
+RUN npm i -g prisma
+
 COPY --from=build /app/dist ./dist
-COPY --from=build /app/node_modules/prisma /tmp/prisma-engines
 COPY --from=build /app/package.json ./package.json
 
 CMD ["node", "dist/main"]

@@ -4,8 +4,6 @@ import { NestFactory } from '@nestjs/core';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { FastifyAdapter, NestFastifyApplication } from '@nestjs/platform-fastify';
 import { plugin, errorHandler } from 'supertokens-node/framework/fastify';
-import awsLambdaFastify, { PromiseHandler } from '@fastify/aws-lambda';
-import { APIGatewayProxyEvent, Context } from 'aws-lambda';
 import supertokens from 'supertokens-node';
 
 import { AppModule } from './app.module';
@@ -71,22 +69,19 @@ async function startServer() {
   }
 }
 
-// if not in lambda environment
-if (require.main === module) {
-  startServer();
-}
+startServer();
 
-let cachedNestApp;
-
-// lambda execution code
-export const handler = async (
-  event: APIGatewayProxyEvent,
-  context: Context
-): Promise<PromiseHandler> => {
-  if (!cachedNestApp) {
-    const nestApp = await bootstrap();
-    cachedNestApp = awsLambdaFastify(nestApp.fastify, { decorateRequest: true });
-  }
-
-  return cachedNestApp(event, context);
-};
+// let cachedNestApp;
+//
+// // lambda execution code
+// export const handler = async (
+//   event: APIGatewayProxyEvent,
+//   context: Context
+// ): Promise<PromiseHandler> => {
+//   if (!cachedNestApp) {
+//     const nestApp = await bootstrap();
+//     cachedNestApp = awsLambdaFastify(nestApp.fastify, { decorateRequest: true });
+//   }
+//
+//   return cachedNestApp(event, context);
+// };
