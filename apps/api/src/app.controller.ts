@@ -9,14 +9,13 @@ export class AppController {
   constructor(private readonly appService: AppService) {}
 
   @Get()
-  getHello(): string {
+  getHello() {
     return this.appService.getHello();
   }
 
   @Get('test') @UseGuards(AuthGuard) async getTest(
     @Session() session: SessionContainer
-  ): Promise<string> {
-    console.log(session);
-    return 'magic';
+  ): Promise<SessionContainer> {
+    return session;
   }
 }
