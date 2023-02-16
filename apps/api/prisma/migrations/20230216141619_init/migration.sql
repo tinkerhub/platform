@@ -1,11 +1,10 @@
 -- CreateTable
 CREATE TABLE "User" (
-    "id" VARCHAR(25) NOT NULL,
+    "id" TEXT NOT NULL DEFAULT gen_random_uuid()::TEXT,
     "authId" TEXT,
     "name" TEXT NOT NULL,
     "email" TEXT NOT NULL,
-    "collegeId" TEXT NOT NULL,
-    "campusCommunityActive" BOOLEAN,
+    "collegeId" TEXT,
     "passYear" INTEGER,
     "description" TEXT NOT NULL,
     "district" TEXT,
@@ -22,7 +21,7 @@ CREATE TABLE "User" (
 
 -- CreateTable
 CREATE TABLE "College" (
-    "id" TEXT NOT NULL,
+    "id" TEXT NOT NULL DEFAULT gen_random_uuid()::TEXT,
     "name" TEXT NOT NULL,
 
     CONSTRAINT "College_pkey" PRIMARY KEY ("id")
@@ -30,7 +29,7 @@ CREATE TABLE "College" (
 
 -- CreateTable
 CREATE TABLE "Skill" (
-    "id" VARCHAR(25) NOT NULL,
+    "id" TEXT NOT NULL DEFAULT gen_random_uuid()::TEXT,
     "name" TEXT NOT NULL,
 
     CONSTRAINT "Skill_pkey" PRIMARY KEY ("id")
@@ -38,8 +37,8 @@ CREATE TABLE "Skill" (
 
 -- CreateTable
 CREATE TABLE "_SkillToUser" (
-    "A" VARCHAR(25) NOT NULL,
-    "B" VARCHAR(25) NOT NULL
+    "A" TEXT NOT NULL,
+    "B" TEXT NOT NULL
 );
 
 -- CreateIndex
@@ -55,7 +54,13 @@ CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
 CREATE UNIQUE INDEX "User_mobile_key" ON "User"("mobile");
 
 -- CreateIndex
+CREATE UNIQUE INDEX "College_id_key" ON "College"("id");
+
+-- CreateIndex
 CREATE UNIQUE INDEX "College_name_key" ON "College"("name");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Skill_id_key" ON "Skill"("id");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Skill_name_key" ON "Skill"("name");
@@ -67,7 +72,7 @@ CREATE UNIQUE INDEX "_SkillToUser_AB_unique" ON "_SkillToUser"("A", "B");
 CREATE INDEX "_SkillToUser_B_index" ON "_SkillToUser"("B");
 
 -- AddForeignKey
-ALTER TABLE "User" ADD CONSTRAINT "User_collegeId_fkey" FOREIGN KEY ("collegeId") REFERENCES "College"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "User" ADD CONSTRAINT "User_collegeId_fkey" FOREIGN KEY ("collegeId") REFERENCES "College"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "_SkillToUser" ADD CONSTRAINT "_SkillToUser_A_fkey" FOREIGN KEY ("A") REFERENCES "Skill"("id") ON DELETE CASCADE ON UPDATE CASCADE;

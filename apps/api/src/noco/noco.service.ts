@@ -11,6 +11,7 @@ export class NocoService {
       where: {
         name: {
           contains: cname,
+          mode: 'insensitive',
         },
       },
     });
@@ -25,6 +26,7 @@ export class NocoService {
       where: {
         name: {
           contains: cname,
+          mode: 'insensitive',
         },
       },
     });

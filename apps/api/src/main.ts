@@ -20,9 +20,11 @@ async function bootstrap() {
     bufferLogs: true,
   });
 
+  const SuperTokensWebDomains = process.env.SUPERTOKENS_WEBSITE_DOMAIN?.split(',');
+
   // SuperTokens CORS
   app.enableCors({
-    origin: process.env.SUPERTOKENS_WEBSITE_DOMAIN,
+    origin: SuperTokensWebDomains,
     allowedHeaders: ['content-type', ...supertokens.getAllCORSHeaders()],
     credentials: true,
   });
