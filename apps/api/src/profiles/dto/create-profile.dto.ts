@@ -53,9 +53,6 @@ export class CreateProfileDto {
   @IsNumber()
   pin: number;
 
-  @IsBoolean()
-  discordActive: boolean;
-
   @IsString()
   pronoun: string;
 
