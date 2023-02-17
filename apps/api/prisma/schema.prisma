@@ -31,13 +31,13 @@ model User {
 }
 
 model College {
-  id   String @id
+  id   String @id @unique @default(dbgenerated("gen_random_uuid()::TEXT"))
   name String @unique
   user User[]
 }
 
 model Skill {
-  id   String @id @default(cuid()) @db.VarChar(25)
+  id   String @id @unique @default(dbgenerated("gen_random_uuid()::TEXT"))
   name String @unique
   user User[]
 }
