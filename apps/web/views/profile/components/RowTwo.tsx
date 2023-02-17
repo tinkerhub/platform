@@ -28,7 +28,7 @@ export const RowTwo = ({ isEdit }: IsEdit) => {
   const getCollege = async (input: string) => {
     const { data } = await platformAPI.get(`/college?search=${input}&limit=20&page=1`);
     // pushing the fetched data to a array to make sure that it is in right format
-    const college = data.map((el: Clg) => ({ label: el.name, value: el.name }));
+    const college = data.map((el: Clg) => ({ label: el.name, value: el.id }));
     return college;
   };
 

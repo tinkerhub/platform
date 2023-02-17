@@ -50,8 +50,8 @@ export class CreateProfileDto {
 
   mobile: string;
 
-  @IsString()
-  pin: string;
+  @IsNumber()
+  pin: number;
 
   @IsString()
   pronoun: string;

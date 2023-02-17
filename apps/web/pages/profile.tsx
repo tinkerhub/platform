@@ -63,7 +63,7 @@ const Index: NextPageWithLayout = () => {
       skills: skillsArr || Dummey,
       collegeId: val.collegeId?.value,
       passYear: Number(val.passYear?.value),
-      email: undefined,
+      email: val.email,
     };
     setEdit((el) => !el);
 
