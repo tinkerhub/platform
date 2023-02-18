@@ -1,4 +1,4 @@
-name: ci
+name: api-ci
 
 on:
   release:
@@ -6,6 +6,8 @@ on:
   push:
     branches:
       - 'main'
+    paths:
+      - 'apps/api/**'
 
 jobs:
   build:
