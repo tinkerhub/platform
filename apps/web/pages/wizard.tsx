@@ -46,23 +46,24 @@ const Wizard: NextPageWithLayout = () => {
   const handleData: SubmitHandler<FormType> = async (val) => {
     if (isReadyForSubmission) {
       // increase the step to 4 to render the sucess/ fail UI
-      const Dummey: string[] = [];
+
       const skillsArr = val.skills?.map((el: { value: string }) => el.value);
-      const Dbdata = {
+      const dbData = {
         ...val,
         mentor: Boolean(Number(val?.mentor)),
         pronoun: val.pronoun.value,
         district: val.district?.value || '',
         description: val.description.value,
-        skills: skillsArr || Dummey,
+        skills: skillsArr || [],
         collegeId: val.collegeId?.value,
         passYear: Number(val.passYear?.value),
+        pin: val.pin || undefined,
       };
 
       stepAdd();
       // send post request to backend
       try {
-        const { data } = await platformAPI.post('/users/profile', Dbdata);
+        const { data } = await platformAPI.post('/users/profile', dbData);
         if (!data.success) throw new Error(data.message);
         setAuthUser(data.data);
         toast({

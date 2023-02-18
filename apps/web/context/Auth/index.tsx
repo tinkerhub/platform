@@ -35,7 +35,7 @@ export const AuthContext = ({ children }: Child) => {
     try {
       setUserLoading(true);
       const { data } = await platformAPI.get('/users/profile');
-      if (data && !data.success) {
+      if (!data.success) {
         throw new Error();
       }
 
@@ -53,6 +53,7 @@ export const AuthContext = ({ children }: Child) => {
       router.push('/');
       toast({
         title: 'Something went wrong',
+        description: "couldn't access your profile",
         status: 'error',
         duration: 3000,
         isClosable: true,
