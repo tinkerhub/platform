@@ -53,14 +53,13 @@ const Index: NextPageWithLayout = () => {
 
   const updateProfile: SubmitHandler<FormType> = async (val) => {
     const skillsArr = val.skills?.map((el: any) => el.value);
-    const Dummey: string[] = [];
 
-    const Dbdata = {
+    const dbData = {
       ...val,
       pronoun: val.pronoun.value,
       district: val.district?.value || '',
       description: val.description.value,
-      skills: skillsArr || Dummey,
+      skills: skillsArr || [],
       collegeId: val.collegeId?.value,
       passYear: Number(val.passYear?.value),
       email: val.email,
@@ -70,7 +69,7 @@ const Index: NextPageWithLayout = () => {
 
     // sending the post request
     try {
-      const { data } = await platformAPI.patch('/users/profile', Dbdata);
+      const { data } = await platformAPI.patch('/users/profile', dbData);
       // need to rerender the  page from context
       if (!data.success) throw new Error(data.message);
       toast({
