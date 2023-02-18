@@ -1,14 +1,11 @@
 version: '3.8'
 services:
   api:
-<<<<<<< Updated upstream
     image: akhilmhdh/tinkerhub-platform:v1
     container_name: platform-api
-=======
     build:
       context: .
       dockerfile: ./apps/api/Dockerfile
->>>>>>> Stashed changes
     ports:
       - 8000:8000
     depends_on:
