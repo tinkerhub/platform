@@ -57,6 +57,7 @@ const Wizard: NextPageWithLayout = () => {
         skills: skillsArr || Dummey,
         collegeId: val.collegeId?.value,
         passYear: Number(val.passYear?.value),
+        pin: val.pin || undefined,
       };
 
       stepAdd();

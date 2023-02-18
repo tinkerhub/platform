@@ -64,6 +64,7 @@ const Index: NextPageWithLayout = () => {
       collegeId: val.collegeId?.value,
       passYear: Number(val.passYear?.value),
       email: val.email,
+      pin: val.pin || undefined,
     };
     setEdit((el) => !el);
 
