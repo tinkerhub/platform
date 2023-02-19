@@ -1,4 +1,4 @@
-import { Box, Flex, Icon, Text } from '@chakra-ui/react';
+import { Box, Flex, Icon, Text, Link, Image } from '@chakra-ui/react';
 import { AiOutlineInstagram, AiOutlineTwitter, AiOutlineYoutube } from 'react-icons/ai';
 
 const Social = [
@@ -33,7 +33,7 @@ export const Footer = () => (
     <Flex minW="100px" justifyContent={{ base: 'space-around', md: 'left' }} mt="20px">
       {Social.map((el, index) => (
         // eslint-disable-next-line react/no-array-index-key
-        <a href={el.link} rel="noopener" key={index}>
+        <Link href={el.link} rel="noopener" key={index}>
           <Icon
             as={el.icon}
             fontSize={{ base: '15px', md: '18px' }}
@@ -41,7 +41,7 @@ export const Footer = () => (
             _hover={{ cursor: 'pointer', color: 'grey' }}
             ml={{ base: '0px', md: '15px' }}
           />
-        </a>
+        </Link>
       ))}
     </Flex>
     <Flex
@@ -50,12 +50,19 @@ export const Footer = () => (
       flexDirection={{ base: 'column-reverse', md: 'row' }}
       alignItems="center"
     >
+      <Link href="https://www.netlify.com" mt="20px">
+        <Image
+          src="https://www.netlify.com/v3/img/components/netlify-color-accent.svg"
+          alt="Deploys by Netlify"
+        />
+      </Link>
       <Flex>
         <Text
           color="rgba(177, 177, 177, 1)"
           _hover={{ cursor: 'pointer', color: 'grey' }}
           mt={{ base: '20px', md: '0px' }}
           fontSize={{ base: '15px', md: '18px' }}
+          alignSelf="center"
         >
           Made with 💙 by TinkerHub
         </Text>
