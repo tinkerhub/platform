@@ -1,6 +1,6 @@
 -- CreateTable
 CREATE TABLE "User" (
-    "id" TEXT NOT NULL DEFAULT gen_random_uuid()::TEXT,
+    "id" VARCHAR(25) NOT NULL,
     "authId" TEXT,
     "name" TEXT NOT NULL,
     "email" TEXT NOT NULL,
@@ -12,9 +12,10 @@ CREATE TABLE "User" (
     "house" TEXT,
     "mentor" BOOLEAN NOT NULL,
     "mobile" TEXT,
-    "pin" TEXT,
+    "pin" INTEGER,
     "pronoun" TEXT,
     "street" TEXT,
+    "discordActive" BOOLEAN NOT NULL DEFAULT false,
 
     CONSTRAINT "User_pkey" PRIMARY KEY ("id")
 );
@@ -38,7 +39,7 @@ CREATE TABLE "Skill" (
 -- CreateTable
 CREATE TABLE "_SkillToUser" (
     "A" TEXT NOT NULL,
-    "B" TEXT NOT NULL
+    "B" VARCHAR(25) NOT NULL
 );
 
 -- CreateIndex

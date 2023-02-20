@@ -50,7 +50,6 @@ export class CreateProfileDto {
 
   mobile: string;
 
-  @IsNumber()
   pin: number;
 
   @IsString()
