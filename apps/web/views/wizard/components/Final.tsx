@@ -11,7 +11,7 @@ import {
   Text,
   useColorMode,
 } from '@chakra-ui/react';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { MdOutlineContentCopy } from 'react-icons/md';
 import { FiExternalLink } from 'react-icons/fi';
 import { TiTick } from 'react-icons/ti';
@@ -36,13 +36,6 @@ export const Final = ({ isLoading, id = 'ERROR', error, user }: Prop) => {
   const router = useRouter();
   const [result, setResult] = useState<boolean>(false);
   const { colorMode } = useColorMode();
-  useEffect(() => {
-    if (isLoading && !error) {
-      setTimeout(() => {
-        setResult(true);
-      }, 6600);
-    }
-  }, [isLoading, error]);
 
   const goHome = () => {
     // updating the context to new return value from post req
@@ -83,7 +76,7 @@ export const Final = ({ isLoading, id = 'ERROR', error, user }: Prop) => {
   if (!isLoading && !result && !error) {
     return (
       <Center mt="30px" minH="400px" p="35px" borderRadius="lg" _hover={{ cursor: 'not-allowed' }}>
-        <LottieAnim />
+        <LottieAnim setResult={setResult} />
       </Center>
     );
   }
@@ -153,7 +146,7 @@ export const Final = ({ isLoading, id = 'ERROR', error, user }: Prop) => {
           </Box>
         </Box>
       </Box>
-      <Box>
+      <Box ml={{ md: '60px' }}>
         <Heading>Next Step</Heading>
         <Text>Come lets network with community people 🚀</Text>
 

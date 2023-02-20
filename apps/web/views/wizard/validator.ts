@@ -30,11 +30,11 @@ export const registerFormValidator = Yup.object({
         label: Yup.string().required(),
       })
     ),
-  mentor: Yup.boolean()
+  mentor: Yup.string()
     .nullable()
     .when('description', {
       is: (val: Option) => val?.value === 'Professional',
-      then: Yup.boolean().required(),
+      then: Yup.string().required(),
     }),
   collegeId: Yup.object()
     .nullable()
@@ -84,11 +84,11 @@ export const secondValidator = Yup.object({
         label: Yup.string().required(),
       })
     ),
-  mentor: Yup.boolean()
+  mentor: Yup.string()
     .nullable()
     .when('description', {
       is: (val: Option) => val?.value === 'Professional',
-      then: Yup.boolean().required(),
+      then: Yup.string().required(),
     }),
   collegeId: Yup.object()
     .nullable()
