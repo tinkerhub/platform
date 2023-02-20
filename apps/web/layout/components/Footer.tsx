@@ -46,11 +46,11 @@ export const Footer = () => (
     </Flex>
     <Flex
       justifyContent="space-between"
-      mt="10px"
       flexDirection={{ base: 'column-reverse', md: 'row' }}
       alignItems="center"
+      mt="30px"
     >
-      <Link href="https://www.netlify.com" mt="20px">
+      <Link href="https://www.netlify.com" mt={{ sm: '18px', md: '0px' }}>
         <Image
           src="https://www.netlify.com/v3/img/components/netlify-color-accent.svg"
           alt="Deploys by Netlify"

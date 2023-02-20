@@ -35,9 +35,8 @@ export const BaseLayout = ({ children }: Child) => {
       flexDirection="column"
       justifyContent="space-between"
       minH="100vh"
-      p={{ base: '20px', sm: '30px', md: '74px' }}
+      p={{ base: '20px', sm: '30px', md: '55px' }}
       pt={{ base: '40px', md: '50px' }}
-      pb="0px"
     >
       <Topbar
         showBtn={path === '/'}
