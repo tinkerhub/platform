@@ -67,7 +67,7 @@ export const RowOne = ({ isEdit }: IsEdit) => {
       <Box display="flex" flexDirection="column" justifyContent="space-between">
         <FormControl label="Email" isInvalid={!!errors.email} id="Email">
           <FormLabel>Email</FormLabel>
-          <Input {...register('email')} value={userInfo?.email} />
+          <Input {...register('email')} isDisabled={isEdit} />
           <FormErrorMessage>{errors.email?.message}</FormErrorMessage>
         </FormControl>
       </Box>

@@ -1,9 +1,13 @@
 import Lottie from 'react-lottie';
 import Anim from '../../../public/final.json';
 
-export const LottieAnim = () => {
+type LottieProp = {
+  setResult: React.Dispatch<boolean>;
+};
+
+export const LottieAnim = ({ setResult }: LottieProp) => {
   const defaultOptions = {
-    loop: true,
+    loop: false,
     autoplay: true,
     animationData: Anim,
     rendererSettings: {
@@ -11,5 +15,17 @@ export const LottieAnim = () => {
     },
   };
 
-  return <Lottie options={defaultOptions} height={400} width={400} />;
+  return (
+    <Lottie
+      options={defaultOptions}
+      height={400}
+      width={400}
+      eventListeners={[
+        {
+          eventName: 'complete',
+          callback: () => setResult(true),
+        },
+      ]}
+    />
+  );
 };

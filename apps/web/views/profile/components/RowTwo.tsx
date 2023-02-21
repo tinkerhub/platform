@@ -11,7 +11,7 @@ import {
 } from '@chakra-ui/react';
 import { AsyncSelect, Select } from 'chakra-react-select';
 import { useCallback, useEffect } from 'react';
-import { Controller, useFormContext, useController } from 'react-hook-form';
+import { Controller, useFormContext } from 'react-hook-form';
 import dayjs from 'dayjs';
 import { useAuthCtx } from '../../../hooks';
 import { Clg, Desp } from '../../wizard/components/Two';
@@ -59,14 +59,6 @@ export const RowTwo = ({ isEdit }: IsEdit) => {
 
   const role = watch('description')?.value;
 
-  const {
-    field: { onChange: mentorChange, ref: mentorRef, value: mentorVal },
-    fieldState: { error: mentorError },
-  } = useController({
-    name: 'mentor',
-    control,
-  });
-
   const yaerOfPassout = new Array(5).fill(null).map((el, index) => ({
     label: dayjs().year() + index,
     value: dayjs().year() + index,
@@ -74,7 +66,7 @@ export const RowTwo = ({ isEdit }: IsEdit) => {
 
   useEffect(() => {
     if (role === 'Student') {
-      setValue('mentor', false);
+      setValue('mentor', 'NO');
     }
 
     // setting the value related to opposite of decription to undefined
@@ -96,7 +88,7 @@ export const RowTwo = ({ isEdit }: IsEdit) => {
     }
 
     if (userInfo?.mentor) {
-      setValue('mentor', userInfo.mentor ? 1 : 0);
+      setValue('mentor', userInfo.mentor ? 'YES' : 'NO');
     }
     if (userInfo?.passYear) {
       setValue('passYear', {
@@ -116,17 +108,9 @@ export const RowTwo = ({ isEdit }: IsEdit) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userInfo]);
 
-  // const customStyles = {
-  //   // For the select it self, not the options of the select
-  //   control: (styles: any, { isDisabled }: { isDisabled: boolean }) => ({
-  //     ...styles,
-  //     // This is an example: backgroundColor: isDisabled ? 'rgba(206, 217, 224, 0.5)' : 'white'
-  //     color: isDisabled ? 'red' : 'white',
-  //   }),
-  // };
-
   return (
     <VStack
+      as="div"
       spacing={2}
       align="stretch"
       w="100%"
@@ -181,26 +165,27 @@ export const RowTwo = ({ isEdit }: IsEdit) => {
             w="350px"
           >
             <Box display="flex" flexDirection="column" justifyContent="space-between" mt="15px">
-              <FormControl label="Mentor" isInvalid={!!mentorError} id="Mentor">
-                <FormLabel>Can you be a Mentor</FormLabel>
-                <RadioGroup
-                  defaultValue={0}
-                  ref={mentorRef}
-                  onChange={mentorChange}
-                  value={Number(mentorVal)}
-                  isDisabled={isEdit}
-                >
-                  <Stack spacing={5} direction="row">
-                    <Radio colorScheme="blue" value={1}>
-                      Yes
-                    </Radio>
-                    <Radio colorScheme="blue" value={0}>
-                      No
-                    </Radio>
-                  </Stack>
-                </RadioGroup>
-                <FormErrorMessage>{mentorError?.message}</FormErrorMessage>
-              </FormControl>
+              <Controller
+                name="mentor"
+                defaultValue="NO"
+                control={control}
+                render={({ field: { onChange, value }, fieldState: { error: mentorError } }) => (
+                  <FormControl label="Mentor" isInvalid={!!mentorError} id="Mentor">
+                    <FormLabel>Can you be a Mentor</FormLabel>
+                    <RadioGroup onChange={onChange} value={value} isDisabled={isEdit}>
+                      <Stack spacing={5} direction="row">
+                        <Radio colorScheme="blue" value="YES">
+                          Yes
+                        </Radio>
+                        <Radio colorScheme="blue" value="NO">
+                          No
+                        </Radio>
+                      </Stack>
+                    </RadioGroup>
+                    <FormErrorMessage>{mentorError?.message}</FormErrorMessage>
+                  </FormControl>
+                )}
+              />
             </Box>
           </Box>
         )}

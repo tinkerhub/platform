@@ -50,14 +50,14 @@ const Wizard: NextPageWithLayout = () => {
       const skillsArr = val.skills?.map((el: { value: string }) => el.value);
       const dbData = {
         ...val,
-        mentor: Boolean(Number(val?.mentor)),
         pronoun: val.pronoun.value,
         district: val.district?.value || '',
         description: val.description.value,
         skills: skillsArr || [],
         collegeId: val.collegeId?.value,
         passYear: Number(val.passYear?.value),
-        pin: val.pin || undefined,
+        pin: Number(val.pin),
+        mentor: val.mentor === 'YES',
       };
 
       stepAdd();

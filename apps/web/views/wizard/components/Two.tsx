@@ -13,7 +13,7 @@ import {
 } from '@chakra-ui/react';
 import dayjs from 'dayjs';
 import { motion } from 'framer-motion';
-import { useController, useFormContext, Controller } from 'react-hook-form';
+import { useFormContext, Controller } from 'react-hook-form';
 import { OptionBase, Select, AsyncSelect } from 'chakra-react-select';
 import { platformAPI } from '../../../config';
 import { debounce } from '../../../utils';
@@ -77,7 +77,7 @@ export const Two = () => {
 
   useEffect(() => {
     if (role === 'Student') {
-      setValue('mentor', false);
+      setValue('mentor', 'NO');
     }
     if (role === 'Professor') {
       setValue('campusCommunityActive', undefined);
@@ -88,14 +88,6 @@ export const Two = () => {
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [role, setValue]);
-
-  const {
-    field: { onChange: mentorChange, ref: mentorRef, value: mentorVal },
-    fieldState: { error: mentorError },
-  } = useController({
-    name: 'mentor',
-    control,
-  });
 
   return (
     <motion.div
@@ -140,25 +132,27 @@ export const Two = () => {
         )}
         {role === 'Professional' && (
           <Box display="flex" flexDirection="column" justifyContent="space-between" mt="15px">
-            <FormControl label="Mentor" isInvalid={!!mentorError} id="Mentor">
-              <FormLabel>Can you be a Mentor</FormLabel>
-              <RadioGroup
-                defaultValue={0}
-                ref={mentorRef}
-                onChange={mentorChange}
-                value={Number(mentorVal)}
-              >
-                <Stack spacing={5} direction="row">
-                  <Radio colorScheme="blue" value={1}>
-                    Yes
-                  </Radio>
-                  <Radio colorScheme="blue" value={0}>
-                    No
-                  </Radio>
-                </Stack>
-              </RadioGroup>
-              <FormErrorMessage>{mentorError?.message}</FormErrorMessage>
-            </FormControl>
+            <Controller
+              name="mentor"
+              defaultValue="NO"
+              control={control}
+              render={({ field: { onChange, value }, fieldState: { error: mentorError } }) => (
+                <FormControl label="Mentor" isInvalid={!!mentorError} id="Mentor">
+                  <FormLabel>Can you be a Mentor</FormLabel>
+                  <RadioGroup onChange={onChange} value={value}>
+                    <Stack spacing={5} direction="row">
+                      <Radio colorScheme="blue" value="YES">
+                        Yes
+                      </Radio>
+                      <Radio colorScheme="blue" value="NO">
+                        No
+                      </Radio>
+                    </Stack>
+                  </RadioGroup>
+                  <FormErrorMessage>{mentorError?.message}</FormErrorMessage>
+                </FormControl>
+              )}
+            />
           </Box>
         )}
         {role === 'Student' && (
