@@ -10,7 +10,7 @@ CREATE TABLE "User" (
     "district" TEXT,
     "dob" TIMESTAMP(3) NOT NULL,
     "house" TEXT,
-    "pin" TEXT,
+    "pin" INTEGER,
     "mentor" BOOLEAN NOT NULL,
     "mobile" TEXT,
     "pronoun" TEXT,

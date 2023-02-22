@@ -45,8 +45,8 @@ export class CreateProfileDto {
   house: string;
 
   @ValidateIf((object) => object.pin != null)
-  @IsString()
-  pin: string;
+  @IsNumber()
+  pin: number;
 
   @IsNotEmpty()
   @IsBoolean()

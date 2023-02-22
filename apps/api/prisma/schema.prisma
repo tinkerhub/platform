@@ -22,7 +22,7 @@ model User {
   district      String?
   dob           DateTime
   house         String?
-  pin           String?
+  pin           Int?
   mentor        Boolean
   mobile        String?  @unique
   pronoun       String?
