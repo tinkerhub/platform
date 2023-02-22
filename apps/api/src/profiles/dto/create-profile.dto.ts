@@ -22,11 +22,11 @@ export class CreateProfileDto {
   @IsEmail()
   email: string;
 
-  @ValidateIf((el) => el.description === 'Student')
+  @ValidateIf((object) => object.description === 'Student')
   @IsString()
   collegeId: string;
 
-  @ValidateIf((el) => el.description === 'Student')
+  @ValidateIf((object) => object.description === 'Student')
   @IsNumber()
   passYear: number;
 
@@ -44,13 +44,15 @@ export class CreateProfileDto {
   @IsString()
   house: string;
 
+  @ValidateIf((object) => object.pin != null)
+  @IsString()
+  pin: string;
+
   @IsNotEmpty()
   @IsBoolean()
   mentor: boolean;
 
   mobile: string;
-
-  pin: number;
 
   @IsString()
   pronoun: string;

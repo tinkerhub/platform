@@ -22,9 +22,9 @@ model User {
   district      String?
   dob           DateTime
   house         String?
+  pin           String?
   mentor        Boolean
   mobile        String?  @unique
-  pin           Int?
   pronoun       String?
   street        String?
   skills        Skill[]
