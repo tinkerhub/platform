@@ -57,7 +57,7 @@ const Auth = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting: isOtpSending },
   } = useForm<FormType>({
     mode: 'onSubmit',
     resolver: yupResolver(phoneNumber),
@@ -292,6 +292,7 @@ const Auth = () => {
                   _hover={{ cursor: 'pointer', bg: '#1328EC' }}
                   marginTop="16px"
                   type="submit"
+                  isLoading={isOtpSending}
                 >
                   Send OTP
                 </Button>
