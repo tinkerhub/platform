@@ -102,7 +102,10 @@ export class ProfilesService {
   async updateUser(authId: string, updateProfileDto: UpdateProfileDto) {
     const EmailResp = await this.getUserByEmail(updateProfileDto.email);
     if (EmailResp.data != null) {
-      throw new UpdateException('Email exists');
+      // @ts-ignore
+      if (EmailResp.data.authId !== authId) {
+        throw new UpdateException('Email exists');
+      }
     }
 
     let resp: object;
