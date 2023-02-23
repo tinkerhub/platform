@@ -27,7 +27,6 @@ export class ProfilesController {
     @Session() session: SessionContainer
   ) {
     try {
-      console.log(createProfileDto);
       const authId = session.getUserId();
       const mobile = (await Passwordless.getUserById({ userId: authId }))!.phoneNumber!;
       const createProfile = createProfileDto;
