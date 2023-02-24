@@ -46,7 +46,6 @@ export const RowOne = ({ isEdit }: IsEdit) => {
     if (userInfo?.dob) {
       setValue('dob', dayjs(userInfo?.dob).format('YYYY-MM-DD'));
     }
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userInfo]);
 

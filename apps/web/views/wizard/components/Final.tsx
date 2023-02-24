@@ -20,14 +20,13 @@ import { useRouter } from 'next/router';
 
 import { LottieAnim } from './Lottie';
 import { Oops } from './Oops';
-import { Form } from '../../../types';
 import { useAuthCtx } from '../../../hooks';
 
 interface Prop {
   isLoading: boolean;
   id: string | undefined;
   error: boolean;
-  user: Form | null;
+  user: any | null;
 }
 
 export const Final = ({ isLoading, id = 'ERROR', error, user }: Prop) => {

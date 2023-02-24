@@ -2,13 +2,14 @@
 import { useState } from 'react';
 import type { NextPageWithLayout } from 'next';
 import { Box, Button, Flex, useToast } from '@chakra-ui/react';
-import { InferType } from 'yup';
+import dayjs from 'dayjs';
 import { SessionAuth } from 'supertokens-auth-react/recipe/session';
 import { useForm, SubmitHandler, FormProvider } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { InferType } from 'yup';
 import { registerFormValidator } from '../views/wizard';
 import { RowOne, RowTwo, RowThree, ProfileBar } from '../views/profile';
-import { Errors } from '../types';
+import { Clg, Errors } from '../types';
 import { useAuthCtx } from '../hooks';
 import { platformAPI } from '../config';
 import { ProfileLayout } from '../layout';
@@ -27,6 +28,29 @@ const Index: NextPageWithLayout = () => {
     methods.setFocus('name');
   };
   const cancelEditHandler = () => {
+    // if user cancel the edit in middle of editing
+    // we wil reset the form data to prev data
+    const skillsArr = user.skills.map((el: Clg) => ({ label: el.name, value: el.id }));
+    methods.reset({
+      name: user?.name,
+      pronoun: { label: user?.pronoun, value: user?.pronoun },
+      email: user?.email,
+      //  @ts-ignore
+      dob: dayjs(user?.dob).format('YYYY-MM-DD'),
+      mentor: user.mentor ? 'YES' : 'NO',
+      passYear: {
+        value: user?.passYear?.toString(),
+        label: user?.passYear?.toString(),
+      },
+      collegeId: { label: user?.college?.name, value: user?.college?.id },
+      skills: skillsArr,
+      description: { label: user.description, value: user.description },
+      district: { label: user?.district, value: user?.district },
+      house: user.house,
+      street: user.street,
+      pin: user.pin,
+    });
+
     setEdit(true);
   };
 
@@ -83,6 +107,26 @@ const Index: NextPageWithLayout = () => {
       setUser(data.data);
     } catch (e) {
       const msg = e as Errors;
+      // rolling back to old state if error occurred
+      methods.reset({
+        name: user?.name,
+        pronoun: { label: user?.pronoun, value: user?.pronoun },
+        email: user?.email,
+        //  @ts-ignore
+        dob: dayjs(user?.dob).format('YYYY-MM-DD'),
+        mentor: user.mentor ? 'YES' : 'NO',
+        passYear: {
+          value: user?.passYear?.toString(),
+          label: user?.passYear?.toString(),
+        },
+        collegeId: { label: user?.college?.name, value: user?.college?.id },
+        skills: skillsArr,
+        description: { label: user.description, value: user.description },
+        district: { label: user?.district, value: user?.district },
+        house: user.house,
+        street: user.street,
+        pin: user.pin,
+      });
       toast({
         title: msg.message,
         status: 'error',
@@ -104,7 +148,6 @@ const Index: NextPageWithLayout = () => {
                 editHandler={editHandler}
                 id={user?.id}
                 cancelEditHandler={cancelEditHandler}
-                doesErrorExist={!methods.formState.isValid}
               />
             </Box>
             <Flex

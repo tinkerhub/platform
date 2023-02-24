@@ -11,7 +11,6 @@ interface BarProp {
   editHandler: () => void;
   id: string | undefined;
   cancelEditHandler: () => void;
-  doesErrorExist: boolean;
 }
 
 export const ProfileBar = ({
@@ -20,7 +19,6 @@ export const ProfileBar = ({
   editHandler,
   id = 'Error',
   cancelEditHandler,
-  doesErrorExist,
 }: BarProp) => {
   const router = useRouter();
 
@@ -95,7 +93,6 @@ export const ProfileBar = ({
             }}
             leftIcon={<MdOutlineCancel />}
             onClick={cancelEditHandler}
-            disabled={doesErrorExist}
           >
             cancel
           </Button>
