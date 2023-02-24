@@ -11,7 +11,7 @@ export interface Clg {
   id: string;
 }
 
-export type Form = {
+export interface Clg {
   name: string;
   passYear?: number;
   description: string;
@@ -30,7 +30,7 @@ export type Form = {
   campusCommunityActive: boolean;
   id: string;
   college?: Skill;
-};
+}
 
 interface Skill {
   name: string;

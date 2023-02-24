@@ -27,7 +27,7 @@ interface Prop {
   isLoading: boolean;
   id: string | undefined;
   error: boolean;
-  user: Form | null;
+  user: any | null;
 }
 
 export const Final = ({ isLoading, id = 'ERROR', error, user }: Prop) => {

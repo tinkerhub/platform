@@ -31,7 +31,7 @@ const Wizard: NextPageWithLayout = () => {
     resolver: yupResolver(stepByStepValidator[step]),
   });
 
-  const [user, setAuthUser] = useState<Form | null>(null);
+  const [user, setAuthUser] = useState<any | null>(null);
   const [formError, setFormError] = useState<boolean>(false);
 
   const toast = useToast();
