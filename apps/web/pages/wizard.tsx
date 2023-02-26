@@ -20,6 +20,7 @@ import {
 } from '../views/wizard';
 import { platformAPI } from '../config';
 import { Quotes } from '../views/wizard/components/Quotes';
+import { Form } from '../types';
 
 type FormType = InferType<typeof registerFormValidator>;
 
@@ -30,7 +31,7 @@ const Wizard: NextPageWithLayout = () => {
     resolver: yupResolver(stepByStepValidator[step]),
   });
 
-  const [user, setAuthUser] = useState<any | null>(null);
+  const [user, setAuthUser] = useState<Form | null>(null);
   const [formError, setFormError] = useState<boolean>(false);
 
   const toast = useToast();

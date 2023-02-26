@@ -29,7 +29,8 @@ export const registerFormValidator = Yup.object({
         value: Yup.string().required(),
         label: Yup.string().required(),
       })
-    ),
+    )
+    .default([]),
   mentor: Yup.string()
     .nullable()
     .when('description', {
