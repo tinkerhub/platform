@@ -2,11 +2,11 @@ import { createContext, useState, useEffect, useMemo } from 'react';
 import Router, { useRouter } from 'next/router';
 import { useToast } from '@chakra-ui/react';
 import { useSessionContext } from 'supertokens-auth-react/recipe/session';
-import { Child } from '../../types';
+import { Child, Form } from '../../types';
 import { platformAPI } from '../../config';
 
 interface Prop {
-  user: any | null;
+  user: Form | null;
   isUserLoading: boolean;
   setUser: React.Dispatch<any | null>;
 }
@@ -16,7 +16,7 @@ export const AuthCtx = createContext({} as Prop);
 export const AuthContext = ({ children }: Child) => {
   const router = useRouter();
   const path = router.pathname.split('/')[1];
-  const [user, setUser] = useState<any | null>(null);
+  const [user, setUser] = useState<Form | null>(null);
   const [isUserLoading, setUserLoading] = useState(true);
   const session = useSessionContext();
   const toast = useToast();
