@@ -37,7 +37,19 @@ export const CancelDialogue = ({ isOpen, onClose, handleModalAction }: Disclosur
           <Button ref={cancelRef} onClick={onClose}>
             No
           </Button>
-          <Button colorScheme="red" ml={3} onClick={handleModalAction}>
+          <Button
+            colorScheme="blue"
+            variant="outline"
+            alignSelf="center"
+            _hover={{
+              cursor: 'pointer',
+              bg: '#1328EC',
+              color: 'white',
+              borderColor: 'transparent',
+            }}
+            ml={3}
+            onClick={handleModalAction}
+          >
             Yes
           </Button>
         </AlertDialogFooter>
