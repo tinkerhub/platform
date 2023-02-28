@@ -19,8 +19,8 @@ import {
   stepByStepValidator,
 } from '../views/wizard';
 import { platformAPI } from '../config';
-import { Form } from '../types';
 import { Quotes } from '../views/wizard/components/Quotes';
+import { Form } from '../types';
 
 type FormType = InferType<typeof registerFormValidator>;
 

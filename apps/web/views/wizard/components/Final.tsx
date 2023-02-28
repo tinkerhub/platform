@@ -20,8 +20,8 @@ import { useRouter } from 'next/router';
 
 import { LottieAnim } from './Lottie';
 import { Oops } from './Oops';
-import { Form } from '../../../types';
 import { useAuthCtx } from '../../../hooks';
+import { Form } from '../../../types';
 
 interface Prop {
   isLoading: boolean;

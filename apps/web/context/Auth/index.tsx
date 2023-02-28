@@ -8,7 +8,7 @@ import { platformAPI } from '../../config';
 interface Prop {
   user: Form | null;
   isUserLoading: boolean;
-  setUser: React.Dispatch<Form | null>;
+  setUser: React.Dispatch<any | null>;
 }
 
 export const AuthCtx = createContext({} as Prop);

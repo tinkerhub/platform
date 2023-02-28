@@ -1,13 +1,13 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import { useState } from 'react';
 import type { NextPageWithLayout } from 'next';
-import { Box, Button, Flex, useToast } from '@chakra-ui/react';
-import { InferType } from 'yup';
+import { Box, Button, Flex, useDisclosure, useToast } from '@chakra-ui/react';
 import { SessionAuth } from 'supertokens-auth-react/recipe/session';
 import { useForm, SubmitHandler, FormProvider } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { InferType } from 'yup';
 import { registerFormValidator } from '../views/wizard';
-import { RowOne, RowTwo, RowThree, ProfileBar } from '../views/profile';
+import { RowOne, RowTwo, RowThree, ProfileBar, CancelDialogue } from '../views/profile';
 import { Errors } from '../types';
 import { useAuthCtx } from '../hooks';
 import { platformAPI } from '../config';
@@ -16,10 +16,36 @@ import { ProfileLayout } from '../layout';
 type FormType = InferType<typeof registerFormValidator>;
 
 const Index: NextPageWithLayout = () => {
-  const [isEdit, setEdit] = useState<boolean>(true);
-  const methods = useForm<FormType>({ mode: 'all', resolver: yupResolver(registerFormValidator) });
-  const toast = useToast();
   const { user, setUser } = useAuthCtx();
+  const [isEdit, setEdit] = useState<boolean>(true);
+
+  // for cancel dialogue
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
+  const methods = useForm<FormType>({
+    mode: 'all',
+    resolver: yupResolver(registerFormValidator),
+    defaultValues: {
+      name: user?.name,
+      pronoun: { label: user?.pronoun, value: user?.pronoun },
+      email: user?.email,
+      description: { label: user?.description, value: user?.description },
+      dob: user?.dob,
+      mentor: user?.mentor ? 'YES' : 'NO',
+      district: { label: user?.district, value: user?.district },
+      house: user?.house,
+      street: user?.street,
+      pin: user?.pin,
+      passYear: {
+        value: user?.passYear?.toString(),
+        label: user?.passYear?.toString(),
+      },
+      collegeId: { label: user?.college?.name, value: user?.college?.id },
+      skills: user?.skills,
+    },
+  });
+
+  const toast = useToast();
 
   const editHandler = () => {
     setEdit(false);
@@ -27,7 +53,18 @@ const Index: NextPageWithLayout = () => {
     methods.setFocus('name');
   };
   const cancelEditHandler = () => {
+    // for cancel dialogue
+    onOpen();
+  };
+
+  // this function is called when the YES button
+  // in dialog is clicked
+  const handleModalAction = () => {
+    // if user cancel the edit in middle of editing
+    // we wil reset the form data to prev data
     setEdit(true);
+    methods.reset();
+    onClose();
   };
 
   const copyMembershipId = () => {
@@ -52,8 +89,7 @@ const Index: NextPageWithLayout = () => {
   };
 
   const updateProfile: SubmitHandler<FormType> = async (val) => {
-    const skillsArr = val.skills?.map((el: any) => el.value);
-
+    const skillsArr = val?.skills?.map((el: any) => el.value);
     const dbData = {
       ...val,
       pronoun: val.pronoun.value,
@@ -83,6 +119,8 @@ const Index: NextPageWithLayout = () => {
       setUser(data.data);
     } catch (e) {
       const msg = e as Errors;
+      // rolling back to old state if error occurred
+      methods.reset();
       toast({
         title: msg.message,
         status: 'error',
@@ -94,6 +132,7 @@ const Index: NextPageWithLayout = () => {
 
   return (
     <SessionAuth>
+      <CancelDialogue isOpen={isOpen} onClose={onClose} handleModalAction={handleModalAction} />
       <Box mt="2" mb="50px">
         <FormProvider {...methods}>
           <form onSubmit={methods.handleSubmit(updateProfile)}>
@@ -104,7 +143,6 @@ const Index: NextPageWithLayout = () => {
                 editHandler={editHandler}
                 id={user?.id}
                 cancelEditHandler={cancelEditHandler}
-                doesErrorExist={!methods.formState.isValid}
               />
             </Box>
             <Flex
