@@ -22,17 +22,13 @@ export const registerFormValidator = Yup.object({
   // Mobile: Yup.string().required(requiredErrorStatement('Mobile number')),
   description: PickAnOptionValidator.nullable().required('Please pick an option'),
   skills: Yup.array()
+    .nullable()
     .max(5, 'Pick 5 skills maximum')
     .of(
-      Yup.object()
-        .shape({
-          value: Yup.string().required(),
-          label: Yup.string().required(),
-        })
-        .when('description', {
-          is: (val: Option) => val?.value === 'Student',
-          otherwise: (schema) => schema.notRequired(),
-        })
+      Yup.object().shape({
+        value: Yup.string().required(),
+        label: Yup.string().required(),
+      })
     )
     .default([]),
   mentor: Yup.string()
@@ -41,13 +37,14 @@ export const registerFormValidator = Yup.object({
       is: (val: Option) => val?.value === 'Professional',
       then: Yup.string().required(),
     }),
-  collegeId: Yup.object({
-    label: Yup.string().required(),
-    value: Yup.string().required(),
-  }).when('description', {
-    is: (val: Option) => val?.value === 'Student',
-    otherwise: (schema) => schema.notRequired(),
-  }),
+  collegeId: Yup.object()
+    .nullable()
+    .when('description', {
+      is: (val: Option) => val?.value === 'Student',
+      then: PickAnOptionValidator.nullable().required(
+        requiredErrorStatement('Please pick an option')
+      ),
+    }),
   house: Yup.string(),
   street: Yup.string(),
   district: PickAnOptionValidator.nullable(),
@@ -57,13 +54,14 @@ export const registerFormValidator = Yup.object({
     .max(6)
     .nullable()
     .transform((value) => (!!value ? value : null)),
-  passYear: Yup.object({
-    label: Yup.string().required(),
-    value: Yup.string().required(),
-  }).when('description', {
-    is: (val: Option) => val?.value === 'Student',
-    otherwise: (schema) => schema.notRequired(),
-  }),
+  passYear: Yup.object()
+    .nullable()
+    .when('description', {
+      is: (val: Option) => val?.value === 'Student',
+      then: PickAnOptionValidator.nullable().required(
+        requiredErrorStatement('Please pick an option')
+      ),
+    }),
 });
 
 export const firstFormValidator = Yup.object({
