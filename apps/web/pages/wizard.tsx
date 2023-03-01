@@ -56,10 +56,9 @@ const Wizard: NextPageWithLayout = () => {
         skills: skillsArr || [],
         collegeId: val.collegeId?.value,
         passYear: Number(val.passYear?.value),
-        pin: Number(val.pin),
+        pin: val.pin ? Number(val.pin) : null,
         mentor: val.mentor === 'YES',
       };
-
       stepAdd();
       // send post request to backend
       try {

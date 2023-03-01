@@ -42,15 +42,22 @@ export const registerFormValidator = Yup.object({
       then: Yup.string().required(),
     }),
   collegeId: Yup.object({
-    label: Yup.string().required(),
-    value: Yup.string().required(),
+    label: Yup.string(),
+    value: Yup.string(),
   }).when('description', {
     is: (val: Option) => val?.value === 'Student',
+    then: Yup.object({
+      label: Yup.string().required(),
+      value: Yup.string().required(),
+    }),
     otherwise: (schema) => schema.notRequired(),
   }),
   house: Yup.string(),
   street: Yup.string(),
-  district: PickAnOptionValidator.nullable(),
+  district: Yup.object({
+    value: Yup.string(),
+    label: Yup.string(),
+  }).nullable(),
   pin: Yup.string()
     .notRequired()
     .min(6)
@@ -58,10 +65,14 @@ export const registerFormValidator = Yup.object({
     .nullable()
     .transform((value) => (!!value ? value : null)),
   passYear: Yup.object({
-    label: Yup.string().required(),
-    value: Yup.string().required(),
+    label: Yup.string(),
+    value: Yup.string(),
   }).when('description', {
     is: (val: Option) => val?.value === 'Student',
+    then: Yup.object({
+      label: Yup.string().required(),
+      value: Yup.string().required(),
+    }),
     otherwise: (schema) => schema.notRequired(),
   }),
 });

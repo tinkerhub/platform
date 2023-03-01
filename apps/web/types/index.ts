@@ -24,7 +24,7 @@ export interface Clg {
   accept?: boolean;
   house?: string;
   district?: string;
-  pin?: string;
+  pin?: string | null;
   skills?: Skill[];
   street?: string;
   campusCommunityActive: boolean;

@@ -332,7 +332,7 @@ const Auth = () => {
                   type="submit"
                   onClick={changePhoneNumber}
                 >
-                  Change phoneNumber
+                  Change phone number
                 </Button>
               </FormControl>
             </form>
