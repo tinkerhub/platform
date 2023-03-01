@@ -130,7 +130,7 @@ const Index: NextPageWithLayout = () => {
       collegeId: val.collegeId?.value,
       passYear: Number(val.passYear?.value),
       email: val.email,
-      pin: Number(val.pin),
+      pin: val.pin ? Number(val.pin) : null,
       mentor: val.mentor === 'YES',
     };
     setEdit((el) => !el);

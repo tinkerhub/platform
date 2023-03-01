@@ -11,7 +11,7 @@ export interface Clg {
   id: string;
 }
 
-export interface Clg {
+export interface Form {
   name: string;
   passYear?: number;
   description: string;
