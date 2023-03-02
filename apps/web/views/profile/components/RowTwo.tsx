@@ -10,18 +10,16 @@ import {
   VStack,
 } from '@chakra-ui/react';
 import { AsyncSelect, Select } from 'chakra-react-select';
-import { useCallback, useEffect } from 'react';
+import { useCallback } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 import dayjs from 'dayjs';
-import { useAuthCtx } from '../../../hooks';
 import { Clg, Desp } from '../../wizard/components/Two';
 import { IsEdit } from '../types';
 import { platformAPI } from '../../../config';
 import { debounce } from '../../../utils';
 
 export const RowTwo = ({ isEdit }: IsEdit) => {
-  const { control, watch, setValue } = useFormContext();
-  const { user: userInfo } = useAuthCtx();
+  const { control, watch } = useFormContext();
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
 
@@ -64,49 +62,7 @@ export const RowTwo = ({ isEdit }: IsEdit) => {
     value: dayjs().year() + index,
   }));
 
-  useEffect(() => {
-    if (role === 'Student') {
-      setValue('mentor', 'NO');
-    }
-
-    // setting the value related to opposite of decription to undefined
-    // making sure that user wont send data from both student and professionall to DB
-    if (role === 'Professional') {
-      setValue('campusCommunityActive', null);
-      setValue('skills', null);
-      setValue('collegeId', null);
-      setValue('passYear', null);
-    }
-  }, [role, setValue]);
-
   // debounce function to  limit the user search
-
-  useEffect(() => {
-    if (userInfo?.description) {
-      // setting the state to change on frontend
-      setValue('description', { label: userInfo?.description, value: userInfo?.description });
-    }
-
-    if (userInfo?.mentor) {
-      setValue('mentor', userInfo.mentor ? 'YES' : 'NO');
-    }
-    if (userInfo?.passYear) {
-      setValue('passYear', {
-        value: userInfo?.passYear?.toString(),
-        label: userInfo.passYear.toString(),
-      });
-    }
-
-    if (userInfo?.college) {
-      setValue('collegeId', { label: userInfo.college.name, value: userInfo.college.id });
-    }
-    if (userInfo?.skills) {
-      const skillsArr = userInfo.skills.map((el: Clg) => ({ label: el.name, value: el.id }));
-      setValue('skills', skillsArr);
-    }
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [userInfo]);
 
   return (
     <VStack
@@ -164,7 +120,12 @@ export const RowTwo = ({ isEdit }: IsEdit) => {
             mt="15px"
             w="350px"
           >
-            <Box display="flex" flexDirection="column" justifyContent="space-between" mt="15px">
+            <Box
+              display="flex"
+              flexDirection="column"
+              justifyContent="space-between"
+              mt={{ sm: '3px', md: '18px' }}
+            >
               <Controller
                 name="mentor"
                 defaultValue="NO"
@@ -201,6 +162,7 @@ export const RowTwo = ({ isEdit }: IsEdit) => {
                     isDisabled={isEdit}
                     {...field}
                     isClearable
+                    defaultOptions
                     loadOptions={loadCollegedebounced}
                   />
                   {collegeErr && <FormErrorMessage>Please pick an option</FormErrorMessage>}

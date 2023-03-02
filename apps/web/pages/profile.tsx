@@ -1,8 +1,9 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import { useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import type { NextPageWithLayout } from 'next';
 import { Box, Button, Flex, useDisclosure, useToast } from '@chakra-ui/react';
 import { SessionAuth } from 'supertokens-auth-react/recipe/session';
+import dayjs from 'dayjs';
 import { useForm, SubmitHandler, FormProvider } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { InferType } from 'yup';
@@ -22,6 +23,13 @@ const Index: NextPageWithLayout = () => {
   // for cancel dialogue
   const { isOpen, onOpen, onClose } = useDisclosure();
 
+  const userSkillsArr = useMemo(() => {
+    if (user && user?.skills) {
+      return user?.skills.map((skill) => ({ label: skill?.name, value: skill?.id }));
+    }
+    return [];
+  }, [user]);
+
   const methods = useForm<FormType>({
     mode: 'all',
     resolver: yupResolver(registerFormValidator),
@@ -30,7 +38,7 @@ const Index: NextPageWithLayout = () => {
       pronoun: { label: user?.pronoun, value: user?.pronoun },
       email: user?.email,
       description: { label: user?.description, value: user?.description },
-      dob: user?.dob,
+      dob: dayjs(user?.dob).format('YYYY-MM-DD') as unknown as Date,
       mentor: user?.mentor ? 'YES' : 'NO',
       district: { label: user?.district, value: user?.district },
       house: user?.house,
@@ -41,9 +49,32 @@ const Index: NextPageWithLayout = () => {
         label: user?.passYear?.toString(),
       },
       collegeId: { label: user?.college?.name, value: user?.college?.id },
-      skills: user?.skills,
+      skills: userSkillsArr,
     },
   });
+
+  // changing form values wheneever  from data changes
+  useEffect(() => {
+    methods.reset({
+      name: user?.name,
+      pronoun: { label: user?.pronoun, value: user?.pronoun },
+      email: user?.email,
+      description: { label: user?.description, value: user?.description },
+      dob: dayjs(user?.dob).format('YYYY-MM-DD') as unknown as Date,
+      mentor: user?.mentor ? 'YES' : 'NO',
+      district: { label: user?.district, value: user?.district },
+      house: user?.house,
+      street: user?.street,
+      pin: user?.pin,
+      passYear: {
+        value: user?.passYear?.toString(),
+        label: user?.passYear?.toString(),
+      },
+      collegeId: { label: user?.college?.name, value: user?.college?.id },
+      skills: userSkillsArr,
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user]);
 
   const toast = useToast();
 
@@ -99,7 +130,7 @@ const Index: NextPageWithLayout = () => {
       collegeId: val.collegeId?.value,
       passYear: Number(val.passYear?.value),
       email: val.email,
-      pin: Number(val.pin),
+      pin: val.pin ? Number(val.pin) : null,
       mentor: val.mentor === 'YES',
     };
     setEdit((el) => !el);

@@ -1,9 +1,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import { FormControl, FormLabel, Input, FormErrorMessage, Box, VStack } from '@chakra-ui/react';
 import { OptionBase, Select } from 'chakra-react-select';
-import { useEffect } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
-import dayjs from 'dayjs';
 import { InferType } from 'yup';
 import { useAuthCtx } from '../../../hooks';
 import { firstFormValidator } from '../../wizard';
@@ -28,26 +26,8 @@ export const RowOne = ({ isEdit }: IsEdit) => {
   const {
     register,
     control,
-    setValue,
     formState: { errors },
   } = useFormContext<FormType>();
-
-  useEffect(() => {
-    // if dont want to do this we might need to change the whole validation schema
-    if (userInfo?.email) {
-      setValue('email', userInfo?.email);
-    }
-    if (userInfo?.pronoun) {
-      setValue('pronoun', { label: userInfo.pronoun, value: userInfo.pronoun });
-    }
-    if (userInfo?.name) {
-      setValue('name', userInfo?.name);
-    }
-    if (userInfo?.dob) {
-      setValue('dob', dayjs(userInfo?.dob).format('YYYY-MM-DD'));
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [userInfo]);
 
   return (
     <VStack spacing={2} align="stretch" w="100%">
