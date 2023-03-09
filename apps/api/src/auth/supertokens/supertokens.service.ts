@@ -2,7 +2,6 @@ import { Inject, Injectable } from '@nestjs/common';
 import supertokens from 'supertokens-node';
 import Session from 'supertokens-node/recipe/session';
 import Passwordless from 'supertokens-node/recipe/passwordless';
-import Dashboard from 'supertokens-node/recipe/dashboard';
 
 import { ConfigInjectionToken, AuthModuleConfig } from '../config.interface';
 import { SmsService } from './sms.service';
@@ -37,9 +36,6 @@ export class SupertokensService {
           },
         }),
         Session.init(),
-        Dashboard.init({
-          apiKey: process.env.SUPERTOKENS_API_KEY as string,
-        }),
       ],
     });
   }
