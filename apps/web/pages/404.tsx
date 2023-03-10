@@ -1,6 +1,7 @@
 import { Button, Flex, Heading } from '@chakra-ui/react';
 import React from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { Topbar, Footer } from '../layout/components';
 
 const Error = () => (
@@ -20,18 +21,23 @@ const Error = () => (
       Here&apos;s is your way back to home
     </Heading>
     <Flex justifyContent="center" mt="20px">
-      <Button variant="outline" mr="10px" outline="1px solid #407BFF">
-        Home
-      </Button>
-      <Button
-        ml="10px"
-        bg="#407BFF"
-        color="white
+      <Link href="/">
+        <Button variant="outline" mr="10px" outline="1px solid #407BFF">
+          Home
+        </Button>
+      </Link>
+
+      <Link href="/profile">
+        <Button
+          ml="10px"
+          bg="#407BFF"
+          color="white
       "
-        _hover={{ bg: '#407BFF' }}
-      >
-        My Profile
-      </Button>
+          _hover={{ bg: '#407BFF' }}
+        >
+          My Profile
+        </Button>
+      </Link>
     </Flex>
     <Footer />
   </Flex>
