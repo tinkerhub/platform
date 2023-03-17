@@ -26,6 +26,8 @@ export class CreateProfileDto {
   @IsString()
   collegeId: string;
 
+  collegeName?: string;
+
   @ValidateIf((object) => object.description === 'Student')
   @IsNumber()
   passYear: number;

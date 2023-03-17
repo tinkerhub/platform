@@ -36,6 +36,14 @@ export class ProfilesService {
     const skillArray = createProfileDto.skills.map((id: string) => ({
       id,
     }));
+
+    if (createProfileDto.collegeName != null) {
+      const collegeData = await this.createCollege(createProfileDto.collegeName);
+      /* eslint-disable */
+      delete createProfileDto.collegeName;
+      createProfileDto.collegeId = collegeData.id;
+    }
+
     const resp = await this.prismaService.user.create({
       data: {
         ...createProfileDto,
@@ -53,8 +61,16 @@ export class ProfilesService {
     });
   }
 
+  async createCollege(name: string) {
+    return await this.prismaService.college.create({
+      data: {
+        name,
+      },
+    });
+  }
+
   async getSkillById(id: string) {
-    const resp = await this.prismaService.skill.findFirst({
+    const resp = await this.prismaService.skill.findUnique({
       where: {
         id,
       },
@@ -67,7 +83,7 @@ export class ProfilesService {
 
   // Method to READ an existing profile
   async getUserById(authId: string) {
-    const resp = await this.prismaService.user.findFirst({
+    const resp = await this.prismaService.user.findUnique({
       where: {
         authId,
       },
@@ -87,7 +103,7 @@ export class ProfilesService {
     if (typeof email === 'undefined') {
       return { data: null };
     }
-    const resp = await this.prismaService.user.findFirst({
+    const resp = await this.prismaService.user.findUnique({
       where: {
         email,
       },
