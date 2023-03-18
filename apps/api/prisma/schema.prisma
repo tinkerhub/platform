@@ -35,7 +35,7 @@ model College {
   id   String @id @unique @default(dbgenerated("gen_random_uuid()::TEXT"))
   name String @unique
   location String?
-  Type String?
+  type String?
   user User[]
 }
 
