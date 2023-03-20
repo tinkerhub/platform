@@ -1,4 +1,4 @@
-import { Controller, Get, Query } from '@nestjs/common';
+import { Controller, Get, Post, Query } from '@nestjs/common';
 import { Throttle } from '@nestjs/throttler';
 import { NocoService } from './noco.service';
 
@@ -26,5 +26,10 @@ export class NocoController {
     @Query('page') page: string
   ) {
     return this.nocoService.getSkills(search, limit, page);
+  }
+
+  @Post('college')
+  async createCollege(@Query('name') name: string) {
+    return this.nocoService.createCollege(name);
   }
 }
