@@ -53,8 +53,6 @@ const Index: NextPageWithLayout = () => {
     },
   });
 
-  console.log(methods.formState.errors);
-
   // changing form values wheneever  from data changes
   useEffect(() => {
     methods.reset({
