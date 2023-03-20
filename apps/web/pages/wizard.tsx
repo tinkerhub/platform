@@ -49,10 +49,10 @@ const Wizard: NextPageWithLayout = () => {
       let college = val.collegeId?.value;
       // eslint-disable-next-line no-underscore-dangle
       if (val.collegeId?.__isNew__) {
-        const { data: newCollege } = await platformAPI.post('/college/new', {
-          name: val.collegeId?.value,
-        });
-        college = newCollege.data.name;
+        const { data: newCollege } = await platformAPI.post(
+          `/college?name=${val.collegeId?.value}`
+        );
+        college = newCollege.data.id;
       }
 
       const skillsArr = val.skills?.map((el: { value: string }) => el.value);
