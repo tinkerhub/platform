@@ -44,11 +44,13 @@ export const registerFormValidator = Yup.object({
   collegeId: Yup.object({
     label: Yup.string(),
     value: Yup.string(),
+    __isNew__: Yup.boolean(),
   }).when('description', {
     is: (val: Option) => val?.value === 'Student',
     then: Yup.object({
       label: Yup.string().required(),
       value: Yup.string().required(),
+      __isNew__: Yup.boolean(),
     }),
     otherwise: (schema) => schema.notRequired(),
   }),

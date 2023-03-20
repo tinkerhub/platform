@@ -46,6 +46,14 @@ const Wizard: NextPageWithLayout = () => {
   const handleData: SubmitHandler<FormType> = async (val) => {
     if (isReadyForSubmission) {
       // increase the step to 4 to render the sucess/ fail UI
+      let college = val.collegeId?.value;
+      // eslint-disable-next-line no-underscore-dangle
+      if (val.collegeId?.__isNew__) {
+        const { data: newCollege } = await platformAPI.post('/college/new', {
+          name: val.collegeId?.value,
+        });
+        college = newCollege.data.name;
+      }
 
       const skillsArr = val.skills?.map((el: { value: string }) => el.value);
       const dbData = {
@@ -54,7 +62,7 @@ const Wizard: NextPageWithLayout = () => {
         district: val.district?.value || '',
         description: val.description.value,
         skills: skillsArr || [],
-        collegeId: val.collegeId?.value,
+        collegeId: college,
         passYear: Number(val.passYear?.value),
         pin: val.pin ? Number(val.pin) : null,
         mentor: val.mentor === 'YES',
