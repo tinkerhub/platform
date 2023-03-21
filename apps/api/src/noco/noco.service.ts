@@ -35,4 +35,12 @@ export class NocoService {
     const endIndex = parseInt(page, 10) * parseInt(limit, 10);
     return data.slice(startIndex, endIndex);
   }
+
+  async createCollege(name: string) {
+    return this.prismaService.college.create({
+      data: {
+        name,
+      },
+    });
+  }
 }

@@ -27,15 +27,16 @@ export class ProfilesService {
   async createUser(createProfileDto: CreateProfileDto) {
     const user = await this.getUserById(createProfileDto.authId);
     const userByEmail = await this.getUserByEmail(createProfileDto.email);
-    if (user.data != null) {
+    if (user.data !== null) {
       throw new CreateException('User Exists');
     }
-    if (userByEmail != null && userByEmail.data != null) {
+    if (userByEmail !== null && userByEmail.data !== null) {
       throw new CreateException('User with same email exists');
     }
     const skillArray = createProfileDto.skills.map((id: string) => ({
       id,
     }));
+
     const resp = await this.prismaService.user.create({
       data: {
         ...createProfileDto,
@@ -54,7 +55,7 @@ export class ProfilesService {
   }
 
   async getSkillById(id: string) {
-    const resp = await this.prismaService.skill.findFirst({
+    const resp = await this.prismaService.skill.findUnique({
       where: {
         id,
       },
@@ -67,7 +68,7 @@ export class ProfilesService {
 
   // Method to READ an existing profile
   async getUserById(authId: string) {
-    const resp = await this.prismaService.user.findFirst({
+    const resp = await this.prismaService.user.findUnique({
       where: {
         authId,
       },
@@ -87,7 +88,7 @@ export class ProfilesService {
     if (typeof email === 'undefined') {
       return { data: null };
     }
-    const resp = await this.prismaService.user.findFirst({
+    const resp = await this.prismaService.user.findUnique({
       where: {
         email,
       },
