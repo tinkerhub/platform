@@ -10,8 +10,17 @@ import {
   ValidateIf,
 } from 'class-validator';
 
+enum Description {
+  Student = 'Student',
+  Professional = 'Professional',
+}
+
 export class CreateProfileDto {
   @ApiProperty()
+  @IsString()
+  id: string;
+
+  @IsString()
   authId: string;
 
   @IsNotEmpty()
@@ -32,8 +41,9 @@ export class CreateProfileDto {
 
   @IsNotEmpty()
   @IsString()
-  description: string;
+  description: Description;
 
+  @ValidateIf((object) => object.district != null)
   @IsString()
   district: string;
 
@@ -41,6 +51,7 @@ export class CreateProfileDto {
   @Type(() => Date)
   dob: Date;
 
+  @ValidateIf((object) => object.house != null)
   @IsString()
   house: string;
 
@@ -52,6 +63,7 @@ export class CreateProfileDto {
   @IsBoolean()
   mentor: boolean;
 
+  @IsString()
   mobile: string;
 
   @IsString()
@@ -60,6 +72,7 @@ export class CreateProfileDto {
   @IsArray()
   skills: Array<string>;
 
+  @ValidateIf((object) => object.street != null)
   @IsString()
   street: string;
 }

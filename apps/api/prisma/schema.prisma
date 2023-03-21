@@ -1,46 +1,48 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "postgres"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
 model User {
-  id            String   @id @unique @default(cuid()) @db.VarChar(25)
-  authId        String?  @unique // SuperTokens Authentication ID
+  id            String      @id @unique @default(cuid()) @db.VarChar(25)
+  authId        String?     @unique
   name          String
-  email         String   @unique
-  college       College? @relation(fields: [collegeId], references: [id])
+  email         String      @unique
   collegeId     String?
   passYear      Int?
-  description   String
   district      String?
   dob           DateTime
   house         String?
   pin           Int?
   mentor        Boolean
-  mobile        String?  @unique
+  mobile        String?     @unique
   pronoun       String?
   street        String?
+  discordActive Boolean     @default(false)
+  description   Description
+  college       College?    @relation(fields: [collegeId], references: [id])
   skills        Skill[]
-  discordActive Boolean  @default(false)
 }
 
 model College {
-  id   String @id @unique @default(dbgenerated("gen_random_uuid()::TEXT"))
-  name String @unique
+  id       String  @id @unique @default(dbgenerated("(gen_random_uuid())::text"))
+  name     String  @unique
   location String?
-  type String?
-  user User[]
+  type     String?
+  user     User[]
 }
 
 model Skill {
-  id   String @id @unique @default(dbgenerated("gen_random_uuid()::TEXT"))
+  id   String @id @unique @default(dbgenerated("(gen_random_uuid())::text"))
   name String @unique
   user User[]
+}
+
+enum Description {
+  Student
+  Professional
 }
