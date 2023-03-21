@@ -9,7 +9,7 @@ import {
   Stack,
   VStack,
 } from '@chakra-ui/react';
-import { AsyncSelect, Select } from 'chakra-react-select';
+import { AsyncSelect, Select, AsyncCreatableSelect } from 'chakra-react-select';
 import { useCallback } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 import dayjs from 'dayjs';
@@ -158,7 +158,7 @@ export const RowTwo = ({ isEdit }: IsEdit) => {
               render={({ field, fieldState: { error: collegeErr } }) => (
                 <FormControl label="College" isInvalid={!!collegeErr} id="College">
                   <FormLabel>I currenlty study at</FormLabel>
-                  <AsyncSelect
+                  <AsyncCreatableSelect
                     isDisabled={isEdit}
                     {...field}
                     isClearable

@@ -120,6 +120,13 @@ const Index: NextPageWithLayout = () => {
   };
 
   const updateProfile: SubmitHandler<FormType> = async (val) => {
+    let college = val.collegeId?.value;
+    // eslint-disable-next-line no-underscore-dangle
+    if (val.collegeId?.__isNew__) {
+      const { data: newCollege } = await platformAPI.post(`/college?name=${val.collegeId?.value}`);
+      college = newCollege.data.id;
+    }
+
     const skillsArr = val?.skills?.map((el: any) => el.value);
     const dbData = {
       ...val,
@@ -127,7 +134,7 @@ const Index: NextPageWithLayout = () => {
       district: val.district?.value || '',
       description: val.description.value,
       skills: skillsArr || [],
-      collegeId: val.collegeId?.value,
+      collegeId: college,
       passYear: Number(val.passYear?.value),
       email: val.email,
       pin: val.pin ? Number(val.pin) : null,

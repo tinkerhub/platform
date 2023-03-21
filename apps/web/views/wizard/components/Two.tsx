@@ -14,7 +14,7 @@ import {
 import dayjs from 'dayjs';
 import { motion } from 'framer-motion';
 import { useFormContext, Controller } from 'react-hook-form';
-import { OptionBase, Select, AsyncSelect } from 'chakra-react-select';
+import { OptionBase, Select, AsyncSelect, AsyncCreatableSelect } from 'chakra-react-select';
 import { platformAPI } from '../../../config';
 import { debounce } from '../../../utils';
 
@@ -163,7 +163,7 @@ export const Two = () => {
               render={({ field, fieldState: { error: collegeErr } }) => (
                 <FormControl label="College" isInvalid={!!collegeErr} id="College">
                   <FormLabel>I currenlty study at</FormLabel>
-                  <AsyncSelect
+                  <AsyncCreatableSelect
                     {...field}
                     isClearable
                     defaultOptions
