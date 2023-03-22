@@ -47,12 +47,27 @@ const Wizard: NextPageWithLayout = () => {
     if (isReadyForSubmission) {
       // increase the step to 4 to render the sucess/ fail UI
       let college = val.collegeId?.value;
+
       // eslint-disable-next-line no-underscore-dangle
       if (val.collegeId?.__isNew__) {
-        const { data: newCollege } = await platformAPI.post(
-          `/college?name=${val.collegeId?.value}`
-        );
-        college = newCollege.data.id;
+        try {
+          const { data: newCollege } = await platformAPI.post(
+            `/college?name=${val.collegeId?.value}`
+          );
+          if (!newCollege.success) {
+            throw new Error();
+          }
+          college = newCollege?.data?.id;
+        } catch {
+          toast({
+            title: 'Error creating College',
+            description: "couldn't create a new college please try again later",
+            status: 'error',
+            duration: 3000,
+            isClosable: true,
+          });
+          return;
+        }
       }
 
       const skillsArr = val.skills?.map((el: { value: string }) => el.value);
