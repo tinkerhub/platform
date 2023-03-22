@@ -1,8 +1,22 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 
+interface Response {
+  message: string;
+  data?: unknown;
+}
+
 @Injectable()
 export class NocoService {
+  // Response Handler
+  Success(response: Response) {
+    return {
+      success: true,
+      message: response.message,
+      data: response.data,
+    };
+  }
+
   constructor(private prismaService: PrismaService) {}
 
   // Method to return college names
@@ -37,10 +51,15 @@ export class NocoService {
   }
 
   async createCollege(name: string) {
-    return this.prismaService.college.create({
+    const createCollegeResponse = await this.prismaService.college.create({
       data: {
         name,
       },
+    });
+
+    return this.Success({
+      data: createCollegeResponse,
+      message: 'college was created succesfully',
     });
   }
 }

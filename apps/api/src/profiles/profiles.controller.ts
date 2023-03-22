@@ -6,9 +6,9 @@ import { Throttle } from '@nestjs/throttler';
 import { ProfilesService } from './profiles.service';
 import { CreateProfileDto } from './dto/create-profile.dto';
 import { UpdateProfileDto } from './dto/update-profile.dto';
-import { CreateException } from './exception/create.exception';
-import { ReadException } from './exception/read.exception';
-import { UpdateException } from './exception/update.exception';
+import { CreateUserException } from './exception/create.user.exception';
+import { ReadUserException } from './exception/read.user.exception';
+import { UpdateUserException } from './exception/update.user.exception';
 
 @UseGuards(AuthGuard)
 @Throttle(
@@ -23,18 +23,18 @@ export class ProfilesController {
   async createUser(
     @Req() req: any,
     @Res({ passthrough: true }) res: any,
-    @Body() createProfileDto: CreateProfileDto,
+    @Body() createUserData: CreateProfileDto,
     @Session() session: SessionContainer
   ) {
     try {
       const authId = session.getUserId();
       const mobile = (await Passwordless.getUserById({ userId: authId }))!.phoneNumber!;
-      const createProfile = createProfileDto;
-      createProfile.authId = authId;
-      createProfile.mobile = mobile;
-      return await this.profilesService.createUser(createProfile);
+      const newCreateUserData = createUserData;
+      newCreateUserData.authId = authId;
+      newCreateUserData.mobile = mobile;
+      return await this.profilesService.createUser(newCreateUserData);
     } catch (err) {
-      throw new CreateException(err);
+      throw new CreateUserException(err);
     }
   }
 
@@ -49,7 +49,7 @@ export class ProfilesController {
       authId = session.getUserId();
       return await this.profilesService.getUserById(authId);
     } catch (err) {
-      throw new ReadException(err);
+      throw new ReadUserException(err);
     }
   }
 
@@ -57,15 +57,15 @@ export class ProfilesController {
   async updateUser(
     @Req() req: any,
     @Res({ passthrough: true }) res: any,
-    @Body() updateProfileDto: UpdateProfileDto,
+    @Body() updateUserData: UpdateProfileDto,
     @Session() session: SessionContainer
   ) {
     let authId: string;
     try {
       authId = session.getUserId();
-      return await this.profilesService.updateUser(authId, updateProfileDto);
+      return await this.profilesService.updateUser(authId, updateUserData);
     } catch (err) {
-      throw new UpdateException(err);
+      throw new UpdateUserException(err);
     }
   }
 }
