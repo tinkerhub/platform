@@ -2,10 +2,10 @@ import { Injectable } from '@nestjs/common';
 import { CreateProfileDto } from './dto/create-profile.dto';
 import { PrismaService } from '../prisma/prisma.service';
 import { UpdateProfileDto } from './dto/update-profile.dto';
-import { CreateException } from './exception/create.exception';
-import { UpdateException } from './exception/update.exception';
+import { CreateUserException } from './exception/create.user.exception';
+import { UpdateUserException } from './exception/update.user.exception';
 
-interface Resp {
+interface Response {
   message: string;
   data?: unknown;
 }
@@ -15,31 +15,31 @@ export class ProfilesService {
   constructor(private prismaService: PrismaService) {}
 
   // Response Handler
-  Success(resp: Resp) {
+  Success(response: Response) {
     return {
       success: true,
-      message: resp.message,
-      data: resp.data,
+      message: response.message,
+      data: response.data,
     };
   }
 
   // Method to CREATE a new profile
-  async createUser(createProfileDto: CreateProfileDto) {
-    const user = await this.getUserById(createProfileDto.authId);
-    const userByEmail = await this.getUserByEmail(createProfileDto.email);
+  async createUser(createUserData: CreateProfileDto) {
+    const user = await this.getUserById(createUserData.authId);
+    const userByEmail = await this.getUserByEmail(createUserData.email);
     if (user.data !== null) {
-      throw new CreateException('User Exists');
+      throw new CreateUserException('User Exists');
     }
     if (userByEmail !== null && userByEmail.data !== null) {
-      throw new CreateException('User with same email exists');
+      throw new CreateUserException('User with same email exists');
     }
-    const skillArray = createProfileDto.skills.map((id: string) => ({
+    const skillArray = createUserData.skills.map((id: string) => ({
       id,
     }));
 
-    const resp = await this.prismaService.user.create({
+    const createUserResponse = await this.prismaService.user.create({
       data: {
-        ...createProfileDto,
+        ...createUserData,
         skills: { connect: skillArray },
       },
       include: {
@@ -49,26 +49,26 @@ export class ProfilesService {
     });
 
     return this.Success({
-      data: resp,
+      data: createUserResponse,
       message: 'User was created succesfully',
     });
   }
 
   async getSkillById(id: string) {
-    const resp = await this.prismaService.skill.findUnique({
+    const getSkillResponse = await this.prismaService.skill.findUnique({
       where: {
         id,
       },
     });
     return this.Success({
-      data: resp,
-      message: 'User info was read succesfully',
+      data: getSkillResponse,
+      message: 'skill info was read succesfully',
     });
   }
 
   // Method to READ an existing profile
   async getUserById(authId: string) {
-    const resp = await this.prismaService.user.findUnique({
+    const getUserResponse = await this.prismaService.user.findUnique({
       where: {
         authId,
       },
@@ -78,7 +78,7 @@ export class ProfilesService {
       },
     });
     return this.Success({
-      data: resp,
+      data: getUserResponse,
       message: 'User info was read succesfully',
     });
   }
@@ -88,34 +88,34 @@ export class ProfilesService {
     if (typeof email === 'undefined') {
       return { data: null };
     }
-    const resp = await this.prismaService.user.findUnique({
+    const getUserResponse = await this.prismaService.user.findUnique({
       where: {
         email,
       },
     });
     return this.Success({
-      data: resp,
+      data: getUserResponse,
       message: 'User info was read succesfully',
     });
   }
 
   // Method to UPDATE an existing profile
-  async updateUser(authId: string, updateProfileDto: UpdateProfileDto) {
-    const EmailResp = await this.getUserByEmail(updateProfileDto.email);
-    if (EmailResp.data != null) {
+  async updateUser(authId: string, updateUserData: UpdateProfileDto) {
+    const getUserByEmailResponse = await this.getUserByEmail(updateUserData.email);
+    if (getUserByEmailResponse.data != null) {
       // @ts-ignore
-      if (EmailResp.data.authId !== authId) {
-        throw new UpdateException('Email exists');
+      if (getUserByEmailResponse.data.authId !== authId) {
+        throw new UpdateUserException('Email exists');
       }
     }
 
-    let resp: object;
-    if (updateProfileDto.skills === undefined) {
+    let updateUserResponse: object;
+    if (updateUserData.skills === undefined) {
       // It works
-      resp = await this.prismaService.user.update({
+      updateUserResponse = await this.prismaService.user.update({
         where: { authId },
         // @ts-ignore
-        data: updateProfileDto,
+        data: updateUserData,
         include: {
           skills: true,
           college: true,
@@ -123,14 +123,14 @@ export class ProfilesService {
       });
       // Magic :)
     } else {
-      const skillArray = updateProfileDto.skills.map((id: any) => ({
+      const skillArray = updateUserData.skills.map((id: any) => ({
         id,
       }));
 
-      resp = await this.prismaService.user.update({
+      updateUserResponse = await this.prismaService.user.update({
         where: { authId },
         data: {
-          ...updateProfileDto,
+          ...updateUserData,
           skills: { set: skillArray },
         },
         include: {
@@ -140,7 +140,7 @@ export class ProfilesService {
       });
     }
     return this.Success({
-      data: resp,
+      data: updateUserResponse,
       message: 'User info was updated succesfully',
     });
   }
