@@ -17,10 +17,6 @@ enum Description {
 
 export class CreateProfileDto {
   @ApiProperty()
-  @IsString()
-  id: string;
-
-  @IsString()
   authId: string;
 
   @IsNotEmpty()
@@ -63,7 +59,6 @@ export class CreateProfileDto {
   @IsBoolean()
   mentor: boolean;
 
-  @IsString()
   mobile: string;
 
   @IsString()
