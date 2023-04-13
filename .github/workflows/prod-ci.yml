@@ -1,12 +1,13 @@
-name: api-ci
+
+name: prod-api-deployment
 
 on:
-  push:
-    branches:
-      - 'main'
-      - 'dev-api'
-    paths:
-      - 'apps/api/**'
+  workflow_dispatch:
+
+env:
+  CONTAINER_IMAGE: platform-api
+  CONTAINER_NAME: api
+  CONTAINER_PORT: 8000
 
 jobs:
   build:
@@ -31,29 +32,6 @@ jobs:
            # end of optional handling for multi line json
           echo "version=$version" >> $GITHUB_OUTPUT
 
-      - id: dev_image_tag
-        name: Set tag for dev env
-        run: |
-          echo "IMAGE=platform-api-dev" >> $GITHUB_ENV
-          echo "NAME=dev-api" >> $GITHUB_ENV
-          echo "PORT=8010" >> $GITHUB_ENV
-        if: ${{ github.ref_name == 'dev-api' }}
-
-      - id: stage_image_tag
-        name: Set tag for stage env
-        run: |
-          echo "IMAGE=platform-api-stage" >> $GITHUB_ENV
-          echo "NAME=stage-api" >> $GITHUB_ENV
-          echo "PORT=8000" >> $GITHUB_ENV
-        if: ${{ github.ref_name == 'main' }}
-
-      - id: image_tag
-        name: Get the final tags for deployment outputs
-        run: |
-          echo "container_image=${{env.IMAGE}}" >> $GITHUB_OUTPUT
-          echo "container_name=${{env.NAME}}" >> $GITHUB_OUTPUT
-          echo "container_port=${{env.PORT}}" >> $GITHUB_OUTPUT
-
       - name: Build and push
         id: build_and_push
         uses: docker/build-push-action@v4
@@ -61,31 +39,25 @@ jobs:
           context: .
           file: ./apps/api/Dockerfile
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/${{ steps.image_tag.outputs.container_image }}:latest, ${{ secrets.DOCKERHUB_USERNAME }}/${{ steps.image_tag.outputs.container_image }}:v${{steps.get_version.outputs.version}}
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/${{env.CONTAINER_IMAGE}}:latest, ${{ secrets.DOCKERHUB_USERNAME }}/${{env.CONTAINER_IMAGE}}:v${{steps.get_version.outputs.version}}
 
     outputs:
-      container_image: ${{ steps.image_tag.outputs.container_image }}
-      container_name: ${{ steps.image_tag.outputs.container_name }}
-      container_port: ${{ steps.image_tag.outputs.container_port }}
       container_tag: v${{steps.get_version.outputs.version}}
 
-  deploy-stage:
+  deploy:
     runs-on: ubuntu-latest
     needs: build
     env:
-      CONTAINER_IMAGE: ${{needs.build.outputs.container_image}}
-      CONTAINER_NAME: ${{needs.build.outputs.container_name}}
       CONTAINER_TAG: ${{needs.build.outputs.container_tag}}
-      CONTAINER_PORT: ${{needs.build.outputs.container_port}}
     steps:
       - name: deploy via ssh
         uses: appleboy/ssh-action@v0.1.3
         with:
-          host: ${{ secrets.STAGE_SSH_HOST }}
-          username: ${{ secrets.STAGE_SSH_USERNAME }}
-          key: ${{ secrets.STAGE_SSH_KEY }}
+          host: ${{ secrets.PROD_SSH_HOST }}
+          username: ${{ secrets.PROD_SSH_USERNAME }}
+          key: ${{ secrets.PROD_SSH_KEY }}
           envs: CONTAINER_NAME,CONTAINER_PORT,CONTAINER_TAG,CONTAINER_IMAGE
-          passphrase: ${{ secrets.STAGE_SSH_PASSPHRASE }}
+          passphrase: ${{ secrets.PROD_SSH_PASSPHRASE }}
           script: |
             # pull image
             docker pull ${{ secrets.DOCKERHUB_USERNAME }}/$(echo $CONTAINER_IMAGE):$(echo $CONTAINER_TAG)
