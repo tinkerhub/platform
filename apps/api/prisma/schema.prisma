@@ -23,7 +23,7 @@ model User {
   pronoun       String?
   street        String?
   discordActive Boolean     @default(false)
-  discordUserId BigInt?     @unique
+  discordUserId String?     @unique
   discordUserName String?   @unique
   description   Description
   college       College?    @relation(fields: [collegeId], references: [id])

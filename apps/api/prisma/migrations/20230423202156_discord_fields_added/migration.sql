@@ -6,7 +6,7 @@
 
 */
 -- AlterTable
-ALTER TABLE "User" ADD COLUMN     "discordUserId" BIGINT,
+ALTER TABLE "User" ADD COLUMN     "discordUserId" TEXT,
 ADD COLUMN     "discordUserName" TEXT;
 
 -- CreateIndex
