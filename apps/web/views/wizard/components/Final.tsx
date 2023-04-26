@@ -199,7 +199,7 @@ export const Final = ({ isLoading, id = 'ERROR', error, user }: Prop) => {
             2
           </Center>
           <Heading size="md">Go to TinkerHub discord</Heading>
-          <a href="www.disord.com/tinkerhub">
+          <a href="https://discord.gg/bWmgn3f">
             <Flex
               mt="15px"
               onClick={copyFile}
