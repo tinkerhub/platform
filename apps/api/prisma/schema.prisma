@@ -28,6 +28,7 @@ model User {
   description   Description
   college       College?    @relation(fields: [collegeId], references: [id])
   skills        Skill[]
+  profileCreated  DateTime @default(now())
 }
 
 model College {
