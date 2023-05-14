@@ -6,11 +6,8 @@ export const getUserData = async () => {
   return data;
 };
 
-export const useUserData = () => {
-  const { isLoading, error, data } = useQuery({
+export const useUserData = () =>
+  useQuery({
     queryKey: ['user-data'],
     queryFn: getUserData,
   });
-
-  return { isLoading, error, data };
-};
