@@ -4,4 +4,5 @@ export const ENV = {
   domain: process.env.NEXT_PUBLIC_WEBSITE_DOMAIN,
   apiPath: process.env.NEXT_PUBLIC_SUPERTOKEN_API_BASEPATH,
   webPath: process.env.NEXT_PUBLIC_SUPERTOKEN_WEBSITE_BASEPATH,
+  discordUrl: process.env.NEXT_PUBLIC_DISCORD_URL,
 };

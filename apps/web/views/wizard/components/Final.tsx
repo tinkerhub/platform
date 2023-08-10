@@ -22,6 +22,7 @@ import { LottieAnim } from './Lottie';
 import { Oops } from './Oops';
 import { useAuthCtx } from '../../../hooks';
 import { Form } from '../../../types';
+import { ENV } from '../../../config';
 
 interface Prop {
   isLoading: boolean;
@@ -199,7 +200,7 @@ export const Final = ({ isLoading, id = 'ERROR', error, user }: Prop) => {
             2
           </Center>
           <Heading size="md">Go to TinkerHub discord</Heading>
-          <a href="https://discord.gg/bWmgn3f">
+          <a href={ENV.discordUrl}>
             <Flex
               mt="15px"
               onClick={copyFile}
