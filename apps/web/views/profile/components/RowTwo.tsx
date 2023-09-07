@@ -57,7 +57,7 @@ export const RowTwo = ({ isEdit }: IsEdit) => {
 
   const role = watch('description')?.value;
 
-  const yaerOfPassout = new Array(5).fill(null).map((el, index) => ({
+  const yaerOfPassout = new Array(6).fill(null).map((el, index) => ({
     label: dayjs().year() + index,
     value: dayjs().year() + index,
   }));
