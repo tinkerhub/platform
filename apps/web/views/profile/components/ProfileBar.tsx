@@ -1,5 +1,5 @@
-import { Heading, Button, Box, Flex, Text, Icon } from '@chakra-ui/react';
-import { MdOutlineContentCopy, MdOutlineCancel } from 'react-icons/md';
+import { Box, Button, Flex, Heading, Icon, Text } from '@chakra-ui/react';
+import { MdOutlineCancel, MdOutlineContentCopy } from 'react-icons/md';
 import { BiArrowBack } from 'react-icons/bi';
 import { FiEdit } from 'react-icons/fi';
 import { AiOutlineSave } from 'react-icons/ai';
@@ -124,6 +124,17 @@ export const ProfileBar = ({
             Save
           </Button>
         )}
+        <Button
+          p="5"
+          colorScheme="blue"
+          backgroundColor="rgba(0, 0, 0, 1)"
+          alignSelf="center"
+          onClick={() => router.push(`https://tinkerhub.org/foss_team?id=${id}`)}
+          _hover={{ cursor: 'pointer', bg: '#0F0F0F' }}
+          color="white"
+        >
+          Connect GitHub
+        </Button>
       </Flex>
     </Box>
   );
