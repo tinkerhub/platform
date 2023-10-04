@@ -129,7 +129,7 @@ export const ProfileBar = ({
           colorScheme="blue"
           backgroundColor="rgba(0, 0, 0, 1)"
           alignSelf="center"
-          onClick={() => router.push(`https://tinkerhub.org/foss_team?id=${id}`)}
+          onClick={() => router.push(`https://tinkerhub.org/foss_team/new?id=${id}`)}
           _hover={{ cursor: 'pointer', bg: '#0F0F0F' }}
           color="white"
         >
