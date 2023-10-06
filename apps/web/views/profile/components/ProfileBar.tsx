@@ -56,11 +56,7 @@ export const ProfileBar = ({
           />
         </Flex>
       </Box>
-      <Flex
-        justifyContent="space-between"
-        w={{ base: '100%', lg: isEdit ? '280px' : '230px' }}
-        mb={{ base: '20px', lg: '0px' }}
-      >
+      <Flex gap="3" wrap="wrap" mb={{ base: '20px', lg: '0px' }}>
         {isEdit && (
           <Button
             p="3"
