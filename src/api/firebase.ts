@@ -42,15 +42,15 @@ export async function getUserData(phone?: string | null) {
     }
 }
 
-export async function getSkills(): Promise<Skill[]> {
+export async function getSkills() {
     const skillsRef = collection(db, 'skills')
     const skillsSnap = await getDocs(skillsRef);
 
     return skillsSnap.docs
-        .map(doc => ({id: doc.id, name: doc.get("name")})) as Skill[];
+        .map(doc => ({value: doc.id, label: doc.get("name")}));
 }
 
-export async function getCollege(search: string): Promise<Skill[]> {
+export async function getCollege(search: string) {
     try {
         const searchParameters = {
             q: search,
@@ -61,11 +61,11 @@ export async function getCollege(search: string): Promise<Skill[]> {
         const result = await typesense.collections('colleges').documents().search(searchParameters);
 
         return result.hits?.map(hit => ({
-            name: (hit.document as Skill).name,
-            id: (hit.document as Skill).id
+            label: (hit.document as Skill).name,
+            value: (hit.document as Skill).id
         })) || [];
     } catch (error) {
         console.error("Error fetching colleges from Typesense:", error);
-        throw error;
+        return [];
     }
 }
