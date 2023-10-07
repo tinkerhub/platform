@@ -1,50 +1,49 @@
-import { useRouter } from 'next/router';
-import { Box, Flex } from '@chakra-ui/react';
-import { useSessionContext } from 'supertokens-auth-react/recipe/session';
-import { Topbar, Footer } from './components';
-import type { Child } from '../types';
-import { useAuthCtx } from '../hooks';
-import { PageLoader } from '../components/loading';
+import {useRouter} from 'next/router';
+import {Box, Flex} from '@chakra-ui/react';
+import {Footer, Topbar} from './components';
+import type {Child} from '@/types';
+import {PageLoader} from '@/components/loading';
+import {auth} from "@/api/firebase";
+import {useAuthState} from "react-firebase-hooks/auth";
 
-export const BaseLayout = ({ children }: Child) => {
-  const router = useRouter();
-  const { isUserLoading } = useAuthCtx();
+export const BaseLayout = ({children}: Child) => {
+    const router = useRouter();
 
-  const redirect = () => {
-    router.push('/auth');
-  };
+    const [user, loading, error] = useAuthState(auth);
 
-  const profileDirect = () => {
-    router.push('/profile');
-  };
-  const path = router.pathname;
+    const redirect = () => {
+        router.push('/auth');
+    };
 
-  const { doesSessionExist } = useSessionContext() as any;
+    const profileDirect = () => {
+        router.push('/profile');
+    };
+    const path = router.pathname;
 
-  if (isUserLoading) {
+    if (loading) {
+        return (
+            <Box>
+                <PageLoader/>
+                <Box display="none">{children}</Box>
+            </Box>
+        );
+    }
+
     return (
-      <Box>
-        <PageLoader />
-        <Box display="none">{children}</Box>
-      </Box>
+        <Flex
+            flexDirection="column"
+            justifyContent="space-between"
+            minH="100vh"
+            p={{base: '20px', sm: '30px', md: '55px'}}
+            pt={{base: '40px', md: '50px'}}
+        >
+            <Topbar
+                showBtn={path === '/'}
+                btnText={user ? 'My Profile' : 'Login'}
+                btnFunc={user ? profileDirect : redirect}
+            />
+            {children}
+            <Footer/>
+        </Flex>
     );
-  }
-
-  return (
-    <Flex
-      flexDirection="column"
-      justifyContent="space-between"
-      minH="100vh"
-      p={{ base: '20px', sm: '30px', md: '55px' }}
-      pt={{ base: '40px', md: '50px' }}
-    >
-      <Topbar
-        showBtn={path === '/'}
-        btnText={doesSessionExist ? 'My Profile' : 'Login'}
-        btnFunc={doesSessionExist ? profileDirect : redirect}
-      />
-      {children}
-      <Footer />
-    </Flex>
-  );
 };

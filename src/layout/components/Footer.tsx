@@ -76,7 +76,7 @@ export const Footer = () => (
         >
           tinkerhub.org
         </Text>
-        <a href="https://www.notion.so/Philosophy-9b1485d8c4b944e5b18777a25af02f89">
+        <Link href="https://www.notion.so/Philosophy-9b1485d8c4b944e5b18777a25af02f89">
           <Text
             color="rgba(177, 177, 177, 1)"
             _hover={{ cursor: 'pointer', color: 'grey' }}
@@ -84,8 +84,8 @@ export const Footer = () => (
           >
             philosophy
           </Text>
-        </a>
-        <a href="https://tinkerhub-foundation.notion.site/Code-of-Conduct-25f2d4dd18bb4b93b5fbddd478cb7ee5">
+        </Link>
+        <Link href="https://tinkerhub-foundation.notion.site/Code-of-Conduct-25f2d4dd18bb4b93b5fbddd478cb7ee5">
           <Text
             color="rgba(177, 177, 177, 1)"
             _hover={{ cursor: 'pointer', color: 'grey' }}
@@ -93,7 +93,7 @@ export const Footer = () => (
           >
             code of conduct
           </Text>
-        </a>
+        </Link>
       </Flex>
     </Flex>
   </Box>

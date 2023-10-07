@@ -1,12 +1,10 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import { Center, useToast } from '@chakra-ui/react';
 import { useState } from 'react';
-import type { NextPageWithLayout } from 'next';
 import { useForm, FormProvider, SubmitHandler } from 'react-hook-form';
-import { SessionAuth } from 'supertokens-auth-react/recipe/session';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { InferType } from 'yup';
-import { BaseLayout } from '../layout';
+import { BaseLayout } from '@/layout';
 
 import {
   CardBio,
@@ -17,14 +15,14 @@ import {
   Final,
   registerFormValidator,
   stepByStepValidator,
-} from '../views/wizard';
-import { platformAPI } from '../config';
-import { Quotes } from '../views/wizard/components/Quotes';
-import { Form } from '../types';
+} from '@/views/wizard';
+import { platformAPI } from '@/config';
+import { Quotes } from '@/views/wizard/components/Quotes';
+import { Form } from '@/types';
 
 type FormType = InferType<typeof registerFormValidator>;
 
-const Wizard: NextPageWithLayout = () => {
+const Wizard = () => {
   const [step, setStep] = useState<number>(1);
   const methods = useForm<FormType>({
     mode: 'all',
@@ -104,7 +102,7 @@ const Wizard: NextPageWithLayout = () => {
 
   if (step === 4) {
     return (
-      <SessionAuth>
+      <>
         <Center mb="60px">
           <Final
             isLoading={methods.formState.isSubmitting}
@@ -113,12 +111,12 @@ const Wizard: NextPageWithLayout = () => {
             user={user}
           />
         </Center>
-      </SessionAuth>
+      </>
     );
   }
 
   return (
-    <SessionAuth>
+    <>
       {step === 1}
       <Quotes word="“80% of engineering graduates don’t have the skills needed for the industry. We’ are here to change that.”">
         <CardBio>
@@ -132,7 +130,7 @@ const Wizard: NextPageWithLayout = () => {
           </FormProvider>
         </CardBio>
       </Quotes>
-    </SessionAuth>
+    </>
   );
 };
 

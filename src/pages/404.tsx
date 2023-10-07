@@ -2,7 +2,7 @@ import { Button, Flex, Heading } from '@chakra-ui/react';
 import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Topbar, Footer } from '../layout/components';
+import { Topbar, Footer } from '@/layout/components';
 
 const Error = () => (
   <Flex
@@ -13,7 +13,7 @@ const Error = () => (
     pt={{ base: '40px', md: '50px' }}
   >
     <Topbar showBtn={false} />
-    <Image src="/404.svg" height="400" width="300" />
+    <Image src="/404.svg" height="400" width="300"  alt=""/>
     <Heading textAlign="center" color="#407BFF" size="2xl">
       Looks Like You&apos;re Lost
     </Heading>

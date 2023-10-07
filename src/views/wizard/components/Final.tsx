@@ -20,9 +20,8 @@ import { useRouter } from 'next/router';
 
 import { LottieAnim } from './Lottie';
 import { Oops } from './Oops';
-import { useAuthCtx } from '../../../hooks';
-import { Form } from '../../../types';
-import { ENV } from '../../../config';
+import { Form } from '@/types';
+import Link from "next/link";
 
 interface Prop {
   isLoading: boolean;
@@ -32,7 +31,6 @@ interface Prop {
 }
 
 export const Final = ({ isLoading, id = 'ERROR', error, user }: Prop) => {
-  const { setUser } = useAuthCtx();
   const toast = useToast();
   const router = useRouter();
   const [result, setResult] = useState<boolean>(false);
@@ -40,7 +38,6 @@ export const Final = ({ isLoading, id = 'ERROR', error, user }: Prop) => {
 
   const goHome = () => {
     // updating the context to new return value from post req
-    setUser(user);
     router.push('/profile');
   };
   const copyFile = () => {
@@ -200,7 +197,7 @@ export const Final = ({ isLoading, id = 'ERROR', error, user }: Prop) => {
             2
           </Center>
           <Heading size="md">Go to TinkerHub discord</Heading>
-          <a href={ENV.discordUrl}>
+          <Link href="https://rohittp.com">
             <Flex
               mt="15px"
               onClick={copyFile}
@@ -212,7 +209,7 @@ export const Final = ({ isLoading, id = 'ERROR', error, user }: Prop) => {
               </Heading>
               <Icon as={FiExternalLink} fontSize="18px" />
             </Flex>
-          </a>
+          </Link>
         </Box>
         <Box
           border="1.5px solid #C8C8C8"

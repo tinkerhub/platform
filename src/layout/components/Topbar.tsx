@@ -19,8 +19,9 @@ import { AiOutlineUser } from 'react-icons/ai';
 import { GiHamburgerMenu } from 'react-icons/gi';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { signOut } from 'supertokens-auth-react/recipe/passwordless';
-import { useSessionContext } from 'supertokens-auth-react/recipe/session';
+import {auth} from "@/api/firebase";
+import {signOut} from "@firebase/auth";
+import {useAuthState} from "react-firebase-hooks/auth";
 
 interface NavProp {
   btnText?: string;
@@ -31,21 +32,22 @@ interface NavProp {
 export const Topbar = ({ btnFunc, btnText = 'Login/Signup', showBtn }: NavProp) => {
   const router = useRouter();
   const SwitchIcon = useColorModeValue(IoMdMoon, BsFillSunFill);
-  const { doesSessionExist } = useSessionContext() as any;
   const { toggleColorMode: toggleMode } = useColorMode();
   const theme = useColorModeValue('dark', 'light');
 
+  const [user] = useAuthState(auth);
+
   const logOut = async () => {
     localStorage.removeItem('isWizardCompleted');
-    await signOut();
-    router.replace('/');
+    await signOut(auth);
+    await router.replace('/');
   };
 
   return (
     <Box display="flex" justifyContent="space-between" h={65} alignItems="center">
       <Flex flexDirection="column">
         <Link href="/" passHref>
-          <a href="replace">
+          <Link href="replace">
             <Flex>
               <Heading size="lg">Tinker</Heading>
               <Heading fontWeight="normal" size="lg">
@@ -55,7 +57,7 @@ export const Topbar = ({ btnFunc, btnText = 'Login/Signup', showBtn }: NavProp) 
             <Heading fontSize="13px" fontWeight="500" ml="2.5px">
               Foundation
             </Heading>
-          </a>
+          </Link>
         </Link>
       </Flex>
       <div>
@@ -69,7 +71,7 @@ export const Topbar = ({ btnFunc, btnText = 'Login/Signup', showBtn }: NavProp) 
           onClick={toggleMode}
           icon={<SwitchIcon />}
         />
-        {doesSessionExist && router.pathname !== '/wizard' && (
+        {user && router.pathname !== '/wizard' && (
           <Box display={{ base: 'inline', md: 'none' }}>
             <Menu>
               <MenuButton
@@ -91,7 +93,7 @@ export const Topbar = ({ btnFunc, btnText = 'Login/Signup', showBtn }: NavProp) 
         )}
 
         <Box display={{ base: 'none', md: 'inline' }}>
-          {doesSessionExist && router.pathname === '/' && (
+          {user && router.pathname === '/' && (
             <Button
               onClick={logOut}
               _hover={{ cursor: 'pointer', bg: '#1328EC', color: 'white' }}
@@ -115,7 +117,7 @@ export const Topbar = ({ btnFunc, btnText = 'Login/Signup', showBtn }: NavProp) 
           )}
         </Box>
         {/* // renders only in  mobile when user is not logged in */}
-        {!doesSessionExist && router.pathname === '/' && (
+        {!user && router.pathname === '/' && (
           <Button
             display={{ base: 'inline', md: 'none' }}
             onClick={() => router.push('/auth')}
