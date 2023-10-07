@@ -16,6 +16,7 @@ import { motion } from 'framer-motion';
 import { useFormContext, Controller } from 'react-hook-form';
 import { OptionBase, Select, AsyncSelect, AsyncCreatableSelect } from 'chakra-react-select';
 import { debounce } from '@/utils';
+import {getCollege, getSkills} from "@/api/firebase";
 
 interface Options extends OptionBase {
   label: string;
@@ -30,13 +31,6 @@ export const Desp: Options[] = [
 export const Two = () => {
   const { control, watch, setValue } = useFormContext();
 
-  const getCollege = async (_: string) => {
-    return []; // TODO: implement this
-  };
-
-  const getSkills = async () => {
-    return []; // TODO: implement this
-  };
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const loadCollegedebounced = useCallback(
     debounce((inputValue: string, callback: (options: any) => void) => {

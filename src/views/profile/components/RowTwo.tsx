@@ -16,17 +16,11 @@ import dayjs from 'dayjs';
 import { Desp } from '../../wizard/components/Two';
 import { IsEdit } from '../types';
 import { debounce } from '@/utils';
+import {getCollege, getSkills} from "@/api/firebase";
 
 export const RowTwo = ({ isEdit }: IsEdit) => {
   const { control, watch } = useFormContext();
 
-  const getCollege = async (_: string) => {
-    return []; // TODO: implement this
-  };
-
-  const getSkills = async () => {
-    return []; // TODO: implement this
-  };
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const loadCollegedebounced = useCallback(
     debounce((inputValue: string, callback: (options: any) => void) => {
