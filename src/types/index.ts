@@ -32,7 +32,7 @@ export interface Form {
   college?: Skill;
 }
 
-interface Skill {
+export interface Skill {
   name: string;
   id: string;
 }
