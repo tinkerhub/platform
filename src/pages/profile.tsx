@@ -7,16 +7,22 @@ import {yupResolver} from '@hookform/resolvers/yup';
 import {InferType} from 'yup';
 import {registerFormValidator} from '@/views/wizard';
 import {CancelDialogue, ProfileBar, RowOne, RowThree, RowTwo} from '@/views/profile';
-import {Errors} from '@/types';
-import {useAuthCtx} from '@/hooks';
-import {platformAPI} from '@/config';
+import {Errors, Form} from '@/types';
 import {ProfileLayout} from '@/layout';
+import {useAuthState} from "react-firebase-hooks/auth";
+import {auth, db, getUserData} from "@/api/firebase";
+import {doc, setDoc} from "firebase/firestore";
 
 type FormType = InferType<typeof registerFormValidator>;
 
 const Index = () => {
-    const {user, setUser} = useAuthCtx();
+    const [pUser] = useAuthState(auth);
+    const [user, setUser] = useState<Form>();
     const [isEdit, setEdit] = useState<boolean>(true);
+
+    useEffect(() => {
+        getUserData(pUser?.phoneNumber).then(setUser);
+    }, [pUser?.phoneNumber])
 
     // for cancel dialogue
     const {isOpen, onOpen, onClose} = useDisclosure();
@@ -38,9 +44,9 @@ const Index = () => {
             description: {label: user?.description, value: user?.description},
             dob: dayjs(user?.dob).format('YYYY-MM-DD') as unknown as Date,
             mentor: user?.mentor ? 'YES' : 'NO',
-            district: {label: user?.district, value: user?.district},
-            house: user?.house,
-            street: user?.street,
+            district: {label: user?.district || undefined, value: user?.district || undefined},
+            house: user?.house || undefined,
+            street: user?.street || undefined,
             pin: user?.pin,
             passYear: {
                 value: user?.passYear?.toString(),
@@ -60,9 +66,9 @@ const Index = () => {
             description: {label: user?.description, value: user?.description},
             dob: dayjs(user?.dob).format('YYYY-MM-DD') as unknown as Date,
             mentor: user?.mentor ? 'YES' : 'NO',
-            district: {label: user?.district, value: user?.district},
-            house: user?.house,
-            street: user?.street,
+            district: {label: user?.district || undefined, value: user?.district || undefined},
+            house: user?.house || undefined,
+            street: user?.street || undefined,
             pin: user?.pin,
             passYear: {
                 value: user?.passYear?.toString(),
@@ -96,9 +102,9 @@ const Index = () => {
         onClose();
     };
 
-    const copyMembershipId = () => {
+    const copyMembershipId = async () => {
         if (user && user.id) {
-            window.navigator.clipboard.writeText(user?.id);
+            await window.navigator.clipboard.writeText(user?.id);
             toast({
                 title: 'Id copied to clipboard.',
                 status: 'success',
@@ -118,49 +124,36 @@ const Index = () => {
     };
 
     const updateProfile: SubmitHandler<FormType> = async (val) => {
+        if(!pUser?.phoneNumber) return;
+
         let college = val.collegeId?.value;
-        // eslint-disable-next-line no-underscore-dangle
-        if (val.collegeId?.__isNew__) {
-            try {
-                const {data: newCollege} = await platformAPI.post(
-                    `/college?name=${val.collegeId?.value}`
-                );
-                if (!newCollege.success) {
-                    throw new Error();
-                }
-                college = newCollege?.data?.id;
-            } catch {
-                toast({
-                    title: 'Error creating College',
-                    description: "couldn't create a new college please try again later",
-                    status: 'error',
-                    duration: 3000,
-                    isClosable: true,
-                });
-                return;
-            }
-        }
 
         const skillsArr = val?.skills?.map((el: any) => el.value);
-        const dbData = {
+        const dbData: Form = {
+            accept: null,
+            college: null,
             ...val,
+            id: pUser.uid,
+            mobile: pUser.phoneNumber,
+            campusCommunityActive: true,
             pronoun: val.pronoun.value,
             district: val.district?.value || '',
             description: val.description.value,
             skills: skillsArr || [],
-            collegeId: college,
+            collegeId: college || null,
             passYear: Number(val.passYear?.value),
             email: val.email,
-            pin: val.pin ? Number(val.pin) : null,
+            pin: val.pin || null,
             mentor: val.mentor === 'YES',
+            house: null,
+            street: null
         };
         setEdit((el) => !el);
 
         // sending the post request
         try {
-            const {data} = await platformAPI.patch('/users/profile', dbData);
-            // need to rerender the  page from context
-            if (!data.success) throw new Error(data.message);
+            await setDoc(doc(db, 'users', pUser?.phoneNumber || ""), dbData, {merge: true});
+
             toast({
                 title: 'user info was updated',
                 status: 'success',
@@ -168,7 +161,7 @@ const Index = () => {
                 isClosable: true,
             });
             // setting the new updated value to context
-            setUser(data.data);
+            setUser(dbData);
         } catch (e) {
             const msg = e as Errors;
             // rolling back to old state if error occurred

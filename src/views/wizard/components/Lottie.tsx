@@ -1,8 +1,9 @@
 import Lottie from 'react-lottie';
 import Anim from '../../../../public/final.json';
+import {Dispatch} from "react";
 
 type LottieProp = {
-  setResult: React.Dispatch<boolean>;
+  setResult: Dispatch<boolean>;
 };
 
 export const LottieAnim = ({ setResult }: LottieProp) => {

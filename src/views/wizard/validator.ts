@@ -1,6 +1,6 @@
 /* eslint-disable no-extra-boolean-cast */
 import * as Yup from 'yup';
-import { OptionalObjectSchema } from 'yup/lib/object';
+import {ObjectSchema} from "yup";
 
 const PickAnOptionValidator = Yup.object({
   value: Yup.string().required(),
@@ -35,25 +35,12 @@ export const registerFormValidator = Yup.object({
         })
     )
     .default([]),
-  mentor: Yup.string()
-    .nullable()
-    .when('description', {
-      is: (val: Option) => val?.value === 'Professional',
-      then: Yup.string().required(),
-    }),
+  mentor: Yup.string().nullable(),
   collegeId: Yup.object({
     label: Yup.string(),
     value: Yup.string(),
     __isNew__: Yup.boolean(),
-  }).when('description', {
-    is: (val: Option) => val?.value === 'Student',
-    then: Yup.object({
-      label: Yup.string().required(),
-      value: Yup.string().required(),
-      __isNew__: Yup.boolean(),
-    }),
-    otherwise: (schema) => schema.notRequired(),
-  }),
+  }).notRequired(),
   house: Yup.string(),
   street: Yup.string(),
   district: Yup.object({
@@ -69,14 +56,7 @@ export const registerFormValidator = Yup.object({
   passYear: Yup.object({
     label: Yup.string(),
     value: Yup.string(),
-  }).when('description', {
-    is: (val: Option) => val?.value === 'Student',
-    then: Yup.object({
-      label: Yup.string().required(),
-      value: Yup.string().required(),
-    }),
-    otherwise: (schema) => schema.notRequired(),
-  }),
+  }).notRequired(),
 });
 
 export const firstFormValidator = Yup.object({
@@ -100,28 +80,9 @@ export const secondValidator = Yup.object({
         label: Yup.string().required(),
       })
     ),
-  mentor: Yup.string()
-    .nullable()
-    .when('description', {
-      is: (val: Option) => val?.value === 'Professional',
-      then: Yup.string().required(),
-    }),
-  collegeId: Yup.object()
-    .nullable()
-    .when('description', {
-      is: (val: Option) => val?.value === 'Student',
-      then: PickAnOptionValidator.nullable().required(
-        requiredErrorStatement('Please pick an option')
-      ),
-    }),
-  passYear: Yup.object()
-    .nullable()
-    .when('description', {
-      is: (val: Option) => val?.value === 'Student',
-      then: PickAnOptionValidator.nullable().required(
-        requiredErrorStatement('Please pick an option')
-      ),
-    }),
+  mentor: Yup.string().nullable(),
+  collegeId: Yup.object().nullable(),
+  passYear: Yup.object().nullable(),
 });
 
 export const thirdValidator = Yup.object({
@@ -136,7 +97,7 @@ export const thirdValidator = Yup.object({
     .transform((value) => (!!value ? value : null)),
 });
 
-export const stepByStepValidator: Record<number, OptionalObjectSchema<any>> = {
+export const stepByStepValidator: Record<number, ObjectSchema<any>> = {
   1: firstFormValidator,
   2: secondValidator,
   3: thirdValidator,

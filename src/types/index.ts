@@ -6,30 +6,25 @@ export interface Errors {
   message: string;
 }
 
-export interface Clg {
-  name: string;
-  id: string;
-}
-
 export interface Form {
   name: string;
-  passYear?: number;
+  passYear: number | null;
   description: string;
   dob: Date;
   email: string;
   pronoun: string;
   mobile: string;
-  collegeId?: string;
-  mentor?: boolean;
-  accept?: boolean;
-  house?: string;
-  district?: string;
-  pin?: string | null;
-  skills?: Skill[];
-  street?: string;
+  collegeId: string | null;
+  mentor: boolean;
+  accept: boolean | null;
+  house: string | null;
+  district: string | null;
+  pin: string | null;
+  skills: Skill[] | [];
+  street: string | null;
   campusCommunityActive: boolean;
   id: string;
-  college?: Skill;
+  college: Skill | null;
 }
 
 export interface Skill {

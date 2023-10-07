@@ -27,10 +27,9 @@ interface Prop {
   isLoading: boolean;
   id: string | undefined;
   error: boolean;
-  user: Form | null;
 }
 
-export const Final = ({ isLoading, id = 'ERROR', error, user }: Prop) => {
+export const Final = ({ isLoading, id = 'ERROR', error }: Prop) => {
   const toast = useToast();
   const router = useRouter();
   const [result, setResult] = useState<boolean>(false);

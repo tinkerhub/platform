@@ -11,7 +11,7 @@ export const Oops = () => (
     p={{ base: '20px', sm: '30px', md: '74px' }}
     pt={{ base: '40px', md: '50px' }}
   >
-    <Image src="/oops.svg" height="400" width="300" />
+    <Image src="/oops.svg" height="400" width="300" alt="oops" />
     <Heading textAlign="center" color="#407BFF" size="2xl" mb={{ base: '20px', lg: '10px' }}>
       Oops... Something Went Wrong
     </Heading>

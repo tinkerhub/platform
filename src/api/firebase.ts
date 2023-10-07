@@ -2,6 +2,8 @@
 import { initializeApp } from "firebase/app";
 import {getAuth} from "@firebase/auth";
 import {getFirestore} from "@firebase/firestore";
+import {doc, getDoc} from "firebase/firestore";
+import {Form} from "@/types";
 
 
 const firebaseConfig = {
@@ -18,3 +20,15 @@ const firebaseConfig = {
 export const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 export const db = getFirestore(app);
+
+export async function getUserData(phone?: string | null)
+{
+  if (!phone) return;
+
+  const userRef = doc(db, 'users', phone);
+  const userSnap = await getDoc(userRef);
+
+  if (userSnap.exists()) {
+    return userSnap.data() as Form;
+  }
+}

@@ -3,11 +3,14 @@ import { FormControl, FormLabel, Input, FormErrorMessage, Box, VStack } from '@c
 import { Select } from 'chakra-react-select';
 import { Controller, useFormContext } from 'react-hook-form';
 import { InferType } from 'yup';
-import { useAuthCtx } from '../../../hooks';
 import { thirdValidator } from '../../wizard';
 import { District } from '../../wizard/components/Three';
 
 import { IsEdit } from '../types';
+import {useAuthState} from "react-firebase-hooks/auth";
+import {auth, getUserData} from "@/api/firebase";
+import {useEffect, useState} from "react";
+import {Form} from "@/types";
 
 type Third = InferType<typeof thirdValidator>;
 
@@ -18,7 +21,12 @@ export const RowThree = ({ isEdit }: IsEdit) => {
     formState: { errors },
   } = useFormContext<Third>();
 
-  const { user: userInfo } = useAuthCtx();
+    const [user] = useAuthState(auth);
+    const [userInfo, setUserInfo] = useState<Form>();
+
+    useEffect(() => {
+        getUserData(user?.phoneNumber).then(setUserInfo);
+    }, [user?.phoneNumber])
 
   return (
     <VStack spacing={2} align="stretch" w="100%" mb={{ base: '10px', lg: '67px' }}>

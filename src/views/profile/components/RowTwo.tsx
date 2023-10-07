@@ -13,28 +13,19 @@ import { AsyncSelect, Select, AsyncCreatableSelect } from 'chakra-react-select';
 import { useCallback } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 import dayjs from 'dayjs';
-import { Clg, Desp } from '../../wizard/components/Two';
+import { Desp } from '../../wizard/components/Two';
 import { IsEdit } from '../types';
-import { platformAPI } from '../../../config';
-import { debounce } from '../../../utils';
+import { debounce } from '@/utils';
 
 export const RowTwo = ({ isEdit }: IsEdit) => {
   const { control, watch } = useFormContext();
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-
-  const getCollege = async (input: string) => {
-    const { data } = await platformAPI.get(`/college?search=${input}&limit=20&page=1`);
-    // pushing the fetched data to a array to make sure that it is in right format
-    const college = data.map((el: Clg) => ({ label: el.name, value: el.id }));
-    return college;
+  const getCollege = async (_: string) => {
+    return []; // TODO: implement this
   };
 
   const getSkills = async () => {
-    const { data } = await platformAPI.get(`/skills?limit=20&page=1`);
-    // pushing the fetched data to a array to make sure that it is in right format
-    const skills = data.map((el: Clg) => ({ label: el.name, value: el.id }));
-    return skills;
+    return []; // TODO: implement this
   };
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const loadCollegedebounced = useCallback(
@@ -47,7 +38,7 @@ export const RowTwo = ({ isEdit }: IsEdit) => {
   );
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const loadSkillsdeBounced = useCallback(
-    debounce((inputValue: string, callback: (options: any) => void) => {
+    debounce((_: string, callback: (options: any) => void) => {
       getSkills().then((options) => {
         callback(options);
       });
@@ -57,7 +48,7 @@ export const RowTwo = ({ isEdit }: IsEdit) => {
 
   const role = watch('description')?.value;
 
-  const yaerOfPassout = new Array(6).fill(null).map((el, index) => ({
+  const yaerOfPassout = new Array(6).fill(null).map((_, index) => ({
     label: dayjs().year() + index,
     value: dayjs().year() + index,
   }));
