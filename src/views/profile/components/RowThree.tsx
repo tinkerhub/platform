@@ -37,7 +37,7 @@ export const RowThree = ({ isEdit }: IsEdit) => {
             {...register('house')}
             type="string"
             isDisabled={isEdit}
-            defaultValue={userInfo?.house}
+            defaultValue={userInfo?.house || undefined}
           />
           <FormErrorMessage>{errors.house?.message}</FormErrorMessage>
         </FormControl>
@@ -45,7 +45,7 @@ export const RowThree = ({ isEdit }: IsEdit) => {
       <Box display="flex" flexDirection="column" justifyContent="space-between">
         <FormControl label="Street" isInvalid={!!errors.street} id="Street">
           <FormLabel>Street Name</FormLabel>
-          <Input {...register('street')} isDisabled={isEdit} defaultValue={userInfo?.street} />
+          <Input {...register('street')} isDisabled={isEdit} defaultValue={userInfo?.street || undefined} />
           <FormErrorMessage>{errors.street?.message}</FormErrorMessage>
         </FormControl>
       </Box>
