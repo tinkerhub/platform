@@ -29,7 +29,7 @@ const Index = () => {
 
     const userSkillsArr = useMemo(() => {
         if (user && user?.skills) {
-            return user?.skills.map((skill) => ({label: skill?.name, value: skill?.id}));
+            return user?.skills.map((skill) => ({label: skill, value: skill}));
         }
         return [];
     }, [user]);
@@ -126,12 +126,14 @@ const Index = () => {
     const updateProfile: SubmitHandler<FormType> = async (val) => {
         if(!pUser?.phoneNumber) return;
 
-        let college = val.collegeId?.value;
+        let college ;
+        if(val.collegeId?.label && val.collegeId?.value)
+            college = {name: val.collegeId.label, id: val.collegeId.value};
 
         const skillsArr = val?.skills?.map((el: any) => el.value);
         const dbData: Form = {
-            accept: null,
-            college: null,
+            accept: user?.accept || false,
+            college: college || user?.college || null,
             ...val,
             id: pUser.uid,
             mobile: pUser.phoneNumber,
@@ -140,13 +142,13 @@ const Index = () => {
             district: val.district?.value || '',
             description: val.description.value,
             skills: skillsArr || [],
-            collegeId: college || null,
+            collegeId: college?.id || null,
             passYear: Number(val.passYear?.value),
             email: val.email,
             pin: val.pin || null,
             mentor: val.mentor === 'YES',
-            house: null,
-            street: null
+            house: val.house || null,
+            street: val.street || null,
         };
         setEdit((el) => !el);
 

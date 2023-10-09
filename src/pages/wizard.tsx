@@ -8,10 +8,10 @@ import {BaseLayout} from '@/layout';
 
 import {Bar, CardBio, Final, One, registerFormValidator, stepByStepValidator, Three, Two,} from '@/views/wizard';
 import {Quotes} from '@/views/wizard/components/Quotes';
-import {Form, Skill} from '@/types';
+import {Form} from '@/types';
 import {doc, setDoc} from 'firebase/firestore';
 import {useAuthState} from 'react-firebase-hooks/auth';
-import {auth, db} from '@/api/firebase';
+import {auth, db, getUserData} from '@/api/firebase';
 import {useRouter} from "next/router";
 
 type FormType = InferType<typeof registerFormValidator>;
@@ -29,6 +29,12 @@ const Wizard = () => {
     useEffect(() => {
         if (user === null)
             router.push('/auth').then();
+
+        getUserData(user?.phoneNumber).then((data) => {
+            if(data?.collegeId)
+                router.push('/profile').then();
+        });
+
     }, [user, router]);
 
     const [formError, setFormError] = useState<boolean>(false);
@@ -45,22 +51,24 @@ const Wizard = () => {
     const handleData: SubmitHandler<FormType> = async (val) => {
         if (isReadyForSubmission) {
             // increase the step to 4 to render the sucess/ fail UI
-            let college = val.collegeId?.value;
 
+            let college ;
+            if(val.collegeId?.label && val.collegeId?.value)
+                college = {name: val.collegeId.label, id: val.collegeId.value};
 
             const skillsArr = val.skills?.map((el: { value: string }) => el.value);
             const dbData: Form = {
                 accept: null,
-                college: null,
+                college: college || null,
                 ...val,
                 id: user.uid,
                 mobile: user.phoneNumber,
                 campusCommunityActive: true,
                 pronoun: val.pronoun.value,
-                district: val.district?.value || '',
+                district: val.district?.value || null,
                 description: val.description.value,
-                skills: (skillsArr || []) as unknown as Skill[],
-                collegeId: college || null,
+                skills: (skillsArr || []) as unknown as string[],
+                collegeId: val.collegeId?.value || null,
                 passYear: Number(val.passYear?.value),
                 pin: val.pin || null,
                 mentor: val.mentor === 'YES',

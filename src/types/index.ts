@@ -20,7 +20,7 @@ export interface Form {
   house: string | null;
   district: string | null;
   pin: string | null;
-  skills: Skill[] | [];
+  skills: string[] | [];
   street: string | null;
   campusCommunityActive: boolean;
   id: string;

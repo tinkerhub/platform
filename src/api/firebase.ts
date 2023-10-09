@@ -38,16 +38,24 @@ export async function getUserData(phone?: string | null) {
     const userSnap = await getDoc(userRef);
 
     if (userSnap.exists()) {
-        return userSnap.data() as Form;
+        return {
+            ...userSnap.data(),
+            dob: userSnap.get("dob").toDate() as Date
+        } as Form;
     }
 }
 
 export async function getSkills() {
+    if(localStorage.getItem("skills"))
+        return JSON.parse(localStorage.getItem("skills") || "[]") as  Skill[];
+
     const skillsRef = collection(db, 'skills')
     const skillsSnap = await getDocs(skillsRef);
 
-    return skillsSnap.docs
-        .map(doc => ({value: doc.id, label: doc.get("name")}));
+    const skill = skillsSnap.docs
+        .map(doc => ({value: doc.get("name"), label: doc.get("name")}));
+
+    localStorage.setItem("skills", JSON.stringify(skill));
 }
 
 export async function getCollege(search: string) {
