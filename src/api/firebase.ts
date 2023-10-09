@@ -40,7 +40,7 @@ export async function getUserData(phone?: string | null) {
     if (userSnap.exists()) {
         return {
             ...userSnap.data(),
-            dob: userSnap.get("dob").toDate() as Date
+            dob: userSnap.get("dob") ? userSnap.get("dob").toDate() as Date : null
         } as Form;
     }
 }
