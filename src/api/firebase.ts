@@ -31,7 +31,7 @@ export const typesense = new Typesense.Client({
     connectionTimeoutSeconds: 2
 });
 
-export async function getUserData(phone?: string | null) {
+export async function getUserData(phone?: string | null, userId?: string | null) {
     if (!phone) return;
 
     const userRef = doc(db, 'users', phone);
@@ -40,7 +40,8 @@ export async function getUserData(phone?: string | null) {
     if (userSnap.exists()) {
         return {
             ...userSnap.data(),
-            dob: userSnap.get("dob") ? userSnap.get("dob").toDate() as Date : null
+            dob: userSnap.get("dob") ? userSnap.get("dob").toDate() as Date : null,
+            id: userId
         } as Form;
     }
 }
