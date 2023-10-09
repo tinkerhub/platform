@@ -27,11 +27,11 @@ const Wizard = () => {
     const router = useRouter();
 
     useEffect(() => {
-        if (user === null)
+        if (!user?.phoneNumber)
             router.push('/auth').then();
 
         getUserData(user?.phoneNumber).then((data) => {
-            if(data?.collegeId)
+            if(data?.name)
                 router.push('/profile').then();
         });
 
