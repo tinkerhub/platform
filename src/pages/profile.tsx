@@ -165,6 +165,7 @@ const Index = () => {
             // setting the new updated value to context
             setUser(dbData);
         } catch (e) {
+            console.error(e);
             const msg = e as Errors;
             // rolling back to old state if error occurred
             methods.reset();

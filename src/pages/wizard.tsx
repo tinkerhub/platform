@@ -78,7 +78,7 @@ const Wizard = () => {
             stepAdd();
             // send post request to backend
             try {
-                await setDoc(doc(db, 'user', user.phoneNumber), dbData);
+                await setDoc(doc(db, 'users', user.phoneNumber), dbData);
                 toast({
                     title: 'User created succesfully',
                     status: 'success',
@@ -86,6 +86,7 @@ const Wizard = () => {
                     isClosable: true,
                 });
             } catch (e) {
+                console.error(e);
                 setFormError(true);
             }
         } else {
