@@ -66,12 +66,6 @@ export const Final = ({ isLoading, id = 'ERROR', error }: Prop) => {
     return <Oops />;
   }
 
-  if (!isLoading && !error) {
-    return (
-      <Center mt="30px" minH="400px" p="35px" borderRadius="lg" _hover={{ cursor: 'not-allowed' }} />
-    );
-  }
-
   return (
     <Flex
       mt="30px"
@@ -190,7 +184,7 @@ export const Final = ({ isLoading, id = 'ERROR', error }: Prop) => {
             2
           </Center>
           <Heading size="md">Go to TinkerHub discord</Heading>
-          <Link href="https://rohittp.com">
+          <Link href="https://discord.gg/67mmFMRvf8">
             <Flex
               mt="15px"
               onClick={copyFile}
