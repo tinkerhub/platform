@@ -64,6 +64,7 @@ const Wizard = () => {
                 accept: null,
                 college: college || null,
                 ...val,
+                dob: new Date(val.dob),
                 id: user.uid,
                 mobile: user.phoneNumber,
                 campusCommunityActive: true,

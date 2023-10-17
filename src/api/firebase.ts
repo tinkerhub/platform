@@ -37,10 +37,12 @@ export async function getUserData(phone?: string | null, userId?: string | null)
     const userRef = doc(db, 'users', phone);
     const userSnap = await getDoc(userRef);
 
+    const dob = userSnap.get("dob") || null;
+
     if (userSnap.exists()) {
         return {
             ...userSnap.data(),
-            dob: userSnap.get("dob") ? userSnap.get("dob").toDate() as Date : null,
+            dob: ("toDate" in (dob || {})) ? dob.toDate() as Date : dob,
             id: userId
         } as Form;
     }
