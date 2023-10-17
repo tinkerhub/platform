@@ -42,7 +42,7 @@ export async function getUserData(phone?: string | null, userId?: string | null)
     if (userSnap.exists()) {
         return {
             ...userSnap.data(),
-            dob: ("toDate" in (dob || {})) ? dob.toDate() as Date : dob,
+            dob: (typeof dob !== "string" && dob) ? dob.toDate() as Date : dob,
             id: userId
         } as Form;
     }
