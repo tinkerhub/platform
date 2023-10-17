@@ -9,7 +9,7 @@ import {BaseLayout} from '@/layout';
 import {Bar, CardBio, Final, One, registerFormValidator, stepByStepValidator, Three, Two,} from '@/views/wizard';
 import {Quotes} from '@/views/wizard/components/Quotes';
 import {Form} from '@/types';
-import {doc, setDoc} from 'firebase/firestore';
+import { doc, setDoc, updateDoc } from 'firebase/firestore';
 import {useAuthState} from 'react-firebase-hooks/auth';
 import {auth, db, getUserData} from '@/api/firebase';
 import {useRouter} from "next/router";
@@ -30,8 +30,11 @@ const Wizard = () => {
         if (!user?.phoneNumber)
             router.push('/auth').then();
 
-        getUserData(user?.phoneNumber).then((data) => {
-            if(data?.name)
+        getUserData(user?.phoneNumber).then(async (data) => {
+            if (data?.name && !data?.id && user?.phoneNumber)
+                await setDoc(doc(db, 'users', user.phoneNumber), { id: user.uid }, { merge: true });
+
+            if (data?.name)
                 router.push('/profile').then();
         });
 
