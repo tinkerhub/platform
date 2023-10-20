@@ -27,9 +27,10 @@ interface NavProp {
   btnText?: string;
   btnFunc?: () => void;
   showBtn: boolean;
+  profileBtn?: boolean;
 }
 
-export const Topbar = ({ btnFunc, btnText = 'Login/Signup', showBtn }: NavProp) => {
+export const Topbar = ({ btnFunc, btnText = 'Login/Signup', showBtn, profileBtn }: NavProp) => {
   const router = useRouter();
   const SwitchIcon = useColorModeValue(IoMdMoon, BsFillSunFill);
   const { toggleColorMode: toggleMode } = useColorMode();
@@ -104,6 +105,19 @@ export const Topbar = ({ btnFunc, btnText = 'Login/Signup', showBtn }: NavProp) 
               Logout
             </Button>
           )}
+          {
+            profileBtn && (
+              <Button
+                colorScheme="blue"
+                backgroundColor="rgba(65, 83, 240, 1)"
+                onClick={btnFunc}
+                _hover={{ cursor: 'pointer', bg: '#1328EC' }}
+                mr={2}
+                color="white">
+                My Profile
+              </Button>
+            )
+          }
           {showBtn && (
             <Button
               colorScheme="blue"

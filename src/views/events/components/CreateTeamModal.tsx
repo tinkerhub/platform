@@ -47,6 +47,10 @@ export const CreateTeamModal = ({ isOpen, onClose, handleModalAction }: Disclosu
             ) : (
               <>
                 <FormControl>
+                  <FormLabel>Your Team's Name</FormLabel>
+                  <Input placeholder='eg. BitBytes' />
+                </FormControl>
+                <FormControl mt={8}>
                   <FormLabel>Github ID of Team Member #1 (Yourself)</FormLabel>
                   <Input placeholder='eg. @yanchummar' />
                 </FormControl>

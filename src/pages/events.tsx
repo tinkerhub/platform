@@ -6,10 +6,10 @@ import {InferType} from 'yup';
 import {registerFormValidator} from '@/views/wizard';
 import {CancelDialogue, ProfileBar, RowOne, RowThree, RowTwo} from '@/views/profile';
 import {Errors, Form} from '@/types';
-import {ProfileLayout} from '@/layout';
 import {useAuthState} from "react-firebase-hooks/auth";
 import {auth, db, getUserData} from "@/api/firebase";
 import { CreateTeamModal } from '@/views/events/components/CreateTeamModal';
+import { EventsLayout } from '@/layout/EventsLayout';
 
 type FormType = InferType<typeof registerFormValidator>;
 
@@ -71,6 +71,6 @@ const Index = () => {
   );
 };
 
-Index.Layout = ProfileLayout;
+Index.Layout = EventsLayout;
 
 export default Index;
