@@ -23,6 +23,7 @@ const Index = () => {
 
   // for cancel dialogue
   const {isOpen, onOpen, onClose} = useDisclosure();
+  const {isOpen: isJoinOpen, onOpen: onJoinOpen, onClose: onJoinClose} = useDisclosure();
 
   const toast = useToast();
 
@@ -31,6 +32,11 @@ const Index = () => {
       <CreateTeamModal
         isOpen={isOpen}
         onClose={onClose}
+        handleModalAction={() => false} />
+      <CreateTeamModal
+        isJoin
+        isOpen={isJoinOpen}
+        onClose={onJoinClose}
         handleModalAction={() => false} />
       <Box mt="2" mb="50px">
         <Card
@@ -62,6 +68,12 @@ const Index = () => {
                 onClick={onOpen}
                 variant='solid' colorScheme='blue'>
                 Create Team
+              </Button>
+              <Button 
+                ml={3}
+                onClick={onJoinOpen}
+                variant='solid' colorScheme='blue'>
+                Join Team
               </Button>
             </CardFooter>
           </Stack>
