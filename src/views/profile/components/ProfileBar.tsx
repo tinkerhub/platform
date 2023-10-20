@@ -120,17 +120,6 @@ export const ProfileBar = ({
             Save
           </Button>
         )}
-        <Button
-          p="5"
-          colorScheme="blue"
-          backgroundColor="rgba(0, 0, 0, 1)"
-          alignSelf="center"
-          onClick={() => router.push(`https://foss.web.app/?id=${id}`)}
-          _hover={{ cursor: 'pointer', bg: '#0F0F0F' }}
-          color="white"
-        >
-          Connect GitHub
-        </Button>
       </Flex>
     </Box>
   );
