@@ -61,6 +61,7 @@ const Wizard = () => {
 
             const skillsArr = val.skills?.map((el: { value: string }) => el.value);
             const dbData: Form = {
+                team: null,
                 accept: null,
                 college: college || null,
                 ...val,

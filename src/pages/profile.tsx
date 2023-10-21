@@ -132,6 +132,7 @@ const Index = () => {
 
         const skillsArr = val?.skills?.map((el: any) => el.value);
         const dbData: Form = {
+            team: null,
             accept: user?.accept || false,
             college: college || user?.college || null,
             ...val,
