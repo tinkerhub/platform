@@ -14,6 +14,8 @@ import {
   Box
 } from '@chakra-ui/react';
 import { useState } from 'react';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { auth } from '@/api/firebase';
 
 interface CreateTeamDisclosure {
   isOpen: boolean;
@@ -25,6 +27,10 @@ interface CreateTeamDisclosure {
 export const CreateTeamModal = ({ isOpen, onClose, handleModalAction, isJoin }: CreateTeamDisclosure) => {
 
   const [isSuccess, setIsSuccess] = useState<boolean>(false);
+  const [user, setUser] = useState();
+
+  const pUser = useAuthState(auth);
+
 
   return (
     <Modal
@@ -41,16 +47,16 @@ export const CreateTeamModal = ({ isOpen, onClose, handleModalAction, isJoin }: 
                 <>
                   <Text
                     as="b">
-                    You've joined the team!
+                    You&apos;ve joined the team!
                   </Text>
                   <Text mt={1}>
-                    All set, you're ready to go!
+                    All set, you&apos;re ready to go!
                   </Text>
                 </>
               ) : (
                 <>
                   <Text>
-                    Enter the Team Code that you've received from your team leader.
+                    Enter the Team Code that you&apos;ve received from your team leader.
                   </Text>
                   <FormControl mt={5}>
                     <FormLabel>Team Code</FormLabel>
@@ -63,10 +69,10 @@ export const CreateTeamModal = ({ isOpen, onClose, handleModalAction, isJoin }: 
                 <>
                   <Text
                     as="b">
-                    You're registered for StackUp!
+                    You&apos;re registered for StackUp!
                   </Text>
                   <Text mt={2}>
-                    Your Team's Code is: <b>123456</b>
+                    Your Team&apos;s Code is: <b>123456</b>
                   </Text>
                   <Text 
                     fontSize={'sm'}
@@ -78,7 +84,7 @@ export const CreateTeamModal = ({ isOpen, onClose, handleModalAction, isJoin }: 
               ) : (
                 <>
                   <FormControl>
-                    <FormLabel>Your Team's Name</FormLabel>
+                    <FormLabel>Your Team&apos;s Name</FormLabel>
                     <Input placeholder='eg. BitBytes' />
                   </FormControl>
                   <Box
