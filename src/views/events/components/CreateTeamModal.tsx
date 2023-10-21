@@ -1,139 +1,151 @@
 import {
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalCloseButton,
-  ModalBody,
-  FormControl,
-  FormLabel,
-  Input,
-  ModalFooter,
-  Button,
-  Text,
-  Box
+    Box,
+    Button,
+    FormControl,
+    FormLabel,
+    Input,
+    Modal,
+    ModalBody,
+    ModalCloseButton,
+    ModalContent,
+    ModalFooter,
+    ModalHeader,
+    ModalOverlay,
+    Text,
+    useToast
 } from '@chakra-ui/react';
-import { useState } from 'react';
-import { useAuthState } from 'react-firebase-hooks/auth';
-import { auth } from '@/api/firebase';
+import { useMemo, useState } from 'react';
+import { doc, getDoc, serverTimestamp, setDoc, updateDoc } from 'firebase/firestore';
+import { db } from '@/api/firebase';
+import { Form } from '@/types';
+
 
 interface CreateTeamDisclosure {
-  isOpen: boolean;
-  onClose: () => void;
-  handleModalAction: () => void;
-  isJoin?: boolean;
+    isOpen: boolean;
+    onClose: () => void;
+    user: Form | undefined;
 }
 
-export const CreateTeamModal = ({ isOpen, onClose, handleModalAction, isJoin }: CreateTeamDisclosure) => {
-
-  const [isSuccess, setIsSuccess] = useState<boolean>(false);
-  const [user, setUser] = useState();
-
-  const pUser = useAuthState(auth);
-
-
-  return (
-    <Modal
-      isOpen={isOpen}
-      onClose={onClose} >
-      <ModalOverlay />
-      <ModalContent>
-        <ModalHeader>{ isSuccess ? 'Congratulations! 🎉': isJoin ? 'Join a team!' : 'Create your team!'}</ModalHeader>
-        <ModalCloseButton />
-        <ModalBody pb={6}>
-          {
-            isJoin ? (
-              isSuccess ? (
-                <>
-                  <Text
-                    as="b">
-                    You&apos;ve joined the team!
-                  </Text>
-                  <Text mt={1}>
-                    All set, you&apos;re ready to go!
-                  </Text>
-                </>
-              ) : (
-                <>
-                  <Text>
-                    Enter the Team Code that you&apos;ve received from your team leader.
-                  </Text>
-                  <FormControl mt={5}>
-                    <FormLabel>Team Code</FormLabel>
-                    <Input placeholder='eg. 123456' />
-                  </FormControl>
-                </>
-              )
-            ) : (
-              isSuccess ? (
-                <>
-                  <Text
-                    as="b">
+function Success({ onClose, teamCode }: { onClose: () => void, teamCode: string }) {
+    return (
+        <>
+            <ModalHeader>Congratulations! 🎉</ModalHeader>
+            <ModalCloseButton />;
+            <ModalBody pb={6}>
+                <Text
+                    as='b'>
                     You&apos;re registered for StackUp!
-                  </Text>
-                  <Text mt={2}>
-                    Your Team&apos;s Code is: <b>123456</b>
-                  </Text>
-                  <Text 
+                </Text>
+                <Text mt={2}>
+                    Your Team&apos;s Code is: <b>{teamCode}</b>
+                </Text>
+                <Text
                     fontSize={'sm'}
                     as='i'
                     mt={1}>
                     Ask your teammates to join your team using this Team Code.
-                  </Text>
-                </>
-              ) : (
-                <>
-                  <FormControl>
-                    <FormLabel>Your Team&apos;s Name</FormLabel>
-                    <Input placeholder='eg. BitBytes' />
-                  </FormControl>
-                  <Box
-                    mt={3}
-                    ml={1}
-                    mr={1}>
-                    <Text
-                      fontSize={'sm'}
-                      pt={2}
-                      as="i" >
-                      A team should have a minimum of <b>3 members</b> and maximum of <b>4 members</b>.
-                    </Text>
-                  </Box>
-                </>
-              )
-            )
-          }
-        </ModalBody>
-        
-        {
-          isJoin ? (
-            isSuccess ? (
-              <ModalFooter>
+                </Text>
+            </ModalBody>;
+
+            <ModalFooter>
                 <Button onClick={onClose} mr={3}>Done</Button>
-              </ModalFooter>
-            ) : (
-              <ModalFooter>
-                <Button onClick={onClose} mr={3}>Cancel</Button>
-                <Button colorScheme='blue' onClick={() => setIsSuccess(true)}>
-                  Join Team
-                </Button>
-              </ModalFooter>
-            )
-          ) : (
-            isSuccess ? (
-              <ModalFooter>
-                <Button onClick={onClose} mr={3}>Done</Button>
-              </ModalFooter>
-            ) : (
-              <ModalFooter>
-                <Button onClick={onClose} mr={3}>Cancel</Button>
-                <Button colorScheme='blue' onClick={() => setIsSuccess(true)}>
-                  Create Team
-                </Button>
-              </ModalFooter>
-            )
-          )
-        }
-      </ModalContent>
-    </Modal>
-  );
+            </ModalFooter>
+        </>
+    );
+}
+
+export const CreateTeamModal = ({ isOpen, onClose, user }: CreateTeamDisclosure) => {
+
+    const [teamId, setTeamId] = useState<string>();
+    const [teamName, setTeamName] = useState('');
+
+    const toast = useToast();
+    const message = useMemo(() => (promise: Promise<unknown>) => {
+        toast.promise(promise, {
+            success: { title: 'Success', description: 'Team created!' },
+            error: {},
+            loading: { title: 'Creating', description: 'Please wait...' }
+        });
+
+        promise.catch((e) => toast({
+            title: 'Error',
+            description: String(e),
+            status: 'error'
+        }));
+    }, [toast]);
+
+    async function handleCreate() {
+        if (!user)
+            throw 'Please login';
+
+        const name = teamName.toLowerCase().replace(' ', '-').trim();
+        const teamRef = doc(db, 'teams', name);
+        const userRef = doc(db, 'users', user.mobile);
+
+        let team = await getDoc(teamRef);
+
+        if (team.exists())
+            throw 'Team name already taken';
+
+        console.log({
+            name,
+            lead: user,
+            createdAt: serverTimestamp(),
+            members: []
+        });
+
+
+        await setDoc(teamRef, {
+            name,
+            lead: user,
+            createdAt: serverTimestamp(),
+            members: []
+        });
+
+        await updateDoc(userRef, {
+            team: name
+        });
+
+        setTeamId(name);
+    }
+
+    return (
+        <Modal
+            isOpen={isOpen}
+            onClose={onClose}>
+            <ModalOverlay />
+            <ModalContent>
+                {teamId ? <Success onClose={onClose} teamCode={teamId} /> :
+                    <>
+                        <ModalHeader>Create your team!</ModalHeader>
+                        <ModalCloseButton />
+                        <ModalBody pb={6}>
+                            <FormControl>
+                                <FormLabel>Your Team&apos;s Name</FormLabel>
+                                <Input placeholder='eg. BitBytes' onChange={(e) => setTeamName(e.target.value)} />
+                            </FormControl>
+                            <Box
+                                mt={3}
+                                ml={1}
+                                mr={1}>
+                                <Text
+                                    fontSize={'sm'}
+                                    pt={2}
+                                    as='i'>
+                                    A team should have a minimum of <b>3 members</b> and maximum of <b>4 members</b>.
+                                </Text>
+                            </Box>
+                        </ModalBody>
+
+                        <ModalFooter>
+                            <Button onClick={onClose} mr={3}>Cancel</Button>
+                            <Button colorScheme='blue' onClick={() => message(handleCreate())}>
+                                Create Team
+                            </Button>
+                        </ModalFooter>
+                    </>
+                }
+            </ModalContent>
+        </Modal>
+    );
 };

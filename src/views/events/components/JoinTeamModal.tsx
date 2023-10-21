@@ -14,13 +14,17 @@ import {
     useToast
 } from '@chakra-ui/react';
 import { useMemo, useState } from 'react';
+import { Form } from '@/types';
+import { arrayUnion, doc, getDoc, updateDoc } from 'firebase/firestore';
+import { db } from '@/api/firebase';
 
 interface CreateTeamDisclosure {
     isOpen: boolean;
     onClose: () => void;
+    user: Form | undefined;
 }
 
-export default function Success({ onClose }: { onClose: () => void }) {
+function Success({ onClose }: { onClose: () => void }) {
     return (
         <>
             <ModalHeader>Congratulations! 🎉</ModalHeader>
@@ -41,18 +45,46 @@ export default function Success({ onClose }: { onClose: () => void }) {
     );
 }
 
-export const JoinTeamModal = ({ isOpen, onClose }: CreateTeamDisclosure) => {
+export const JoinTeamModal = ({ isOpen, onClose, user }: CreateTeamDisclosure) => {
 
     const [isSuccess, setIsSuccess] = useState<boolean>(false);
+    const [teamId, setTeamId] = useState("");
 
     const toast = useToast();
-    const messages = useMemo(() => ({
-        success: { title: 'Success', description: "Joined the team" },
-        error: { title: 'Oops', description: "Something went wrong" },
-        loading: { title: 'Joining', description: "Please wait..." }
-    }), []);
+    const message = useMemo(() => (promise: Promise<unknown>) => {
+        toast.promise(promise, {
+            success: { title: 'Success', description: 'Team Joined!' },
+            error: {},
+            loading: { title: 'Creating', description: 'Please wait...' }
+        });
+
+        promise.catch((e) => toast({
+            title: 'Error',
+            description: String(e),
+            status: 'error'
+        }));
+    }, [toast]);
 
     async function handleJoin() {
+        if (!user)
+            throw 'Please login';
+
+        const teamRef = doc(db, 'teams', teamId);
+        const userRef = doc(db, 'users', user.mobile);
+
+        let team = await getDoc(teamRef);
+
+        if (!team.exists())
+            throw 'Invalid Team ID';
+
+
+        await updateDoc(teamRef, {
+            members: arrayUnion(user.id)
+        });
+
+        await updateDoc(userRef, {
+            team: teamId
+        });
         setIsSuccess(true);
     }
 
@@ -72,13 +104,13 @@ export const JoinTeamModal = ({ isOpen, onClose }: CreateTeamDisclosure) => {
                             </Text>
                             <FormControl mt={5}>
                                 <FormLabel>Team Code</FormLabel>
-                                <Input placeholder='eg. 123456' />
+                                <Input placeholder='eg. super-duper-team' onChange={(e) => setTeamId(e.target.value)}/>
                             </FormControl>
                         </ModalBody>
 
                         <ModalFooter>
                             <Button onClick={onClose} mr={3}>Cancel</Button>
-                            <Button colorScheme='blue' onClick={() => toast.promise(handleJoin(), messages)}>
+                            <Button colorScheme='blue' onClick={() => message(handleJoin())}>
                                 Join Team
                             </Button>
                         </ModalFooter>

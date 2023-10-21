@@ -31,10 +31,11 @@ const Index = () => {
             <CreateTeamModal
                 isOpen={isOpen}
                 onClose={onClose}
-                handleModalAction={() => false} />
+                user={user} />
             <JoinTeamModal
                 isOpen={isJoinOpen}
                 onClose={onJoinClose}
+                user={user}
             />
             <Box mt='2' mb='50px'>
                 <Card
