@@ -35,7 +35,7 @@ const Wizard = () => {
                 await setDoc(doc(db, 'users', user.phoneNumber), { id: user.uid }, { merge: true });
 
             if (data?.name)
-                router.push('/profile').then();
+                router.push('/events').then();
         });
 
     }, [user, router]);
