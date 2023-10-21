@@ -14,7 +14,7 @@ type ComponentWithPageLayout = AppProps & {
 
 const MyApp = ({Component, pageProps}: ComponentWithPageLayout) => {
     const router = useRouter();
-    const path = router.pathname.split('/')[1];
+    const path = String(router.pathname.split('/')[1]);
     return (
         <>
             <Head>

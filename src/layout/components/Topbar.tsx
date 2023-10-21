@@ -5,12 +5,12 @@ import {
   Flex,
   Heading,
   IconButton,
-  useColorModeValue,
   Menu,
   MenuButton,
   MenuItem,
   MenuList,
   useColorMode,
+  useColorModeValue
 } from '@chakra-ui/react';
 import { IoMdMoon } from 'react-icons/io';
 import { BsFillSunFill } from 'react-icons/bs';
@@ -19,9 +19,9 @@ import { AiOutlineUser } from 'react-icons/ai';
 import { GiHamburgerMenu } from 'react-icons/gi';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import {auth} from "@/api/firebase";
-import {signOut} from "@firebase/auth";
-import {useAuthState} from "react-firebase-hooks/auth";
+import { auth } from '@/api/firebase';
+import { signOut } from '@firebase/auth';
+import { useAuthState } from 'react-firebase-hooks/auth';
 
 interface NavProp {
   btnText?: string;
@@ -45,29 +45,27 @@ export const Topbar = ({ btnFunc, btnText = 'Login/Signup', showBtn, profileBtn 
   };
 
   return (
-    <Box display="flex" justifyContent="space-between" h={65} alignItems="center">
-      <Flex flexDirection="column">
-        <Link href="/" passHref>
-          <Link href="replace">
-            <Flex>
-              <Heading size="lg">Tinker</Heading>
-              <Heading fontWeight="normal" size="lg">
-                Hub
-              </Heading>
-            </Flex>
-            <Heading fontSize="13px" fontWeight="500" ml="2.5px">
-              Foundation
+    <Box display='flex' justifyContent='space-between' h={65} alignItems='center'>
+      <Flex flexDirection='column'>
+        <Link href='/' passHref>
+          <Flex>
+            <Heading size='lg'>Tinker</Heading>
+            <Heading fontWeight='normal' size='lg'>
+              Hub
             </Heading>
-          </Link>
+          </Flex>
+          <Heading fontSize='13px' fontWeight='500' ml='2.5px'>
+            Foundation
+          </Heading>
         </Link>
       </Flex>
       <div>
         <IconButton
-          size="md"
-          fontSize="xl"
+          size='md'
+          fontSize='xl'
           aria-label={`Switch to ${theme} mode`}
-          variant="ghost"
-          color="current"
+          variant='ghost'
+          color='current'
           mr={{ base: '3', md: '3' }}
           onClick={toggleMode}
           icon={<SwitchIcon />}
@@ -77,9 +75,9 @@ export const Topbar = ({ btnFunc, btnText = 'Login/Signup', showBtn, profileBtn 
             <Menu>
               <MenuButton
                 as={IconButton}
-                aria-label="Options"
+                aria-label='Options'
                 icon={<GiHamburgerMenu />}
-                variant="outline"
+                variant='outline'
               />
               <MenuList>
                 <MenuItem icon={<AiOutlineUser />} onClick={() => router.push('/profile')}>
@@ -99,8 +97,8 @@ export const Topbar = ({ btnFunc, btnText = 'Login/Signup', showBtn, profileBtn 
               onClick={logOut}
               _hover={{ cursor: 'pointer', bg: '#1328EC', color: 'white' }}
               px={{ base: '25px', lg: '50px' }}
-              mr="20px"
-              variant="outline"
+              mr='20px'
+              variant='outline'
             >
               Logout
             </Button>
@@ -108,23 +106,23 @@ export const Topbar = ({ btnFunc, btnText = 'Login/Signup', showBtn, profileBtn 
           {
             profileBtn && (
               <Button
-                colorScheme="blue"
-                backgroundColor="rgba(65, 83, 240, 1)"
+                colorScheme='blue'
+                backgroundColor='rgba(65, 83, 240, 1)'
                 onClick={btnFunc}
                 _hover={{ cursor: 'pointer', bg: '#1328EC' }}
                 mr={2}
-                color="white">
+                color='white'>
                 My Profile
               </Button>
             )
           }
           {showBtn && (
             <Button
-              colorScheme="blue"
-              backgroundColor="rgba(65, 83, 240, 1)"
+              colorScheme='blue'
+              backgroundColor='rgba(65, 83, 240, 1)'
               onClick={btnFunc}
               _hover={{ cursor: 'pointer', bg: '#1328EC' }}
-              color="white"
+              color='white'
             >
               {btnText}
             </Button>
@@ -137,8 +135,8 @@ export const Topbar = ({ btnFunc, btnText = 'Login/Signup', showBtn, profileBtn 
             onClick={() => router.push('/auth')}
             _hover={{ cursor: 'pointer', bg: '#1328EC', color: 'white' }}
             px={{ base: '25px', lg: '50px' }}
-            mr="20px"
-            variant="outline"
+            mr='20px'
+            variant='outline'
           >
             Login
           </Button>

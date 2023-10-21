@@ -22,7 +22,7 @@ const Index = () => {
     }
 
     if (pUser === null)
-      router.push('/').then();
+      router.push('/auth').then();
 
   }, [pUser, router, searchParams]);
 
