@@ -31,7 +31,7 @@ export const typesense = new Typesense.Client({
     connectionTimeoutSeconds: 2
 });
 
-export async function getUserData(phone?: string | null, userId?: string | null) {
+export async function getUserData(phone: string | null, userId: string | null) {
     if (!phone) return;
 
     const userRef = doc(db, 'users', phone);

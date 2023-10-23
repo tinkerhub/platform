@@ -31,17 +31,11 @@ export const Final = ({ isLoading, id = 'ERROR', error }: Prop) => {
   const router = useRouter();
   const { colorMode } = useColorMode();
 
-  const goHome = () => {
-    // updating the context to new return value from post req
-    router.push('/profile');
-  };
   const copyFile = () => {
-    window.navigator.clipboard.writeText(id);
-    toast({
-      title: 'Id copied to clipboard.',
-      status: 'success',
-      duration: 1000,
-      isClosable: true,
+    toast.promise(window.navigator.clipboard.writeText(id), {
+        success: { title: 'Id copied to clipboard.', description: 'You can paste it now.' },
+        error: { title: 'Error copying to clipboard.', description: 'Please try again.' },
+        loading: { title: 'Copying to clipboard.', description: 'Please wait...' }
     });
   };
 
@@ -236,7 +230,7 @@ export const Final = ({ isLoading, id = 'ERROR', error }: Prop) => {
           justifyContent="space-between"
           w="150px"
           mt="20px"
-          onClick={goHome}
+          onClick={() => router.push('/profile')}
           fontWeight="500"
           _hover={{ cursor: 'pointer' }}
         >

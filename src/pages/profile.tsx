@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-props-no-spreading */
 import {useEffect, useMemo, useState} from 'react';
 import {Box, Button, Flex, useDisclosure, useToast} from '@chakra-ui/react';
 import dayjs from 'dayjs';
@@ -21,8 +20,8 @@ const Index = () => {
     const [isEdit, setEdit] = useState<boolean>(true);
 
     useEffect(() => {
-        getUserData(pUser?.phoneNumber, pUser?.uid).then(setUser);
-    }, [pUser?.phoneNumber])
+        getUserData(pUser?.phoneNumber || null, pUser?.uid || null).then(setUser);
+    }, [pUser])
 
     // for cancel dialogue
     const {isOpen, onOpen, onClose} = useDisclosure();
@@ -102,27 +101,6 @@ const Index = () => {
         onClose();
     };
 
-    const copyMembershipId = async () => {
-        if (user && user.id) {
-            await window.navigator.clipboard.writeText(user?.id);
-            toast({
-                title: 'Id copied to clipboard.',
-                status: 'success',
-                duration: 3000,
-                isClosable: true,
-                position: 'bottom-left',
-            });
-        } else {
-            toast({
-                title: 'Error copying to clipboard.',
-                status: 'error',
-                duration: 3000,
-                isClosable: true,
-                position: 'bottom-left',
-            });
-        }
-    };
-
     const updateProfile: SubmitHandler<FormType> = async (val) => {
         if(!pUser?.phoneNumber) return;
 
@@ -132,6 +110,7 @@ const Index = () => {
 
         const skillsArr = val?.skills?.map((el: any) => el.value);
         const dbData: Form = {
+            team: null,
             accept: user?.accept || false,
             college: college || user?.college || null,
             ...val,
@@ -186,7 +165,6 @@ const Index = () => {
                     <form onSubmit={methods.handleSubmit(updateProfile)}>
                         <Box>
                             <ProfileBar
-                                copyMembershipId={copyMembershipId}
                                 isEdit={isEdit}
                                 editHandler={editHandler}
                                 id={user?.id}

@@ -1,5 +1,5 @@
 import { Box, Flex, Heading } from '@chakra-ui/react';
-import { Child } from '../../../types';
+import { Child } from '@/types';
 
 interface Word extends Child {
   word: string;

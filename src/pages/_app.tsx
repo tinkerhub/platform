@@ -1,10 +1,9 @@
-/* eslint-disable react/jsx-props-no-spreading */
-import {ChakraProvider} from '@chakra-ui/react';
-import type {AppProps} from 'next/app';
+import type {JSX} from 'react'
+import { ChakraProvider } from '@chakra-ui/react';
+import type { AppProps } from 'next/app';
+import { theme } from '@/theme';
+import { Child } from '@/types';
 import Head from 'next/head';
-import {useRouter} from 'next/router';
-import {theme} from '@/theme';
-import {Child} from '@/types';
 
 type ComponentWithPageLayout = AppProps & {
     Component: AppProps['Component'] & {
@@ -12,14 +11,12 @@ type ComponentWithPageLayout = AppProps & {
     };
 };
 
-const MyApp = ({Component, pageProps}: ComponentWithPageLayout) => {
-    const router = useRouter();
-    const path = router.pathname.split('/')[1];
+const MyApp = ({ Component, pageProps }: ComponentWithPageLayout) => {
     return (
         <>
             <Head>
-                <title>{path} / tinkerhub</title>
-            </Head><>
+                <title>TinkerHub</title>
+            </Head>
             <ChakraProvider theme={theme}>
                 {Component.Layout ? (
                     <Component.Layout>
@@ -29,7 +26,6 @@ const MyApp = ({Component, pageProps}: ComponentWithPageLayout) => {
                     <Component {...pageProps} />
                 )}
             </ChakraProvider>
-        </>
         </>
     )
         ;
