@@ -10,7 +10,6 @@ import {Form} from "@/types";
 interface BarProp {
     isEdit: boolean;
     editHandler: () => void;
-    id: string | undefined;
     cancelEditHandler: () => void;
     user: Form;
 }
@@ -18,7 +17,6 @@ interface BarProp {
 export const ProfileBar = ({
                                isEdit,
                                editHandler,
-                               id = 'Error',
                                user,
                                cancelEditHandler,
                            }: BarProp) => {
@@ -48,7 +46,6 @@ export const ProfileBar = ({
                 <Heading as="h2" size="xl">
                     My Profile
                 </Heading>
-                <CopyText label="Membership ID" text={id}/>
             </Box>
             <Flex gap="3" wrap="wrap" mb={{base: '20px', lg: '0px'}}>
 

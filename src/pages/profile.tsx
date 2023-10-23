@@ -171,7 +171,6 @@ const Index = () => {
                                     user={user}
                                     isEdit={isEdit}
                                     editHandler={editHandler}
-                                    id={user?.id}
                                     cancelEditHandler={cancelEditHandler}
                                 />
                             }
