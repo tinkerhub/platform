@@ -15,7 +15,7 @@ const Error = () => {
       p={{ base: '20px', sm: '30px', md: '74px' }}
       pt={{ base: '40px', md: '50px' }}
     >
-      <TopBar showBtn={false} />
+      <TopBar />
       <Image src='/404.svg' height='400' width='300' alt='' />
       <Heading textAlign='center' color='#407BFF' size='2xl'>
         Looks Like You&apos;re Lost
