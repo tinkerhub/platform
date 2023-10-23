@@ -34,7 +34,7 @@ function Success({ onClose }: { onClose: () => void }) {
                     You&apos;ve joined the team!
                 </Text>
                 <Text mt={1}>
-                    All set, you&apos;re ready to go!
+                    Check the TinkerHub discord server Stackup channel.
                 </Text>
             </ModalBody>;
 

@@ -43,7 +43,8 @@ function Success({ onClose, teamCode }: { onClose: () => void, teamCode: string 
                 <Text
                     fontSize={'sm'}
                     mt={1}>
-                    Ask your teammates to join your team using this Team Code.
+                    Ask your teammates to join your team using this Team Code.<br />
+                    Also Check out the TinkerHub discord server Stackup channel.
                 </Text>
             </ModalBody>;
 
