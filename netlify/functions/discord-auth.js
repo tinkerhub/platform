@@ -19,9 +19,6 @@ const client = new Client({
     ],
     partials: [Partials.Channel],
 });
-client.login(process.env.DISCORD_TOKEN).then();
-
-const ready = new Promise((resolve) => client.once('ready', resolve));
 
 exports.handler = async function (event) {
     const { access_token, state, token_type  } = event.queryStringParameters;
@@ -34,20 +31,21 @@ exports.handler = async function (event) {
     }
 
     try {
+        client.login(process.env.DISCORD_TOKEN).then();
+
         const response = await fetch('https://discord.com/api/users/@me', {
             headers: {
                 Authorization: `${token_type} ${access_token}`,
             },
         }).then((res) => res.json());
 
-        console.log(response);
-
         const discordId = response.id;
         const userId = decodeURIComponent(state);
 
-        await ready
-        const server = client.guilds.cache.get(process.env.guildID);
-        const channel = await server.channels.fetch(process.env.START_CHANNEL);
+        await new Promise(async (resolve) => client.once('ready', resolve));
+
+        const server = client.guilds.cache.get(process.env.guildID) || await client.guilds.fetch(process.env.guildID);
+        const channel = server.channels.cache.get(process.env.START_CHANNEL) || await server.channels.fetch(process.env.START_CHANNEL);
 
         const invite = await channel.createInvite({
             maxAge: 300,  // 5 minutes
@@ -63,8 +61,6 @@ exports.handler = async function (event) {
             }
         }, { merge: true });
 
-        client.destroy().then();
-
         return {
             statusCode: 302,
             headers: {
@@ -72,6 +68,7 @@ exports.handler = async function (event) {
             }
         };
     } catch (error) {
+        console.error(error);
         return {
             statusCode: 500,
             body: 'Internal Server Error',
