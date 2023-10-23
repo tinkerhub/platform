@@ -18,6 +18,7 @@ import {Dispatch, SetStateAction, useMemo, useState} from 'react';
 import {doc, getDoc, serverTimestamp, writeBatch} from 'firebase/firestore';
 import { db } from '@/api/firebase';
 import { Form } from '@/types';
+import {CopyText} from "@/components/copy";
 
 
 interface CreateTeamDisclosure {
@@ -37,11 +38,10 @@ function Success({ onClose, teamCode }: { onClose: () => void, teamCode: string 
                     You&apos;re registered for StackUp!
                 </Text>
                 <Text mt={2}>
-                    Your Team&apos;s Code is: <b>{teamCode}</b>
+                    <CopyText label="Your Team Code" text={teamCode} />
                 </Text>
                 <Text
                     fontSize={'sm'}
-                    as='i'
                     mt={1}>
                     Ask your teammates to join your team using this Team Code.
                 </Text>

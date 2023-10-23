@@ -1,4 +1,4 @@
-import { Box, Button, Card, CardBody, CardFooter, Heading, Image, Stack, Text, useDisclosure } from '@chakra-ui/react';
+import { Box, Button, Card, CardBody, CardFooter, Heading, Image, Stack, Text } from '@chakra-ui/react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth, getUserData } from '@/api/firebase';
 import { CreateTeamModal } from '@/views/events/components/CreateTeamModal';
@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { JoinTeamModal } from '@/views/events/components/JoinTeamModal';
 import { Form } from '@/types';
+import {CopyText} from "@/components/copy";
 
 const Index = () => {
     const [userInfo, setUserInfo] = useState<Form>();
@@ -21,7 +22,7 @@ const Index = () => {
             router.push('/auth').then();
         else if(user)
             getUserData(user.phoneNumber, user.uid).then(setUserInfo);
-    }, [user, loading, error, router]);
+    }, [user, loading, error, router, createOpen, joinOpen]);
 
     return (
         <>
@@ -60,7 +61,7 @@ const Index = () => {
                             </Text>
                         </CardBody>
                         <CardFooter>
-                            {userInfo && userInfo.team && <p>Team ID: {userInfo.team}</p>}
+                            {userInfo && userInfo.team && <CopyText label="Team ID" text={userInfo.team} />}
                             {userInfo && !userInfo.team &&
                               <>
                                 <Button
