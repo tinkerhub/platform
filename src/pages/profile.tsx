@@ -102,10 +102,10 @@ const Index = () => {
     };
 
     const updateProfile: SubmitHandler<FormType> = async (val) => {
-        if(!pUser?.phoneNumber) return;
+        if (!pUser?.phoneNumber) return;
 
-        let college ;
-        if(val.collegeId?.label && val.collegeId?.value)
+        let college;
+        if (val.collegeId?.label && val.collegeId?.value)
             college = {name: val.collegeId.label, id: val.collegeId.value};
 
         const skillsArr = val?.skills?.map((el: any) => el.value);
@@ -164,12 +164,15 @@ const Index = () => {
                 <FormProvider {...methods}>
                     <form onSubmit={methods.handleSubmit(updateProfile)}>
                         <Box>
-                            <ProfileBar
-                                isEdit={isEdit}
-                                editHandler={editHandler}
-                                id={user?.id}
-                                cancelEditHandler={cancelEditHandler}
-                            />
+                            {user &&
+                                <ProfileBar
+                                    user={user}
+                                    isEdit={isEdit}
+                                    editHandler={editHandler}
+                                    id={user?.id}
+                                    cancelEditHandler={cancelEditHandler}
+                                />
+                            }
                         </Box>
                         <Flex
                             flexDirection={{base: 'column', lg: 'row'}}

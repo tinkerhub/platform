@@ -1,36 +1,41 @@
 import {ReactNode} from "react";
 
 export type Child = {
-  children: ReactNode;
+    children: ReactNode;
 };
 
 export interface Errors {
-  message: string;
+    message: string;
 }
 
 export interface Form {
+    discordId: string | null;
+    discordInvite: {
+        url: string;
+        expiry: number;
+    } | null;
     team: string | null;
-  name: string;
-  passYear: number | null;
-  description: string;
-  dob: Date;
-  email: string;
-  pronoun: string;
-  mobile: string;
-  collegeId: string | null;
-  mentor: boolean;
-  accept: boolean | null;
-  house: string | null;
-  district: string | null;
-  pin: string | null;
-  skills: string[] | [];
-  street: string | null;
-  campusCommunityActive: boolean;
-  id: string;
-  college: Skill | null;
+    name: string;
+    passYear: number | null;
+    description: string;
+    dob: Date;
+    email: string;
+    pronoun: string;
+    mobile: string;
+    collegeId: string | null;
+    mentor: boolean;
+    accept: boolean | null;
+    house: string | null;
+    district: string | null;
+    pin: string | null;
+    skills: string[] | [];
+    street: string | null;
+    campusCommunityActive: boolean;
+    id: string;
+    college: Skill | null;
 }
 
 export interface Skill {
-  name: string;
-  id: string;
+    name: string;
+    id: string;
 }
