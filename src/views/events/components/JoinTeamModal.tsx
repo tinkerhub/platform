@@ -13,14 +13,14 @@ import {
     Text,
     useToast
 } from '@chakra-ui/react';
-import { useMemo, useState } from 'react';
+import {Dispatch, SetStateAction, useMemo, useState} from 'react';
 import { Form } from '@/types';
-import {arrayUnion, doc, getDoc, updateDoc, writeBatch} from 'firebase/firestore';
+import {arrayUnion, doc, getDoc, writeBatch} from 'firebase/firestore';
 import { db } from '@/api/firebase';
 
 interface CreateTeamDisclosure {
     isOpen: boolean;
-    onClose: () => void;
+    onClose: Dispatch<SetStateAction<boolean>>;
     user: Form | undefined;
 }
 
@@ -94,10 +94,10 @@ export const JoinTeamModal = ({ isOpen, onClose, user }: CreateTeamDisclosure) =
     return (
         <Modal
             isOpen={isOpen}
-            onClose={onClose}>
+            onClose={() => onClose(false)}>
             <ModalOverlay />
             <ModalContent>
-                {isSuccess ? <Success onClose={onClose} /> :
+                {isSuccess ? <Success onClose={() => onClose(false)} /> :
                     <>
                         <ModalHeader>Join a team!</ModalHeader>
                         <ModalCloseButton />
@@ -112,7 +112,7 @@ export const JoinTeamModal = ({ isOpen, onClose, user }: CreateTeamDisclosure) =
                         </ModalBody>
 
                         <ModalFooter>
-                            <Button onClick={onClose} mr={3}>Cancel</Button>
+                            <Button onClick={() => onClose(false)} mr={3}>Cancel</Button>
                             <Button colorScheme='blue' onClick={() => message(handleJoin())}>
                                 Join Team
                             </Button>

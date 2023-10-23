@@ -1,12 +1,12 @@
-import { Box, Button, Flex, Heading, Icon, Text } from '@chakra-ui/react';
-import { MdOutlineCancel, MdOutlineContentCopy } from 'react-icons/md';
+import { Box, Button, Flex, Heading } from '@chakra-ui/react';
+import { MdOutlineCancel } from 'react-icons/md';
 import { BiArrowBack } from 'react-icons/bi';
 import { FiEdit } from 'react-icons/fi';
 import { AiOutlineSave } from 'react-icons/ai';
 import { useRouter } from 'next/router';
+import {CopyText} from "@/components/copy";
 
 interface BarProp {
-  copyMembershipId: () => void;
   isEdit: boolean;
   editHandler: () => void;
   id: string | undefined;
@@ -14,7 +14,6 @@ interface BarProp {
 }
 
 export const ProfileBar = ({
-  copyMembershipId,
   isEdit,
   editHandler,
   id = 'Error',
@@ -37,24 +36,7 @@ export const ProfileBar = ({
         <Heading as="h2" size="xl">
           My Profile
         </Heading>
-        <Flex mt={{ base: '14px', md: '0px' }} ml={{ sm: '0px', lg: '30px' }}>
-          <Heading as="h2" fontSize={{ base: '16px', md: 'md' }} pl={{ base: '0px', md: '5' }}>
-            <Text fontSize="14px" fontWeight="normal">
-              Membership ID
-            </Text>
-            {id}
-          </Heading>
-
-          <Icon
-            as={MdOutlineContentCopy}
-            onClick={copyMembershipId}
-            w={4}
-            h={4}
-            ml={3}
-            alignSelf="end"
-            _hover={{ cursor: 'pointer', color: 'grey' }}
-          />
-        </Flex>
+        <CopyText label="Membership ID" text={id}/>
       </Box>
       <Flex gap="3" wrap="wrap" mb={{ base: '20px', lg: '0px' }}>
         {isEdit && (

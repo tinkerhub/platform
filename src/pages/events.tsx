@@ -11,6 +11,9 @@ import { Form } from '@/types';
 const Index = () => {
     const [userInfo, setUserInfo] = useState<Form>();
     const [user, loading, error] = useAuthState(auth);
+    const [createOpen, setCreateOpen] = useState(false);
+    const [joinOpen, setJoinOpen] = useState(false);
+
     const router = useRouter();
 
     useEffect(() => {
@@ -20,20 +23,15 @@ const Index = () => {
             getUserData(user.phoneNumber, user.uid).then(setUserInfo);
     }, [user, loading, error, router]);
 
-    // for cancel dialogue
-    const { isOpen, onOpen, onClose } = useDisclosure();
-    const { isOpen: isJoinOpen, onOpen: onJoinOpen, onClose: onJoinClose } = useDisclosure();
-
-
     return (
         <>
             <CreateTeamModal
-                isOpen={isOpen}
-                onClose={onClose}
+                isOpen={createOpen}
+                onClose={setCreateOpen}
                 user={userInfo} />
             <JoinTeamModal
-                isOpen={isJoinOpen}
-                onClose={onJoinClose}
+                isOpen={joinOpen}
+                onClose={setJoinOpen}
                 user={userInfo}
             />
             <Box mt='2' mb='50px'>
@@ -62,17 +60,17 @@ const Index = () => {
                             </Text>
                         </CardBody>
                         <CardFooter>
-                            {userInfo && userInfo.team && <p>Joined</p>}
+                            {userInfo && userInfo.team && <p>Team ID: {userInfo.team}</p>}
                             {userInfo && !userInfo.team &&
                               <>
                                 <Button
-                                  onClick={onOpen}
+                                  onClick={() => setCreateOpen(true)}
                                   variant='solid' colorScheme='blue'>
                                   Create Team
                                 </Button>
                                 <Button
                                   ml={3}
-                                  onClick={onJoinOpen}
+                                  onClick={() => setJoinOpen(true)}
                                   variant='solid' colorScheme='blue'>
                                   Join Team
                                 </Button>

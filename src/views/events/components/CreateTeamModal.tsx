@@ -14,15 +14,15 @@ import {
     Text,
     useToast
 } from '@chakra-ui/react';
-import { useMemo, useState } from 'react';
-import {doc, getDoc, serverTimestamp, setDoc, updateDoc, writeBatch} from 'firebase/firestore';
+import {Dispatch, SetStateAction, useMemo, useState} from 'react';
+import {doc, getDoc, serverTimestamp, writeBatch} from 'firebase/firestore';
 import { db } from '@/api/firebase';
 import { Form } from '@/types';
 
 
 interface CreateTeamDisclosure {
     isOpen: boolean;
-    onClose: () => void;
+    onClose: Dispatch<SetStateAction<boolean>>;
     user: Form | undefined;
 }
 
@@ -108,10 +108,10 @@ export const CreateTeamModal = ({ isOpen, onClose, user }: CreateTeamDisclosure)
     return (
         <Modal
             isOpen={isOpen}
-            onClose={onClose}>
+            onClose={() => onClose(false)}>
             <ModalOverlay />
             <ModalContent>
-                {teamId ? <Success onClose={onClose} teamCode={teamId} /> :
+                {teamId ? <Success onClose={() => onClose(false)} teamCode={teamId} /> :
                     <>
                         <ModalHeader>Create your team!</ModalHeader>
                         <ModalCloseButton />
@@ -134,7 +134,7 @@ export const CreateTeamModal = ({ isOpen, onClose, user }: CreateTeamDisclosure)
                         </ModalBody>
 
                         <ModalFooter>
-                            <Button onClick={onClose} mr={3}>Cancel</Button>
+                            <Button onClick={() => onClose(false)} mr={3}>Cancel</Button>
                             <Button colorScheme='blue' onClick={() => message(handleCreate())}>
                                 Create Team
                             </Button>

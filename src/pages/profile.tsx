@@ -101,13 +101,6 @@ const Index = () => {
         onClose();
     };
 
-    const copyMembershipId =  () =>
-        toast.promise(window.navigator.clipboard.writeText(user?.id || ""), {
-            loading: {title: 'Copying to clipboard'},
-            success: {title: 'Copied to clipboard'},
-            error: {title: 'Failed to copy to clipboard'},
-        });
-
     const updateProfile: SubmitHandler<FormType> = async (val) => {
         if(!pUser?.phoneNumber) return;
 
@@ -172,7 +165,6 @@ const Index = () => {
                     <form onSubmit={methods.handleSubmit(updateProfile)}>
                         <Box>
                             <ProfileBar
-                                copyMembershipId={copyMembershipId}
                                 isEdit={isEdit}
                                 editHandler={editHandler}
                                 id={user?.id}
