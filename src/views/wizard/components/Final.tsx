@@ -149,79 +149,11 @@ export const Final = ({ isLoading, id = 'ERROR', error }: Prop) => {
           >
             1
           </Center>
-          <Heading size="md">Copy Membership ID</Heading>
-          <Flex mt="15px" onClick={copyFile} _hover={{ cursor: 'pointer' }}>
-            <Heading fontWeight="500" size="14px" marginRight="14px" color="rgba(65, 83, 240, 1)">
-              {id}
-            </Heading>
-            <Icon as={MdOutlineContentCopy} fontSize="18px" color="rgba(65, 83, 240, 1)" />
-          </Flex>
-        </Box>
-        <Box
-          border="1.5px solid #C8C8C8"
-          p="3"
-          borderRadius="md"
-          mt="30px"
-          pl="30px"
-          position="relative"
-        >
-          <Center
-            position="absolute"
-            bg={colorMode === 'dark' ? '#1A202C' : 'white'}
-            borderRadius="full"
-            w="35px"
-            h="35px"
-            left="-19"
-            top="6"
-            border="1.5px solid #C8C8C8"
-          >
-            2
-          </Center>
-          <Heading size="md">Go to TinkerHub discord</Heading>
-          <Link href="https://discord.gg/67mmFMRvf8">
-            <Flex
-              mt="15px"
-              onClick={copyFile}
-              _hover={{ cursor: 'pointer' }}
-              color="rgba(65, 83, 240, 1)"
-            >
-              <Heading fontWeight="500" size="14px" marginRight="14px">
-                TinkerHub Discord
-              </Heading>
-              <Icon as={FiExternalLink} fontSize="18px" />
-            </Flex>
-          </Link>
-        </Box>
-        <Box
-          border="1.5px solid #C8C8C8"
-          p="3"
-          borderRadius="md"
-          mt="30px"
-          pl="30px"
-          position="relative"
-        >
-          <Center
-            position="absolute"
-            bg={colorMode === 'dark' ? '#1A202C' : 'white'}
-            borderRadius="full"
-            w="35px"
-            h="35px"
-            left="-19"
-            top={{ base: '8', md: '12++', lg: '6' }}
-            border="1.5px solid #C8C8C8"
-          >
-            3
-          </Center>
-          <Heading size="md">Verify your id on discord</Heading>
-          <Flex mt="15px" onClick={copyFile} _hover={{ cursor: 'pointer' }}>
-            <Text fontWeight="500" size="14px" marginRight="14px">
-              Paste your membership ID in the{' '}
-              <Text as="span" color="rgba(65, 83, 240, 1)">
-                #verify-to-view-all-channels &nbsp;
-              </Text>
-              channel on discord
+          <Heading size="md">Connect your Discord</Heading>
+          <Text fontWeight="500" size="14px" marginRight="14px">
+              Go to My profile page and click on connect Discord button
             </Text>
-          </Flex>
+           
         </Box>
         <Text mt="30px" fontWeight="400">
           And your're done ✅
@@ -230,12 +162,12 @@ export const Final = ({ isLoading, id = 'ERROR', error }: Prop) => {
           justifyContent="space-between"
           w="150px"
           mt="20px"
-          onClick={() => router.push('/profile')}
+          onClick={() => router.push('/events')}
           fontWeight="500"
           _hover={{ cursor: 'pointer' }}
         >
           <Icon as={BiArrowBack} fontSize="18px" alignSelf="center" color="rgba(65, 83, 240, 1)" />
-          <Text color="rgba(65, 83, 240, 1)">Return To home</Text>
+          <Text color="rgba(65, 83, 240, 1)">Return To Events</Text>
         </Flex>
       </Box>
     </Flex>
