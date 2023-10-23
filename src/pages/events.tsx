@@ -9,17 +9,16 @@ import { JoinTeamModal } from '@/views/events/components/JoinTeamModal';
 import { Form } from '@/types';
 
 const Index = () => {
-    const [user, setUser] = useState<Form>();
-    const [pUser] = useAuthState(auth);
+    const [userInfo, setUserInfo] = useState<Form>();
+    const [user, loading, error] = useAuthState(auth);
     const router = useRouter();
 
     useEffect(() => {
-        if (pUser === null)
+        if(!loading && (error || !user))
             router.push('/auth').then();
-        else if (pUser)
-            getUserData(pUser.phoneNumber, pUser.uid).then((user) => setUser(user));
-
-    }, [pUser, router]);
+        else if(user)
+            getUserData(user.phoneNumber).then(setUserInfo);
+    }, [user, loading, error, router]);
 
     // for cancel dialogue
     const { isOpen, onOpen, onClose } = useDisclosure();
@@ -31,11 +30,11 @@ const Index = () => {
             <CreateTeamModal
                 isOpen={isOpen}
                 onClose={onClose}
-                user={user} />
+                user={userInfo} />
             <JoinTeamModal
                 isOpen={isJoinOpen}
                 onClose={onJoinClose}
-                user={user}
+                user={userInfo}
             />
             <Box mt='2' mb='50px'>
                 <Card
@@ -63,8 +62,8 @@ const Index = () => {
                             </Text>
                         </CardBody>
                         <CardFooter>
-                            {user && user.team && <p>Joined</p>}
-                            {user && !user.team &&
+                            {userInfo && userInfo.team && <p>Joined</p>}
+                            {userInfo && !userInfo.team &&
                               <>
                                 <Button
                                   onClick={onOpen}
@@ -79,7 +78,7 @@ const Index = () => {
                                 </Button>
                               </>
                             }
-                            {!user && <p>Loading...</p>}
+                            {!userInfo && <p>Loading...</p>}
                         </CardFooter>
                     </Stack>
                 </Card>

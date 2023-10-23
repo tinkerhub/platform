@@ -9,7 +9,7 @@ import {BaseLayout} from '@/layout';
 import {Bar, CardBio, Final, One, registerFormValidator, stepByStepValidator, Three, Two,} from '@/views/wizard';
 import {Quotes} from '@/views/wizard/components/Quotes';
 import {Form} from '@/types';
-import { doc, setDoc, updateDoc } from 'firebase/firestore';
+import { doc, setDoc } from 'firebase/firestore';
 import {useAuthState} from 'react-firebase-hooks/auth';
 import {auth, db, getUserData} from '@/api/firebase';
 import {useRouter} from "next/router";

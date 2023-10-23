@@ -7,6 +7,7 @@ import {firstFormValidator} from '../../wizard';
 import {IsEdit} from '../types';
 import {useAuthState} from "react-firebase-hooks/auth";
 import {auth} from "@/api/firebase";
+import {PageLoader} from "@/components/loading";
 
 interface Options extends OptionBase {
     label: string;
@@ -22,7 +23,7 @@ type FormType = InferType<typeof firstFormValidator>;
 
 export const RowOne = ({isEdit}: IsEdit) => {
     // Auth context use
-    const [user] = useAuthState(auth);
+    const [user, loading] = useAuthState(auth);
 
     const {
         register,

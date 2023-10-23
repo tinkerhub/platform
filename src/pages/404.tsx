@@ -1,7 +1,7 @@
 import { Button, Flex, Heading } from '@chakra-ui/react';
 import React from 'react';
 import Image from 'next/image';
-import { Footer, Topbar } from '@/layout/components';
+import { Footer, TopBar } from '@/layout/components';
 import { useRouter } from 'next/router';
 
 const Error = () => {
@@ -15,7 +15,7 @@ const Error = () => {
       p={{ base: '20px', sm: '30px', md: '74px' }}
       pt={{ base: '40px', md: '50px' }}
     >
-      <Topbar showBtn={false} />
+      <TopBar showBtn={false} />
       <Image src='/404.svg' height='400' width='300' alt='' />
       <Heading textAlign='center' color='#407BFF' size='2xl'>
         Looks Like You&apos;re Lost

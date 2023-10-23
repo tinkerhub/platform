@@ -11,6 +11,7 @@ import {useAuthState} from "react-firebase-hooks/auth";
 import {auth, getUserData} from "@/api/firebase";
 import {useEffect, useState} from "react";
 import {Form} from "@/types";
+import {useRouter} from "next/router";
 
 type Third = InferType<typeof thirdValidator>;
 
@@ -21,12 +22,17 @@ export const RowThree = ({ isEdit }: IsEdit) => {
     formState: { errors },
   } = useFormContext<Third>();
 
-    const [user] = useAuthState(auth);
+    const [user, loading, error] = useAuthState(auth);
     const [userInfo, setUserInfo] = useState<Form>();
 
+    const router = useRouter();
+
     useEffect(() => {
-        getUserData(user?.phoneNumber).then(setUserInfo);
-    }, [user?.phoneNumber])
+        if(!loading && (error || !user))
+            router.push('/auth').then();
+        else if(user)
+            getUserData(user.phoneNumber).then(setUserInfo);
+    }, [user, loading, error, router]);
 
   return (
     <VStack spacing={2} align="stretch" w="100%" mb={{ base: '10px', lg: '67px' }}>

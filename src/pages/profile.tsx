@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-props-no-spreading */
 import {useEffect, useMemo, useState} from 'react';
 import {Box, Button, Flex, useDisclosure, useToast} from '@chakra-ui/react';
 import dayjs from 'dayjs';
@@ -22,7 +21,7 @@ const Index = () => {
 
     useEffect(() => {
         getUserData(pUser?.phoneNumber, pUser?.uid).then(setUser);
-    }, [pUser?.phoneNumber])
+    }, [pUser])
 
     // for cancel dialogue
     const {isOpen, onOpen, onClose} = useDisclosure();
@@ -102,26 +101,12 @@ const Index = () => {
         onClose();
     };
 
-    const copyMembershipId = async () => {
-        if (user && user.id) {
-            await window.navigator.clipboard.writeText(user?.id);
-            toast({
-                title: 'Id copied to clipboard.',
-                status: 'success',
-                duration: 3000,
-                isClosable: true,
-                position: 'bottom-left',
-            });
-        } else {
-            toast({
-                title: 'Error copying to clipboard.',
-                status: 'error',
-                duration: 3000,
-                isClosable: true,
-                position: 'bottom-left',
-            });
-        }
-    };
+    const copyMembershipId =  () =>
+        toast.promise(window.navigator.clipboard.writeText(user?.id || ""), {
+            loading: {title: 'Copying to clipboard'},
+            success: {title: 'Copied to clipboard'},
+            error: {title: 'Failed to copy to clipboard'},
+        });
 
     const updateProfile: SubmitHandler<FormType> = async (val) => {
         if(!pUser?.phoneNumber) return;

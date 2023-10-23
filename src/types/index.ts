@@ -1,5 +1,7 @@
+import {ReactNode} from "react";
+
 export type Child = {
-  children: React.ReactNode;
+  children: ReactNode;
 };
 
 export interface Errors {

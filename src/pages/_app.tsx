@@ -1,6 +1,6 @@
+import type {JSX} from 'react'
 import { ChakraProvider } from '@chakra-ui/react';
 import type { AppProps } from 'next/app';
-import { useRouter } from 'next/router';
 import { theme } from '@/theme';
 import { Child } from '@/types';
 import Head from 'next/head';
@@ -12,8 +12,6 @@ type ComponentWithPageLayout = AppProps & {
 };
 
 const MyApp = ({ Component, pageProps }: ComponentWithPageLayout) => {
-    const router = useRouter();
-    const path = String(router.pathname.split('/')[1]);
     return (
         <>
             <Head>

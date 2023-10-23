@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Child } from '../../types';
+import { Child } from '@/types';
 
 export const Pulse = ({ children }: Child) => (
   <motion.div

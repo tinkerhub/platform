@@ -23,14 +23,8 @@ import { auth } from '@/api/firebase';
 import { signOut } from '@firebase/auth';
 import { useAuthState } from 'react-firebase-hooks/auth';
 
-interface NavProp {
-  btnText?: string;
-  btnFunc?: () => void;
-  showBtn: boolean;
-  profileBtn?: boolean;
-}
 
-export const Topbar = ({ btnFunc, btnText = 'Login/Signup', showBtn, profileBtn }: NavProp) => {
+export const TopBar = () => {
   const router = useRouter();
   const SwitchIcon = useColorModeValue(IoMdMoon, BsFillSunFill);
   const { toggleColorMode: toggleMode } = useColorMode();
@@ -92,23 +86,25 @@ export const Topbar = ({ btnFunc, btnText = 'Login/Signup', showBtn, profileBtn 
         )}
 
         <Box display={{ base: 'none', md: 'inline' }}>
-          {user && router.pathname === '/' && (
-            <Button
-              onClick={logOut}
-              _hover={{ cursor: 'pointer', bg: '#1328EC', color: 'white' }}
-              px={{ base: '25px', lg: '50px' }}
-              mr='20px'
-              variant='outline'
-            >
-              Logout
-            </Button>
-          )}
           {
-            profileBtn && (
+              !user && router.pathname !== '/auth' && (
+                  <Button
+                      colorScheme='blue'
+                      backgroundColor='rgba(65, 83, 240, 1)'
+                      onClick={() => router.push('/auth')}
+                      _hover={{ cursor: 'pointer', bg: '#1328EC' }}
+                      mr={2}
+                      color='white'>
+                    Login
+                  </Button>
+              )
+          }
+          {
+            user && router.pathname !== '/profile' && (
               <Button
                 colorScheme='blue'
                 backgroundColor='rgba(65, 83, 240, 1)'
-                onClick={btnFunc}
+                onClick={() => router.push('/profile')}
                 _hover={{ cursor: 'pointer', bg: '#1328EC' }}
                 mr={2}
                 color='white'>
@@ -116,15 +112,15 @@ export const Topbar = ({ btnFunc, btnText = 'Login/Signup', showBtn, profileBtn 
               </Button>
             )
           }
-          {showBtn && (
+          {user && (
             <Button
               colorScheme='blue'
               backgroundColor='rgba(65, 83, 240, 1)'
-              onClick={btnFunc}
+              onClick={logOut}
               _hover={{ cursor: 'pointer', bg: '#1328EC' }}
               color='white'
             >
-              {btnText}
+              Logout
             </Button>
           )}
         </Box>
