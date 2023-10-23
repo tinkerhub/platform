@@ -15,7 +15,7 @@ import {
 } from '@chakra-ui/react';
 import { useMemo, useState } from 'react';
 import { Form } from '@/types';
-import { arrayUnion, doc, getDoc, updateDoc } from 'firebase/firestore';
+import {arrayUnion, doc, getDoc, updateDoc, writeBatch} from 'firebase/firestore';
 import { db } from '@/api/firebase';
 
 interface CreateTeamDisclosure {
@@ -77,14 +77,17 @@ export const JoinTeamModal = ({ isOpen, onClose, user }: CreateTeamDisclosure) =
         if (!team.exists())
             throw 'Invalid Team ID';
 
+        const batch = writeBatch(db);
 
-        await updateDoc(teamRef, {
+        batch.update(teamRef, {
             members: arrayUnion(user.id)
         });
 
-        await updateDoc(userRef, {
+        batch.update(userRef, {
             team: teamId
         });
+
+        await batch.commit();
         setIsSuccess(true);
     }
 

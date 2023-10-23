@@ -15,7 +15,7 @@ import {
     useToast
 } from '@chakra-ui/react';
 import { useMemo, useState } from 'react';
-import { doc, getDoc, serverTimestamp, setDoc, updateDoc } from 'firebase/firestore';
+import {doc, getDoc, serverTimestamp, setDoc, updateDoc, writeBatch} from 'firebase/firestore';
 import { db } from '@/api/firebase';
 import { Form } from '@/types';
 
@@ -87,24 +87,20 @@ export const CreateTeamModal = ({ isOpen, onClose, user }: CreateTeamDisclosure)
         if (team.exists())
             throw 'Team name already taken';
 
-        console.log({
+        const batch = writeBatch(db);
+
+        batch.set(teamRef, {
             name,
             lead: user,
             createdAt: serverTimestamp(),
             members: []
         });
 
-
-        await setDoc(teamRef, {
-            name,
-            lead: user,
-            createdAt: serverTimestamp(),
-            members: []
-        });
-
-        await updateDoc(userRef, {
+        batch.update(userRef, {
             team: name
         });
+
+        await batch.commit();
 
         setTeamId(name);
     }
