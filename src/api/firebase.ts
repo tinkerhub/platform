@@ -1,8 +1,7 @@
 // Import the functions you need from the SDKs you need
 import {initializeApp} from "firebase/app";
 import {getAuth} from "@firebase/auth";
-import {collection, getDocs, getFirestore} from "@firebase/firestore";
-import {doc, getDoc} from "firebase/firestore";
+import {collection, getDocs, getFirestore, doc, getDoc} from "@firebase/firestore";
 import {Form, Skill} from "@/types";
 import Typesense from "typesense";
 

@@ -24,6 +24,13 @@ const Index = () => {
             getUserData(user.phoneNumber, user.uid).then(setUserInfo);
     }, [user, loading, error, router, createOpen, joinOpen]);
 
+    const handleConnectDiscord = () => {
+        const state = encodeURIComponent(user?.phoneNumber || '');
+        const redirectUri = encodeURIComponent(`${window.location.origin}/.netlify/functions/discord-auth`);
+        const clientId = 'your-discord-client-id';
+        return router.push(`https://discord.com/api/oauth2/authorize?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=code&scope=identify&state=${state}`);
+    };
+
     return (
         <>
             <CreateTeamModal
