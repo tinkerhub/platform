@@ -9,7 +9,7 @@ import {BaseLayout} from '@/layout';
 import {Bar, CardBio, Final, One, registerFormValidator, stepByStepValidator, Three, Two,} from '@/views/wizard';
 import {Quotes} from '@/views/wizard/components/Quotes';
 import {Form} from '@/types';
-import { doc, setDoc } from 'firebase/firestore';
+import {doc, setDoc} from 'firebase/firestore';
 import {useAuthState} from 'react-firebase-hooks/auth';
 import {auth, db, getUserData} from '@/api/firebase';
 import {useRouter} from "next/router";
@@ -17,28 +17,29 @@ import {useRouter} from "next/router";
 type FormType = InferType<typeof registerFormValidator>;
 
 const Wizard = () => {
-    const [user] = useAuthState(auth);
+    const [user, loading] = useAuthState(auth);
     const [step, setStep] = useState<number>(1);
     const methods = useForm<FormType>({
         mode: 'all',
-        resolver: step !==2 ? yupResolver(stepByStepValidator[step]) : undefined,
+        resolver: step !== 2 ? yupResolver(stepByStepValidator[step]) : undefined,
     });
 
     const router = useRouter();
 
     useEffect(() => {
-        if (!user?.phoneNumber)
+        if (!loading && !user?.phoneNumber)
             router.push('/auth').then();
 
-        getUserData(user?.phoneNumber).then(async (data) => {
-            if (data?.name && !data?.id && user?.phoneNumber)
-                await setDoc(doc(db, 'users', user.phoneNumber), { id: user.uid }, { merge: true });
+        if (user)
+            getUserData(user.phoneNumber, user.uid).then(async (data) => {
+                if (data?.name && !data?.id && user?.phoneNumber)
+                    await setDoc(doc(db, 'users', user.phoneNumber), {id: user.uid}, {merge: true});
 
-            if (data?.name)
-                router.push('/events').then();
-        });
+                if (data?.name)
+                    router.push('/events').then();
+            });
 
-    }, [user, router]);
+    }, [user, router, loading]);
 
     const [formError, setFormError] = useState<boolean>(false);
 
@@ -53,10 +54,8 @@ const Wizard = () => {
     };
     const handleData: SubmitHandler<FormType> = async (val) => {
         if (isReadyForSubmission) {
-            // increase the step to 4 to render the sucess/ fail UI
-
-            let college ;
-            if(val.collegeId?.label && val.collegeId?.value)
+            let college;
+            if (val.collegeId?.label && val.collegeId?.value)
                 college = {name: val.collegeId.label, id: val.collegeId.value};
 
             const skillsArr = val.skills?.map((el: { value: string }) => el.value);
@@ -85,7 +84,7 @@ const Wizard = () => {
             try {
                 await setDoc(doc(db, 'users', user.phoneNumber), dbData);
                 toast({
-                    title: 'User created succesfully',
+                    title: 'User created successfully',
                     status: 'success',
                     duration: 1000,
                     isClosable: true,

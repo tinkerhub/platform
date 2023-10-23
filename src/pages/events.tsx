@@ -17,7 +17,7 @@ const Index = () => {
         if(!loading && (error || !user))
             router.push('/auth').then();
         else if(user)
-            getUserData(user.phoneNumber).then(setUserInfo);
+            getUserData(user.phoneNumber, user.uid).then(setUserInfo);
     }, [user, loading, error, router]);
 
     // for cancel dialogue

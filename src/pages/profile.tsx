@@ -20,7 +20,7 @@ const Index = () => {
     const [isEdit, setEdit] = useState<boolean>(true);
 
     useEffect(() => {
-        getUserData(pUser?.phoneNumber, pUser?.uid).then(setUser);
+        getUserData(pUser?.phoneNumber || null, pUser?.uid || null).then(setUser);
     }, [pUser])
 
     // for cancel dialogue
