@@ -1,7 +1,6 @@
 // netlify/functions/discord-auth.js
-const axios = require('axios');
 const admin = require('firebase-admin');
-const { Client } = require('discord.js');
+const { Client, GatewayIntentBits, Partials } = require("discord.js");
 
 if (!admin.apps.length) {
     admin.initializeApp({
@@ -25,32 +24,25 @@ client.login(process.env.DISCORD_TOKEN).then();
 const ready = new Promise((resolve) => client.once('ready', resolve));
 
 exports.handler = async function (event) {
-    const { code, state  } = event.queryStringParameters;
-    const clientId = process.env.DISCORD_CLIENT_ID;
-    const clientSecret = process.env.DISCORD_CLIENT_SECRET;
-    const redirectUri = `${process.env.URL}/.netlify/functions/discord-auth`;
+    const { access_token, state, token_type  } = event.queryStringParameters;
+
+    if (!access_token || !state || !token_type) {
+        return {
+            statusCode: 400,
+            body: 'Bad Request',
+        };
+    }
 
     try {
-        const tokenResponse = await axios.post('https://discord.com/api/oauth2/token', null, {
-            params: {
-                client_id: clientId,
-                client_secret: clientSecret,
-                grant_type: 'authorization_code',
-                code,
-                redirect_uri: redirectUri,
-            },
+        const response = await fetch('https://discord.com/api/users/@me', {
             headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
+                Authorization: `${token_type} ${access_token}`,
             },
-        });
+        }).then((res) => res.json());
 
-        const userResponse = await axios.get('https://discord.com/api/users/@me', {
-            headers: {
-                Authorization: `Bearer ${tokenResponse.data.access_token}`,
-            },
-        });
+        console.log(response);
 
-        const discordId = userResponse.data.id;
+        const discordId = response.id;
         const userId = decodeURIComponent(state);
 
         await ready
@@ -74,11 +66,12 @@ exports.handler = async function (event) {
         client.destroy().then();
 
         return {
-            statusCode: 200,
-            body: JSON.stringify({ discordInvite: invite.url }),
+            statusCode: 302,
+            headers: {
+                Location: `${process.env.URL}/profile`
+            }
         };
     } catch (error) {
-        console.error(error);
         return {
             statusCode: 500,
             body: 'Internal Server Error',

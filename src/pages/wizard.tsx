@@ -60,6 +60,8 @@ const Wizard = () => {
 
             const skillsArr = val.skills?.map((el: { value: string }) => el.value);
             const dbData: Form = {
+                discordId: null,
+                discordInvite: null,
                 team: null,
                 accept: null,
                 college: college || null,

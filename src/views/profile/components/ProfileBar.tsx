@@ -26,9 +26,9 @@ export const ProfileBar = ({
 
     const handleConnectDiscord = () => {
         const state = encodeURIComponent(user.mobile);
-        const redirectUri = encodeURIComponent(`${window.location.origin}/.netlify/functions/discord-auth`);
+        const redirectUri = encodeURIComponent(`${window.location.origin}/auth/discord`);
         const clientId = process.env.NEXT_PUBLIC_CLIENT_ID;
-        return router.push(`https://discord.com/api/oauth2/authorize?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=code&scope=identify&state=${state}`);
+        return router.push(`https://discord.com/api/oauth2/authorize?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=token&scope=identify&state=${state}`);
     };
 
     const valid = user.discordInvite?.expiry && user.discordInvite.expiry > Date.now();
