@@ -4,7 +4,6 @@ import {BiArrowBack} from 'react-icons/bi';
 import {FiEdit} from 'react-icons/fi';
 import {AiOutlineSave} from 'react-icons/ai';
 import {useRouter} from 'next/router';
-import {CopyText} from "@/components/copy";
 import {Form} from "@/types";
 
 interface BarProp {
@@ -28,8 +27,6 @@ export const ProfileBar = ({
         const clientId = process.env.NEXT_PUBLIC_CLIENT_ID;
         return router.push(`https://discord.com/api/oauth2/authorize?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=token&scope=identify&state=${state}`);
     };
-
-    const valid = user.discordInvite?.expiry && user.discordInvite.expiry > Date.now();
 
     return (
         <Box
@@ -60,9 +57,9 @@ export const ProfileBar = ({
                     color: 'white',
                     borderColor: 'transparent',
                   }}
-                  onClick={valid ? () => router.push( user.discordInvite?.url || '') : handleConnectDiscord}
+                  onClick={handleConnectDiscord}
               >
-                  {valid ? "Join Discord" : "Connect Discord"}
+                  Join Discord
               </Button>
                 {isEdit && (
                     <Button

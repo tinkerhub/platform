@@ -1,6 +1,5 @@
 // netlify/functions/discord-auth.js
 const admin = require('firebase-admin');
-const { Client, GatewayIntentBits, Partials } = require("discord.js");
 
 if (!admin.apps.length) {
     admin.initializeApp({
@@ -9,19 +8,8 @@ if (!admin.apps.length) {
 }
 const db = admin.firestore();
 
-const client = new Client({
-    intents: [
-        GatewayIntentBits.DirectMessages,
-        GatewayIntentBits.Guilds,
-        GatewayIntentBits.GuildMessages,
-        GatewayIntentBits.MessageContent,
-        GatewayIntentBits.GuildMembers,
-    ],
-    partials: [Partials.Channel],
-});
-
 exports.handler = async function (event) {
-    const { access_token, state, token_type  } = event.queryStringParameters;
+    const { access_token, state, token_type } = event.queryStringParameters;
 
     if (!access_token || !state || !token_type) {
         return {
@@ -31,8 +19,6 @@ exports.handler = async function (event) {
     }
 
     try {
-        client.login(process.env.DISCORD_TOKEN).then();
-
         const response = await fetch('https://discord.com/api/users/@me', {
             headers: {
                 Authorization: `${token_type} ${access_token}`,
@@ -42,36 +28,37 @@ exports.handler = async function (event) {
         const discordId = response.id;
         const userId = decodeURIComponent(state);
 
-        await new Promise(async (resolve) => client.once('ready', resolve));
+        // Create an invitation link
+        const inviteResponse = await fetch(`https://discord.com/api/v10/channels/${process.env.START_CHANNEL}/invites`, {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bot ${process.env.DISCORD_TOKEN}`,
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                max_age: 300,  // 5 minutes
+                max_uses: 1,
+            }),
+        }).then((res) => res.json());
 
-        const server = client.guilds.cache.get(process.env.guildID) || await client.guilds.fetch(process.env.guildID);
-        const channel = server.channels.cache.get(process.env.START_CHANNEL) || await server.channels.fetch(process.env.START_CHANNEL);
-
-        const invite = await channel.createInvite({
-            maxAge: 300,  // 5 minutes
-            maxUses: 1,
-        });
+        const inviteUrl = `https://discord.gg/${inviteResponse.code}`;
 
         const userDoc = db.collection('users').doc(userId);
         await userDoc.set({
-            discordId,
-            discordInvite: {
-                url: invite.url,
-                expiry: Date.now() + 300 * 1000,  // Current timestamp + 5 minutes in milliseconds
-            }
+            discordId
         }, { merge: true });
 
         return {
-            statusCode: 302,
-            headers: {
-                Location: `${process.env.URL}/profile`
-            }
+            statusCode: 200,
+            body: JSON.stringify({
+                url: inviteUrl,
+                expiry: Date.now() + 300 * 1000,  // Current timestamp + 5 minutes in milliseconds
+            }),
         };
     } catch (error) {
-        console.error(error);
         return {
             statusCode: 500,
-            body: 'Internal Server Error',
+            body: error.message || error,
         };
     }
 }

@@ -7,6 +7,8 @@ import { useRouter } from 'next/router';
 const Error = () => {
   const router = useRouter();
 
+  const error = router.query.error || "Looks Like You&apos;re Lost";
+
   return (
     <Flex
       flexDirection='column'
@@ -18,7 +20,7 @@ const Error = () => {
       <TopBar />
       <Image src='/404.svg' height='400' width='300' alt='' />
       <Heading textAlign='center' color='#407BFF' size='2xl'>
-        Looks Like You&apos;re Lost
+        {error}
       </Heading>
       <Heading textAlign='center' size='md' fontWeight='300' mt='20px'>
         Here&apos;s is your way back to home

@@ -7,11 +7,21 @@ const DiscordAuth = () => {
     const router = useRouter();
 
     useEffect(() => {
-        if(typeof window === 'undefined')
+        if (typeof window === 'undefined')
             return;
 
         const query = window.location.hash.slice(1);
-        router.push(`/.netlify/functions/discord-auth?${query}`).then();
+        fetch(`/.netlify/functions/discord-auth?${query}`).then(async (res) => {
+            if(res.status !== 200)
+                return router.push(`/404?error=${await res.text()}`);
+
+            const data = await res.json();
+
+            if (!data.url)
+                return router.push("/404?error=Unable to Create Invite");
+
+            return router.push(data.url);
+        })
     }, [router]);
 
     return (

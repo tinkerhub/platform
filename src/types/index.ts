@@ -10,10 +10,6 @@ export interface Errors {
 
 export interface Form {
     discordId: string | null;
-    discordInvite: {
-        url: string;
-        expiry: number;
-    } | null;
     team: string | null;
     name: string;
     passYear: number | null;
