@@ -51,13 +51,16 @@ const Index = () => {
                         <CardBody>
                             <Heading size='md'>Stack Up</Heading>
                             <Text py='1'>
-                                Full-stack developer skill up program for students.
+                                organized by the TinkerHub Foundation, is an all-inclusive 10-day tech project-building<br/>
+                                learning program, Welcomes participants from all backgrounds. You can join forces with a team of <br/>
+                                2 to 4 members and explore this beginner-friendly program.
                             </Text>
                             <Text
                                 as='b'
                                 color={'gray.500'}
                                 fontSize='md'>
-                                November 1 - 14
+                                November 1 - 10
+                                <Link href="https://tinkerhub-foundation.notion.site/StackUp-118871d72824481aa6c4b1c6aeefbe8b?pvs=4">Home></Link>
                             </Text>
                         </CardBody>
                         <CardFooter>
