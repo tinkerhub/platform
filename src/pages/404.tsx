@@ -7,7 +7,7 @@ import { useRouter } from 'next/router';
 const Error = () => {
   const router = useRouter();
 
-  const error = router.query.error || "Looks Like You&apos;re Lost";
+  const error = router.query.error || "Looks Like You're Lost";
 
   return (
     <Flex
