@@ -8,6 +8,7 @@ import { useRouter } from 'next/router';
 import { JoinTeamModal } from '@/views/events/components/JoinTeamModal';
 import { Form } from '@/types';
 import {CopyText} from "@/components/copy";
+import Link from 'next/link';
 
 const Index = () => {
     const [userInfo, setUserInfo] = useState<Form>();
