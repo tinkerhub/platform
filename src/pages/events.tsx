@@ -59,8 +59,8 @@ const Index = () => {
                                 as='b'
                                 color={'gray.500'}
                                 fontSize='md'>
-                                November 1 - 10
-                                <Link href="https://tinkerhub-foundation.notion.site/StackUp-118871d72824481aa6c4b1c6aeefbe8b?pvs=4">Home></Link>
+                                November 1 - 10 <br/>
+                                <Link href="https://tinkerhub-foundation.notion.site/StackUp-118871d72824481aa6c4b1c6aeefbe8b?pvs=4">Click Here for more details</Link>
                             </Text>
                         </CardBody>
                         <CardFooter>
