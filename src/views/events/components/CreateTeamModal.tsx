@@ -129,7 +129,7 @@ export const CreateTeamModal = ({ isOpen, onClose, user }: CreateTeamDisclosure)
                                     fontSize={'sm'}
                                     pt={2}
                                     as='i'>
-                                    A team should have a minimum of <b>3 members</b> and maximum of <b>4 members</b>.
+                                    A team should have a minimum of <b>2 members</b> and maximum of <b>4 members</b>.
                                 </Text>
                             </Box>
                         </ModalBody>
