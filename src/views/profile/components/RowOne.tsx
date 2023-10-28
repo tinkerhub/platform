@@ -14,8 +14,6 @@ export const RowOne = ({isEdit}: IsEdit) => {
     // Auth context use
     const [user] = useAuthState(auth);
 
-    console.log('User:', user);
-
     const {
         register,
         formState: {errors: {dob, email, name}},
