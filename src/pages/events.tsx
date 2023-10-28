@@ -1,12 +1,12 @@
-import { Box, Button, Card, CardBody, CardFooter, Heading, Image, Stack, Text } from '@chakra-ui/react';
-import { useAuthState } from 'react-firebase-hooks/auth';
-import { auth, getUserData } from '@/api/firebase';
-import { CreateTeamModal } from '@/views/events/components/CreateTeamModal';
-import { EventsLayout } from '@/layout/EventsLayout';
-import { useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
-import { JoinTeamModal } from '@/views/events/components/JoinTeamModal';
-import { Form } from '@/types';
+import {Box, Button, Card, CardBody, CardFooter, Heading, Image, Stack, Text} from '@chakra-ui/react';
+import {useAuthState} from 'react-firebase-hooks/auth';
+import {auth, getUserData} from '@/api/firebase';
+import {CreateTeamModal} from '@/views/events/components/CreateTeamModal';
+import {EventsLayout} from '@/layout/EventsLayout';
+import {useEffect, useState} from 'react';
+import {useRouter} from 'next/router';
+import {JoinTeamModal} from '@/views/events/components/JoinTeamModal';
+import {Form} from '@/types';
 import {CopyText} from "@/components/copy";
 import Link from 'next/link';
 
@@ -19,9 +19,9 @@ const Index = () => {
     const router = useRouter();
 
     useEffect(() => {
-        if(!loading && (error || !user))
+        if (!loading && (error || !user))
             router.push('/auth').then();
-        else if(user)
+        else if (user)
             getUserData(user.phoneNumber, user.uid).then(setUserInfo);
     }, [user, loading, error, router, createOpen, joinOpen]);
 
@@ -30,7 +30,7 @@ const Index = () => {
             <CreateTeamModal
                 isOpen={createOpen}
                 onClose={setCreateOpen}
-                user={userInfo} />
+                user={userInfo}/>
             <JoinTeamModal
                 isOpen={joinOpen}
                 onClose={setJoinOpen}
@@ -38,27 +38,28 @@ const Index = () => {
             />
             <Box mt='2' mb='50px'>
                 <Card
-                    direction={{ base: 'column', sm: 'row' }}
+                    direction={{base: 'column', sm: 'row'}}
                     overflow='hidden'
                     variant='outline'>
                     <Image
                         objectFit='cover'
-                        maxW={{ base: '100%', sm: '200px' }}
+                        maxW={{base: '100%', sm: '200px'}}
                         src='https://www.helsinki.fi/assets/drupal/styles/16_10_fallback/s3/media-image/fullstack_stack_1842x1080.png.jpeg?itok=zEKFAthk'
                         alt='Full-stack icon'
                         borderRight={'1px'}
-                        borderColor={'gray.200'} />
+                        borderColor={'gray.200'}/>
                     <Stack ml={1}>
                         <CardBody>
                             <Heading size='md'>Stack Up</Heading>
                             <Text py='1'>
-                                organized by the TinkerHub Foundation, is an all-inclusive 10-day tech project-building<br/>
-                                learning program, Welcomes participants from all backgrounds. You can join forces with a team of <br/>
+                                organized by the TinkerHub Foundation, is an all-inclusive 10-day tech
+                                project-building<br/>
+                                learning program, Welcomes participants from all backgrounds. You can join forces with a
+                                team of <br/>
                                 2 to 4 members and explore this beginner-friendly program.
                             </Text>
                             <Text
                                 as='b'
-                                color={'gray.200'}
                                 fontSize='md'>
                                 November 1 - 10<br/><br/>
                             </Text>
@@ -67,28 +68,54 @@ const Index = () => {
                                 color={'blue.500'}
                                 fontSize='md'>
 
-                                <Link href="https://tinkerhub-foundation.notion.site/StackUp-118871d72824481aa6c4b1c6aeefbe8b?pvs=4">Click Here for more details</Link>
+                                <Link
+                                    href="https://tinkerhub-foundation.notion.site/StackUp-118871d72824481aa6c4b1c6aeefbe8b?pvs=4">Click
+                                    Here for more details</Link>
                             </Text>
                         </CardBody>
-                        <CardFooter>
+                        <CardFooter
+                            display="flex"
+                            flexDirection={{ base: 'column', md: 'row' }}
+                            justifyContent={{ base: 'center', md: 'flex-start' }}
+                            alignItems={{ base: 'center', md: 'flex-start' }}
+                            flexWrap="wrap"
+                        >
                             {userInfo && userInfo.team && <CopyText label="Team ID" text={userInfo.team} />}
-                            {userInfo && !userInfo.team &&
-                              <>
-                                <Button
-                                  onClick={() => setCreateOpen(true)}
-                                  variant='solid' colorScheme='blue'>
-                                  Create Team
-                                </Button>
-                                <Button
-                                  ml={3}
-                                  onClick={() => setJoinOpen(true)}
-                                  variant='solid' colorScheme='blue'>
-                                  Join Team
-                                </Button>
-                              </>
-                            }
+                            {userInfo && !userInfo.team && (
+                                <>
+                                    <Button
+                                        onClick={() => setCreateOpen(true)}
+                                        variant="solid"
+                                        colorScheme="blue"
+                                        mb={{ base: 2, md: 0 }}
+                                        mx={2}
+                                    >
+                                        Create Team
+                                    </Button>
+                                    <Button
+                                        onClick={() => setJoinOpen(true)}
+                                        variant="solid"
+                                        colorScheme="blue"
+                                        mb={{ base: 2, md: 0 }}
+                                        mx={2}
+                                    >
+                                        Join Team
+                                    </Button>
+                                    {/*<Button*/}
+                                    {/*    onClick={() => /!* Handle Campus Stats click *!/}*/}
+                                    {/*    variant="outline"*/}
+                                    {/*    colorScheme="blue"*/}
+                                    {/*    mb={{ base: 2, md: 0 }}*/}
+                                    {/*    mx={2}*/}
+                                    {/*>*/}
+                                    {/*    Campus Stats*/}
+                                    {/*</Button>*/}
+                                </>
+                            )}
                             {!userInfo && <p>Loading...</p>}
                         </CardFooter>
+
+
                     </Stack>
                 </Card>
             </Box>
