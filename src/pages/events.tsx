@@ -101,15 +101,15 @@ const Index = () => {
                                     >
                                         Join Team
                                     </Button>
-                                    <Button
-                                        onClick={() => {/* Handle Campus Stats click */}}
-                                        variant="outline"
-                                        colorScheme="blue"
-                                        mb={{ base: 2, md: 0 }}
-                                        mx={2}
-                                    >
-                                        Campus Stats
-                                    </Button>
+                                    {/*<Button*/}
+                                    {/*    onClick={() => /!* Handle Campus Stats click *!/}*/}
+                                    {/*    variant="outline"*/}
+                                    {/*    colorScheme="blue"*/}
+                                    {/*    mb={{ base: 2, md: 0 }}*/}
+                                    {/*    mx={2}*/}
+                                    {/*>*/}
+                                    {/*    Campus Stats*/}
+                                    {/*</Button>*/}
                                 </>
                             )}
                             {!userInfo && <p>Loading...</p>}
