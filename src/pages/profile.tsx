@@ -19,6 +19,8 @@ const Index = () => {
     const [user, setUser] = useState<Form>();
     const [isEdit, setEdit] = useState<boolean>(true);
 
+    firebase.firestore().collection('collectionName').get()
+
     useEffect(() => {
         getUserData(pUser?.phoneNumber || null, pUser?.uid || null).then(setUser);
     }, [pUser])

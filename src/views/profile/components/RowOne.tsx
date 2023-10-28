@@ -26,7 +26,7 @@ export const RowOne = ({isEdit}: IsEdit) => {
             <Box display="flex" flexDirection="column" justifyContent="space-between">
                 <FormControl label="Name" isInvalid={!!name} id="FullName">
                 </FormControl>
-                <CopyText label="Copy User ID: " text={user?.uid || 'user id not found!'} />
+                <CopyText label="Copy Memership ID: " text={user?.uid || 'User id not found!'} />
             </Box>
             <Box display="flex" flexDirection="column" justifyContent="space-between">
                 <FormControl label="Name" isInvalid={!!name} id="FullName">
